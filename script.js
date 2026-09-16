@@ -65,7 +65,7 @@ document.querySelectorAll('.btn-add').forEach(btn => {
     const name = btn.getAttribute('data-name');
     cartCount++;
     cartCountEl.textContent = cartCount;
-    showToast(`"${name}" ja és teva. Que la gaudeixis amb mala bava! ☕`);
+    showToast(`"${name}" ja és teva. Que la gaudeixis amb mala bava!`);
   });
 });
 

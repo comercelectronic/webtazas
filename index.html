@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tasses amb Mala Llet ☕ | Frases fetes, paraules rares i insults d'autor</title>
+  <title>Tasses amb Mala Llet | Frases fetes, paraules rares i insults d'autor</title>
   <meta name="description" content="Tasses catalanes fetes amb amor i mala bava: frases fetes de tota la vida, paraules poc habituals i insults únics per amanir el cafè de cada dia.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,9 +12,66 @@
 </head>
 <body>
 
+  <!-- SPRITE D'ICONES SVG (reemplacen la major part dels emojis) -->
+  <svg class="icon-sprite" aria-hidden="true" style="position:absolute; width:0; height:0; overflow:hidden;">
+    <symbol id="icon-mug" viewBox="0 0 24 24">
+      <path d="M4 8h12v7a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8Z"/>
+      <path d="M16 10h2a2.5 2.5 0 0 1 0 5h-2"/>
+      <path d="M8 5c0-1 .8-1.1.8-2M12 5c0-1 .8-1.1.8-2"/>
+    </symbol>
+    <symbol id="icon-leaf" viewBox="0 0 24 24">
+      <path d="M20 4C10 4 4 10 4 18c8 0 14-6 14-14Z"/>
+      <path d="M8 18C10 12 14 8 20 4"/>
+    </symbol>
+    <symbol id="icon-quill" viewBox="0 0 24 24">
+      <path d="M4 20l4-1 10.5-10.5a2.1 2.1 0 0 0-3-3L5 16l-1 4Z"/>
+      <path d="M13 7l3 3"/>
+    </symbol>
+    <symbol id="icon-truck" viewBox="0 0 24 24">
+      <path d="M2 7h11v9H2z"/>
+      <path d="M13 10h4l3 3v3h-7z"/>
+      <circle cx="6" cy="18" r="1.6"/>
+      <circle cx="17" cy="18" r="1.6"/>
+    </symbol>
+    <symbol id="icon-flame" viewBox="0 0 24 24">
+      <path d="M12 2c1 3-3 4-3 8a3 3 0 0 0 6 0c0-1-.5-2-.5-2 1.5 1 2.5 3 2.5 5a5.5 5.5 0 0 1-11 0C6 8 9 6 12 2Z"/>
+    </symbol>
+    <symbol id="icon-cart" viewBox="0 0 24 24">
+      <path d="M3 4h2l2.4 12.2a2 2 0 0 0 2 1.6h7.2a2 2 0 0 0 2-1.6L20 8H6"/>
+      <circle cx="9" cy="20" r="1.4"/>
+      <circle cx="17" cy="20" r="1.4"/>
+    </symbol>
+    <symbol id="icon-mail" viewBox="0 0 24 24">
+      <rect x="3" y="5" width="18" height="14" rx="2"/>
+      <path d="M3 7l9 6 9-6"/>
+    </symbol>
+    <symbol id="icon-phone" viewBox="0 0 24 24">
+      <path d="M6 3h3l1.5 4-2 2a12 12 0 0 0 6.5 6.5l2-2 4 1.5v3a2 2 0 0 1-2.2 2A17 17 0 0 1 4 6.2 2 2 0 0 1 6 3Z"/>
+    </symbol>
+    <symbol id="icon-pin" viewBox="0 0 24 24">
+      <path d="M12 22s7-7.5 7-12.5A7 7 0 0 0 5 9.5C5 14.5 12 22 12 22Z"/>
+      <circle cx="12" cy="9.5" r="2.3"/>
+    </symbol>
+    <symbol id="icon-instagram" viewBox="0 0 24 24">
+      <rect x="3" y="3" width="18" height="18" rx="5"/>
+      <circle cx="12" cy="12" r="4.2"/>
+      <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/>
+    </symbol>
+    <symbol id="icon-x" viewBox="0 0 24 24">
+      <path d="M4 4l16 16M20 4 4 20"/>
+    </symbol>
+    <symbol id="icon-note" viewBox="0 0 24 24">
+      <path d="M10 4v11.5a3.5 3.5 0 1 1-2-3.2"/>
+      <path d="M10 4c1 2 3 2.6 5 3"/>
+    </symbol>
+  </svg>
+
   <header class="header" id="header">
     <nav class="navbar">
-      <a href="#inici" class="logo">☕ <span>Mala Llet</span></a>
+      <a href="#inici" class="logo">
+        <svg class="icon icon-logo" aria-hidden="true"><use href="#icon-mug"/></svg>
+        <span>Mala Llet</span>
+      </a>
       <ul class="nav-links" id="navLinks">
         <li><a href="#inici">Inici</a></li>
         <li><a href="#caracteristiques">Per què nosaltres</a></li>
@@ -24,7 +81,8 @@
       </ul>
       <div class="nav-actions">
         <div class="cart-icon" id="cartIcon" title="La teva cistella">
-          🛒 <span class="cart-count" id="cartCount">0</span>
+          <svg class="icon" aria-hidden="true"><use href="#icon-cart"/></svg>
+          <span class="cart-count" id="cartCount">0</span>
         </div>
         <button class="hamburger" id="hamburger" aria-label="Obrir menú">
           <span></span><span></span><span></span>
@@ -37,11 +95,9 @@
     <!-- HERO -->
     <section class="hero" id="inici">
       <div class="hero-floaters" aria-hidden="true">
-        <span class="floater f1">☕</span>
-        <span class="floater f2">😤</span>
-        <span class="floater f3">🤬</span>
-        <span class="floater f4">☕</span>
-        <span class="floater f5">😏</span>
+        <svg class="floater f1"><use href="#icon-mug"/></svg>
+        <svg class="floater f3"><use href="#icon-mug"/></svg>
+        <svg class="floater f5"><use href="#icon-mug"/></svg>
       </div>
       <div class="hero-content">
         <span class="hero-eyebrow">100% català de soca-rel</span>
@@ -83,22 +139,22 @@
       </div>
       <div class="features-grid">
         <div class="feature-card">
-          <div class="feature-icon">🐓</div>
+          <div class="feature-icon"><svg class="icon"><use href="#icon-leaf"/></svg></div>
           <h3>Català de soca-rel</h3>
           <p>Res de frases traduïdes a corre-cuita. Aquí parlem el català dels avis, dels bars i dels sopars de Nadal quan surt el tema de la política.</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">✍️</div>
+          <div class="feature-icon"><svg class="icon"><use href="#icon-quill"/></svg></div>
           <h3>Frases que fan forat</h3>
           <p>Res de "keep calm and drink coffee". Les nostres frases són collita pròpia i, si t'ho sembla, ben bé podries no haver-les sentit mai.</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">🚚</div>
+          <div class="feature-icon"><svg class="icon"><use href="#icon-truck"/></svg></div>
           <h3>Enviament sense embuts</h3>
           <p>T'arriba abans que se't giri la llet. Embalatge fort perquè la tassa aguanti el viatge millor que tu els comentaris del cunyat.</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">🔥</div>
+          <div class="feature-icon"><svg class="icon"><use href="#icon-flame"/></svg></div>
           <h3>Ceràmica que aguanta canyes</h3>
           <p>Apta per rentavaixelles i microones, i per aguantar un cafè bullent mentre llegeixes l'insult per tercera vegada aquell dilluns.</p>
         </div>
@@ -124,7 +180,19 @@
 
         <article class="product-card" data-category="frases" style="--grad-a:#FF6B6B; --grad-b:#FF9A8D;">
           <div class="product-visual">
-            <span class="product-emoji">🕊️</span>
+            <svg class="mug-illustration" viewBox="0 0 200 190" aria-hidden="true">
+              <defs><linearGradient id="mugGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:var(--grad-a)"/><stop offset="100%" style="stop-color:var(--grad-b)"/>
+              </linearGradient></defs>
+              <path class="mug-steam" d="M56,34 C50,24 60,18 55,6"/>
+              <path class="mug-steam" d="M82,34 C76,24 86,16 81,4"/>
+              <path class="mug-steam" d="M108,34 C102,24 112,18 107,6"/>
+              <rect class="mug-shadow" x="18" y="150" width="128" height="10" rx="5"/>
+              <path class="mug-handle" d="M146,72 Q189,72 189,105 Q189,138 146,138" fill="url(#mugGrad1)"/>
+              <rect x="18" y="42" width="128" height="118" rx="10" fill="url(#mugGrad1)"/>
+              <ellipse class="mug-rim-shadow" cx="82" cy="42" rx="64" ry="12"/>
+              <ellipse class="mug-coffee" cx="82" cy="40" rx="58" ry="9"/>
+            </svg>
             <blockquote class="product-quote">Fer volar coloms</blockquote>
           </div>
           <div class="product-body">
@@ -140,7 +208,19 @@
 
         <article class="product-card" data-category="frases" style="--grad-a:#4ECDC4; --grad-b:#8CF0E6;">
           <div class="product-visual">
-            <span class="product-emoji">👉✌️</span>
+            <svg class="mug-illustration" viewBox="0 0 200 190" aria-hidden="true">
+              <defs><linearGradient id="mugGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:var(--grad-a)"/><stop offset="100%" style="stop-color:var(--grad-b)"/>
+              </linearGradient></defs>
+              <path class="mug-steam" d="M56,34 C50,24 60,18 55,6"/>
+              <path class="mug-steam" d="M82,34 C76,24 86,16 81,4"/>
+              <path class="mug-steam" d="M108,34 C102,24 112,18 107,6"/>
+              <rect class="mug-shadow" x="18" y="150" width="128" height="10" rx="5"/>
+              <path class="mug-handle" d="M146,72 Q189,72 189,105 Q189,138 146,138" fill="url(#mugGrad2)"/>
+              <rect x="18" y="42" width="128" height="118" rx="10" fill="url(#mugGrad2)"/>
+              <ellipse class="mug-rim-shadow" cx="82" cy="42" rx="64" ry="12"/>
+              <ellipse class="mug-coffee" cx="82" cy="40" rx="58" ry="9"/>
+            </svg>
             <blockquote class="product-quote">Tocar el dos</blockquote>
           </div>
           <div class="product-body">
@@ -156,7 +236,19 @@
 
         <article class="product-card" data-category="frases" style="--grad-a:#FFE66D; --grad-b:#FFC93C;">
           <div class="product-visual">
-            <span class="product-emoji">👶🍼</span>
+            <svg class="mug-illustration" viewBox="0 0 200 190" aria-hidden="true">
+              <defs><linearGradient id="mugGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:var(--grad-a)"/><stop offset="100%" style="stop-color:var(--grad-b)"/>
+              </linearGradient></defs>
+              <path class="mug-steam" d="M56,34 C50,24 60,18 55,6"/>
+              <path class="mug-steam" d="M82,34 C76,24 86,16 81,4"/>
+              <path class="mug-steam" d="M108,34 C102,24 112,18 107,6"/>
+              <rect class="mug-shadow" x="18" y="150" width="128" height="10" rx="5"/>
+              <path class="mug-handle" d="M146,72 Q189,72 189,105 Q189,138 146,138" fill="url(#mugGrad3)"/>
+              <rect x="18" y="42" width="128" height="118" rx="10" fill="url(#mugGrad3)"/>
+              <ellipse class="mug-rim-shadow" cx="82" cy="42" rx="64" ry="12"/>
+              <ellipse class="mug-coffee" cx="82" cy="40" rx="58" ry="9"/>
+            </svg>
             <blockquote class="product-quote">Qui no plora, no mama</blockquote>
           </div>
           <div class="product-body">
@@ -172,7 +264,19 @@
 
         <article class="product-card" data-category="paraules" style="--grad-a:#845EC2; --grad-b:#B39CD0;">
           <div class="product-visual">
-            <span class="product-emoji">😌</span>
+            <svg class="mug-illustration" viewBox="0 0 200 190" aria-hidden="true">
+              <defs><linearGradient id="mugGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:var(--grad-a)"/><stop offset="100%" style="stop-color:var(--grad-b)"/>
+              </linearGradient></defs>
+              <path class="mug-steam" d="M56,34 C50,24 60,18 55,6"/>
+              <path class="mug-steam" d="M82,34 C76,24 86,16 81,4"/>
+              <path class="mug-steam" d="M108,34 C102,24 112,18 107,6"/>
+              <rect class="mug-shadow" x="18" y="150" width="128" height="10" rx="5"/>
+              <path class="mug-handle" d="M146,72 Q189,72 189,105 Q189,138 146,138" fill="url(#mugGrad4)"/>
+              <rect x="18" y="42" width="128" height="118" rx="10" fill="url(#mugGrad4)"/>
+              <ellipse class="mug-rim-shadow" cx="82" cy="42" rx="64" ry="12"/>
+              <ellipse class="mug-coffee" cx="82" cy="40" rx="58" ry="9"/>
+            </svg>
             <blockquote class="product-quote">Cofoi</blockquote>
           </div>
           <div class="product-body">
@@ -188,7 +292,19 @@
 
         <article class="product-card" data-category="paraules" style="--grad-a:#2C3E50; --grad-b:#557089;">
           <div class="product-visual">
-            <span class="product-emoji">🫥</span>
+            <svg class="mug-illustration" viewBox="0 0 200 190" aria-hidden="true">
+              <defs><linearGradient id="mugGrad5" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:var(--grad-a)"/><stop offset="100%" style="stop-color:var(--grad-b)"/>
+              </linearGradient></defs>
+              <path class="mug-steam" d="M56,34 C50,24 60,18 55,6"/>
+              <path class="mug-steam" d="M82,34 C76,24 86,16 81,4"/>
+              <path class="mug-steam" d="M108,34 C102,24 112,18 107,6"/>
+              <rect class="mug-shadow" x="18" y="150" width="128" height="10" rx="5"/>
+              <path class="mug-handle" d="M146,72 Q189,72 189,105 Q189,138 146,138" fill="url(#mugGrad5)"/>
+              <rect x="18" y="42" width="128" height="118" rx="10" fill="url(#mugGrad5)"/>
+              <ellipse class="mug-rim-shadow" cx="82" cy="42" rx="64" ry="12"/>
+              <ellipse class="mug-coffee" cx="82" cy="40" rx="58" ry="9"/>
+            </svg>
             <blockquote class="product-quote">Escarransit</blockquote>
           </div>
           <div class="product-body">
@@ -204,7 +320,19 @@
 
         <article class="product-card" data-category="paraules" style="--grad-a:#FF7EB3; --grad-b:#FF477E;">
           <div class="product-visual">
-            <span class="product-emoji">🌀</span>
+            <svg class="mug-illustration" viewBox="0 0 200 190" aria-hidden="true">
+              <defs><linearGradient id="mugGrad6" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:var(--grad-a)"/><stop offset="100%" style="stop-color:var(--grad-b)"/>
+              </linearGradient></defs>
+              <path class="mug-steam" d="M56,34 C50,24 60,18 55,6"/>
+              <path class="mug-steam" d="M82,34 C76,24 86,16 81,4"/>
+              <path class="mug-steam" d="M108,34 C102,24 112,18 107,6"/>
+              <rect class="mug-shadow" x="18" y="150" width="128" height="10" rx="5"/>
+              <path class="mug-handle" d="M146,72 Q189,72 189,105 Q189,138 146,138" fill="url(#mugGrad6)"/>
+              <rect x="18" y="42" width="128" height="118" rx="10" fill="url(#mugGrad6)"/>
+              <ellipse class="mug-rim-shadow" cx="82" cy="42" rx="64" ry="12"/>
+              <ellipse class="mug-coffee" cx="82" cy="40" rx="58" ry="9"/>
+            </svg>
             <blockquote class="product-quote">Esbojarrat</blockquote>
           </div>
           <div class="product-body">
@@ -220,7 +348,19 @@
 
         <article class="product-card" data-category="insults" style="--grad-a:#FF6B6B; --grad-b:#C44536;">
           <div class="product-visual">
-            <span class="product-emoji">🏅</span>
+            <svg class="mug-illustration" viewBox="0 0 200 190" aria-hidden="true">
+              <defs><linearGradient id="mugGrad7" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:var(--grad-a)"/><stop offset="100%" style="stop-color:var(--grad-b)"/>
+              </linearGradient></defs>
+              <path class="mug-steam" d="M56,34 C50,24 60,18 55,6"/>
+              <path class="mug-steam" d="M82,34 C76,24 86,16 81,4"/>
+              <path class="mug-steam" d="M108,34 C102,24 112,18 107,6"/>
+              <rect class="mug-shadow" x="18" y="150" width="128" height="10" rx="5"/>
+              <path class="mug-handle" d="M146,72 Q189,72 189,105 Q189,138 146,138" fill="url(#mugGrad7)"/>
+              <rect x="18" y="42" width="128" height="118" rx="10" fill="url(#mugGrad7)"/>
+              <ellipse class="mug-rim-shadow" cx="82" cy="42" rx="64" ry="12"/>
+              <ellipse class="mug-coffee" cx="82" cy="40" rx="58" ry="9"/>
+            </svg>
             <blockquote class="product-quote">Carallot Oficial</blockquote>
           </div>
           <div class="product-body">
@@ -236,7 +376,19 @@
 
         <article class="product-card" data-category="insults" style="--grad-a:#4ECDC4; --grad-b:#1A8F86;">
           <div class="product-visual">
-            <span class="product-emoji">🏆</span>
+            <svg class="mug-illustration" viewBox="0 0 200 190" aria-hidden="true">
+              <defs><linearGradient id="mugGrad8" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:var(--grad-a)"/><stop offset="100%" style="stop-color:var(--grad-b)"/>
+              </linearGradient></defs>
+              <path class="mug-steam" d="M56,34 C50,24 60,18 55,6"/>
+              <path class="mug-steam" d="M82,34 C76,24 86,16 81,4"/>
+              <path class="mug-steam" d="M108,34 C102,24 112,18 107,6"/>
+              <rect class="mug-shadow" x="18" y="150" width="128" height="10" rx="5"/>
+              <path class="mug-handle" d="M146,72 Q189,72 189,105 Q189,138 146,138" fill="url(#mugGrad8)"/>
+              <rect x="18" y="42" width="128" height="118" rx="10" fill="url(#mugGrad8)"/>
+              <ellipse class="mug-rim-shadow" cx="82" cy="42" rx="64" ry="12"/>
+              <ellipse class="mug-coffee" cx="82" cy="40" rx="58" ry="9"/>
+            </svg>
             <blockquote class="product-quote">Panoli de Categoria Mundial</blockquote>
           </div>
           <div class="product-body">
@@ -252,7 +404,19 @@
 
         <article class="product-card" data-category="insults" style="--grad-a:#FFE66D; --grad-b:#E8A628;">
           <div class="product-visual">
-            <span class="product-emoji">🍑</span>
+            <svg class="mug-illustration" viewBox="0 0 200 190" aria-hidden="true">
+              <defs><linearGradient id="mugGrad9" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:var(--grad-a)"/><stop offset="100%" style="stop-color:var(--grad-b)"/>
+              </linearGradient></defs>
+              <path class="mug-steam" d="M56,34 C50,24 60,18 55,6"/>
+              <path class="mug-steam" d="M82,34 C76,24 86,16 81,4"/>
+              <path class="mug-steam" d="M108,34 C102,24 112,18 107,6"/>
+              <rect class="mug-shadow" x="18" y="150" width="128" height="10" rx="5"/>
+              <path class="mug-handle" d="M146,72 Q189,72 189,105 Q189,138 146,138" fill="url(#mugGrad9)"/>
+              <rect x="18" y="42" width="128" height="118" rx="10" fill="url(#mugGrad9)"/>
+              <ellipse class="mug-rim-shadow" cx="82" cy="42" rx="64" ry="12"/>
+              <ellipse class="mug-coffee" cx="82" cy="40" rx="58" ry="9"/>
+            </svg>
             <blockquote class="product-quote">Figamolla amb Gràcia</blockquote>
           </div>
           <div class="product-body">
@@ -289,7 +453,7 @@
         <div class="testimonial-card">
           <p class="testimonial-quote">"Aquesta tassa m'ha salvat de dir coses pitjors al meu cunyat cada diumenge de dinar familiar."</p>
           <div class="testimonial-author">
-            <span class="avatar">👵</span>
+            <span class="avatar avatar-1">M</span>
             <div>
               <strong>Montserrat</strong>
               <span>54 anys, mestressa de casa i de la seva paciència</span>
@@ -299,7 +463,7 @@
         <div class="testimonial-card">
           <p class="testimonial-quote">"Ara quan em diuen carallot, els ensenyo la tassa i em sento correspost. És teràpia en forma de ceràmica."</p>
           <div class="testimonial-author">
-            <span class="avatar">🧔</span>
+            <span class="avatar avatar-2">B</span>
             <div>
               <strong>Bernat</strong>
               <span>29 anys, expert en aguantar cunyats</span>
@@ -309,7 +473,7 @@
         <div class="testimonial-card">
           <p class="testimonial-quote">"Vaig regalar la de 'fer volar coloms' al meu soci i ara em té una mica de respecte. O de por, encara no ho sé del cert."</p>
           <div class="testimonial-author">
-            <span class="avatar">👩‍💼</span>
+            <span class="avatar avatar-3">E</span>
             <div>
               <strong>Empar</strong>
               <span>41 anys, sòcia amb sentit de l'humor</span>
@@ -319,7 +483,7 @@
         <div class="testimonial-card">
           <p class="testimonial-quote">"Sóc jo o la tassa 'Escarransit' descriu perfectament el meu germà petit? Li'n vaig regalar tres."</p>
           <div class="testimonial-author">
-            <span class="avatar">👨</span>
+            <span class="avatar avatar-4">R</span>
             <div>
               <strong>Ramon</strong>
               <span>36 anys, germà gran amb rancúnies acumulades</span>
@@ -337,9 +501,9 @@
           <h2>Escriu-nos, no mosseguem</h2>
           <p>Les tasses, en canvi, sí que ho fan una mica. Si tens un dubte, una queixa o una proposta d'insult nou, som tota orelles.</p>
           <ul class="contact-details">
-            <li>📧 hola@malallet.cat</li>
-            <li>📞 +34 931 234 567</li>
-            <li>📍 Carrer del Rebost, 12 · Barcelona</li>
+            <li><svg class="icon"><use href="#icon-mail"/></svg> hola@malallet.cat</li>
+            <li><svg class="icon"><use href="#icon-phone"/></svg> +34 931 234 567</li>
+            <li><svg class="icon"><use href="#icon-pin"/></svg> Carrer del Rebost, 12 · Barcelona</li>
           </ul>
         </div>
         <form class="contact-form" id="contactForm" novalidate>
@@ -364,7 +528,10 @@
   <footer class="footer">
     <div class="footer-content">
       <div class="footer-brand">
-        <div class="logo">☕ <span>Mala Llet</span></div>
+        <div class="logo">
+          <svg class="icon icon-logo" aria-hidden="true"><use href="#icon-mug"/></svg>
+          <span>Mala Llet</span>
+        </div>
         <p>Tasses catalanes fetes amb amor, ceràmica de qualitat i una mica de mala bava ben posada.</p>
       </div>
       <div class="footer-links">
@@ -384,14 +551,14 @@
       <div class="footer-social">
         <h4>Segueix-nos</h4>
         <div class="social-icons">
-          <a href="#" aria-label="Instagram">📷</a>
-          <a href="#" aria-label="X">🐦</a>
-          <a href="#" aria-label="TikTok">🎵</a>
+          <a href="#" aria-label="Instagram"><svg class="icon"><use href="#icon-instagram"/></svg></a>
+          <a href="#" aria-label="X"><svg class="icon"><use href="#icon-x"/></svg></a>
+          <a href="#" aria-label="TikTok"><svg class="icon"><use href="#icon-note"/></svg></a>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>Fet amb ☕ i mala llet a Catalunya. © 2024 Mala Llet — Tots els drets, i alguns insults, reservats.</p>
+      <p>Fet amb amor i mala llet a Catalunya. © 2024 Mala Llet — Tots els drets, i alguns insults, reservats.</p>
     </div>
   </footer>
 
