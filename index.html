@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tasses amb Mala Llet ☕ | Frases fetes, paraules rares i insults d'autor</title>
+  <meta name="description" content="Tasses catalanes fetes amb amor i mala bava: frases fetes de tota la vida, paraules poc habituals i insults únics per amanir el cafè de cada dia.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Fredoka:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="header" id="header">
+    <nav class="navbar">
+      <a href="#inici" class="logo">☕ <span>Mala Llet</span></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#inici">Inici</a></li>
+        <li><a href="#caracteristiques">Per què nosaltres</a></li>
+        <li><a href="#productes">Les tasses</a></li>
+        <li><a href="#opinions">Opinions</a></li>
+        <li><a href="#contacte">Contacte</a></li>
+      </ul>
+      <div class="nav-actions">
+        <div class="cart-icon" id="cartIcon" title="La teva cistella">
+          🛒 <span class="cart-count" id="cartCount">0</span>
+        </div>
+        <button class="hamburger" id="hamburger" aria-label="Obrir menú">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="inici">
+      <div class="hero-floaters" aria-hidden="true">
+        <span class="floater f1">☕</span>
+        <span class="floater f2">😤</span>
+        <span class="floater f3">🤬</span>
+        <span class="floater f4">☕</span>
+        <span class="floater f5">😏</span>
+      </div>
+      <div class="hero-content">
+        <span class="hero-eyebrow">100% català de soca-rel</span>
+        <h1 class="hero-title">
+          <span id="typedTitle"></span><span class="cursor">|</span>
+        </h1>
+        <p class="hero-subtitle">
+          Perquè cada glop de cafè necessita un bon rebrec ben plantat.
+          Frases fetes, paraules que ja ningú diu i insults fets a mida,
+          tot en un sol got que aguanta escalfor i impertinències.
+        </p>
+        <div class="hero-buttons">
+          <a href="#productes" class="btn btn-primary">Vull la meva tassa</a>
+          <a href="#caracteristiques" class="btn btn-secondary">Per què som així</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat">
+            <strong>+3.000</strong>
+            <span>tasses venudes sense trencar cap amistat</span>
+          </div>
+          <div class="stat">
+            <strong>0</strong>
+            <span>pèls a la llengua</span>
+          </div>
+          <div class="stat">
+            <strong>100%</strong>
+            <span>collita pròpia, res de traduccions cutres</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CARACTERÍSTIQUES -->
+    <section class="features" id="caracteristiques">
+      <div class="section-heading">
+        <span class="section-tag">Per què nosaltres</span>
+        <h2>Ni fets amb el cul, ni comprats a última hora</h2>
+        <p>Aquí no colem gat per llebre: cada tassa surt del nostre magí, no d'un traductor automàtic espantat.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🐓</div>
+          <h3>Català de soca-rel</h3>
+          <p>Res de frases traduïdes a corre-cuita. Aquí parlem el català dels avis, dels bars i dels sopars de Nadal quan surt el tema de la política.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">✍️</div>
+          <h3>Frases que fan forat</h3>
+          <p>Res de "keep calm and drink coffee". Les nostres frases són collita pròpia i, si t'ho sembla, ben bé podries no haver-les sentit mai.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🚚</div>
+          <h3>Enviament sense embuts</h3>
+          <p>T'arriba abans que se't giri la llet. Embalatge fort perquè la tassa aguanti el viatge millor que tu els comentaris del cunyat.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔥</div>
+          <h3>Ceràmica que aguanta canyes</h3>
+          <p>Apta per rentavaixelles i microones, i per aguantar un cafè bullent mentre llegeixes l'insult per tercera vegada aquell dilluns.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCTES -->
+    <section class="products" id="productes">
+      <div class="section-heading">
+        <span class="section-tag">El nostre rebost</span>
+        <h2>Tria la teva mala bava del matí</h2>
+        <p>Tres calaixos plens de gràcia catalana: frases fetes de tota la vida, paraules que gairebé ningú fa servir i insults fets a mida.</p>
+      </div>
+
+      <div class="filters" id="filters">
+        <button class="filter-btn active" data-filter="totes">Totes</button>
+        <button class="filter-btn" data-filter="frases">Frases fetes</button>
+        <button class="filter-btn" data-filter="paraules">Paraules rares</button>
+        <button class="filter-btn" data-filter="insults">Insults d'autor</button>
+      </div>
+
+      <div class="products-grid" id="productsGrid">
+
+        <article class="product-card" data-category="frases" style="--grad-a:#FF6B6B; --grad-b:#FF9A8D;">
+          <div class="product-visual">
+            <span class="product-emoji">🕊️</span>
+            <blockquote class="product-quote">Fer volar coloms</blockquote>
+          </div>
+          <div class="product-body">
+            <span class="product-tag">Frase feta</span>
+            <p class="product-gloss">Per a qui somia despert amb un cafè descafeïnat a la mà i s'ho creu de veritat.</p>
+            <div class="product-footer">
+              <span class="price">14,90 €</span>
+              <div class="rating" aria-label="5 de 5 estrelles">★★★★★</div>
+            </div>
+            <button class="btn btn-add" data-name="Fer volar coloms">Afegeix-la a la cistella</button>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="frases" style="--grad-a:#4ECDC4; --grad-b:#8CF0E6;">
+          <div class="product-visual">
+            <span class="product-emoji">👉✌️</span>
+            <blockquote class="product-quote">Tocar el dos</blockquote>
+          </div>
+          <div class="product-body">
+            <span class="product-tag">Frase feta</span>
+            <p class="product-gloss">La tassa oficial per fugir de reunions que duren més que una missa de Setmana Santa.</p>
+            <div class="product-footer">
+              <span class="price">14,90 €</span>
+              <div class="rating" aria-label="5 de 5 estrelles">★★★★★</div>
+            </div>
+            <button class="btn btn-add" data-name="Tocar el dos">Afegeix-la a la cistella</button>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="frases" style="--grad-a:#FFE66D; --grad-b:#FFC93C;">
+          <div class="product-visual">
+            <span class="product-emoji">👶🍼</span>
+            <blockquote class="product-quote">Qui no plora, no mama</blockquote>
+          </div>
+          <div class="product-body">
+            <span class="product-tag">Frase feta</span>
+            <p class="product-gloss">Per a qui sap demanar el que vol i, de pas, que li reomplin la tassa sense haver de dir res més.</p>
+            <div class="product-footer">
+              <span class="price">14,90 €</span>
+              <div class="rating" aria-label="4 de 5 estrelles">★★★★☆</div>
+            </div>
+            <button class="btn btn-add" data-name="Qui no plora, no mama">Afegeix-la a la cistella</button>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="paraules" style="--grad-a:#845EC2; --grad-b:#B39CD0;">
+          <div class="product-visual">
+            <span class="product-emoji">😌</span>
+            <blockquote class="product-quote">Cofoi</blockquote>
+          </div>
+          <div class="product-body">
+            <span class="product-tag">Paraula poc habitual</span>
+            <p class="product-gloss">Adj. Satisfet d'un mateix fins a l'insuportable. Com et sentiràs ensenyant aquesta tassa a la feina.</p>
+            <div class="product-footer">
+              <span class="price">15,50 €</span>
+              <div class="rating" aria-label="5 de 5 estrelles">★★★★★</div>
+            </div>
+            <button class="btn btn-add" data-name="Cofoi">Afegeix-la a la cistella</button>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="paraules" style="--grad-a:#2C3E50; --grad-b:#557089;">
+          <div class="product-visual">
+            <span class="product-emoji">🫥</span>
+            <blockquote class="product-quote">Escarransit</blockquote>
+          </div>
+          <div class="product-body">
+            <span class="product-tag">Paraula poc habitual</span>
+            <p class="product-gloss">Adj. Prim, magre, sense gaire suc. Igualet que el cafè del dilluns si no la fas servir, aquesta tassa.</p>
+            <div class="product-footer">
+              <span class="price">15,50 €</span>
+              <div class="rating" aria-label="4 de 5 estrelles">★★★★☆</div>
+            </div>
+            <button class="btn btn-add" data-name="Escarransit">Afegeix-la a la cistella</button>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="paraules" style="--grad-a:#FF7EB3; --grad-b:#FF477E;">
+          <div class="product-visual">
+            <span class="product-emoji">🌀</span>
+            <blockquote class="product-quote">Esbojarrat</blockquote>
+          </div>
+          <div class="product-body">
+            <span class="product-tag">Paraula poc habitual</span>
+            <p class="product-gloss">Adj. Sense seny, esvalotat, de flip. Efecte secundari habitual després de la tercera tassa del matí.</p>
+            <div class="product-footer">
+              <span class="price">15,50 €</span>
+              <div class="rating" aria-label="5 de 5 estrelles">★★★★★</div>
+            </div>
+            <button class="btn btn-add" data-name="Esbojarrat">Afegeix-la a la cistella</button>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="insults" style="--grad-a:#FF6B6B; --grad-b:#C44536;">
+          <div class="product-visual">
+            <span class="product-emoji">🏅</span>
+            <blockquote class="product-quote">Carallot Oficial</blockquote>
+          </div>
+          <div class="product-body">
+            <span class="product-tag">Insult d'autor</span>
+            <p class="product-gloss">Amb diploma incorporat i tot. Per a qui es mereix el títol i, sobretot, per a qui l'hi vulgui regalar.</p>
+            <div class="product-footer">
+              <span class="price">16,90 €</span>
+              <div class="rating" aria-label="5 de 5 estrelles">★★★★★</div>
+            </div>
+            <button class="btn btn-add" data-name="Carallot Oficial">Afegeix-la a la cistella</button>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="insults" style="--grad-a:#4ECDC4; --grad-b:#1A8F86;">
+          <div class="product-visual">
+            <span class="product-emoji">🏆</span>
+            <blockquote class="product-quote">Panoli de Categoria Mundial</blockquote>
+          </div>
+          <div class="product-body">
+            <span class="product-tag">Insult d'autor</span>
+            <p class="product-gloss">Amb podi inclòs. Perquè no n'hi ha per menys quan algú confon el sucre amb la sal per tercer cop.</p>
+            <div class="product-footer">
+              <span class="price">16,90 €</span>
+              <div class="rating" aria-label="4 de 5 estrelles">★★★★☆</div>
+            </div>
+            <button class="btn btn-add" data-name="Panoli de Categoria Mundial">Afegeix-la a la cistella</button>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="insults" style="--grad-a:#FFE66D; --grad-b:#E8A628;">
+          <div class="product-visual">
+            <span class="product-emoji">🍑</span>
+            <blockquote class="product-quote">Figamolla amb Gràcia</blockquote>
+          </div>
+          <div class="product-body">
+            <span class="product-tag">Insult d'autor</span>
+            <p class="product-gloss">Tova per fora, dura per dins, com el caràcter de qui no s'atreveix a dir les coses a la cara.</p>
+            <div class="product-footer">
+              <span class="price">16,90 €</span>
+              <div class="rating" aria-label="5 de 5 estrelles">★★★★★</div>
+            </div>
+            <button class="btn btn-add" data-name="Figamolla amb Gràcia">Afegeix-la a la cistella</button>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- PROMO -->
+    <section class="promo">
+      <div class="promo-content">
+        <span class="promo-tag">Oferta xucla-xucla</span>
+        <h2>2x1 en insults: ideal per regalar (o per venjar-te)</h2>
+        <p>Compra dues tasses de la col·lecció "Insults d'autor" i la segona et surt de franc. Perquè la mala llet, compartida, sap millor.</p>
+        <a href="#productes" class="btn btn-promo">Aprofita l'oferta abans que se't refredi</a>
+      </div>
+    </section>
+
+    <!-- TESTIMONIS -->
+    <section class="testimonials" id="opinions">
+      <div class="section-heading">
+        <span class="section-tag">Diuen els nostres clients</span>
+        <h2>Gent que ja no s'empassa els renecs</h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <p class="testimonial-quote">"Aquesta tassa m'ha salvat de dir coses pitjors al meu cunyat cada diumenge de dinar familiar."</p>
+          <div class="testimonial-author">
+            <span class="avatar">👵</span>
+            <div>
+              <strong>Montserrat</strong>
+              <span>54 anys, mestressa de casa i de la seva paciència</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-quote">"Ara quan em diuen carallot, els ensenyo la tassa i em sento correspost. És teràpia en forma de ceràmica."</p>
+          <div class="testimonial-author">
+            <span class="avatar">🧔</span>
+            <div>
+              <strong>Bernat</strong>
+              <span>29 anys, expert en aguantar cunyats</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-quote">"Vaig regalar la de 'fer volar coloms' al meu soci i ara em té una mica de respecte. O de por, encara no ho sé del cert."</p>
+          <div class="testimonial-author">
+            <span class="avatar">👩‍💼</span>
+            <div>
+              <strong>Empar</strong>
+              <span>41 anys, sòcia amb sentit de l'humor</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-quote">"Sóc jo o la tassa 'Escarransit' descriu perfectament el meu germà petit? Li'n vaig regalar tres."</p>
+          <div class="testimonial-author">
+            <span class="avatar">👨</span>
+            <div>
+              <strong>Ramon</strong>
+              <span>36 anys, germà gran amb rancúnies acumulades</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACTE -->
+    <section class="contact" id="contacte">
+      <div class="contact-wrapper">
+        <div class="contact-info">
+          <span class="section-tag">Parla amb nosaltres</span>
+          <h2>Escriu-nos, no mosseguem</h2>
+          <p>Les tasses, en canvi, sí que ho fan una mica. Si tens un dubte, una queixa o una proposta d'insult nou, som tota orelles.</p>
+          <ul class="contact-details">
+            <li>📧 hola@malallet.cat</li>
+            <li>📞 +34 931 234 567</li>
+            <li>📍 Carrer del Rebost, 12 · Barcelona</li>
+          </ul>
+        </div>
+        <form class="contact-form" id="contactForm" novalidate>
+          <div class="form-group">
+            <label for="name">Nom i cognoms</label>
+            <input type="text" id="name" name="name" placeholder="Com et diuen a casa" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Correu electrònic</label>
+            <input type="email" id="email" name="email" placeholder="el.teu@correu.cat" required>
+          </div>
+          <div class="form-group">
+            <label for="message">El teu missatge</label>
+            <textarea id="message" name="message" rows="5" placeholder="Digues-nos la teva, sense pèls a la llengua" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">Envia sense por</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <div class="logo">☕ <span>Mala Llet</span></div>
+        <p>Tasses catalanes fetes amb amor, ceràmica de qualitat i una mica de mala bava ben posada.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Navega</h4>
+        <a href="#inici">Inici</a>
+        <a href="#caracteristiques">Per què nosaltres</a>
+        <a href="#productes">Les tasses</a>
+        <a href="#opinions">Opinions</a>
+        <a href="#contacte">Contacte</a>
+      </div>
+      <div class="footer-links">
+        <h4>Col·leccions</h4>
+        <a href="#productes">Frases fetes</a>
+        <a href="#productes">Paraules rares</a>
+        <a href="#productes">Insults d'autor</a>
+      </div>
+      <div class="footer-social">
+        <h4>Segueix-nos</h4>
+        <div class="social-icons">
+          <a href="#" aria-label="Instagram">📷</a>
+          <a href="#" aria-label="X">🐦</a>
+          <a href="#" aria-label="TikTok">🎵</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Fet amb ☕ i mala llet a Catalunya. © 2024 Mala Llet — Tots els drets, i alguns insults, reservats.</p>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
