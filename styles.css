@@ -44,6 +44,20 @@ ul { list-style: none; }
 
 button { font-family: inherit; cursor: pointer; border: none; background: none; }
 
+/* ===== ICONES SVG ===== */
+.icon {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+  display: inline-block;
+  vertical-align: middle;
+}
+
 .section-heading {
   text-align: center;
   max-width: 680px;
@@ -197,6 +211,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   background-clip: text;
 }
 
+.icon-logo {
+  width: 28px;
+  height: 28px;
+  color: var(--color-primary);
+  stroke-width: 1.5;
+}
+
 .nav-links {
   display: flex;
   gap: 2rem;
@@ -232,8 +253,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 .cart-icon {
   position: relative;
-  font-size: 1.3rem;
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-dark);
   cursor: pointer;
+}
+
+.cart-icon .icon {
+  width: 22px;
+  height: 22px;
 }
 
 .cart-count {
@@ -287,16 +315,19 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 .floater {
   position: absolute;
-  font-size: 2.5rem;
+  width: 46px;
+  height: 46px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.3;
+  color: var(--color-primary);
   animation: float 6s ease-in-out infinite;
-  opacity: 0.5;
+  opacity: 0.3;
 }
 
 .f1 { top: 15%; left: 8%; animation-delay: 0s; }
-.f2 { top: 65%; left: 12%; animation-delay: 1.2s; font-size: 2rem; }
-.f3 { top: 25%; right: 10%; animation-delay: 0.6s; font-size: 2.2rem; }
-.f4 { top: 70%; right: 15%; animation-delay: 1.8s; }
-.f5 { top: 45%; left: 48%; animation-delay: 2.4s; font-size: 1.8rem; }
+.f3 { top: 22%; right: 10%; animation-delay: 0.8s; width: 38px; height: 38px; color: var(--color-secondary); }
+.f5 { top: 62%; left: 47%; animation-delay: 1.6s; width: 34px; height: 34px; opacity: 0.2; }
 
 @keyframes float {
   0%, 100% { transform: translateY(0) rotate(0deg); }
@@ -420,10 +451,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 
 .feature-icon {
-  font-size: 2.6rem;
   margin-bottom: 1rem;
-  display: inline-block;
+  display: inline-flex;
   animation: bounce 2.5s ease-in-out infinite;
+}
+
+.feature-icon .icon {
+  width: 38px;
+  height: 38px;
+  color: var(--color-primary);
+  stroke-width: 1.4;
 }
 
 @keyframes bounce {
@@ -510,26 +547,60 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 
 .product-visual {
-  background: linear-gradient(135deg, var(--grad-a), var(--grad-b));
-  padding: 2.5rem 1.5rem;
-  text-align: center;
-  color: white;
   position: relative;
+  height: 230px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, #ffffff 0%, var(--color-light) 100%);
+  overflow: hidden;
 }
 
-.product-emoji {
-  font-size: 2.5rem;
-  display: block;
-  margin-bottom: 0.8rem;
-  animation: bounce 3s ease-in-out infinite;
+.mug-illustration {
+  width: auto;
+  height: 82%;
+  filter: drop-shadow(0 14px 18px rgba(44, 62, 80, 0.18));
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .mug-illustration {
+  transform: translateY(-4px) rotate(-1.5deg);
+}
+
+.mug-steam {
+  fill: none;
+  stroke: #b9c3cc;
+  stroke-width: 4;
+  stroke-linecap: round;
+  opacity: 0.85;
+}
+
+.mug-shadow {
+  fill: rgba(44, 62, 80, 0.1);
+}
+
+.mug-rim-shadow {
+  fill: rgba(0, 0, 0, 0.16);
+}
+
+.mug-coffee {
+  fill: #3b2314;
 }
 
 .product-quote {
+  position: absolute;
+  top: 55%;
+  left: 41%;
+  width: 60%;
+  transform: translate(-50%, -50%);
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: 1.5rem;
-  line-height: 1.25;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  font-size: clamp(0.85rem, 3.2vw, 1.15rem);
+  line-height: 1.22;
+  color: white;
+  text-align: center;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
 }
 
 .product-body {
@@ -666,15 +737,23 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 
 .avatar {
-  font-size: 1.8rem;
-  background: var(--color-light);
+  font-family: var(--font-secondary);
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: white;
   width: 48px;
   height: 48px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
+
+.avatar-1 { background: var(--color-primary); }
+.avatar-2 { background: var(--color-secondary); }
+.avatar-3 { background: #845EC2; }
+.avatar-4 { background: var(--color-dark); }
 
 .testimonial-author strong {
   display: block;
@@ -716,9 +795,19 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 
 .contact-details li {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
   padding: 0.5rem 0;
   color: var(--color-dark);
   font-weight: 500;
+}
+
+.contact-details .icon {
+  width: 18px;
+  height: 18px;
+  color: var(--color-primary);
+  stroke-width: 1.8;
 }
 
 .contact-form {
@@ -828,8 +917,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.1rem;
   transition: var(--transition);
+}
+
+.social-icons .icon {
+  width: 18px;
+  height: 18px;
+  stroke-width: 1.8;
 }
 
 .social-icons a:hover {
