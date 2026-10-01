@@ -603,6 +603,68 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   pointer-events: none;
 }
 
+/* ===== PRODUCTE AMB FOTO REAL ===== */
+.product-visual--photo {
+  background: var(--color-light);
+}
+
+.product-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.4s ease;
+}
+
+.product-photo--back {
+  opacity: 0;
+}
+
+.product-card:hover .product-photo--front {
+  opacity: 0;
+}
+
+.product-card:hover .product-photo--back {
+  opacity: 1;
+}
+
+.product-photo-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: var(--color-dark);
+  color: white;
+  font-family: var(--font-secondary);
+  font-weight: 600;
+  font-size: 0.72rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 50px;
+  z-index: 2;
+}
+
+.product-photo-hint {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.55);
+  color: white;
+  font-family: var(--font-secondary);
+  font-size: 0.72rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 50px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.product-quote-photo {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.15rem;
+  color: var(--color-dark);
+  margin-bottom: 0.6rem;
+}
+
 .product-body {
   padding: 1.5rem;
 }
