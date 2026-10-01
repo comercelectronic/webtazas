@@ -30,7 +30,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 // ===== EFECTE DE MECANOGRAFIA AL TÍTOL =====
 const typedTitleEl = document.getElementById('typedTitle');
-const fullTitle = 'TASSES AMB MALA LLET';
+const fullTitle = 'TASSES SENSE SUCRE';
 let typeIndex = 0;
 
 function typeTitle() {
