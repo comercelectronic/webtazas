@@ -6,20 +6,20 @@
 }
 
 :root {
-  --color-primary: #FF6B6B;
-  --color-secondary: #4ECDC4;
-  --color-accent: #FFE66D;
-  --color-dark: #2C3E50;
-  --color-light: #F7F7F7;
+  --color-primary: #C1440E;
+  --color-secondary: #6B4226;
+  --color-accent: #E8A33D;
+  --color-dark: #2C1810;
+  --color-light: #FBF3E7;
   --color-white: #FFFFFF;
 
   --font-display: 'Playfair Display', serif;
   --font-secondary: 'Fredoka', sans-serif;
   --font-body: 'Poppins', sans-serif;
 
-  --shadow-sm: 0 2px 8px rgba(44, 62, 80, 0.08);
-  --shadow-md: 0 8px 24px rgba(44, 62, 80, 0.12);
-  --shadow-lg: 0 16px 40px rgba(44, 62, 80, 0.18);
+  --shadow-sm: 0 2px 8px rgba(44, 24, 16, 0.08);
+  --shadow-md: 0 8px 24px rgba(44, 24, 16, 0.12);
+  --shadow-lg: 0 16px 40px rgba(44, 24, 16, 0.18);
 
   --radius: 20px;
   --transition: all 0.3s ease;
@@ -106,7 +106,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--color-primary), #ff9a8d);
+  background: linear-gradient(135deg, var(--color-primary), #E87A3E);
   color: var(--color-white);
   box-shadow: var(--shadow-md);
 }
@@ -135,7 +135,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 
 .btn-promo:hover {
-  background: #1a2836;
+  background: #1A0F08;
   transform: translateY(-3px);
 }
 
@@ -358,7 +358,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   font-size: clamp(2.4rem, 7vw, 4.2rem);
   line-height: 1.1;
   margin-bottom: 1.5rem;
-  background: linear-gradient(135deg, var(--color-primary), #c2185b, var(--color-secondary));
+  background: linear-gradient(135deg, var(--color-primary), #8B3A1F, var(--color-secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -559,7 +559,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .mug-illustration {
   width: auto;
   height: 82%;
-  filter: drop-shadow(0 14px 18px rgba(44, 62, 80, 0.18));
+  filter: drop-shadow(0 14px 18px rgba(44, 24, 16, 0.18));
   transition: transform 0.3s ease;
 }
 
@@ -569,14 +569,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 .mug-steam {
   fill: none;
-  stroke: #b9c3cc;
+  stroke: #c9bba8;
   stroke-width: 4;
   stroke-linecap: round;
   opacity: 0.85;
 }
 
 .mug-shadow {
-  fill: rgba(44, 62, 80, 0.1);
+  fill: rgba(44, 24, 16, 0.1);
 }
 
 .mug-rim-shadow {
@@ -711,7 +711,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* ===== PROMO ===== */
 .promo {
   padding: 5rem 1.5rem;
-  background: linear-gradient(135deg, var(--color-dark), #1a2836);
+  background: linear-gradient(135deg, var(--color-dark), #1A0F08);
   text-align: center;
 }
 
@@ -814,7 +814,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 .avatar-1 { background: var(--color-primary); }
 .avatar-2 { background: var(--color-secondary); }
-.avatar-3 { background: #845EC2; }
+.avatar-3 { background: #A8661D; }
 .avatar-4 { background: var(--color-dark); }
 
 .testimonial-author strong {
