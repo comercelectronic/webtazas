@@ -1,3 +1,45 @@
+// ===== ANIMACIÓ D'ENTRADA =====
+(function () {
+  const intro = document.getElementById('intro');
+  if (!intro) return;
+
+  let alreadyPlayed = false;
+  try {
+    alreadyPlayed = sessionStorage.getItem('introPlayed') === '1';
+  } catch (e) {
+    alreadyPlayed = false;
+  }
+
+  if (alreadyPlayed) {
+    intro.remove();
+    return;
+  }
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.body.classList.add('intro-active');
+
+  let finished = false;
+  function finishIntro() {
+    if (finished) return;
+    finished = true;
+    intro.classList.add('intro--exit');
+    document.body.classList.remove('intro-active');
+    try {
+      sessionStorage.setItem('introPlayed', '1');
+    } catch (e) {
+      /* la sessió no permet emmagatzematge; es tornarà a veure, sense passar res greu */
+    }
+    setTimeout(() => intro.remove(), 750);
+  }
+
+  if (reduceMotion) {
+    finishIntro();
+  } else {
+    setTimeout(finishIntro, 2800);
+    intro.addEventListener('click', finishIntro);
+  }
+})();
+
 // ===== NAVEGACIÓ MÒBIL =====
 const hamburger = document.getElementById('hamburger');
 const navLinks = document.getElementById('navLinks');
