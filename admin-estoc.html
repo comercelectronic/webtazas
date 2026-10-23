@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestió d'estoc | Sense Sucre</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <style>
+    :root {
+      --color-primary: #C1440E;
+      --color-dark: #2C1810;
+      --color-light: #FBF3E7;
+      --color-white: #FFFFFF;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--color-light);
+      color: var(--color-dark);
+      padding: 2rem 1rem 4rem;
+    }
+    .wrap { max-width: 640px; margin: 0 auto; }
+    h1 { font-weight: 600; font-size: 1.6rem; margin-bottom: 0.3rem; }
+    .subtitle { color: #7a6f63; font-size: 0.9rem; margin-bottom: 2rem; }
+    .card {
+      background: var(--color-white);
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 12px rgba(44, 24, 16, 0.08);
+      margin-bottom: 1.5rem;
+    }
+    label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.4rem; }
+    input[type="password"], input[type="number"] {
+      width: 100%;
+      padding: 0.7rem 0.9rem;
+      border: 1px solid #e2d9cc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+    button {
+      background: var(--color-primary);
+      color: white;
+      border: none;
+      padding: 0.7rem 1.4rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+    button:hover { filter: brightness(0.92); }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    #loginForm { display: flex; gap: 0.6rem; align-items: flex-end; }
+    #loginForm > div { flex: 1; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { text-align: left; padding: 0.7rem 0.4rem; border-bottom: 1px solid #efe7da; font-size: 0.92rem; }
+    th { color: #7a6f63; font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.03em; }
+    td.stock-cell { display: flex; gap: 0.5rem; align-items: center; }
+    td.stock-cell input { width: 80px; }
+    .row-saved { color: #2f8f4f; font-size: 0.8rem; }
+    .row-error { color: var(--color-primary); font-size: 0.8rem; }
+    .badge-untracked { color: #a39687; font-size: 0.78rem; font-style: italic; }
+    .msg { margin-top: 0.8rem; font-size: 0.85rem; }
+    .msg.error { color: var(--color-primary); }
+    #stockSection { display: none; }
+    p.hint { font-size: 0.82rem; color: #7a6f63; line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Gestió d'estoc — Sense Sucre</h1>
+    <p class="subtitle">Pàgina privada per consultar i actualitzar les unitats disponibles de cada tassa.</p>
+
+    <div class="card" id="loginCard">
+      <form id="loginForm">
+        <div>
+          <label for="password">Contrasenya d'administració</label>
+          <input type="password" id="password" autocomplete="current-password" required>
+        </div>
+        <button type="submit">Entra</button>
+      </form>
+      <p class="msg error" id="loginError"></p>
+    </div>
+
+    <div class="card" id="stockSection">
+      <p class="hint">
+        Un producte sense cap número desat es ven <strong>sense límit</strong> (com fins ara). En
+        posar-hi una quantitat, la web deixa de vendre'l automàticament quan arribi a 0.
+        L'estoc es descompta sol quan es confirma un pagament real — no cal tocar res més.
+      </p>
+      <table>
+        <thead>
+          <tr><th>Producte</th><th>Estoc</th><th></th></tr>
+        </thead>
+        <tbody id="stockTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const PRODUCTS = [
+      { slug: 'fer-volar-coloms', name: 'Fer Volar Coloms' },
+      { slug: 'aneu-a-fer-punyetes', name: 'Aneu a Fer Punyetes' },
+      { slug: 'qui-no-plora-no-mama', name: 'Qui no plora, no mama' },
+      { slug: 'cofoi', name: 'Cofoi' },
+      { slug: 'escarransit', name: 'Escarransit' },
+      { slug: 'esbojarrat', name: 'Esbojarrat' },
+      { slug: 'carallot-oficial', name: 'Carallot Oficial' },
+      { slug: 'arsenal-insults', name: "L'Arsenal d'Insults" },
+      { slug: 'no-em-toquis-ovaris', name: 'No em Toquis els Ovaris' },
+    ];
+
+    let password = '';
+
+    const loginForm = document.getElementById('loginForm');
+    const loginCard = document.getElementById('loginCard');
+    const loginError = document.getElementById('loginError');
+    const stockSection = document.getElementById('stockSection');
+    const tbody = document.getElementById('stockTableBody');
+
+    function renderTable(stock) {
+      tbody.innerHTML = PRODUCTS.map(p => {
+        const value = stock[p.slug];
+        const displayValue = value === null || value === undefined ? '' : value;
+        const untrackedNote = value === null || value === undefined
+          ? '<span class="badge-untracked">sense límit</span>'
+          : '';
+        return `
+          <tr data-slug="${p.slug}">
+            <td>${p.name}</td>
+            <td class="stock-cell">
+              <input type="number" min="0" step="1" value="${displayValue}" placeholder="il·limitat">
+              ${untrackedNote}
+            </td>
+            <td><button type="button" class="save-btn">Desa</button></td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    async function loadStock() {
+      const res = await fetch('/.netlify/functions/admin-stock', {
+        headers: { 'X-Admin-Password': password },
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || 'No s\'ha pogut carregar l\'estoc.');
+      }
+      return res.json();
+    }
+
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      loginError.textContent = '';
+      password = document.getElementById('password').value;
+      try {
+        const stock = await loadStock();
+        renderTable(stock);
+        loginCard.style.display = 'none';
+        stockSection.style.display = 'block';
+      } catch (err) {
+        loginError.textContent = err.message;
+        password = '';
+      }
+    });
+
+    tbody.addEventListener('click', async (e) => {
+      const btn = e.target.closest('.save-btn');
+      if (!btn) return;
+      const row = btn.closest('tr');
+      const slug = row.getAttribute('data-slug');
+      const input = row.querySelector('input');
+      const cell = row.querySelector('.stock-cell');
+      const value = input.value.trim();
+
+      if (value === '') return;
+
+      btn.disabled = true;
+      row.querySelectorAll('.row-saved, .row-error').forEach(el => el.remove());
+
+      try {
+        const res = await fetch('/.netlify/functions/admin-stock', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password, slug, stock: parseInt(value, 10) }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Error desant.');
+
+        const note = document.createElement('span');
+        note.className = 'row-saved';
+        note.textContent = 'Desat ✓';
+        cell.appendChild(note);
+        setTimeout(() => note.remove(), 2500);
+      } catch (err) {
+        const note = document.createElement('span');
+        note.className = 'row-error';
+        note.textContent = err.message;
+        cell.appendChild(note);
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

@@ -9,6 +9,8 @@
 // IMPORTANT: aquest catàleg ha de coincidir amb el de script.js (noms i
 // preus en cèntims). Si afegeixes o canvies un producte a la web, actualitza
 // els dos llocs.
+const { stockStore, readStock } = require('./lib/stock');
+
 const PRODUCTS = {
   'fer-volar-coloms': { name: 'Fer Volar Coloms', price: 1890, image: 'images/mug-coloms.jpg' },
   'aneu-a-fer-punyetes': { name: 'Aneu a Fer Punyetes', price: 1890, image: 'images/mug-punyetes.jpg' },
@@ -56,7 +58,16 @@ exports.handler = async function (event) {
 
   const origin = event.headers.origin || `https://${event.headers.host}`;
 
+  let stock;
+  try {
+    stock = await readStock(stockStore(event));
+  } catch (err) {
+    console.error('Error llegint l\'estoc:', err);
+    return { statusCode: 500, body: JSON.stringify({ error: 'No s\'ha pogut comprovar l\'estoc. Torna-ho a provar.' }) };
+  }
+
   const line_items = [];
+  const itemsMeta = [];
   for (const item of items) {
     const product = PRODUCTS[item && item.id];
     if (!product) {
@@ -64,6 +75,19 @@ exports.handler = async function (event) {
     }
     const qty = Math.min(MAX_QTY_PER_ITEM, Math.max(1, parseInt(item.qty, 10) || 1));
 
+    const available = stock[item.id];
+    if (available !== null && available !== undefined && qty > available) {
+      return {
+        statusCode: 409,
+        body: JSON.stringify({
+          error: available > 0
+            ? `Només queden ${available} unitats de «${product.name}».`
+            : `«${product.name}» s'ha exhaurit.`,
+        }),
+      };
+    }
+
+    itemsMeta.push(`${item.id}:${qty}`);
     line_items.push({
       quantity: qty,
       price_data: {
@@ -98,6 +122,7 @@ exports.handler = async function (event) {
         },
       ],
       phone_number_collection: { enabled: true },
+      metadata: { items: itemsMeta.join(',') },
       success_url: `${origin}/gracies.html?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/#productes`,
       locale: 'auto',

@@ -1643,6 +1643,29 @@ body.cart-open {
   margin-bottom: 0.3rem;
 }
 
+/* ===== ESTOC ===== */
+.stock-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--color-dark);
+  color: white;
+  font-family: var(--font-secondary);
+  font-weight: 600;
+  font-size: 0.72rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 50px;
+  z-index: 2;
+}
+
+.stock-low-note {
+  font-family: var(--font-secondary);
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: var(--color-primary);
+  margin: 0.6rem 0 0;
+}
+
 /* ===== TOAST ===== */
 .toast {
   position: fixed;
