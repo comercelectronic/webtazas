@@ -1649,6 +1649,70 @@ body.cart-open {
   transform: translateX(-50%) translateY(0);
 }
 
+/* ===== AVÍS DE COOKIES ===== */
+.cookie-notice {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2500;
+  background: var(--color-dark);
+  color: white;
+  padding: 1.1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cookie-notice.show {
+  transform: translateY(0);
+}
+
+.cookie-notice p {
+  margin: 0;
+  font-family: var(--font-secondary);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  max-width: 640px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.cookie-notice p a {
+  color: white;
+  text-decoration: underline;
+}
+
+.cookie-notice-btn {
+  flex-shrink: 0;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 0.65rem 1.4rem;
+  border-radius: 50px;
+  font-family: var(--font-secondary);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.cookie-notice-btn:hover {
+  filter: brightness(0.9);
+}
+
+@media (max-width: 600px) {
+  .cookie-notice {
+    justify-content: flex-start;
+    text-align: left;
+    padding: 1rem 1.2rem;
+  }
+}
+
 /* ===== PÀGINES LEGALS ===== */
 .legal-page {
   max-width: 760px;
