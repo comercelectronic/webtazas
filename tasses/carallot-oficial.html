@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carallot Oficial | Sense Sucre</title>
+  <meta name="description" content="Probablement l'insult català més entranyable que existeix, ara amb rang oficial i diploma inclòs.">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+  <svg class="icon-sprite" aria-hidden="true" style="position:absolute; width:0; height:0; overflow:hidden;">
+    <symbol id="icon-mug" viewBox="0 0 24 24">
+      <path d="M4 8h12v7a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8Z"/>
+      <path d="M16 10h2a2.5 2.5 0 0 1 0 5h-2"/>
+      <path d="M8 5c0-1 .8-1.1.8-2M12 5c0-1 .8-1.1.8-2"/>
+    </symbol>
+    <symbol id="icon-flame" viewBox="0 0 24 24">
+      <path d="M12 2c1 3-3 4-3 8a3 3 0 0 0 6 0c0-1-.5-2-.5-2 1.5 1 2.5 3 2.5 5a5.5 5.5 0 0 1-11 0C6 8 9 6 12 2Z"/>
+    </symbol>
+    <symbol id="icon-truck" viewBox="0 0 24 24">
+      <path d="M2 7h11v9H2z"/>
+      <path d="M13 10h4l3 3v3h-7z"/>
+      <circle cx="6" cy="18" r="1.6"/>
+      <circle cx="17" cy="18" r="1.6"/>
+    </symbol>
+    <symbol id="icon-cart" viewBox="0 0 24 24">
+      <path d="M3 4h2l2.4 12.2a2 2 0 0 0 2 1.6h7.2a2 2 0 0 0 2-1.6L20 8H6"/>
+      <circle cx="9" cy="20" r="1.4"/>
+      <circle cx="17" cy="20" r="1.4"/>
+    </symbol>
+    <symbol id="icon-x" viewBox="0 0 24 24">
+      <path d="M4 4l16 16M20 4 4 20"/>
+    </symbol>
+    <symbol id="icon-plus" viewBox="0 0 24 24">
+      <path d="M12 5v14M5 12h14"/>
+    </symbol>
+    <symbol id="icon-minus" viewBox="0 0 24 24">
+      <path d="M5 12h14"/>
+    </symbol>
+    <symbol id="icon-trash" viewBox="0 0 24 24">
+      <path d="M4 7h16M9 7V4.5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1V7M6 7l1 13a1 1 0 0 0 1 .9h8a1 1 0 0 0 1-.9l1-13"/>
+    </symbol>
+    <symbol id="icon-lock" viewBox="0 0 24 24">
+      <rect x="4" y="11" width="16" height="10" rx="2"/>
+      <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+    </symbol>
+  </svg>
+
+  <header class="header" id="header">
+    <nav class="navbar">
+      <a href="../index.html" class="logo">
+        <svg class="icon icon-logo" aria-hidden="true"><use href="#icon-mug"/></svg>
+        <span>Sense Sucre</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="../index.html">Inici</a></li>
+        <li><a href="../index.html#productes">Les tasses</a></li>
+        <li><a href="../index.html#caracteristiques">Per què nosaltres</a></li>
+        <li><a href="../index.html#opinions">Opinions</a></li>
+        <li><a href="../index.html#contacte">Contacte</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="cart-icon" id="cartIcon" aria-label="Obrir la cistella" title="La teva cistella">
+          <svg class="icon" aria-hidden="true"><use href="#icon-cart"/></svg>
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+        <button class="hamburger" id="hamburger" aria-label="Obrir menú">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="product-detail">
+    <p class="pd-breadcrumb">
+      <a href="../index.html">Inici</a> <span>/</span>
+      <a href="../index.html#productes">Insults d'autor</a> <span>/</span>
+      <strong>Carallot Oficial</strong>
+    </p>
+
+    <div class="pd-layout">
+      <div class="pd-gallery">
+        <div class="pd-gallery-main">
+          <svg class="mug-illustration" viewBox="0 0 200 190" aria-hidden="true">
+              <defs><linearGradient id="pdMugGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#7A2E1D"/><stop offset="100%" stop-color="#C1440E"/>
+              </linearGradient></defs>
+              <path class="mug-steam" d="M56,34 C50,24 60,18 55,6"/>
+              <path class="mug-steam" d="M82,34 C76,24 86,16 81,4"/>
+              <path class="mug-steam" d="M108,34 C102,24 112,18 107,6"/>
+              <rect class="mug-shadow" x="18" y="150" width="128" height="10" rx="5"/>
+              <path class="mug-handle" d="M146,72 Q189,72 189,105 Q189,138 146,138" fill="url(#pdMugGrad)"/>
+              <rect x="18" y="42" width="128" height="118" rx="10" fill="url(#pdMugGrad)"/>
+              <ellipse class="mug-rim-shadow" cx="82" cy="42" rx="64" ry="12"/>
+              <ellipse class="mug-coffee" cx="82" cy="40" rx="58" ry="9"/>
+            </svg>
+        </div>
+      <!-- Aquesta tassa encara no té fotografia real: de moment es mostra la
+           il·lustració. Per afegir-ne una, substitueix el <svg> de dalt per
+           un <img src="../images/NOM-DE-LA-FOTO.jpg"> i afegeix aquí sota
+           botons .pd-thumb com als altres productes. -->
+      </div>
+
+      <div class="pd-info">
+        <span class="product-tag">Insult d'autor</span>
+        <h1 class="pd-title">Carallot Oficial</h1>
+        <div class="rating" aria-label="5 de 5 estrelles">★★★★★</div>
+        <p class="pd-price">16,90 €</p>
+        <p class="pd-description">«Carallot» és, probablement, l'insult català més entranyable que existeix: prou fort per fer mal, prou tou per dir-lo entre riures. Aquesta tassa li dona rang oficial, amb diploma inclòs i tot, per a qui el porti amb orgull o per a qui el rebi com a regal ben merescut.</p>
+        <p class="pd-description">En vermell intens, és la manera perfecta de dir «ets un carallot» sense haver-ho de repetir cada matí —la tassa ja ho fa per tu.</p>
+        <ul class="pd-specs">
+        <li><svg class="icon"><use href="#icon-mug"/></svg> Ceràmica de qualitat, feta per durar</li>
+        <li><svg class="icon"><use href="#icon-flame"/></svg> Apta per rentavaixelles i microones</li>
+        <li><svg class="icon"><use href="#icon-truck"/></svg> Enviament en 3-7 dies hàbils</li>
+        </ul>
+        <button class="btn btn-add btn-full pd-add" data-id="carallot-oficial">Afegeix-la a la cistella — 16,90 €</button>
+        <a href="../index.html#productes" class="pd-back">← Torna a totes les tasses</a>
+      </div>
+    </div>
+
+    <section class="pd-related">
+      <h2>També et pot agradar</h2>
+      <div class="pd-related-grid">
+      <a class="pd-related-card" href="escarransit.html">
+        <div class="pd-related-visual"><svg class="mug-illustration" viewBox="0 0 200 190" aria-hidden="true">
+              <defs><linearGradient id="relGradescarransit" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#2C1810"/><stop offset="100%" stop-color="#5C4433"/>
+              </linearGradient></defs>
+              <path class="mug-steam" d="M56,34 C50,24 60,18 55,6"/>
+              <path class="mug-steam" d="M82,34 C76,24 86,16 81,4"/>
+              <path class="mug-steam" d="M108,34 C102,24 112,18 107,6"/>
+              <rect class="mug-shadow" x="18" y="150" width="128" height="10" rx="5"/>
+              <path class="mug-handle" d="M146,72 Q189,72 189,105 Q189,138 146,138" fill="url(#relGradescarransit)"/>
+              <rect x="18" y="42" width="128" height="118" rx="10" fill="url(#relGradescarransit)"/>
+              <ellipse class="mug-rim-shadow" cx="82" cy="42" rx="64" ry="12"/>
+              <ellipse class="mug-coffee" cx="82" cy="40" rx="58" ry="9"/>
+            </svg></div>
+        <div class="pd-related-body">
+          <strong>Escarransit</strong>
+          <span>15,50 €</span>
+        </div>
+      </a>
+      <a class="pd-related-card" href="fer-volar-coloms.html">
+        <div class="pd-related-visual"><img src="../images/mug-coloms.jpg" alt=""></div>
+        <div class="pd-related-body">
+          <strong>Fer Volar Coloms</strong>
+          <span>18,90 €</span>
+        </div>
+      </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- CISTELLA -->
+  <div class="cart-backdrop" id="cartBackdrop"></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Cistella de la compra">
+    <div class="cart-drawer-header">
+      <h2>La teva cistella</h2>
+      <button class="cart-close" id="cartClose" aria-label="Tancar la cistella">
+        <svg class="icon"><use href="#icon-x"/></svg>
+      </button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <!-- Generat dinàmicament per script.js -->
+    </div>
+    <div class="cart-drawer-footer" id="cartFooter">
+      <div class="cart-total-row">
+        <span>Subtotal</span>
+        <strong id="cartTotal">0,00 €</strong>
+      </div>
+      <p class="cart-shipping-note">L'enviament es calcula al pagament.</p>
+      <button class="btn btn-primary btn-full" id="checkoutBtn">Pagar amb targeta</button>
+      <p class="cart-secure-note">
+        <svg class="icon"><use href="#icon-lock"/></svg>
+        Pagament segur gestionat per Stripe
+      </p>
+    </div>
+  </aside>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <div class="logo">
+          <svg class="icon icon-logo" aria-hidden="true"><use href="#icon-mug"/></svg>
+          <span>Sense Sucre</span>
+        </div>
+        <p>Tasses catalanes fetes amb amor, ceràmica de qualitat i cap gra de sucre afegit.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Fet amb amor i cap cullerada de sucre a Catalunya. © 2024 Sense Sucre — Tots els drets, i alguns insults, reservats.</p>
+      <nav class="footer-legal" aria-label="Informació legal">
+        <a href="../avis-legal.html">Avís legal</a>
+        <a href="../privacitat.html">Privacitat</a>
+        <a href="../cookies.html">Cookies</a>
+        <a href="../condicions-venda.html">Condicions de venda</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="../script.js"></script>
+  <script>
+    // Galeria: en clicar una miniatura, la mostra com a imatge principal.
+    document.querySelectorAll('.pd-thumb').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var mainImg = document.getElementById('pdMainImg');
+        if (!mainImg) return;
+        document.querySelectorAll('.pd-thumb').forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        mainImg.src = btn.getAttribute('data-src');
+      });
+    });
+  </script>
+</body>
+</html>

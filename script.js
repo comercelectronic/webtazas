@@ -44,17 +44,19 @@
 const hamburger = document.getElementById('hamburger');
 const navLinks = document.getElementById('navLinks');
 
-hamburger.addEventListener('click', () => {
-  hamburger.classList.toggle('active');
-  navLinks.classList.toggle('active');
-});
-
-navLinks.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    hamburger.classList.remove('active');
-    navLinks.classList.remove('active');
+if (hamburger && navLinks) {
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navLinks.classList.toggle('active');
   });
-});
+
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      navLinks.classList.remove('active');
+    });
+  });
+}
 
 // ===== SCROLL SUAU (ja gestionat per CSS, però reforcem per a navegadors antics) =====
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -82,13 +84,14 @@ function typeTitle() {
     setTimeout(typeTitle, 90);
   }
 }
-typeTitle();
+if (typedTitleEl) typeTitle();
 
 // ===== TOAST DE NOTIFICACIONS =====
 const toast = document.getElementById('toast');
 let toastTimeout;
 
 function showToast(message) {
+  if (!toast) return;
   clearTimeout(toastTimeout);
   toast.textContent = message;
   toast.classList.add('show');
@@ -102,15 +105,15 @@ function showToast(message) {
 // es valida sempre al servidor (netlify/functions/create-checkout-session.js)
 // abans de crear el pagament, perquè ningú el pugui manipular des del navegador.
 const PRODUCTS = {
-  'fer-volar-coloms': { name: 'Fer Volar Coloms', price: 1890, image: 'images/mug-coloms.jpg' },
-  'aneu-a-fer-punyetes': { name: 'Aneu a Fer Punyetes', price: 1890, image: 'images/mug-punyetes.jpg' },
+  'fer-volar-coloms': { name: 'Fer Volar Coloms', price: 1890, image: '/images/mug-coloms.jpg' },
+  'aneu-a-fer-punyetes': { name: 'Aneu a Fer Punyetes', price: 1890, image: '/images/mug-punyetes.jpg' },
   'qui-no-plora-no-mama': { name: 'Qui no plora, no mama', price: 1490, image: null },
   'cofoi': { name: 'Cofoi', price: 1550, image: null },
   'escarransit': { name: 'Escarransit', price: 1550, image: null },
   'esbojarrat': { name: 'Esbojarrat', price: 1550, image: null },
   'carallot-oficial': { name: 'Carallot Oficial', price: 1690, image: null },
-  'arsenal-insults': { name: "L'Arsenal d'Insults", price: 1890, image: 'images/mug-insults-front.jpg' },
-  'no-em-toquis-ovaris': { name: 'No em Toquis els Ovaris', price: 1890, image: 'images/mug-no-toquis-front.jpg' },
+  'arsenal-insults': { name: "L'Arsenal d'Insults", price: 1890, image: '/images/mug-insults-front.jpg' },
+  'no-em-toquis-ovaris': { name: 'No em Toquis els Ovaris', price: 1890, image: '/images/mug-no-toquis-front.jpg' },
 };
 
 function formatPrice(cents) {
@@ -362,40 +365,42 @@ document.querySelectorAll('.feature-card, .product-card, .testimonial-card').for
 // ===== VALIDACIÓ DEL FORMULARI DE CONTACTE =====
 const contactForm = document.getElementById('contactForm');
 
-contactForm.addEventListener('submit', (e) => {
-  e.preventDefault();
+if (contactForm) {
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
 
-  const name = document.getElementById('name');
-  const email = document.getElementById('email');
-  const message = document.getElementById('message');
-  let isValid = true;
+    const name = document.getElementById('name');
+    const email = document.getElementById('email');
+    const message = document.getElementById('message');
+    let isValid = true;
 
-  [name, email, message].forEach(field => field.classList.remove('error'));
+    [name, email, message].forEach(field => field.classList.remove('error'));
 
-  if (name.value.trim().length < 2) {
-    name.classList.add('error');
-    isValid = false;
-  }
+    if (name.value.trim().length < 2) {
+      name.classList.add('error');
+      isValid = false;
+    }
 
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailPattern.test(email.value.trim())) {
-    email.classList.add('error');
-    isValid = false;
-  }
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email.value.trim())) {
+      email.classList.add('error');
+      isValid = false;
+    }
 
-  if (message.value.trim().length < 10) {
-    message.classList.add('error');
-    isValid = false;
-  }
+    if (message.value.trim().length < 10) {
+      message.classList.add('error');
+      isValid = false;
+    }
 
-  if (!isValid) {
-    showToast('Falta algun camp o l\'has omplert de qualsevol manera. Revisa\'l!');
-    return;
-  }
+    if (!isValid) {
+      showToast('Falta algun camp o l\'has omplert de qualsevol manera. Revisa\'l!');
+      return;
+    }
 
-  showToast(`Gràcies, ${name.value.trim().split(' ')[0]}! Ja tenim el teu missatge. T'escrivim aviat.`);
-  contactForm.reset();
-});
+    showToast(`Gràcies, ${name.value.trim().split(' ')[0]}! Ja tenim el teu missatge. T'escrivim aviat.`);
+    contactForm.reset();
+  });
+}
 
 // ===== HEADER AMB OMBRA EN FER SCROLL =====
 const header = document.getElementById('header');
