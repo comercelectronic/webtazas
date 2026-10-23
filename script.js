@@ -97,28 +97,201 @@ function showToast(message) {
   }, 2800);
 }
 
-// ===== CISTELLA SIMULADA =====
+// ===== CATÀLEG DE PRODUCTES =====
+// Nomes per mostrar preus/noms a la interfície. El preu real i definitiu
+// es valida sempre al servidor (netlify/functions/create-checkout-session.js)
+// abans de crear el pagament, perquè ningú el pugui manipular des del navegador.
+const PRODUCTS = {
+  'fer-volar-coloms': { name: 'Fer Volar Coloms', price: 1890, image: 'images/mug-coloms.jpg' },
+  'aneu-a-fer-punyetes': { name: 'Aneu a Fer Punyetes', price: 1890, image: 'images/mug-punyetes.jpg' },
+  'qui-no-plora-no-mama': { name: 'Qui no plora, no mama', price: 1490, image: null },
+  'cofoi': { name: 'Cofoi', price: 1550, image: null },
+  'escarransit': { name: 'Escarransit', price: 1550, image: null },
+  'esbojarrat': { name: 'Esbojarrat', price: 1550, image: null },
+  'carallot-oficial': { name: 'Carallot Oficial', price: 1690, image: null },
+  'arsenal-insults': { name: "L'Arsenal d'Insults", price: 1890, image: 'images/mug-insults-front.jpg' },
+  'no-em-toquis-ovaris': { name: 'No em Toquis els Ovaris', price: 1890, image: 'images/mug-no-toquis-front.jpg' },
+};
+
+function formatPrice(cents) {
+  return (cents / 100).toFixed(2).replace('.', ',') + ' €';
+}
+
+// ===== CISTELLA =====
+const CART_STORAGE_KEY = 'senseSucreCart';
+let cart = loadCart();
+
+function loadCart() {
+  try {
+    const raw = localStorage.getItem(CART_STORAGE_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed.filter(item => PRODUCTS[item.id]) : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveCart() {
+  try {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+  } catch (e) {
+    /* emmagatzematge no disponible; la cistella només durarà la sessió en curs */
+  }
+}
+
+function cartItemCount() {
+  return cart.reduce((sum, item) => sum + item.qty, 0);
+}
+
+function cartSubtotal() {
+  return cart.reduce((sum, item) => sum + (PRODUCTS[item.id]?.price || 0) * item.qty, 0);
+}
+
+function addToCart(id) {
+  const existing = cart.find(item => item.id === id);
+  if (existing) {
+    existing.qty = Math.min(20, existing.qty + 1);
+  } else {
+    cart.push({ id, qty: 1 });
+  }
+  saveCart();
+  renderCart();
+}
+
+function setQty(id, qty) {
+  const item = cart.find(i => i.id === id);
+  if (!item) return;
+  if (qty <= 0) {
+    cart = cart.filter(i => i.id !== id);
+  } else {
+    item.qty = Math.min(20, qty);
+  }
+  saveCart();
+  renderCart();
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(item => item.id !== id);
+  saveCart();
+  renderCart();
+}
+
 const cartCountEl = document.getElementById('cartCount');
-let cartCount = 0;
+const cartItemsEl = document.getElementById('cartItems');
+const cartTotalEl = document.getElementById('cartTotal');
+const cartDrawer = document.getElementById('cartDrawer');
+const cartBackdrop = document.getElementById('cartBackdrop');
+const checkoutBtn = document.getElementById('checkoutBtn');
+
+function renderCart() {
+  cartCountEl.textContent = cartItemCount();
+
+  if (cart.length === 0) {
+    cartItemsEl.innerHTML = '<p class="cart-empty">La cistella és més buida que una excusa de dilluns.<br>Encara no hi has afegit cap tassa.</p>';
+    checkoutBtn.disabled = true;
+  } else {
+    cartItemsEl.innerHTML = cart.map(item => {
+      const product = PRODUCTS[item.id];
+      if (!product) return '';
+      const thumb = product.image
+        ? `<img src="${product.image}" alt="" class="cart-item-thumb">`
+        : `<span class="cart-item-thumb cart-item-thumb--icon"><svg class="icon"><use href="#icon-mug"/></svg></span>`;
+      return `
+        <div class="cart-item" data-id="${item.id}">
+          ${thumb}
+          <div class="cart-item-info">
+            <strong>${product.name}</strong>
+            <span class="cart-item-price">${formatPrice(product.price)}</span>
+            <div class="cart-item-qty">
+              <button class="qty-btn" data-action="decrease" aria-label="Treu-ne una unitat"><svg class="icon"><use href="#icon-minus"/></svg></button>
+              <span>${item.qty}</span>
+              <button class="qty-btn" data-action="increase" aria-label="Afegeix-ne una unitat"><svg class="icon"><use href="#icon-plus"/></svg></button>
+            </div>
+          </div>
+          <button class="cart-item-remove" data-action="remove" aria-label="Elimina ${product.name} de la cistella">
+            <svg class="icon"><use href="#icon-trash"/></svg>
+          </button>
+        </div>
+      `;
+    }).join('');
+    checkoutBtn.disabled = false;
+  }
+
+  cartTotalEl.textContent = formatPrice(cartSubtotal());
+}
+
+function openCart() {
+  cartDrawer.classList.add('open');
+  cartBackdrop.classList.add('open');
+  document.body.classList.add('cart-open');
+}
+
+function closeCart() {
+  cartDrawer.classList.remove('open');
+  cartBackdrop.classList.remove('open');
+  document.body.classList.remove('cart-open');
+}
 
 document.querySelectorAll('.btn-add').forEach(btn => {
   btn.addEventListener('click', (e) => {
     createRipple(e, btn);
-    const name = btn.getAttribute('data-name');
-    cartCount++;
-    cartCountEl.textContent = cartCount;
-    showToast(`"${name}" ja és teva. A gaudir-la ben clara, sense sucre!`);
+    const id = btn.getAttribute('data-id');
+    const product = PRODUCTS[id];
+    if (!product) return;
+    addToCart(id);
+    showToast(`"${product.name}" ja és teva. A gaudir-la ben clara, sense sucre!`);
   });
 });
 
-const cartIcon = document.getElementById('cartIcon');
-cartIcon.addEventListener('click', () => {
-  if (cartCount === 0) {
-    showToast('La cistella és més buida que una excusa de dilluns.');
-  } else {
-    showToast(`Tens ${cartCount} tassa(es) esperant per amanir el teu cafè.`);
+document.getElementById('cartIcon').addEventListener('click', openCart);
+document.getElementById('cartClose').addEventListener('click', closeCart);
+cartBackdrop.addEventListener('click', closeCart);
+
+cartItemsEl.addEventListener('click', (e) => {
+  const itemEl = e.target.closest('.cart-item');
+  if (!itemEl) return;
+  const id = itemEl.getAttribute('data-id');
+  const item = cart.find(i => i.id === id);
+  if (!item) return;
+
+  const action = e.target.closest('[data-action]')?.getAttribute('data-action');
+  if (action === 'increase') setQty(id, item.qty + 1);
+  if (action === 'decrease') setQty(id, item.qty - 1);
+  if (action === 'remove') removeFromCart(id);
+});
+
+checkoutBtn.addEventListener('click', async () => {
+  if (cart.length === 0) return;
+
+  checkoutBtn.disabled = true;
+  const originalText = checkoutBtn.textContent;
+  checkoutBtn.textContent = 'Redirigint al pagament...';
+
+  try {
+    const response = await fetch('/.netlify/functions/create-checkout-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items: cart }),
+    });
+
+    if (!response.ok) {
+      throw new Error('checkout-failed');
+    }
+
+    const data = await response.json();
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      throw new Error('no-url');
+    }
+  } catch (err) {
+    showToast('No hem pogut connectar amb el pagament. Si estàs veient una còpia de la web sense Netlify, el pagament real només funciona al domini publicat.');
+    checkoutBtn.disabled = false;
+    checkoutBtn.textContent = originalText;
   }
 });
+
+renderCart();
 
 // ===== EFECTE RIPPLE ALS BOTONS =====
 function createRipple(event, element) {
