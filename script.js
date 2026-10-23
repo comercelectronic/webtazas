@@ -100,6 +100,44 @@ function showToast(message) {
   }, 2800);
 }
 
+// ===== AVÍS DE COOKIES =====
+// Sense Sucre només fa servir emmagatzematge tècnic necessari (cistella) i les
+// cookies pròpies de Stripe al moment de pagar, exemptes de consentiment previ
+// segons l'art. 22.2 LSSI. Per això aquest és un avís informatiu, no un
+// bàner de consentiment granular. Si en el futur s'afegeix analítica o
+// publicitat, caldrà substituir-ho per un gestor de consentiment amb
+// botons "Accepto" / "Rebutjo" que bloquegi aquestes cookies fins que
+// l'usuari hi consenti.
+(function cookieNotice() {
+  let alreadySeen = false;
+  try {
+    alreadySeen = localStorage.getItem('senseSucreCookieNotice') === 'ok';
+  } catch (e) {}
+  if (alreadySeen) return;
+
+  const inSubfolder = location.pathname.includes('/tasses/');
+  const cookiesHref = (inSubfolder ? '../' : '') + 'cookies.html';
+
+  const bar = document.createElement('div');
+  bar.className = 'cookie-notice';
+  bar.setAttribute('role', 'region');
+  bar.setAttribute('aria-label', 'Avís de cookies');
+  bar.innerHTML =
+    '<p>Fem servir només l\'emmagatzematge tècnic necessari per a la cistella i, en pagar, ' +
+    'les cookies pròpies de Stripe per processar el pagament de forma segura. No fem servir ' +
+    'cookies d\'analítica ni de publicitat. <a href="' + cookiesHref + '">Més informació</a></p>' +
+    '<button type="button" class="cookie-notice-btn">Entesos</button>';
+  document.body.appendChild(bar);
+
+  requestAnimationFrame(() => bar.classList.add('show'));
+
+  bar.querySelector('.cookie-notice-btn').addEventListener('click', () => {
+    try { localStorage.setItem('senseSucreCookieNotice', 'ok'); } catch (e) {}
+    bar.classList.remove('show');
+    setTimeout(() => bar.remove(), 400);
+  });
+})();
+
 // ===== CATÀLEG DE PRODUCTES =====
 // Nomes per mostrar preus/noms a la interfície. El preu real i definitiu
 // es valida sempre al servidor (netlify/functions/create-checkout-session.js)
