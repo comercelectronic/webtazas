@@ -275,6 +275,7 @@ function closeCart() {
 
 document.querySelectorAll('.btn-add').forEach(btn => {
   btn.addEventListener('click', (e) => {
+    if (btn.disabled) return;
     createRipple(e, btn);
     const id = btn.getAttribute('data-id');
     const product = PRODUCTS[id];
@@ -283,6 +284,42 @@ document.querySelectorAll('.btn-add').forEach(btn => {
     showToast(`"${product.name}" ja és teva. A gaudir-la ben clara, sense sucre!`);
   });
 });
+
+// ===== ESTOC =====
+// Si un producte té estoc controlat (veure netlify/functions/lib/stock.js)
+// i s'ha exhaurit, desactivem el seu botó de compra i ho indiquem
+// visualment. Si la crida falla (funció encara no desplegada, sense
+// connexió...) no fem res: la botiga es comporta exactament com fins ara,
+// sense cap límit.
+fetch('/.netlify/functions/get-stock')
+  .then(res => (res.ok ? res.json() : null))
+  .then(stock => {
+    if (!stock) return;
+    document.querySelectorAll('.btn-add[data-id]').forEach(btn => {
+      const id = btn.getAttribute('data-id');
+      const available = stock[id];
+      if (available === null || available === undefined) return;
+
+      if (available <= 0) {
+        btn.disabled = true;
+        btn.textContent = 'Exhaurit';
+        const visual = btn.closest('.product-card')?.querySelector('.product-visual')
+          || btn.closest('.pd-layout')?.querySelector('.pd-gallery-main');
+        if (visual && !visual.querySelector('.stock-badge')) {
+          const badge = document.createElement('span');
+          badge.className = 'stock-badge';
+          badge.textContent = 'Exhaurit';
+          visual.appendChild(badge);
+        }
+      } else if (available <= 3) {
+        const note = document.createElement('p');
+        note.className = 'stock-low-note';
+        note.textContent = `Només en queden ${available}!`;
+        btn.insertAdjacentElement('afterend', note);
+      }
+    });
+  })
+  .catch(() => {});
 
 document.getElementById('cartIcon').addEventListener('click', openCart);
 document.getElementById('cartClose').addEventListener('click', closeCart);
@@ -315,18 +352,21 @@ checkoutBtn.addEventListener('click', async () => {
       body: JSON.stringify({ items: cart }),
     });
 
+    const data = await response.json().catch(() => ({}));
+
     if (!response.ok) {
-      throw new Error('checkout-failed');
+      throw new Error(data.error || 'checkout-failed');
     }
 
-    const data = await response.json();
     if (data.url) {
       window.location.href = data.url;
     } else {
       throw new Error('no-url');
     }
   } catch (err) {
-    showToast('No hem pogut connectar amb el pagament. Si estàs veient una còpia de la web sense Netlify, el pagament real només funciona al domini publicat.');
+    const genericMessage = 'No hem pogut connectar amb el pagament. Si estàs veient una còpia de la web sense Netlify, el pagament real només funciona al domini publicat.';
+    const isKnownServerMessage = err.message && err.message !== 'checkout-failed' && err.message !== 'no-url';
+    showToast(isKnownServerMessage ? err.message : genericMessage);
     checkoutBtn.disabled = false;
     checkoutBtn.textContent = originalText;
   }

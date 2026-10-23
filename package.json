@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "description": "Tasses catalanes Sense Sucre — lloc web i funcions de pagament (Netlify Functions + Stripe).",
   "dependencies": {
+    "@netlify/blobs": "^11.1.6",
     "stripe": "^16.0.0"
   }
 }
