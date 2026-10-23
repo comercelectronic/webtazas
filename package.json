@@ -1,0 +1,9 @@
+{
+  "name": "sense-sucre",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Tasses catalanes Sense Sucre — lloc web i funcions de pagament (Netlify Functions + Stripe).",
+  "dependencies": {
+    "stripe": "^16.0.0"
+  }
+}

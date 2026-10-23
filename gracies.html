@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gràcies per la compra | Sense Sucre</title>
+  <meta name="description" content="Gràcies per la teva comanda a Sense Sucre.">
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <svg class="icon-sprite" aria-hidden="true" style="position:absolute; width:0; height:0; overflow:hidden;">
+    <symbol id="icon-mug" viewBox="0 0 24 24">
+      <path d="M4 8h12v7a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8Z"/>
+      <path d="M16 10h2a2.5 2.5 0 0 1 0 5h-2"/>
+      <path d="M8 5c0-1 .8-1.1.8-2M12 5c0-1 .8-1.1.8-2"/>
+    </symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24">
+      <path d="M4 12l6 6L20 6"/>
+    </symbol>
+  </svg>
+
+  <header class="header">
+    <nav class="navbar">
+      <a href="index.html" class="logo">
+        <svg class="icon icon-logo" aria-hidden="true"><use href="#icon-mug"/></svg>
+        <span>Sense Sucre</span>
+      </a>
+    </nav>
+  </header>
+
+  <main style="min-height: 70vh; display: flex; align-items: center; justify-content: center; text-align: center; padding-top: 5rem;">
+    <div style="max-width: 520px; padding: 8rem 1.5rem 4rem;">
+      <div style="width: 72px; height: 72px; border-radius: 50%; background: var(--color-primary); color: white; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+        <svg class="icon" style="width: 36px; height: 36px; stroke-width: 2.2;"><use href="#icon-check"/></svg>
+      </div>
+      <h1 style="font-family: var(--font-display); font-weight: 400; font-size: clamp(1.8rem, 5vw, 2.6rem); margin-bottom: 1rem;">Gràcies, ja és teva!</h1>
+      <p style="color: #5c6b7a; line-height: 1.7; margin-bottom: 2rem;">
+        Hem rebut la teva comanda i el pagament s'ha processat correctament.
+        En breu rebràs un correu de confirmació amb tots els detalls. La teva
+        tassa sense sucre ja està de camí.
+      </p>
+      <a href="index.html" class="btn btn-primary">Torna a la botiga</a>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <div class="logo">
+          <svg class="icon icon-logo" aria-hidden="true"><use href="#icon-mug"/></svg>
+          <span>Sense Sucre</span>
+        </div>
+        <p>Tasses catalanes fetes amb amor, ceràmica de qualitat i cap gra de sucre afegit.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Fet amb amor i cap cullerada de sucre a Catalunya. © 2024 Sense Sucre — Tots els drets, i alguns insults, reservats.</p>
+      <nav class="footer-legal" aria-label="Informació legal">
+        <a href="avis-legal.html">Avís legal</a>
+        <a href="privacitat.html">Privacitat</a>
+        <a href="cookies.html">Cookies</a>
+        <a href="condicions-venda.html">Condicions de venda</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    // Neteja la cistella un cop el pagament s'ha completat.
+    try { localStorage.removeItem('senseSucreCart'); } catch (e) {}
+  </script>
+</body>
+</html>

@@ -76,6 +76,19 @@
       <path d="M10 4v11.5a3.5 3.5 0 1 1-2-3.2"/>
       <path d="M10 4c1 2 3 2.6 5 3"/>
     </symbol>
+    <symbol id="icon-lock" viewBox="0 0 24 24">
+      <rect x="4" y="11" width="16" height="10" rx="2"/>
+      <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+    </symbol>
+    <symbol id="icon-plus" viewBox="0 0 24 24">
+      <path d="M12 5v14M5 12h14"/>
+    </symbol>
+    <symbol id="icon-minus" viewBox="0 0 24 24">
+      <path d="M5 12h14"/>
+    </symbol>
+    <symbol id="icon-trash" viewBox="0 0 24 24">
+      <path d="M4 7h16M9 7V4.5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1V7M6 7l1 13a1 1 0 0 0 1 .9h8a1 1 0 0 0 1-.9l1-13"/>
+    </symbol>
   </svg>
 
   <header class="header" id="header">
@@ -92,10 +105,10 @@
         <li><a href="#contacte">Contacte</a></li>
       </ul>
       <div class="nav-actions">
-        <div class="cart-icon" id="cartIcon" title="La teva cistella">
+        <button class="cart-icon" id="cartIcon" aria-label="Obrir la cistella" title="La teva cistella">
           <svg class="icon" aria-hidden="true"><use href="#icon-cart"/></svg>
           <span class="cart-count" id="cartCount">0</span>
-        </div>
+        </button>
         <button class="hamburger" id="hamburger" aria-label="Obrir menú">
           <span></span><span></span><span></span>
         </button>
@@ -176,7 +189,7 @@
               <span class="price">18,90 €</span>
               <div class="rating" aria-label="5 de 5 estrelles">★★★★★</div>
             </div>
-            <button class="btn btn-add" data-name="Fer Volar Coloms">Afegeix-la a la cistella</button>
+            <button class="btn btn-add" data-id="fer-volar-coloms" data-name="Fer Volar Coloms">Afegeix-la a la cistella</button>
           </div>
         </article>
 
@@ -193,7 +206,7 @@
               <span class="price">18,90 €</span>
               <div class="rating" aria-label="5 de 5 estrelles">★★★★★</div>
             </div>
-            <button class="btn btn-add" data-name="Aneu a Fer Punyetes">Afegeix-la a la cistella</button>
+            <button class="btn btn-add" data-id="aneu-a-fer-punyetes" data-name="Aneu a Fer Punyetes">Afegeix-la a la cistella</button>
           </div>
         </article>
 
@@ -221,7 +234,7 @@
               <span class="price">14,90 €</span>
               <div class="rating" aria-label="4 de 5 estrelles">★★★★☆</div>
             </div>
-            <button class="btn btn-add" data-name="Qui no plora, no mama">Afegeix-la a la cistella</button>
+            <button class="btn btn-add" data-id="qui-no-plora-no-mama" data-name="Qui no plora, no mama">Afegeix-la a la cistella</button>
           </div>
         </article>
 
@@ -249,7 +262,7 @@
               <span class="price">15,50 €</span>
               <div class="rating" aria-label="5 de 5 estrelles">★★★★★</div>
             </div>
-            <button class="btn btn-add" data-name="Cofoi">Afegeix-la a la cistella</button>
+            <button class="btn btn-add" data-id="cofoi" data-name="Cofoi">Afegeix-la a la cistella</button>
           </div>
         </article>
 
@@ -277,7 +290,7 @@
               <span class="price">15,50 €</span>
               <div class="rating" aria-label="4 de 5 estrelles">★★★★☆</div>
             </div>
-            <button class="btn btn-add" data-name="Escarransit">Afegeix-la a la cistella</button>
+            <button class="btn btn-add" data-id="escarransit" data-name="Escarransit">Afegeix-la a la cistella</button>
           </div>
         </article>
 
@@ -305,7 +318,7 @@
               <span class="price">15,50 €</span>
               <div class="rating" aria-label="5 de 5 estrelles">★★★★★</div>
             </div>
-            <button class="btn btn-add" data-name="Esbojarrat">Afegeix-la a la cistella</button>
+            <button class="btn btn-add" data-id="esbojarrat" data-name="Esbojarrat">Afegeix-la a la cistella</button>
           </div>
         </article>
 
@@ -333,7 +346,7 @@
               <span class="price">16,90 €</span>
               <div class="rating" aria-label="5 de 5 estrelles">★★★★★</div>
             </div>
-            <button class="btn btn-add" data-name="Carallot Oficial">Afegeix-la a la cistella</button>
+            <button class="btn btn-add" data-id="carallot-oficial" data-name="Carallot Oficial">Afegeix-la a la cistella</button>
           </div>
         </article>
 
@@ -352,7 +365,7 @@
               <span class="price">18,90 €</span>
               <div class="rating" aria-label="5 de 5 estrelles">★★★★★</div>
             </div>
-            <button class="btn btn-add" data-name="L'Arsenal d'Insults">Afegeix-la a la cistella</button>
+            <button class="btn btn-add" data-id="arsenal-insults" data-name="L'Arsenal d'Insults">Afegeix-la a la cistella</button>
           </div>
         </article>
 
@@ -371,7 +384,7 @@
               <span class="price">18,90 €</span>
               <div class="rating" aria-label="5 de 5 estrelles">★★★★★</div>
             </div>
-            <button class="btn btn-add" data-name="No em Toquis els Ovaris">Afegeix-la a la cistella</button>
+            <button class="btn btn-add" data-id="no-em-toquis-ovaris" data-name="No em Toquis els Ovaris">Afegeix-la a la cistella</button>
           </div>
         </article>
 
@@ -535,8 +548,40 @@
     </div>
     <div class="footer-bottom">
       <p>Fet amb amor i cap cullerada de sucre a Catalunya. © 2024 Sense Sucre — Tots els drets, i alguns insults, reservats.</p>
+      <nav class="footer-legal" aria-label="Informació legal">
+        <a href="avis-legal.html">Avís legal</a>
+        <a href="privacitat.html">Privacitat</a>
+        <a href="cookies.html">Cookies</a>
+        <a href="condicions-venda.html">Condicions de venda</a>
+      </nav>
     </div>
   </footer>
+
+  <!-- CISTELLA -->
+  <div class="cart-backdrop" id="cartBackdrop"></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Cistella de la compra">
+    <div class="cart-drawer-header">
+      <h2>La teva cistella</h2>
+      <button class="cart-close" id="cartClose" aria-label="Tancar la cistella">
+        <svg class="icon"><use href="#icon-x"/></svg>
+      </button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <!-- Generat dinàmicament per script.js -->
+    </div>
+    <div class="cart-drawer-footer" id="cartFooter">
+      <div class="cart-total-row">
+        <span>Subtotal</span>
+        <strong id="cartTotal">0,00 €</strong>
+      </div>
+      <p class="cart-shipping-note">L'enviament es calcula al pagament.</p>
+      <button class="btn btn-primary btn-full" id="checkoutBtn">Pagar amb targeta</button>
+      <p class="cart-secure-note">
+        <svg class="icon"><use href="#icon-lock"/></svg>
+        Pagament segur gestionat per Stripe
+      </p>
+    </div>
+  </aside>
 
   <div class="toast" id="toast"></div>
 
