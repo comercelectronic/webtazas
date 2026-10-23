@@ -680,6 +680,11 @@ body.intro-active {
   box-shadow: var(--shadow-lg);
 }
 
+.product-visual-link {
+  display: block;
+  cursor: pointer;
+}
+
 .product-visual {
   position: relative;
   height: 230px;
@@ -1046,6 +1051,243 @@ body.intro-active {
 .form-group input.error,
 .form-group textarea.error {
   border-color: #e74c3c;
+}
+
+/* ===== PÀGINA DE PRODUCTE ===== */
+.product-detail {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 7.5rem 1.5rem 5rem;
+}
+
+.pd-breadcrumb {
+  font-size: 0.85rem;
+  color: #8894a0;
+  margin-bottom: 2rem;
+}
+
+.pd-breadcrumb a {
+  color: #8894a0;
+  transition: var(--transition);
+}
+
+.pd-breadcrumb a:hover {
+  color: var(--color-primary);
+}
+
+.pd-breadcrumb strong {
+  color: var(--color-dark);
+  font-weight: 500;
+}
+
+.pd-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 5rem;
+}
+
+.pd-gallery-main {
+  position: relative;
+  height: 420px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: linear-gradient(160deg, #ffffff 0%, var(--color-light) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pd-gallery-main img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pd-gallery-main .mug-illustration {
+  width: auto;
+  height: 78%;
+  filter: drop-shadow(0 18px 24px rgba(44, 24, 16, 0.2));
+}
+
+/* Per afegir més fotografies a una tassa: duplica un <button class="pd-thumb">
+   dins de .pd-gallery-thumbs amb la ruta de la nova imatge, al fitxer HTML
+   d'aquesta tassa. */
+.pd-gallery-thumbs {
+  display: flex;
+  gap: 0.7rem;
+  margin-top: 0.8rem;
+}
+
+.pd-thumb {
+  width: 72px;
+  height: 72px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  opacity: 0.6;
+  transition: var(--transition);
+  flex-shrink: 0;
+}
+
+.pd-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pd-thumb:hover {
+  opacity: 0.9;
+}
+
+.pd-thumb.active {
+  opacity: 1;
+  border-color: var(--color-primary);
+}
+
+.pd-info .product-tag {
+  margin-bottom: 1rem;
+}
+
+.pd-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  margin-bottom: 0.6rem;
+  color: var(--color-dark);
+}
+
+.pd-info .rating {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.pd-price {
+  font-family: var(--font-secondary);
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: var(--color-primary);
+  margin-bottom: 1.5rem;
+}
+
+.pd-description {
+  color: #4a5768;
+  line-height: 1.75;
+  margin-bottom: 1.8rem;
+}
+
+.pd-specs {
+  list-style: none;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.pd-specs li {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 0.9rem;
+  color: #5c6b7a;
+}
+
+.pd-specs .icon {
+  width: 18px;
+  height: 18px;
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.pd-add {
+  margin-bottom: 1rem;
+}
+
+.pd-back {
+  display: inline-block;
+  font-size: 0.9rem;
+  color: #8894a0;
+  transition: var(--transition);
+}
+
+.pd-back:hover {
+  color: var(--color-primary);
+}
+
+.pd-related h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.6rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.pd-related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.pd-related-card {
+  background: var(--color-white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.pd-related-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+
+.pd-related-card .pd-related-visual {
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, #ffffff 0%, var(--color-light) 100%);
+  overflow: hidden;
+}
+
+.pd-related-card .pd-related-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pd-related-card .pd-related-visual .mug-illustration {
+  width: auto;
+  height: 75%;
+}
+
+.pd-related-card .pd-related-body {
+  padding: 1rem 1.2rem;
+}
+
+.pd-related-card strong {
+  display: block;
+  font-size: 0.95rem;
+  margin-bottom: 0.3rem;
+}
+
+.pd-related-card span {
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 860px) {
+  .pd-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .pd-gallery-main {
+    height: 320px;
+  }
 }
 
 /* ===== FOOTER ===== */
