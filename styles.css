@@ -1610,19 +1610,37 @@ body.cart-open {
   margin-bottom: 1rem;
 }
 
-.cart-secure-note {
+/* ===== SENYALS DE CONFIANÇA ===== */
+.trust-badges {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
   justify-content: center;
-  gap: 0.4rem;
+  gap: 0.5rem 1.1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0.9rem 0 0;
   font-size: 0.78rem;
   color: #8894a0;
-  margin-top: 0.9rem;
 }
 
-.cart-secure-note .icon {
-  width: 14px;
-  height: 14px;
+.trust-badges li {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.trust-badges .icon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  color: var(--color-primary);
+}
+
+.pd-info .trust-badges {
+  justify-content: flex-start;
+  font-size: 0.82rem;
+  margin-top: 1.1rem;
+  margin-bottom: 0.3rem;
 }
 
 /* ===== TOAST ===== */
