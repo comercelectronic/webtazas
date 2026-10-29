@@ -1,0 +1,8 @@
+{
+  "name": "el-ultimo-umbral",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node tests/levels.test.js"
+  }
+}

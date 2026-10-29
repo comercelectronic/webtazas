@@ -1,0 +1,15 @@
+{
+  "name": "El Último Umbral",
+  "short_name": "Umbral",
+  "description": "Aventura de puzles dimensionales con una IA con muy poca paciencia.",
+  "lang": "es",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0d0a06",
+  "theme_color": "#0d0a06",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

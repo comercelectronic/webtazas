@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#0d0a06">
+  <meta name="description" content="El Último Umbral: aventura de puzles dimensionales, misterio cósmico y una inteligencia artificial con muy poca paciencia. Prototipo jugable del Capítulo 1.">
+  <meta name="robots" content="noindex">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>El Último Umbral</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-dim="O">
+  <div id="app">
+
+    <!-- Portada -->
+    <section id="screen-title" class="screen active" aria-label="Portada">
+      <div class="title-wrap">
+        <p class="kicker">Documento de prueba · Prototipo</p>
+        <h1 class="logo">EL ÚLTIMO<br><span>UMBRAL</span></h1>
+        <p class="tagline">Diez dimensiones. Una realidad rota. Una inteligencia artificial con muy poca paciencia.</p>
+        <div class="menu">
+          <button class="btn primary" data-action="play" id="btn-play">Empezar</button>
+          <button class="btn" data-action="levels">Salas</button>
+          <button class="btn" data-action="archive">Archivo de investigación</button>
+          <button class="btn" data-action="achievements">Logros</button>
+          <button class="btn" data-action="settings">Ajustes</button>
+        </div>
+        <p class="fineprint">Capítulo 1 gratuito · Las bromas pueden ser crueles con el universo; los acertijos, nunca contigo.</p>
+      </div>
+    </section>
+
+    <!-- Selección de salas -->
+    <section id="screen-levels" class="screen" aria-label="Salas">
+      <header class="panel-head">
+        <button class="icon-btn" data-action="back" aria-label="Volver">←</button>
+        <h2>Capítulo 1 · Origen</h2>
+      </header>
+      <div id="level-grid" class="level-grid"></div>
+    </section>
+
+    <!-- Juego -->
+    <section id="screen-game" class="screen" aria-label="Sala">
+      <header class="hud">
+        <button class="icon-btn" data-action="pause" aria-label="Menú">≡</button>
+        <div class="hud-text">
+          <div class="sector" id="hud-sector">SECTOR 01 · ORIGEN</div>
+          <div class="room" id="hud-title">La habitación blanca</div>
+          <div class="objective" id="hud-objective">Objetivo: abrir la puerta de salida</div>
+        </div>
+        <button class="icon-btn" data-action="archive" aria-label="Archivo">▤</button>
+        <button class="icon-btn hint-btn" data-action="hint" aria-label="Pista">?</button>
+      </header>
+
+      <nav class="dimbar" id="dimbar" aria-label="Dimensiones">
+        <button class="dim-btn" data-dim="O"><span class="glyph">■</span><span class="dim-name">Origen</span><kbd>1</kbd></button>
+        <button class="dim-btn" data-dim="E"><span class="glyph">◎</span><span class="dim-name">Eco</span><kbd>2</kbd></button>
+        <button class="dim-btn" data-dim="F"><span class="glyph">◆</span><span class="dim-name">Fractura</span><kbd>3</kbd></button>
+      </nav>
+
+      <div class="stage" id="stage">
+        <canvas id="cv" aria-label="Tablero de la sala" role="img"></canvas>
+        <div class="toast-stack" id="toasts" aria-live="polite"></div>
+        <div class="status" id="status"></div>
+      </div>
+
+      <div class="controls" id="controls">
+        <div class="dpad" aria-label="Movimiento">
+          <button class="pad up" data-move="U" aria-label="Arriba">▲</button>
+          <button class="pad left" data-move="L" aria-label="Izquierda">◀</button>
+          <button class="pad wait" data-move="W" aria-label="Esperar un turno">⧗</button>
+          <button class="pad right" data-move="R" aria-label="Derecha">▶</button>
+          <button class="pad down" data-move="D" aria-label="Abajo">▼</button>
+        </div>
+        <div class="actions">
+          <button class="act echo-btn" id="btn-echo" data-action="echo"><span class="act-icon">◎</span><span id="echo-label">Grabar eco</span><kbd>E</kbd></button>
+          <button class="act" data-action="wait"><span class="act-icon">⧗</span>Esperar<kbd>Espacio</kbd></button>
+          <button class="act" data-action="undo"><span class="act-icon">↶</span>Deshacer<kbd>Z</kbd></button>
+          <button class="act" data-action="reset"><span class="act-icon">⟲</span>Reiniciar<kbd>R</kbd></button>
+        </div>
+      </div>
+
+      <div class="dialog hidden" id="dialog" role="dialog" aria-live="polite">
+        <div class="dialog-who" id="dialog-who">NEXO</div>
+        <div class="dialog-text" id="dialog-text"></div>
+        <div class="dialog-more">Toca para continuar ▸</div>
+      </div>
+    </section>
+
+    <!-- Paneles superpuestos -->
+    <section id="screen-archive" class="screen overlay" aria-label="Archivo de investigación">
+      <header class="panel-head">
+        <button class="icon-btn" data-action="close" aria-label="Cerrar">✕</button>
+        <h2>Archivo de investigación</h2>
+      </header>
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-tab="docs">Registros</button>
+        <button class="tab" data-tab="frags">Fragmentos</button>
+        <button class="tab" data-tab="log">Diálogos</button>
+      </div>
+      <div class="panel-body" id="archive-body"></div>
+    </section>
+
+    <section id="screen-achievements" class="screen overlay" aria-label="Logros">
+      <header class="panel-head">
+        <button class="icon-btn" data-action="close" aria-label="Cerrar">✕</button>
+        <h2>Logros</h2>
+      </header>
+      <div class="panel-body" id="ach-body"></div>
+    </section>
+
+    <section id="screen-settings" class="screen overlay" aria-label="Ajustes">
+      <header class="panel-head">
+        <button class="icon-btn" data-action="close" aria-label="Cerrar">✕</button>
+        <h2>Ajustes</h2>
+      </header>
+      <div class="panel-body" id="settings-body"></div>
+    </section>
+
+    <section id="screen-pause" class="screen overlay" aria-label="Pausa">
+      <header class="panel-head">
+        <button class="icon-btn" data-action="close" aria-label="Cerrar">✕</button>
+        <h2>Pausa</h2>
+      </header>
+      <div class="panel-body menu">
+        <button class="btn primary" data-action="close">Continuar</button>
+        <button class="btn" data-action="reset">Reiniciar sala</button>
+        <button class="btn" data-action="levels">Salas</button>
+        <button class="btn" data-action="settings">Ajustes</button>
+        <button class="btn" data-action="title">Portada</button>
+        <div class="keys">
+          <h3>Teclado</h3>
+          <p><kbd>←↑→↓</kbd>/<kbd>WASD</kbd> mover · <kbd>Espacio</kbd> esperar · <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> dimensión · <kbd>E</kbd> eco · <kbd>Z</kbd> deshacer · <kbd>R</kbd> reiniciar · <kbd>H</kbd> pista</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-hint" class="screen overlay" aria-label="Pistas">
+      <header class="panel-head">
+        <button class="icon-btn" data-action="close" aria-label="Cerrar">✕</button>
+        <h2>Pistas</h2>
+      </header>
+      <div class="panel-body" id="hint-body"></div>
+    </section>
+
+    <section id="screen-win" class="screen overlay" aria-label="Sala completada">
+      <div class="panel-body center" id="win-body"></div>
+    </section>
+
+    <section id="screen-end" class="screen" aria-label="Fin del capítulo">
+      <div class="panel-body center" id="end-body"></div>
+    </section>
+
+    <section id="screen-doc" class="screen overlay doc-overlay" aria-label="Documento">
+      <header class="panel-head">
+        <button class="icon-btn" data-action="close" aria-label="Cerrar">✕</button>
+        <h2 id="doc-title">Documento</h2>
+      </header>
+      <div class="panel-body"><pre class="doc-text" id="doc-text"></pre></div>
+    </section>
+  </div>
+
+  <script type="module" src="js/game.js"></script>
+</body>
+</html>
