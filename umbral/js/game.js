@@ -25,6 +25,7 @@ const defaultSave = () => ({
     reduceMotion: typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches,
     textSpeed: 'normal',
     bigText: false,
+    graphics: 'alta',
   },
 });
 
@@ -192,6 +193,7 @@ const G = {
   flash: 0,
   bump: null,
   solidWalls: new Set(),
+  snapToken: 0,
   taught: new Set(),
   resetsThisLevel: 0,
   hintsThisPlay: 0,
@@ -255,6 +257,7 @@ function startLevel(idx, { skipIntro = false } = {}) {
   G.pal = { from: G.state.dim, to: G.state.dim, t: 1 };
   G.solidWalls = interiorWalls(G.lvl);
   snapVisuals();
+  R3?.setLevel(G.lvl, G.state);
   statFor(G.lvl.id).plays++;
   save.lastLevel = idx;
   persist();
@@ -660,6 +663,7 @@ function resize() {
   cv.width = Math.max(1, Math.round(r.width * dpr));
   cv.height = Math.max(1, Math.round(r.height * dpr));
   view.dpr = dpr; view.w = r.width; view.h = r.height;
+  R3?.resize(r.width, r.height);
   if (!G.lvl) return;
   const padTop = 40, padBottom = 30;
   const ts = Math.floor(Math.min((r.width - 16) / G.lvl.w, (r.height - padTop - padBottom) / (G.lvl.h + 0.35)));
@@ -670,6 +674,7 @@ function resize() {
 
 function snapVisuals() {
   const s = G.state;
+  G.snapToken++;
   G.vis = {
     p: { x: s.px, y: s.py },
     e: s.echo ? { x: s.echo.x, y: s.echo.y } : null,
@@ -721,11 +726,38 @@ function raised(X, Y, ts, top, front, h) {
   ctx.fillRect(X, Y - h, ts, Math.max(1, ts * 0.05));
 }
 
+// Renderizador 3D (Three.js). Se carga aparte: si WebGL no está disponible, se juega en 2D.
+let R3 = null;
+const use3D = () => !!R3 && save.settings.graphics !== '2d';
+async function initRenderer3D() {
+  if (save.settings.graphics !== '2d' && !R3) {
+    try {
+      const mod = await import('./renderer3d.js');
+      R3 = mod.createRenderer3D($('#gl'), { quality: save.settings.graphics, isRead: (d) => save.docs.includes(d) });
+    } catch (err) {
+      console.warn('3D no disponible, se usa el modo 2D', err);
+      R3 = null;
+    }
+    if (R3 && G.lvl) R3.setLevel(G.lvl, G.state);
+  }
+  if (R3 && save.settings.graphics !== '2d') R3.setQuality(save.settings.graphics);
+  $('#gl').hidden = !use3D();
+  $('#cv').hidden = use3D();
+  resize();
+}
+
 let lastFrame = performance.now();
 function frame(now) {
   const dt = Math.min(0.05, (now - lastFrame) / 1000);
   lastFrame = now;
-  if (baseScreen === 'game' && G.state) draw(now, dt);
+  if (baseScreen === 'game' && G.state) {
+    if (use3D()) {
+      G.reduceMotion = !!save.settings.reduceMotion;
+      R3.frame(G.state, dt, now, G);
+      G.shake = Math.max(0, G.shake - dt * 3);
+      G.flash = Math.max(0, G.flash - dt * 2.5);
+    } else draw(now, dt);
+  }
   requestAnimationFrame(frame);
 }
 
@@ -806,7 +838,7 @@ function draw(now, dt) {
     if (c.t === 'dwall' && !c.dims.includes(s.dim)) {
       dashedCell(X, Y, ts, DIMCOL[c.dims[0]]);
       label(c.dims.map((d) => DIM_INFO[d].glyph).join(''), X + ts / 2, Y + ts / 2, ts * 0.28, DIMCOL[c.dims[0]]);
-    } else if (c.t === 'shift' && s.frac === c.phase) {
+    } else if (c.t === 'shift' && s.frac !== c.phase) {
       // Visible aunque no exista ahora: el jugador ve dónde aparecerá.
       ctx.save();
       ctx.globalAlpha = 0.5;
@@ -901,7 +933,7 @@ function draw(now, dt) {
         } else {
           label(DIM_INFO[c.dims[0]].glyph, X + ts / 2, Y - hgt + ts / 2, ts * 0.32, '#1a1006');
         }
-      } else if (c.t === 'shift' && s.frac !== c.phase) {
+      } else if (c.t === 'shift' && s.frac === c.phase) {
         raised(X, Y, ts, mix(P.wallTop, PAL.F.accent, 0.45), P.wallFront, hgt);
         ctx.save();
         ctx.beginPath(); ctx.rect(X, Y - hgt, ts, ts); ctx.clip();
@@ -1095,6 +1127,10 @@ function renderAchievements() {
 function renderSettings() {
   const st = save.settings;
   $('#settings-body').innerHTML = `
+    <div class="setting"><label for="set-gfx">Gráficos<small>3D con luces, sombras y brillo. «Ligero» para móviles modestos; «2D» funciona en cualquier dispositivo.</small></label>
+      <select id="set-gfx">
+        ${[['alta', '3D · calidad alta'], ['baja', '3D · ligero'], ['2d', '2D clásico']].map(([v, t]) => `<option value="${v}" ${st.graphics === v ? 'selected' : ''}>${t}</option>`).join('')}
+      </select></div>
     <div class="setting"><label for="set-sfx">Efectos de sonido</label><input type="checkbox" id="set-sfx" ${st.sfx ? 'checked' : ''}></div>
     <div class="setting"><label for="set-music">Música ambiental<small>Un zumbido distinto por dimensión.</small></label><input type="checkbox" id="set-music" ${st.music ? 'checked' : ''}></div>
     <div class="setting"><label for="set-motion">Reducir movimiento y destellos<small>Sin temblores, transiciones ni parpadeos.</small></label><input type="checkbox" id="set-motion" ${st.reduceMotion ? 'checked' : ''}></div>
@@ -1117,6 +1153,7 @@ function renderSettings() {
   bind('#set-motion', 'reduceMotion');
   bind('#set-big', 'bigText', () => setTimeout(resize, 50));
   bind('#set-speed', 'textSpeed');
+  bind('#set-gfx', 'graphics', () => initRenderer3D());
   $('#btn-copy').addEventListener('click', async () => {
     try { await navigator.clipboard.writeText($('#export').value); $('#btn-copy').textContent = 'Copiado'; } catch { $('#export').select(); }
   });
@@ -1218,8 +1255,9 @@ for (const pad of $$('.pad')) {
 
 // Gestos sobre el tablero: deslizar mueve; tocar una casilla avanza hacia ella
 let touchStart = null;
-cv.addEventListener('pointerdown', (e) => { touchStart = { x: e.clientX, y: e.clientY }; });
-cv.addEventListener('pointerup', (e) => {
+const stageEl = $('#stage');
+stageEl.addEventListener('pointerdown', (e) => { touchStart = { x: e.clientX, y: e.clientY }; });
+stageEl.addEventListener('pointerup', (e) => {
   if (!touchStart || !G.state) return;
   if (G.dialog) { nextLine(); touchStart = null; return; }
   const dx = e.clientX - touchStart.x, dy = e.clientY - touchStart.y;
@@ -1228,9 +1266,16 @@ cv.addEventListener('pointerup', (e) => {
   if (Math.hypot(dx, dy) > 24) {
     dir = Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'R' : 'L') : (dy > 0 ? 'D' : 'U');
   } else {
-    const r = cv.getBoundingClientRect();
-    const tx = (e.clientX - r.left - view.ox) / view.ts - 0.5 - G.state.px;
-    const ty = (e.clientY - r.top - view.oy) / view.ts - 0.5 - G.state.py;
+    let tx, ty;
+    if (use3D()) {
+      const p = R3.pick(e.clientX, e.clientY);
+      if (!p) return;
+      tx = p.x - G.state.px; ty = p.y - G.state.py;
+    } else {
+      const r = cv.getBoundingClientRect();
+      tx = (e.clientX - r.left - view.ox) / view.ts - 0.5 - G.state.px;
+      ty = (e.clientY - r.top - view.oy) / view.ts - 0.5 - G.state.py;
+    }
     if (Math.abs(tx) < 0.5 && Math.abs(ty) < 0.5) return;
     dir = Math.abs(tx) > Math.abs(ty) ? (tx > 0 ? 'R' : 'L') : (ty > 0 ? 'D' : 'U');
   }
@@ -1282,6 +1327,7 @@ function refreshTitle() {
 applySettings();
 refreshTitle();
 requestAnimationFrame(frame);
+initRenderer3D();
 
 if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
   navigator.serviceWorker.register('sw.js').catch(() => { /* sin modo offline */ });

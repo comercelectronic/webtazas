@@ -142,7 +142,8 @@ kbd {
 .dim-btn.locked .dim-name::after { content: " · bloqueada"; font-size: .75em; color: var(--muted); }
 
 .stage { grid-area: stage; position: relative; min-height: 0; }
-#cv { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; display: block; }
+#cv, #gl { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; display: block; }
+#cv[hidden], #gl[hidden] { display: none; }
 .status {
   position: absolute; left: 12px; bottom: 8px; right: 12px; pointer-events: none;
   font-family: var(--mono); font-size: .72em; color: var(--muted); display: flex; gap: 12px; flex-wrap: wrap;
@@ -190,7 +191,7 @@ kbd {
 .echo-btn.recording .act-icon { color: var(--danger); animation: blink 1s infinite; }
 @keyframes blink { 50% { opacity: .3; } }
 
-@media (hover: hover) and (pointer: fine) {
+@media (hover: hover) and (pointer: fine) and (min-width: 700px) {
   .dim-btn kbd, .act kbd { display: inline-block; }
   .dpad { grid-template-columns: repeat(3, 46px); grid-template-rows: repeat(3, 46px); }
   .controls { justify-content: center; }

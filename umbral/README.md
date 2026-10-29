@@ -4,7 +4,7 @@ Aventura de puzles dimensionales. Esta carpeta contiene las fases 01 (prototipo 
 
 ## Jugar
 
-Es una web estática sin dependencias. Desde esta carpeta:
+Es una web estática; Three.js va incluido en `vendor/`. En Ajustes se elige 3D (alta o ligera) o 2D clásico; si el dispositivo no tiene WebGL, se usa 2D automáticamente. Desde esta carpeta:
 
 ```sh
 python3 -m http.server 8000   # y abre http://localhost:8000
@@ -29,7 +29,9 @@ Comprueba que cada sala tiene solución, que los fragmentos secretos son alcanza
 | `js/engine.js` | Reglas puras, sin DOM. Todas las dimensiones comparten una única función `passable()`. |
 | `js/levels.js` | Mapas ASCII y leyendas de las diez salas. |
 | `js/story.js` | Diálogos de NEXO, pistas (3 niveles), documentos, fragmentos y logros. |
-| `js/game.js` | Renderizado 2.5D en canvas, interfaz, audio (Web Audio), guardado y métricas locales. |
+| `js/renderer3d.js` | Escena 3D con Three.js: materiales y texturas procedurales, luces y sombras, brillo (bloom), hologramas de la geometría de otras dimensiones y animaciones. |
+| `js/game.js` | Interfaz, renderizador 2D de respaldo, audio (Web Audio), guardado y métricas locales. |
+| `vendor/three/` | Three.js r160 (MIT), copia local para jugar sin conexión. |
 | `tests/levels.test.js` | Verificación automática de las salas. |
 
 ## Reglas implementadas
