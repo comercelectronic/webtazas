@@ -1,7 +1,7 @@
 // Caché para jugar sin conexión. Sube la versión al cambiar cualquier archivo.
-const CACHE = 'umbral-v2';
+const CACHE = 'umbral-v3';
 const ASSETS = [
-  './', 'index.html', 'styles.css', 'manifest.webmanifest', 'icon.svg',
+  './', 'index.html', 'styles.css', 'manifest.webmanifest', 'icon.svg', 'fonts/bangers.woff2',
   'js/game.js', 'js/engine.js', 'js/levels.js', 'js/story.js', 'js/renderer3d.js',
   'vendor/three/three.module.min.js',
   'vendor/three/addons/postprocessing/EffectComposer.js', 'vendor/three/addons/postprocessing/RenderPass.js',

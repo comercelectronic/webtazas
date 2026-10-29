@@ -29,9 +29,10 @@ Comprueba que cada sala tiene solución, que los fragmentos secretos son alcanza
 | `js/engine.js` | Reglas puras, sin DOM. Todas las dimensiones comparten una única función `passable()`. |
 | `js/levels.js` | Mapas ASCII y leyendas de las diez salas. |
 | `js/story.js` | Diálogos de NEXO, pistas (3 niveles), documentos, fragmentos y logros. |
-| `js/renderer3d.js` | Escena 3D con Three.js: materiales y texturas procedurales, luces y sombras, brillo (bloom), hologramas de la geometría de otras dimensiones y animaciones. |
+| `js/renderer3d.js` | Escena 3D de estilo anime con Three.js: sombreado por bandas, contornos de tinta, formas redondeadas, protagonista con pelo de punta y bufanda, círculos mágicos, cielos con rayos, hologramas y animaciones. |
 | `js/game.js` | Interfaz, renderizador 2D de respaldo, audio (Web Audio), guardado y métricas locales. |
 | `vendor/three/` | Three.js r160 (MIT), copia local para jugar sin conexión. |
+| `fonts/` | Tipografía Bangers (SIL OFL) para la interfaz y las onomatopeyas. |
 | `tests/levels.test.js` | Verificación automática de las salas. |
 
 ## Reglas implementadas

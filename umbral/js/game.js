@@ -364,8 +364,12 @@ function reset() {
 function handleEvents(events, prev, s) {
   const moved = s.px !== prev.px || s.py !== prev.py;
   if (moved && !events.some((e) => e.type === 'echo-start')) Sound.fx.step();
-  const newlyActive = Object.keys(s.active).some((k) => s.active[k] && !prev.active[k]);
-  if (newlyActive) Sound.fx.plate();
+  const newlyActive = Object.keys(s.active).some((k) => s.active[k] && !prev.active[k] && k !== 'code');
+  if (newlyActive) {
+    Sound.fx.plate();
+    const p = G.lvl.plates.find((c) => s.active[c.id] && !prev.active[c.id]);
+    if (p) mangaText('¡CLIC!', p.x, p.y, { size: 26, color: '#ffffff', h: 0.5, dur: 0.7 });
+  }
 
   for (const e of events) {
     switch (e.type) {
@@ -375,40 +379,58 @@ function handleEvents(events, prev, s) {
         G.bump = { dir: s.facing, t: 0 };
         teach(e);
         break;
-      case 'push': if (e.who === 'P') Sound.fx.push(); break;
-      case 'door-open': Sound.fx.door(); break;
+      case 'push':
+        if (e.who === 'P') {
+          Sound.fx.push();
+          const d = { U: [0, -1], D: [0, 1], L: [-1, 0], R: [1, 0] }[s.facing];
+          mangaText('¡PUM!', s.px + d[0], s.py + d[1], { size: 30, color: '#ffb347', h: 0.9, dur: 0.6 });
+        }
+        break;
+      case 'door-open': {
+        Sound.fx.door();
+        const [dx, dy] = e.at.split(',').map(Number);
+        mangaText('¡CLAC!', dx, dy, { size: 32, color: '#7dff9a', h: 1.4 });
+        break;
+      }
       case 'dim':
         changePalette(prev.dim, e.dim);
         Sound.setDim(e.dim);
         Sound.fx.dim();
+        speedLines(DIMCOL[e.dim]);
+        mangaText(`¡${DIM_INFO[e.dim].name.toUpperCase()}!`, s.px, s.py, { size: 54, color: DIMCOL[e.dim], h: 1.7, dur: 0.95 });
         break;
       case 'interference':
         G.warned = true;
         G.flash = 1;
         Sound.fx.blocked();
         toast(QUIPS.interference[e.what](DIM_INFO[e.dim].name), 'warn');
+        mangaText('¡¿?!', s.px, s.py, { size: 40, color: '#ff3b4e', h: 1.6 });
         break;
       case 'dim-locked': toast(QUIPS.dimLocked); break;
       case 'dim-recording': toast(QUIPS.dimRecording, 'warn'); break;
       case 'echo-locked': toast(QUIPS.echoLocked); break;
       case 'echo-wrong-dim': G.warned = true; toast(QUIPS.echoWrongDim, 'warn'); break;
-      case 'record-start': Sound.fx.rec(); toastOnce('rec', QUIPS.recordStart); break;
+      case 'record-start': Sound.fx.rec(); mangaText('● REC', s.px, s.py, { size: 30, color: '#ff3b4e', h: 1.6 }); toastOnce('rec', QUIPS.recordStart); break;
       case 'record-cancel': toast(QUIPS.recordCancel); break;
       case 'echo-start':
         Sound.fx.echo();
         statFor(G.lvl.id).echoes++;
         snapVisuals();
+        mangaText('¡ECO!', s.px, s.py, { size: 44, color: '#5cc8ff', h: 1.6 });
         toast(e.auto ? QUIPS.echoAuto : QUIPS.echoStart(e.length));
         break;
       case 'fracture':
         Sound.fx.fracture();
         G.shake = save.settings.reduceMotion ? 0 : 1;
+        speedLines('#ff4f8b');
+        mangaText('¡CRAAAC!', s.px, s.py, { size: 52, color: '#ff4f8b', h: 1.7, dur: 1 });
         toastOnce('fracture', QUIPS.fracture);
         break;
       case 'fracture-blocked': G.warned = true; toast(QUIPS.fractureBlocked, 'warn'); break;
       case 'lever-spent': toast(QUIPS.leverSpent); break;
       case 'doc': {
         Sound.fx.doc();
+        mangaText('¡!', s.px, s.py, { size: 46, color: '#ffd23f', h: 1.7 });
         addDoc(e.doc);
         const d = DOCS[e.doc];
         toast(e.secret ? `${QUIPS.docSecret} «${d.title}» añadido al archivo.` : `Registro recuperado: «${d.title}». Consúltalo en el ARCHIVO.`, 'good');
@@ -416,11 +438,16 @@ function handleEvents(events, prev, s) {
       }
       case 'console':
         Sound.fx.console(e.progress > 0);
+        mangaText(e.progress > 0 ? '¡BIP!' : '¡BZZT!', s.px, s.py, { size: 32, color: e.progress > 0 ? '#7dff9a' : '#ff3b4e', h: 1.6 });
         if (e.done) toast(QUIPS.consoleDone, 'good');
         else if (e.progress > 0) toast(QUIPS.consoleOk(e.progress, G.lvl.code.length));
         else toast(QUIPS.consoleBad, 'warn');
         break;
-      case 'win': onWin(); break;
+      case 'win':
+        speedLines('#ffffff', 0.9);
+        mangaText('¡UMBRAL SUPERADO!', s.px, s.py, { size: 50, color: '#ffd23f', h: 1.8, dur: 1.5 });
+        onWin();
+        break;
       default: break;
     }
   }
@@ -496,7 +523,7 @@ function onWin() {
       if (has !== neg) lines.unshift(...extra);
     }
   }
-  setTimeout(() => say(lines, () => showWin(unlocked)), 450);
+  setTimeout(() => say(lines, () => showWin(unlocked)), 1100);
 }
 
 function showWin(unlocked) {
@@ -547,6 +574,29 @@ function showChapterEnd() {
 // ===================================================================
 const SPEED = { lenta: 22, normal: 45, rapida: 110, instantanea: Infinity };
 
+// Retratos de manga para los diálogos (SVG en línea).
+const HERO_FACE = (tint = '', extra = '') => `<svg viewBox="0 0 64 64">
+  <g ${tint}>
+  <path d="M10 30 L4 12 L18 20 L20 4 L30 16 L38 2 L42 17 L54 6 L52 22 L62 20 L54 32 Z" fill="#24264a" stroke="#160b20" stroke-width="2.5" stroke-linejoin="round"/>
+  <ellipse cx="32" cy="38" rx="19" ry="20" fill="#ffd8b5" stroke="#160b20" stroke-width="2.5"/>
+  <path d="M13 32 Q20 18 32 22 Q44 18 51 32 Q46 24 40 26 L36 20 L30 27 L24 21 Z" fill="#24264a" stroke="#160b20" stroke-width="2" stroke-linejoin="round"/>
+  <ellipse cx="25" cy="39" rx="4.5" ry="6.5" fill="#fff" stroke="#160b20" stroke-width="2"/><ellipse cx="25.5" cy="40" rx="3" ry="4.5" fill="#3a2a8a"/><circle cx="24" cy="37.5" r="1.4" fill="#fff"/>
+  <ellipse cx="39" cy="39" rx="4.5" ry="6.5" fill="#fff" stroke="#160b20" stroke-width="2"/><ellipse cx="38.5" cy="40" rx="3" ry="4.5" fill="#3a2a8a"/><circle cx="37.5" cy="37.5" r="1.4" fill="#fff"/>
+  <path d="M20 31 L29 33 M44 31 L35 33" stroke="#160b20" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M28 50 Q32 52 36 50" stroke="#160b20" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M14 56 Q32 64 50 56 L52 64 L12 64 Z" fill="#e8233d" stroke="#160b20" stroke-width="2.5"/>
+  </g>${extra}</svg>`;
+const PORTRAITS = {
+  NEXO: `<svg viewBox="0 0 64 64">
+    <rect x="6" y="10" width="52" height="40" rx="12" fill="#2b2140" stroke="#160b20" stroke-width="3"/>
+    <rect x="11" y="15" width="42" height="30" rx="8" fill="#0d0716"/>
+    <ellipse cx="32" cy="30" rx="13" ry="10" fill="var(--accent)"/><ellipse cx="32" cy="30" rx="5" ry="7" fill="#160b20"/><circle cx="29" cy="27" r="2" fill="#fff"/>
+    <path d="M17 18 L27 22 M47 18 L37 22" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/>
+    <rect x="26" y="50" width="12" height="6" fill="#2b2140" stroke="#160b20" stroke-width="2.5"/><rect x="18" y="55" width="28" height="5" rx="2" fill="#2b2140" stroke="#160b20" stroke-width="2.5"/></svg>`,
+  'TÚ': HERO_FACE(),
+  'GRABACIÓN': HERO_FACE('opacity=".55" filter="grayscale(1)"', '<circle cx="54" cy="10" r="6" fill="#ff3b4e" stroke="#160b20" stroke-width="2"/>'),
+};
+
 function logLine(who, text) {
   save.log.push({ who, text, lvl: G.lvl?.id ?? 0 });
   if (save.log.length > 300) save.log.splice(0, save.log.length - 300);
@@ -574,6 +624,8 @@ function nextLine() {
   logLine(line.who, line.text);
   const who = $('#dialog-who');
   who.textContent = line.who;
+  $('#dialog-portrait').innerHTML = PORTRAITS[line.who] || '';
+  $('#dialog').classList.toggle('narration', !line.who || line.who === '…');
   who.className = `dialog-who${line.who === 'TÚ' ? ' you' : line.who === 'GRABACIÓN' ? ' rec' : ''}`;
   const el = $('#dialog-text');
   const cps = SPEED[save.settings.textSpeed] ?? 45;
@@ -664,6 +716,8 @@ function resize() {
   cv.height = Math.max(1, Math.round(r.height * dpr));
   view.dpr = dpr; view.w = r.width; view.h = r.height;
   R3?.resize(r.width, r.height);
+  fxCanvas.width = Math.max(1, Math.round(r.width * dpr));
+  fxCanvas.height = Math.max(1, Math.round(r.height * dpr));
   if (!G.lvl) return;
   const padTop = 40, padBottom = 30;
   const ts = Math.floor(Math.min((r.width - 16) / G.lvl.w, (r.height - padTop - padBottom) / (G.lvl.h + 0.35)));
@@ -726,11 +780,98 @@ function raised(X, Y, ts, top, front, h) {
   ctx.fillRect(X, Y - h, ts, Math.max(1, ts * 0.05));
 }
 
+// ===================================================================
+// Efectos de manga: onomatopeyas y líneas de velocidad sobre el tablero
+// ===================================================================
+const fxCanvas = $('#fx');
+const fxCtx = fxCanvas.getContext('2d');
+const FX = [];
+const DISPLAY_FONT = "'Bangers', Impact, 'Arial Black', sans-serif";
+
+function mangaText(text, gx, gy, { color = '#ffd23f', size = 34, h = 1.2, dur = 0.9 } = {}) {
+  // Solo una onomatopeya a la vez: la anterior se apaga rápido.
+  for (const f of FX) if (f.kind === 'text') f.dur = Math.min(f.dur, f.t + 0.12);
+  FX.push({ kind: 'text', text, gx, gy, h, color, size, t: 0, dur, rot: (Math.random() - 0.5) * 0.35 });
+  if (FX.length > 12) FX.shift();
+}
+function speedLines(color, dur = 0.55) {
+  if (save.settings.reduceMotion) return;
+  FX.push({ kind: 'lines', color, t: 0, dur, seed: Math.random() * 1000 });
+}
+function screenPos(gx, gy, h) {
+  if (use3D()) return R3.project(gx, gy, h);
+  return { x: view.ox + (gx + 0.5) * view.ts, y: view.oy + (gy + 0.5) * view.ts - h * view.ts * 0.6 };
+}
+function drawFx(dt) {
+  const w = view.w, h = view.h;
+  fxCtx.setTransform(view.dpr, 0, 0, view.dpr, 0, 0);
+  fxCtx.clearRect(0, 0, w, h);
+  if (!G.state) return;
+  for (let i = FX.length - 1; i >= 0; i--) {
+    const f = FX[i];
+    f.t += dt;
+    if (f.t >= f.dur) { FX.splice(i, 1); continue; }
+    const p = f.t / f.dur;
+    if (f.kind === 'lines') {
+      const c = screenPos(G.state.px, G.state.py, 0.6) || { x: w / 2, y: h / 2 };
+      const diag = Math.hypot(w, h);
+      fxCtx.save();
+      fxCtx.globalAlpha = (1 - p) * 0.9;
+      let s = f.seed;
+      const rnd = () => ((s = (s * 9301 + 49297) % 233280) / 233280);
+      for (let k = 0; k < 90; k++) {
+        const a = rnd() * Math.PI * 2;
+        const r0 = diag * (0.16 + rnd() * 0.22) * (1 - p * 0.4);
+        const wdt = 2 + rnd() * 7;
+        fxCtx.fillStyle = k % 3 ? '#ffffff' : f.color;
+        fxCtx.beginPath();
+        fxCtx.moveTo(c.x + Math.cos(a) * r0, c.y + Math.sin(a) * r0);
+        fxCtx.lineTo(c.x + Math.cos(a + wdt / diag) * diag, c.y + Math.sin(a + wdt / diag) * diag);
+        fxCtx.lineTo(c.x + Math.cos(a - wdt / diag) * diag, c.y + Math.sin(a - wdt / diag) * diag);
+        fxCtx.fill();
+      }
+      fxCtx.restore();
+    } else {
+      const c = screenPos(f.gx, f.gy, f.h);
+      if (!c) continue;
+      const pop = save.settings.reduceMotion ? 1 : p < 0.15 ? 0.4 + (p / 0.15) * 0.9 : 1.3 - Math.min(0.3, (p - 0.15) * 1.5);
+      const size = Math.max(16, f.size * Math.min(1.2, view.w / 700 + 0.45));
+      fxCtx.save();
+      fxCtx.font = `${size}px ${DISPLAY_FONT}`;
+      // Que quepa siempre en pantalla, también en móvil
+      const tw = fxCtx.measureText(f.text).width + size * 0.4;
+      const fit = Math.min(1, (w - 24) / (tw * 1.3));
+      const half = (tw * fit * 1.3) / 2;
+      const cx = Math.max(12 + half, Math.min(w - 12 - half, c.x));
+      fxCtx.translate(cx, c.y - p * 18);
+      fxCtx.rotate(f.rot);
+      fxCtx.scale(pop * fit, pop * fit);
+      fxCtx.globalAlpha = p > 0.7 ? 1 - (p - 0.7) / 0.3 : 1;
+      fxCtx.textAlign = 'center';
+      fxCtx.textBaseline = 'middle';
+      fxCtx.lineJoin = 'round';
+      fxCtx.lineWidth = size * 0.28;
+      fxCtx.strokeStyle = '#160b20';
+      fxCtx.strokeText(f.text, 3, 4);
+      fxCtx.strokeText(f.text, 0, 0);
+      fxCtx.fillStyle = f.color;
+      fxCtx.fillText(f.text, 0, 0);
+      fxCtx.lineWidth = Math.max(1, size * 0.04);
+      fxCtx.strokeStyle = 'rgba(255,255,255,.85)';
+      fxCtx.strokeText(f.text, -1, -1);
+      fxCtx.restore();
+    }
+  }
+}
+
 // Renderizador 3D (Three.js). Se carga aparte: si WebGL no está disponible, se juega en 2D.
 let R3 = null;
 const use3D = () => !!R3 && save.settings.graphics !== '2d';
 async function initRenderer3D() {
   if (save.settings.graphics !== '2d' && !R3) {
+    try {
+      await Promise.race([document.fonts?.load(`40px ${DISPLAY_FONT}`), new Promise((r) => setTimeout(r, 1500))]);
+    } catch { /* sin fuente: se usa la alternativa */ }
     try {
       const mod = await import('./renderer3d.js');
       R3 = mod.createRenderer3D($('#gl'), { quality: save.settings.graphics, isRead: (d) => save.docs.includes(d) });
@@ -757,6 +898,7 @@ function frame(now) {
       G.shake = Math.max(0, G.shake - dt * 3);
       G.flash = Math.max(0, G.flash - dt * 2.5);
     } else draw(now, dt);
+    drawFx(dt);
   }
   requestAnimationFrame(frame);
 }
