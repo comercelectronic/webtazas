@@ -1,0 +1,9 @@
+{
+  "name": "agenciadigital",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Agència Digital — joc educatiu de màrqueting digital (PWA estàtica + funció de resultats a Netlify).",
+  "dependencies": {
+    "@netlify/blobs": "^11.1.6"
+  }
+}

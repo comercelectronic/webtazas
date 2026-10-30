@@ -1,0 +1,19 @@
+{
+  "name": "Agència Digital — Joc de màrqueting",
+  "short_name": "Agència Digital",
+  "description": "Dirigeix una agència de màrqueting a Vic, aprèn màrqueting digital i fes créixer en Pau fase a fase.",
+  "lang": "ca",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#1b1640",
+  "theme_color": "#2a2350",
+  "categories": ["games", "education"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
