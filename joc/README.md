@@ -24,6 +24,16 @@ El joc i el panell del professor es poden fer servir en **català, castellà i a
 - **Contrasenya:** variable d'entorn `TEACHER_PASSWORD` a Netlify. Si no existeix, es fa servir `ADMIN_PASSWORD` (la de la pàgina d'estoc).
 - **Dades personals:** només s'envia el nom i cognom que escrigui l'alumne i els resultats del joc. No es demana correu ni cap altra dada.
 
+## Taller web (opcional)
+
+Pestanya 🛠️ **Taller**: un curs a part on l'alumne aprèn a crear webs professionals per als clients de l'agència. No és obligatori: la campanya avança igual sense fer-lo, però cada web entregada dona EXP, diners, reputació i confiança.
+
+- **Plataformes:** Wix, WordPress, Webflow, Shopify i Codi + IA (HTML/CSS/JS publicat a Netlify, GitHub Pages o Vercel). L'alumne en tria una o diverses i ho pot canviar quan vulgui; cada nivell mostra la guia pas a pas de les plataformes triades.
+- **8 nivells de complexitat creixent:** landing de la fleca → web del restaurant amb reserves i SEO → web corporativa B2B → botiga en línia → landing de conversió amb analítica i UTM → web de marca de l'agència (portafoli, accessibilitat, rendiment) → web multilingüe per a França (hreflang, galetes) → projecte final de scrollytelling. Cada nivell inclou conceptes, una pauta d'animació i un consell professional.
+- **Entrega:** l'alumne enganxa l'enllaç públic de la web, marca els requisits del client, explica com l'ha feta (i opcionalment deixa una nota, p. ex. la contrasenya de la botiga). Entregar un nivell desbloqueja el següent. El joc comprova si l'enllaç respon; si no, l'alumne pot entregar igualment i el professor ho veu marcat amb ⚠️.
+- **Professorat:** columna «Webs» a la taula, apartat «Taller web» al detall de cada alumne amb tots els enllaços clicables i les reflexions, i columnes per nivell (plataforma i enllaç) al CSV.
+- Contingut a `js/data-web.js` (`GD.webPlatforms`, `GD.webLevels`).
+
 ## Què hi ha al joc
 
 | Sistema | On és |

@@ -34,7 +34,7 @@
     return {
       v: 1, agency: T('Píxel d\'Osona'), profile: null,
       player: { id: uid(), name: 'Pau', surname: 'Riera', g: 'm', look: Object.assign({}, ART.PLAYER_DEFAULT) },
-      classe: '', quizLog: {}, syncPending: false, lastSync: 0,
+      classe: '', quizLog: {}, syncPending: false, lastSync: 0, web: { platforms: [], levels: {} },
       level: 1, xp: 0, sp: 0,
       skills: { estrategia: 0, creativitat: 0, analitica: 0, comercial: 0, gestio: 0 },
       money: 3000, reserve: 0, week: 1, rep: 5,
@@ -256,12 +256,12 @@
         <div class="hub-body" id="hubBody"></div>
       </main>
       <nav class="tabs">
-        ${[['campanya', '🗺️', T('Campanya')], ['pau', '🧑', esc(S.player.name)], ['encarrecs', '📨', T('Encàrrecs')], ['biblioteca', '📚', T('Biblioteca')], ['empresa', '🏢', T('Empresa')]]
+        ${[['campanya', '🗺️', T('Campanya')], ['pau', '🧑', esc(S.player.name)], ['encarrecs', '📨', T('Encàrrecs')], ['taller', '🛠️', T('Taller')], ['biblioteca', '📚', T('Biblioteca')], ['empresa', '🏢', T('Empresa')]]
           .map(([k, i, n]) => `<button class="tab ${hubTab === k ? 'on' : ''}" data-tab="${k}"><span>${i}</span>${n}${k === 'pau' && S.sp ? `<em class="dot">${S.sp}</em>` : ''}</button>`).join('')}
       </nav>`;
     hud();
     const body = $('#hubBody');
-    ({ campanya: tabCampanya, pau: tabPau, encarrecs: tabGigs, biblioteca: tabLibrary, empresa: tabEmpresa })[hubTab](body);
+    ({ campanya: tabCampanya, pau: tabPau, encarrecs: tabGigs, taller: tabTaller, biblioteca: tabLibrary, empresa: tabEmpresa })[hubTab](body);
   }
 
   function chapterState(chId) {
@@ -416,6 +416,144 @@
     }
     S.gigs = picks;
   }
+  /* ================= Taller web (curs opcional) ================= */
+  const WP = () => GD.webPlatforms;
+  function webState() { if (!S.web) S.web = { platforms: [], levels: {} }; return S.web; }
+  function webOpen(n) { return n === 1 || !!webState().levels[n - 1]; }
+  const safeUrl = (u) => /^https?:\/\//i.test(u || '') ? esc(u) : '#';
+
+  function tabTaller(el) {
+    const W = webState();
+    if (!W.platforms.length) return webPicker(el);
+    const done = Object.keys(W.levels).length;
+    el.innerHTML = `
+      <div class="card web-head">
+        <h3>${T('🛠️ Taller web')}</h3>
+        <p>${T('Aprèn a crear webs professionals per als clients de l\'agència. Cada nivell és un encàrrec real: el construeixes amb la plataforma que vulguis i n\'entregues l\'enllaç. És opcional: pots avançar en la campanya igualment.')}</p>
+        <div class="web-plats">${W.platforms.map(k => `<span class="plat-chip">${WP()[k].i} ${esc(WP()[k].n)}</span>`).join('')}
+          <button class="btn small" data-act="webPlatforms">${T('Canviar plataformes')}</button></div>
+        <p class="muted small">${T('Webs entregades: {0} de {1}', [done, GD.webLevels.length])}</p>
+      </div>
+      <div class="web-levels">${GD.webLevels.map(L => {
+        const d = W.levels[L.n], open = webOpen(L.n), p = d && WP()[d.platform];
+        return `<div class="web-level card ${d ? 'done' : open ? 'open' : 'locked'}">
+          <span class="wl-ava">${ART.portrait(L.who, d ? 'h' : 'n')}</span>
+          <div class="wl-txt"><small>${T('Nivell {0}', [L.n])} · ${txt(L.sub)}</small><b>${txt(L.title)}</b>
+            ${d ? `<a href="${safeUrl(d.url)}" target="_blank" rel="noopener">${esc(d.url)}</a>${p ? ` <em class="plat-chip">${p.i} ${esc(p.n)}</em>` : ''}` : ''}
+          </div>
+          ${open ? `<button class="btn ${d ? 'small' : 'primary'}" data-web="${L.n}">${d ? T('Revisar') : T('Començar')}</button>` : '<span class="ch-s">🔒</span>'}
+        </div>`;
+      }).join('')}</div>`;
+  }
+
+  function webPicker(el) {
+    const W = webState(); const sel = new Set(W.platforms);
+    const draw = () => {
+      el.innerHTML = `<div class="card"><h3>${T('🛠️ Taller web')}</h3>
+        <p>${T('Tria amb quines plataformes vols aprendre a crear webs. Pots escollir-ne una o diverses i canviar-ho quan vulguis: a cada nivell veuràs la guia pas a pas de les plataformes triades.')}</p></div>
+        <div class="plat-grid">${Object.entries(WP()).map(([k, p]) => `<button class="plat ${sel.has(k) ? 'on' : ''}" data-plat="${k}">
+          <span class="plat-top"><span class="plat-i">${p.i}</span><b>${esc(p.n)}</b><em>${sel.has(k) ? '☑' : '☐'}</em></span>
+          <small>${txt(p.d)}</small><small class="plat-free">🆓 ${txt(p.free)}</small><small>🎯 ${txt(p.ideal)}</small></button>`).join('')}</div>
+        <button class="btn primary big" id="platOk" ${sel.size ? '' : 'disabled'}>${T('Confirmar plataformes')}</button>`;
+      el.querySelectorAll('[data-plat]').forEach(b => b.onclick = () => { const k = b.dataset.plat; if (sel.has(k)) sel.delete(k); else sel.add(k); draw(); });
+      el.querySelector('#platOk').onclick = () => { W.platforms = Object.keys(WP()).filter(k => sel.has(k)); save(); hubScreen('taller'); };
+    };
+    draw();
+  }
+
+  function urlHint(u, k) {
+    if (!u) return '';
+    let url;
+    try { url = new URL(/^https?:\/\//i.test(u) ? u : 'https://' + u); } catch (e) { return T('⚠️ L\'enllaç no és vàlid.'); }
+    const p = WP()[k];
+    if (p && p.domains.some(d => url.hostname.includes(d))) return T('✔ Adreça de {0}.', [p.n]);
+    return T('⚠️ L\'adreça no sembla de {0}. Si fas servir un domini propi, cap problema.', [p ? p.n : '']);
+  }
+
+  function webLevel(n) {
+    const L = GD.webLevels.find(x => x.n === n); const W = webState();
+    const prev = W.levels[n];
+    let plat = prev && W.platforms.includes(prev.platform) ? prev.platform : W.platforms[0];
+    rightActor = null;
+    sceneShell(L.bg);
+    const back = () => hubScreen('taller');
+    const brief = () => panel(`<div class="pn-h"><b>🧾 ${txt(L.title)}</b><small>${T('Taller web · Nivell {0}', [n])} · ${txt(L.sub)}</small></div>
+      <h4>${T('Què demana el client')}</h4>
+      <ul class="req-list">${L.reqs.map(r => `<li>${txt(r)}</li>`).join('')}</ul>
+      ${prev ? `<div class="info">${T('Ja has entregat aquest nivell:')} <a href="${safeUrl(prev.url)}" target="_blank" rel="noopener">${esc(prev.url)}</a></div>` : ''}
+      <div class="row-btns"><button class="btn primary" id="learn">${T('📚 Aprèn a fer-la')}</button><button class="btn" id="deliver">${T('📤 Entregar')}</button><button class="btn ghost" id="back">${T('Tornar al taller')}</button></div>`, (p) => {
+      p.querySelector('#learn').onclick = learn; p.querySelector('#deliver').onclick = deliver; p.querySelector('#back').onclick = back;
+    });
+    const learn = () => panel(`<div class="lesson"><div class="ls-h"><small>${T('🛠️ Taller web · Nivell {0}', [n])}</small><h2>${txt(L.title)}</h2></div>
+        ${L.concepts.map(c => `<p>${txt(c)}</p>`).join('')}
+        <div class="example"><b>${T('✨ Animacions')}</b><p>${txt(L.anim)}</p></div>
+        <h4>${T('Guia pas a pas')}</h4>
+        <div class="seg plat-tabs">${W.platforms.map(k => `<button data-pl="${k}" class="${k === plat ? 'on' : ''}">${WP()[k].i} ${esc(WP()[k].n)}</button>`).join('')}</div>
+        <ol class="steps">${(L.guides[plat] || []).map(s => `<li>${txt(s)}</li>`).join('')}</ol>
+        <div class="errors"><b>💡 ${T('Consell professional')}</b><p>${txt(L.pro)}</p></div>
+        <div class="row-btns"><button class="btn primary" id="deliver">${T('📤 Ja l\'he feta: entregar')}</button><button class="btn" id="brief">${T('Veure l\'encàrrec')}</button></div></div>`, (p) => {
+      p.querySelectorAll('[data-pl]').forEach(b => b.onclick = () => { plat = b.dataset.pl; learn(); });
+      p.querySelector('#deliver').onclick = deliver; p.querySelector('#brief').onclick = brief;
+    });
+    const deliver = () => {
+      const d = prev || {};
+      panel(`<div class="pn-h"><b>📤 ${T('Entrega de la web')}</b><small>${txt(L.title)}</small></div>
+        <label class="fld">${T('Plataforma amb què l\'has feta')}<select class="inp" id="wPlat">${W.platforms.map(k => `<option value="${k}" ${k === (d.platform || plat) ? 'selected' : ''}>${esc(WP()[k].n)}</option>`).join('')}</select></label>
+        <label class="fld">${T('Enllaç públic de la web')}<input class="inp" id="wUrl" type="url" inputmode="url" placeholder="https://..." value="${esc(d.url || '')}"></label>
+        <p class="muted small" id="wHint"></p>
+        <p class="lbl">${T('Comprova que compleix tot el que demana el client:')}</p>
+        <div class="checks">${L.reqs.map((r, i) => `<label class="chk"><input type="checkbox" data-r="${i}" ${d.url ? 'checked' : ''}><span>${txt(r)}</span></label>`).join('')}</div>
+        <label class="fld">${T('Explica breument com l\'has feta i com has creat les animacions')}<textarea class="inp" id="wRef" rows="3" maxlength="1000">${esc(d.reflection || '')}</textarea></label>
+        <label class="fld">${T('Nota per al client (opcional): contrasenya de la botiga, puntuació de rendiment...')}<textarea class="inp" id="wNote" rows="2" maxlength="500">${esc(d.note || '')}</textarea></label>
+        <div class="row-btns"><button class="btn primary" id="send">${T('Entregar al client')}</button><button class="btn ghost" id="learn">${T('Tornar a la guia')}</button></div>`, (p) => {
+        const hint = () => { p.querySelector('#wHint').textContent = urlHint(p.querySelector('#wUrl').value.trim(), p.querySelector('#wPlat').value); };
+        p.querySelector('#wUrl').oninput = hint; p.querySelector('#wPlat').onchange = hint; hint();
+        p.querySelector('#learn').onclick = learn;
+        p.querySelector('#send').onclick = async () => {
+          let u = p.querySelector('#wUrl').value.trim();
+          if (u && !/^https?:\/\//i.test(u)) u = 'https://' + u;
+          let url = null;
+          try { url = new URL(u); } catch (e) { }
+          if (!url || !/^https?:$/.test(url.protocol) || !url.hostname.includes('.') || /^(localhost|127\.|192\.168\.|10\.)/.test(url.hostname)) { toast(T('Escriu l\'enllaç públic de la web (per exemple, https://el-meu-lloc.wixsite.com/forn).'), 'bad'); return; }
+          if ([...p.querySelectorAll('[data-r]')].some(c => !c.checked)) { toast(T('Revisa i marca tots els requisits abans d\'entregar.'), 'bad'); return; }
+          const reflection = p.querySelector('#wRef').value.trim();
+          if (reflection.length < 20) { toast(T('Explica en almenys una frase com l\'has feta.'), 'bad'); p.querySelector('#wRef').focus(); return; }
+          const btn = p.querySelector('#send'); btn.disabled = true; btn.textContent = T('Comprovant l\'enllaç…');
+          const reach = await Promise.race([
+            fetch(url.href, { mode: 'no-cors', cache: 'no-store' }).then(() => true).catch(() => false),
+            new Promise(r => setTimeout(() => r(false), 7000))
+          ]);
+          const finish = () => webDelivered(L, { url: url.href, platform: p.querySelector('#wPlat').value, reflection, note: p.querySelector('#wNote').value.trim(), reachable: reach, at: new Date().toISOString() }, !prev);
+          if (reach) finish();
+          else { btn.disabled = false; btn.textContent = T('Entregar al client'); confirmBox(T('No hem pogut comprovar que la web estigui publicada. Assegura\'t que l\'enllaç és públic. Vols entregar-la igualment?'), finish); }
+        };
+      });
+    };
+    playLines(L.brief, brief);
+  }
+
+  function webDelivered(L, rec, first) {
+    webState().levels[L.n] = rec;
+    const R = L.reward;
+    if (first) {
+      applyFx({ xp: R.xp, money: R.money, fee: true, rep: R.rep, trust: R.trust ? { [R.trust]: 1 } : null, log: T('Va entregar la web «{0}» feta amb {1}.', [txt(L.title), WP()[rec.platform].n]), key: true }, true);
+      advanceWeeks(1);
+    }
+    save(); queueSync();
+    showActors(L.who, 'h');
+    playLines([[L.who + '.h', T('Ja la tinc! Moltes gràcies, {nom}. Ara mateix l\'ensenyo a tothom.')]], () => {
+      const next = GD.webLevels.find(x => x.n === L.n + 1);
+      panel(`<div class="reward"><div class="rw-h"><small>${T('Taller web · Nivell {0}', [L.n])}</small><h2>🎉 ${T('Web entregada!')}</h2></div>
+        <p><a href="${safeUrl(rec.url)}" target="_blank" rel="noopener">${esc(rec.url)}</a></p>
+        ${first ? `<div class="metrics"><div class="metric good"><small>${T('Experiència')}</small><b>+${R.xp}</b></div>
+          ${R.money ? `<div class="metric good"><small>${T('Honoraris cobrats')}</small><b>+${eur(R.money * (1 + 0.05 * sk('comercial')))}</b></div>` : ''}
+          <div class="metric good"><small>${T('Reputació')}</small><b>+${R.rep}</b></div></div>` : `<p class="muted">${T('Entrega actualitzada. Les recompenses només es donen la primera vegada.')}</p>`}
+        ${next ? `<div class="stage-clear" style="--sc:#38d1c4"><b>🔓 ${T('Nou encàrrec desbloquejat:')}</b><p>${txt(next.title)}</p></div>` : `<div class="stage-clear" style="--sc:#ffd24a"><b>🏆 ${T('Has completat el Taller web!')}</b></div>`}
+        <button class="btn primary big" data-act="hubTaller">${T('Tornar al taller')}</button></div>`);
+      if (first) petals($('.scene'), 20);
+    });
+  }
+
   function tabGigs(el) {
     if (!S.gigs || !S.gigs.length) genGigs();
     el.innerHTML = `<p class="muted">${T("Petits encàrrecs que arriben per recomanacions. Cada encàrrec dura una setmana, et fa guanyar experiència i diners, i posa a prova el que has après.")}</p>
@@ -1015,6 +1153,9 @@
       cami: S.f.path || '', final: S.ending ? GD.endings[S.ending].title : '',
       habilitats: S.skills, coneixement: S.know, confianca: S.trust,
       encarrecs: S.stats.gigs, campanyes: S.stats.campaigns, campanyesBones: S.stats.good,
+      webPlataformes: (S.web && S.web.platforms) || [],
+      webs: Object.fromEntries(Object.entries((S.web && S.web.levels) || {}).map(([k, v]) => [k, { url: v.url, platform: v.platform, at: v.at, reflection: v.reflection, note: v.note, reachable: v.reachable }])),
+      websEntregades: Object.keys((S.web && S.web.levels) || {}).length,
       decisions: S.history.filter(h => h.key).map(h => T("Cap. {0}: {1}", [h.ch, h.t]))
     };
   }
@@ -1063,7 +1204,7 @@
   document.addEventListener('click', (ev) => {
     const lb = ev.target.closest('[data-lang]');
     if (lb && !lb.closest('.setup')) { if (lb.dataset.lang !== LANG) setLang(lb.dataset.lang); return; }
-    const b = ev.target.closest('[data-act],[data-ch],[data-tab],[data-skill],[data-lesson],[data-gig]');
+    const b = ev.target.closest('[data-act],[data-ch],[data-tab],[data-skill],[data-lesson],[data-gig],[data-web]');
     if (!b || b.disabled) return;
     if (b.dataset.ch) { startChapter(b.dataset.ch); return; }
     if (b.dataset.tab) { hubScreen(b.dataset.tab); return; }
@@ -1074,11 +1215,14 @@
     }
     if (b.dataset.lesson) { sceneShell('despatx'); showActors('pau', 't'); lessonFlow(b.dataset.lesson, false, () => hubScreen('biblioteca')); return; }
     if (b.dataset.gig != null) { playGig(+b.dataset.gig); return; }
+    if (b.dataset.web != null) { webLevel(+b.dataset.web); return; }
     switch (b.dataset.act) {
       case 'new': newGame(); break;
       case 'continue': continueGame(); break;
       case 'hub': if (S.ending && $('.ending')) { hubScreen('campanya'); } else hubScreen(); break;
       case 'hubGigs': hubScreen('encarrecs'); break;
+      case 'hubTaller': hubScreen('taller'); break;
+      case 'webPlatforms': webPicker($('#hubBody')); break;
       case 'title': titleScreen(); break;
       case 'showEnding': endingScreen(S.ending, false); break;
       case 'refreshGigs': advanceWeeks(1); genGigs(); save(); hubScreen('encarrecs'); toast(T('Ha passat una setmana. Nous encàrrecs disponibles.')); break;
@@ -1122,6 +1266,7 @@
   hubScreen = function (tab) {
     const pending = S && S.cur && GD.chapters[S.cur.id] ? S.cur : null;
     _hub(tab);
+    window.scrollTo(0, 0);
     if (pending) { S.cur = pending; save(); const nm = document.querySelector('.next-mission'); if (nm) { nm.dataset.resume = '1'; } }
   };
   document.addEventListener('click', (ev) => {

@@ -96,7 +96,7 @@ button { font-family: inherit; font-size: inherit; color: inherit; cursor: point
 
 /* ---------- Hub ---------- */
 .hub { flex: 1; padding: 16px 16px calc(90px + env(safe-area-inset-bottom)); width: 100%; max-width: 980px; margin: 0 auto; }
-.tabs { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; display: grid; grid-template-columns: repeat(5, 1fr); background: rgba(255, 250, 246, .97); border-top: 2.5px solid var(--ink); padding-bottom: env(safe-area-inset-bottom); }
+.tabs { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; display: grid; grid-template-columns: repeat(6, 1fr); background: rgba(255, 250, 246, .97); border-top: 2.5px solid var(--ink); padding-bottom: env(safe-area-inset-bottom); }
 .tab { position: relative; background: none; border: 0; padding: 8px 2px 9px; font-size: .7em; font-weight: 800; color: var(--muted); display: flex; flex-direction: column; align-items: center; gap: 1px; }
 .tab span { font-size: 1.7em; line-height: 1.1; filter: grayscale(.6); transition: transform .15s; }
 .tab.on { color: var(--pink); }
@@ -445,3 +445,40 @@ button { font-family: inherit; font-size: inherit; color: inherit; cursor: point
 .card .langs, span.langs { display: inline-flex; align-items: center; }
 .card .langs button { background: #fff; color: var(--txt); border-color: #d9cdee; }
 .card .langs button.on { background: var(--pink); color: #fff; border-color: var(--ink); }
+
+/* ---------- Taller web ---------- */
+.web-head p { margin: .4em 0; }
+.web-plats { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 8px 0; }
+.plat-chip { display: inline-flex; align-items: center; gap: 4px; background: var(--card2); border: 2px solid #d9cdee; border-radius: 999px; padding: 2px 10px; font-size: .82em; font-weight: 700; font-style: normal; }
+.plat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.plat { text-align: left; background: var(--card); border: 2.5px solid var(--ink); border-radius: 16px; padding: 12px; box-shadow: 0 4px 0 var(--ink); display: flex; flex-direction: column; gap: 6px; }
+.plat.on { background: #fff0f6; border-color: var(--pink); box-shadow: 0 4px 0 var(--pink); }
+.plat-top { display: flex; align-items: center; gap: 8px; }
+.plat-top b { flex: 1; font-size: 1.1em; }
+.plat-top em { font-style: normal; font-size: 1.3em; }
+.plat-i { font-size: 1.6em; }
+.plat small { color: var(--muted); font-size: .84em; }
+.plat small.plat-free { color: #137a54; }
+.web-levels { display: flex; flex-direction: column; gap: 10px; }
+.web-level { display: flex; align-items: center; gap: 12px; margin: 0; }
+.web-level.locked { filter: grayscale(.8); opacity: .65; }
+.web-level.done { background: linear-gradient(120deg, #eafaf4, #fff); }
+.wl-ava { width: 56px; height: 56px; border-radius: 14px; overflow: hidden; background: var(--card2); border: 2px solid var(--ink); flex: none; }
+.wl-ava svg { width: 100%; height: 150%; margin-top: -10%; }
+.wl-txt { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.wl-txt small { color: var(--muted); font-weight: 700; font-size: .78em; }
+.wl-txt a { font-size: .82em; color: var(--violet); word-break: break-all; }
+.req-list { margin: 0 0 12px; padding-left: 1.2em; }
+.req-list li { margin: 4px 0; }
+.plat-tabs { margin-bottom: 8px; }
+.steps { margin: 0 0 12px; padding-left: 1.4em; }
+.steps li { margin: 7px 0; }
+.steps code, .lesson code, .req-list code { background: #f2ecfb; border-radius: 6px; padding: 1px 5px; font-size: .88em; }
+.fld { display: flex; flex-direction: column; gap: 4px; font-weight: 800; font-size: .88em; margin: 10px 0 0; }
+.fld .inp { margin-bottom: 0; font-weight: 400; }
+.checks { display: flex; flex-direction: column; gap: 6px; }
+.chk { display: flex; gap: 8px; align-items: flex-start; background: #faf7fd; border-radius: 10px; padding: 7px 10px; font-size: .9em; cursor: pointer; }
+.chk input { margin-top: 3px; width: 18px; height: 18px; accent-color: var(--pink); flex: none; }
+.reward a { color: var(--violet); word-break: break-all; font-weight: 700; }
+@media (max-width: 400px) { .tab { font-size: .62em; } }
+.panel { overflow-x: hidden; overflow-wrap: anywhere; }
