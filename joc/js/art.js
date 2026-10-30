@@ -282,5 +282,19 @@
     return `<svg class="bg-svg" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">${fn(k)}</svg>`;
   }
 
-  window.ART = { portrait, background, CHARS, PAU_OUTFITS };
+  // Aspecte escollit pel jugador per al protagonista
+  const PLAYER_DEFAULT = { style: 'spiky', hair: '#3b2a24', eye: '#c47a28', skin: '#f8dcc6', acc: [] };
+  function setPlayer(look) {
+    const l = Object.assign({}, PLAYER_DEFAULT, look || {});
+    Object.assign(CHARS.pau, { style: l.style, hair: l.hair, hi: shade(l.hair, 50), eye: l.eye, skin: l.skin, acc: (l.acc || []).slice() });
+  }
+  const LOOK_OPTIONS = {
+    style: [['spiky', 'Punxegut'], ['neat', 'Curt clàssic'], ['buzz', 'Molt curt'], ['slick', 'Pentinat enrere'], ['bob', 'Mitja melena'], ['long', 'Llarg'], ['pony', 'Cua'], ['wavy', 'Ondulat'], ['bun', 'Monyo']],
+    hair: ['#3b2a24', '#141414', '#6b4226', '#a3451f', '#e9c25a', '#d8d8d8', '#e2577a', '#3a6fd6', '#2f9a6e', '#7a5ac8'],
+    eye: ['#c47a28', '#5a3a20', '#2a6fb0', '#2f9a6e', '#8a3fd1', '#c8424b'],
+    skin: ['#fbe1cf', '#f8dcc6', '#eec7a6', '#d9a57e', '#b97f57', '#8a5a3c'],
+    acc: [['', 'Cap'], ['glassesRound', 'Ulleres rodones'], ['glassesRect', 'Ulleres quadrades'], ['earrings', 'Arracades']]
+  };
+
+  window.ART = { portrait, background, CHARS, PAU_OUTFITS, setPlayer, LOOK_OPTIONS, PLAYER_DEFAULT };
 })();

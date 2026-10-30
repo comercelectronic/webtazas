@@ -56,8 +56,8 @@
         };
       } },
       { t: 'dlg', lines: [
-        ['', 'Mentre recull l\'estand, en Pau veu una dona amb americana negra que parla amb tres empresaris alhora. Tothom l\'escolta.'],
-        ['laia.n', 'Tu deus ser el de {agencia}. Laia Vidal, de Vidal & Co., Barcelona. He sentit parlar del forn.'],
+        ['', 'Mentre recull l\'estand, {en} veu una dona amb americana negra que parla amb tres empresaris alhora. Tothom l\'escolta.'],
+        ['laia.n', 'Tu deus ser {g:el|la|qui porta} {agencia}. Laia Vidal, de Vidal & Co., Barcelona. He sentit parlar del forn.'],
         ['laia.t', 'Demà presentem una proposta a la cooperativa agrícola. Suposo que tu també. Que guanyi el millor.']
       ] },
       { t: 'fx', silent: true, fx: { flags: { met_laia: true } } }
@@ -98,7 +98,7 @@
     steps: [
       { t: 'fx', silent: true, fx: { flags: { met_quim: true } } },
       { t: 'dlg', lines: [
-        ['quim.h', 'Pau, nano! Quim Soler, de Soler Motor. Cotxes de segona mà i recanvis, tres naus a Manlleu.'],
+        ['quim.h', '{nom}, {g:nano|nena|nano}! Quim Soler, de Soler Motor. Cotxes de segona mà i recanvis, tres naus a Manlleu.'],
         ['quim.n', 'Vull que porteu tot el digital. Tot. Web, xarxes, anuncis, vídeos, correus... el que calgui.'],
         ['quim.h', 'Et pago 1.500 € al mes. Comences demà. I si de cas sorgeix alguna coseta més, ja t\'ho aniré dient.'],
         ['pau.t', '(«Tot» i «alguna coseta més»... Això fa olor de problema.)']
@@ -108,13 +108,13 @@
         ['Quota proposada', '1.500 €/mes'], ['«Tot el digital», estimació', '≈ 70 h/mes'], ['Cost intern per hora', '25 €'], ['Cost estimat', '1.750 €/mes'], ['Marge brut', '<b class="neg">−17 %</b>']
       ]), opts: [
         { t: 'Acceptar tal com està: 1.500 €/mes per «tot el digital».', v: 'mal', fx: { client: { id: 'quim', name: 'Soler Motor', fee: 1500 }, flags: { quimMal: true }, log: 'Va acceptar el contracte de Quim sense definir l\'abast.', key: true }, say: [['quim.h', 'Així m\'agrada! Demà t\'envio la primera llista.']] },
-        { t: 'Negociar l\'abast: 4 serveis definits, 2 revisions per peça i 40 h/mes. El que surti d\'aquí, a part. 1.500 €/mes.', v: 'be', fx: { client: { id: 'quim', name: 'Soler Motor', fee: 1500 }, trust: { quim: 1 }, xp: 30, log: 'Va negociar un contracte amb abast clar amb Quim.', key: true }, say: [['quim.t', 'Ets dur negociant, eh? Va, d\'acord. Però que es noti la feina.']] },
+        { t: 'Negociar l\'abast: 4 serveis definits, 2 revisions per peça i 40 h/mes. El que surti d\'aquí, a part. 1.500 €/mes.', v: 'be', fx: { client: { id: 'quim', name: 'Soler Motor', fee: 1500 }, trust: { quim: 1 }, xp: 30, log: 'Va negociar un contracte amb abast clar amb Quim.', key: true }, say: [['quim.t', '{g:Ets dur|Ets dura|Negocies fort}, eh? Va, d\'acord. Però que es noti la feina.']] },
         { t: 'Abast complet però a preu just: 2.400 €/mes amb tot detallat al contracte.', v: 'premium', req: { skill: 'comercial', min: 2 }, fx: { client: { id: 'quim', name: 'Soler Motor', fee: 2400 }, xp: 30, log: 'Va negociar amb Quim un preu adequat a l\'abast real.', key: true }, say: [['quim.s', '2.400? Uf...'], ['quim.n', 'Bé. Si tot està per escrit i ho compleixes, val la pena. Tracte fet.']] },
-        { t: 'Rebutjar el contracte.', v: 'no', fx: { trust: { quim: -1 } }, say: [['quim.a', 'Tu t\'ho perds, nano.']] }
+        { t: 'Rebutjar el contracte.', v: 'no', fx: { trust: { quim: -1 } }, say: [['quim.a', 'Tu t\'ho perds, {g:nano|nena|nano}.']] }
       ] },
       { t: 'dlg', lines: (S) => ({
         mal: [['', 'Al cap de dues setmanes, Quim ha demanat tres canvis de logo, un vídeo per a TikTok i «una web nova per a la nau de recanvis».'], ['pau.w', 'I tot entra dins dels 1.500 €... No, això no pot continuar així.']],
-        be: [['', 'Quim demana un vídeo extra. En Pau li envia un pressupost a part. Quim protesta... i l\'accepta.'], ['pau.h', 'L\'abast ben definit és la millor protecció.']],
+        be: [['', 'Quim demana un vídeo extra. {En} li envia un pressupost a part. Quim protesta... i l\'accepta.'], ['pau.h', 'L\'abast ben definit és la millor protecció.']],
         premium: [['', 'Quim és exigent, però paga puntualment i ho té tot per escrit.'], ['pau.h', 'Preu just, client clar.']],
         no: [['pau.n', 'He perdut un client potencial, però hauria perdut diners treballant-hi.']]
       })[S.f.quimContracte] }
@@ -127,16 +127,16 @@
     steps: [
       { t: 'dlg', lines: (S) => [
         ['', 'Dilluns, 8.15 h. Tres missatges alhora.'],
-        ['nuria.w', 'Pau, la botiga en línia no deixa pagar amb targeta! Tinc comandes penjades!'],
-        ['miquel.n', 'Pau, necessito la presentació per a la fira de Saragossa dijous. Sense falta.'],
-        has(S, 'quim') ? ['quim.a', 'Vull cinc vídeos per divendres. Cinc. Tinc una promoció.'] : ['jordi.n', 'Pau, voldria la carta nova a la web abans del cap de setmana.'],
+        ['nuria.w', '{nom}, la botiga en línia no deixa pagar amb targeta! Tinc comandes penjades!'],
+        ['miquel.n', '{nom}, necessito la presentació per a la fira de Saragossa dijous. Sense falta.'],
+        has(S, 'quim') ? ['quim.a', 'Vull cinc vídeos per divendres. Cinc. Tinc una promoció.'] : ['jordi.n', '{nom}, voldria la carta nova a la web abans del cap de setmana.'],
         ['pau.w', 'No hi ha prou hores a la setmana per a tot això.']
       ] },
       { t: 'lesson', id: 'L_planificacio' },
       { t: 'choice', key: 'pla34', prompt: 'Com organitzes la setmana?', opts: [
-        { t: 'Fer-ho tot jo, treballant de nit.', v: 'nit', fx: { rep: -2, flags: { cansament: 1 }, log: 'Va intentar fer-ho tot sol treballant de nit.' }, say: [['', 'Tres nits sense dormir. La presentació de Miquel arriba amb dues errades a les xifres.'], ['miquel.a', 'Pau, aquesta xifra està malament. Davant del client, quedo fatal.'], ['pau.w', 'El cansament es paga.']] },
-        { t: 'Prioritzar per urgència i impacte: primer el pagament de la Núria, després la presentació de Miquel; parlar amb el tercer per moure el termini i subcontractar el disseny.', v: 'prio', fx: (S) => ({ money: -250, rep: 3, xp: 30, trust: { miquel: 1, quim: S.f.quimMal ? -1 : 0 }, log: 'Va prioritzar per urgència i impacte i va comunicar els nous terminis.', key: true }), say: (S) => [['', 'Dilluns a migdia, la botiga de la Núria torna a cobrar. Dijous, la presentació de Miquel és impecable.'], S.f.quimMal ? ['quim.a', 'Com que dilluns? Jo vull els vídeos ara! Pago per «tot», no?'] : has(S, 'quim') ? ['quim.n', 'Està al contracte: dos vídeos al mes. La resta a part? Bé, d\'acord, per dilluns.'] : ['jordi.h', 'Cap problema, Pau. Gràcies per avisar.'], ['pau.h', 'Planificar i comunicar. Sembla fàcil, però marca la diferència.']] },
-        { t: 'Ajornar el client més petit sense avisar.', v: 'amagar', fx: { rep: -3, trust: { carme: -1 }, log: 'Va ajornar un client sense avisar.' }, say: [['', 'El client petit s\'assabenta per la Carme que en Pau «estava massa ocupat».'], ['carme.w', 'Pau, la gent parla. Si no pots, digues-ho, home.']] }
+        { t: 'Fer-ho tot jo, treballant de nit.', v: 'nit', fx: { rep: -2, flags: { cansament: 1 }, log: 'Va intentar fer-ho tot {g:sol|sola|sol} treballant de nit.' }, say: [['', 'Tres nits sense dormir. La presentació de Miquel arriba amb dues errades a les xifres.'], ['miquel.a', '{nom}, aquesta xifra està malament. Davant del client, quedo fatal.'], ['pau.w', 'El cansament es paga.']] },
+        { t: 'Prioritzar per urgència i impacte: primer el pagament de la Núria, després la presentació de Miquel; parlar amb el tercer per moure el termini i subcontractar el disseny.', v: 'prio', fx: (S) => ({ money: -250, rep: 3, xp: 30, trust: { miquel: 1, quim: S.f.quimMal ? -1 : 0 }, log: 'Va prioritzar per urgència i impacte i va comunicar els nous terminis.', key: true }), say: (S) => [['', 'Dilluns a migdia, la botiga de la Núria torna a cobrar. Dijous, la presentació de Miquel és impecable.'], S.f.quimMal ? ['quim.a', 'Com que dilluns? Jo vull els vídeos ara! Pago per «tot», no?'] : has(S, 'quim') ? ['quim.n', 'Està al contracte: dos vídeos al mes. La resta a part? Bé, d\'acord, per dilluns.'] : ['jordi.h', 'Cap problema, {nom}. Gràcies per avisar.'], ['pau.h', 'Planificar i comunicar. Sembla fàcil, però marca la diferència.']] },
+        { t: 'Ajornar el client més petit sense avisar.', v: 'amagar', fx: { rep: -3, trust: { carme: -1 }, log: 'Va ajornar un client sense avisar.' }, say: [['', 'El client petit s\'assabenta per la Carme que {en} «estava massa ocupat».'], ['carme.w', '{nom}, la gent parla. Si no pots, digues-ho, {g:home|dona|maco}.']] }
       ] }
     ]
   });
@@ -171,11 +171,11 @@
      ============================================================ */
   CH('4.1', {
     title: 'La primera contractació', who: 'julia', bg: 'despatx', weeks: 2,
-    blurb: 'Vendes, estratègia, publicitat, informes, administració... i un sol Pau.',
+    blurb: 'Vendes, estratègia, publicitat, informes, administració... i {g:un sol|una sola|només} {nom}.',
     steps: [
       { t: 'fx', silent: true, fx: { flags: { met_julia: true } } },
       { t: 'dlg', lines: [
-        ['', 'Una cafeteria del carrer de la Riera. En Pau ha quedat amb una candidata que li ha recomanat Miquel.'],
+        ['', 'Una cafeteria del carrer de la Riera. {En} ha quedat amb una candidata que li ha recomanat Miquel.'],
         ['julia.n', 'Júlia Serra. Analista de dades. Cinc anys en una consultora de Barcelona. Vull tornar a viure a Osona.'],
         ['julia.t', 'Abans de parlar de sou: ensenya\'m les dades de l\'agència. Com mesureu els resultats?'],
         ['pau.s', '(Està entrevistant-me ella a mi?)']
@@ -214,7 +214,7 @@
       { t: 'choice', key: 'brief42', prompt: 'Com treballareu les campanyes creatives?', opts: [
         { t: 'Les decisions creatives les prenc jo, sempre.', v: 'centralitza', fx: { trust: { berta: -2 } }, say: [['berta.w', 'Doncs... per què m\'has contractat?']] },
         { t: 'Brief per a cada campanya (objectiu, públic, missatge, formats i criteri d\'èxit) i proves A/B quan hi hagi dubtes.', v: 'brief', fx: { trust: { berta: 2 }, xp: 30 }, say: [['berta.t', 'Mmm. Un marc clar... i dins del marc, llibertat. M\'agrada.']] },
-        { t: 'Llibertat creativa total per a la Berta.', v: 'llibertat', fx: { trust: { berta: 1 } }, say: [['berta.h', 'Seràs el meu director preferit!']] }
+        { t: 'Llibertat creativa total per a la Berta.', v: 'llibertat', fx: { trust: { berta: 1 } }, say: [['berta.h', '{g:Seràs el meu director preferit|Seràs la meva directora preferida|Ets el millor cap que he tingut}!']] }
       ] },
       { t: 'sim', calc: (S, H) => {
         const v = S.f.brief42;
@@ -243,7 +243,7 @@
     steps: [
       { t: 'dlg', lines: (S) => [
         ['', 'Dimecres. Una factura s\'ha enviat amb el nom d\'un altre client. Una campanya s\'ha publicat amb el preu antic.'],
-        ['julia.a', 'Pau, això no pot continuar. Els clients ens envien coses per WhatsApp, per correu, ens truquen... i ningú no sap qui fa què.'],
+        ['julia.a', '{nom}, això no pot continuar. Els clients ens envien coses per WhatsApp, per correu, ens truquen... i ningú no sap qui fa què.'],
         S.f.quimMal ? ['julia.w', 'Només Quim ens ha canviat l\'encàrrec tres vegades aquesta setmana.'] : ['julia.t', 'Necessitem un sistema.']
       ] },
       { t: 'lesson', id: 'L_processos' },
@@ -282,7 +282,7 @@
         { t: 'Decidir l\'estratègia de cada client', ok: false, why: 'És el valor principal de l\'agència.' },
         { t: 'Negociar preus', ok: false, why: 'Requereix judici i relació.' }
       ], fx: (S, g) => ({ xp: g * 12, tools: S.tools + 80, flags: { crm: true } }) },
-      { t: 'dlg', lines: [['', 'Al cap d\'uns dies, un client proposa una «drecera».'], ['sergi.n', 'Pau, puc comprar una base de 20.000 correus d\'empreses per 200 €. Els enviem el butlletí i llestos!']] },
+      { t: 'dlg', lines: [['', 'Al cap d\'uns dies, un client proposa una «drecera».'], ['sergi.n', '{nom}, puc comprar una base de 20.000 correus d\'empreses per 200 €. Els enviem el butlletí i llestos!']] },
       { t: 'choice', key: 'dades44', prompt: 'Què li respons al Sergi?', opts: [
         { t: 'Comprar-la: és barata i ràpida.', v: 'comprar', fx: { rep: -4, flags: { rgpdRisk: true }, log: 'Va acceptar enviar correus a una base de dades comprada.', key: true }, say: [['', 'El 40 % dels correus reboten. Arriben queixes i el domini de correu queda marcat com a brossa.'], ['julia.a', 'T\'ho vaig dir. A més, sense consentiment és un risc legal.']] },
         { t: 'Rebutjar-la i proposar captació amb consentiment: fitxes descarregables i butlletí.', v: 'consent', fx: { rep: 2, xp: 30, log: 'Va rebutjar comprar una base de dades i va proposar captació amb consentiment.' }, say: [['sergi.t', 'Més lent... però si ho dius tu.'], ['julia.h', 'Tres mesos després, la llista pròpia té 900 contactes que obren els correus.']] }
@@ -295,7 +295,7 @@
     blurb: 'Els ingressos pugen. El benefici, no al mateix ritme.',
     steps: [
       { t: 'dlg', lines: [
-        ['julia.n', 'Pau, he creuat les hores reals amb el que factura cada client. Has de veure això.']
+        ['julia.n', '{nom}, he creuat les hores reals amb el que factura cada client. Has de veure això.']
       ] },
       { t: 'lesson', id: 'L_rendibilitat' },
       { t: 'choice', key: 'rend45', prompt: 'Què fas amb els clients poc rendibles?', info: (S) => {
@@ -324,7 +324,7 @@
     steps: [
       { t: 'dlg', lines: [
         ['', 'Campanya de Nadal de la Cansaladeria Núria. 2.000 € d\'anuncis en deu dies.'],
-        ['nuria.a', 'Pau, la plataforma diu zero vendes! Zero! Si això continua així, cancel·lo el contracte.'],
+        ['nuria.a', '{nom}, la plataforma diu zero vendes! Zero! Si això continua així, cancel·lo el contracte.'],
         ['pau.w', 'Calma, Núria. Abans de tocar res, he de saber què passa.']
       ] },
       { t: 'lesson', id: 'L_ads2' },
@@ -362,7 +362,7 @@
           fx: { rep: verdict === 'good' ? 6 : verdict === 'mid' ? 1 : -4, know: { ads: 1 }, flags: { nuria51: verdict }, dropClient: verdict === 'bad' ? 'nuria' : null, log: `Crisi de la campanya de Nadal: resultat ${verdict === 'good' ? 'recuperat' : verdict === 'mid' ? 'parcial' : 'negatiu'}.`, key: true }
         };
       } },
-      { t: 'dlg', lines: (S) => S.f.nuria51 === 'good' ? [['nuria.h', 'El millor Nadal de la història de la cansaladeria! I tot per un botó... Gràcies per no tornar-te boig.']] : S.f.nuria51 === 'mid' ? [['nuria.n', 'Bé, almenys hem salvat una part del Nadal.']] : [['nuria.a', 'Ho sento, Pau. Ho deixem aquí.']] }
+      { t: 'dlg', lines: (S) => S.f.nuria51 === 'good' ? [['nuria.h', 'El millor Nadal de la història de la cansaladeria! I tot per un botó... Gràcies per no tornar-te boig.']] : S.f.nuria51 === 'mid' ? [['nuria.n', 'Bé, almenys hem salvat una part del Nadal.']] : [['nuria.a', 'Ho sento, {nom}. Ho deixem aquí.']] }
     ]
   });
 
@@ -373,7 +373,7 @@
       { t: 'dlg', lines: [
         ['', 'Can Jordi ha canviat la carta: ha tret els canelons de la iàia, ha apujat els preus un 20 % i hi ha un cambrer nou poc amable.'],
         ['', 'En una setmana, 23 ressenyes d\'una estrella. Un perfil local amb 30.000 seguidors en parla.'],
-        ['jordi.a', 'Pau, esborra-ho tot! Denuncia aquestes ressenyes! Són uns desagraïts!']
+        ['jordi.a', '{nom}, esborra-ho tot! Denuncia aquestes ressenyes! Són uns desagraïts!']
       ] },
       { t: 'lesson', id: 'L_crisi' },
       { t: 'choice', key: 'crisi52', prompt: 'Com gestiones la crisi?', opts: [
@@ -411,12 +411,12 @@
       { t: 'dlg', lines: (S) => [
         [H.teamHas('julia') ? 'julia.t' : 'pau.t', 'Cim Trail: Meta diu que ha generat 120 vendes. Google, 90. El correu, 40. Total: 250.'],
         [H.teamHas('julia') ? 'julia.a' : 'pau.w', 'Però la botiga en línia n\'ha fet 160. Com pot ser?'],
-        ['sergi.n', 'Pau, vull retallar el canal que funcioni pitjor. Quin és?']
+        ['sergi.n', '{nom}, vull retallar el canal que funcioni pitjor. Quin és?']
       ] },
       { t: 'lesson', id: 'L_atribucio' },
       { t: 'choice', key: 'atr53', prompt: 'Què recomanes al Sergi?', opts: [
         { t: 'Retallar el canal amb pitjor ROAS segons les plataformes', v: 'retallar' },
-        { t: 'Sumar-ho tot: «La campanya ha generat 250 vendes»', v: 'sumar', fx: { rep: -3 }, say: [['sergi.a', '250? Si a la botiga n\'hem fet 160! Pau, m\'estàs prenent el pèl?']] },
+        { t: 'Sumar-ho tot: «La campanya ha generat 250 vendes»', v: 'sumar', fx: { rep: -3 }, say: [['sergi.a', '250? Si a la botiga n\'hem fet 160! {nom}, m\'estàs prenent el pèl?']] },
         { t: 'Explicar les limitacions de l\'atribució i fer servir les vendes reals com a referència', v: 'explicar', fx: { rep: 2, xp: 25 } },
         { t: 'Proposar un experiment geogràfic: pausar Meta tres setmanes a Lleida i Girona i comparar-les amb Barcelona i Tarragona', v: 'experiment', req: (S, H) => S.skills.analitica >= 2 || H.teamHas('julia'), fx: { rep: 4, xp: 50, log: 'Va proposar un experiment d\'incrementalitat per decidir la inversió.', key: true } }
       ] },
@@ -452,7 +452,7 @@
         return [
           ['', 'Divendres. Les nòmines s\'han de pagar dilluns.'],
           [H.teamHas('julia') ? 'julia.w' : 'pau.w', deb === 'quim' ? 'Quim no ha pagat les dues últimes quotes. Són 3.000 €.' : 'Cim Trail no ha pagat les dues últimes quotes. Són 1.000 €, i amb els projectes pendents, 3.000 €.'],
-          [deb + '.n', deb === 'quim' ? 'Tranquil, nano. Ja pagaré. Ara vaig una mica just.' : 'Ho sento, Pau. Hem tingut una mala temporada.']
+          [deb + '.n', deb === 'quim' ? 'Tranquil, {g:nano|nena|nano}. Ja pagaré. Ara vaig una mica just.' : 'Ho sento, {nom}. Hem tingut una mala temporada.']
         ];
       } },
       { t: 'fx', fx: { money: -3000, log: 'Un client va deixar de pagar 3.000 € en factures.' } },
@@ -479,9 +479,9 @@
     steps: [
       { t: 'fx', silent: true, fx: (S) => S.f.prestec ? { money: -3400, log: 'Va tornar el préstec ràpid amb 400 € d\'interessos.' } : null },
       { t: 'dlg', lines: (S) => [
-        ['laia.n', S.f.laiaAliada ? 'Pau, tinc un projecte per a una cadena de supermercats. Necessito un soci a Osona. 6.000 € per a vosaltres, però els terminis són estrictes: tres setmanes.' : 'Pau, tinc un projecte gran i em falta gent. 6.000 € per a vosaltres. Tres setmanes, sense excuses.'],
-        has(S, 'quim') ? ['quim.n', 'Pau, vull ampliar el contracte: obro una nau a Vic. +800 € al mes, però ho vull ja.'] : ['miquel.n', 'Pau, voldria ampliar la feina: obrim línia d\'exportació. +800 € al mes, però ho necessito ja.'],
-        ['carme.h', 'Pau, vull fer una cosa nova: vendre coques a les cafeteries de la comarca. M\'ajudes? No et puc pagar gaire...'],
+        ['laia.n', S.f.laiaAliada ? '{nom}, tinc un projecte per a una cadena de supermercats. Necessito un soci a Osona. 6.000 € per a vosaltres, però els terminis són estrictes: tres setmanes.' : '{nom}, tinc un projecte gran i em falta gent. 6.000 € per a vosaltres. Tres setmanes, sense excuses.'],
+        has(S, 'quim') ? ['quim.n', '{nom}, vull ampliar el contracte: obro una nau a Vic. +800 € al mes, però ho vull ja.'] : ['miquel.n', '{nom}, voldria ampliar la feina: obrim línia d\'exportació. +800 € al mes, però ho necessito ja.'],
+        ['carme.h', '{nom}, vull fer una cosa nova: vendre coques a les cafeteries de la comarca. M\'ajudes? No et puc pagar gaire...'],
         ['pau.w', 'No hi ha prou equip per a tot alhora.']
       ] },
       { t: 'choice', key: 'prio55', prompt: 'Què prioritzes?', sub: 'Cada opció té conseqüències amb cada persona.', opts: [
@@ -492,11 +492,11 @@
         { t: 'Negociar: una setmana més de termini per a la Laia, una solució senzilla per a la Carme i l\'ampliació d\'aquí a un mes', v: 'negociar', req: { skill: 'gestio', min: 2 }, fx: (S) => ({ money: 5400, fee: true, clientFee: has(S, 'quim') ? { quim: 800 } : { miquel: 800 }, trust: { laia: 1, carme: 1, julia: 1 }, rep: 3, xp: 60, flags: { laiaCollab: true }, log: 'Va negociar terminis i va atendre les tres peticions sense cremar l\'equip.', key: true }) }
       ] },
       { t: 'dlg', lines: (S) => ({
-        laia: [['laia.h', 'Feina impecable. Sabia que podia comptar amb vosaltres.'], ['carme.w', 'Ja ho entenc, Pau. Ets un home ocupat.']],
+        laia: [['laia.h', 'Feina impecable. Sabia que podia comptar amb vosaltres.'], ['carme.w', 'Ja ho entenc, {nom}. {g:Ets un home ocupat|Ets una dona ocupada|Tens molta feina}.']],
         client: [['laia.t', 'Entesos. Buscaré algú altre.'], ['carme.n', 'No passa res, ja m\'espavilaré.']],
         carme: [['carme.h', 'Sabia que no em fallaries. Les cafeteries ja em demanen coques!'], ['laia.n', 'Una decisió... sentimental. Respecte.']],
-        tot: [['julia.a', 'Pau, fa tres setmanes que no veig la meva família.'], ['berta.w', 'Estic esgotada. Així no podem continuar.']],
-        negociar: [['laia.h', 'Una setmana més? D\'acord: m\'has convençut amb el pla.'], ['carme.h', 'I la plantilla de comandes que m\'has fet és facilíssima!'], ['julia.h', 'Això és dirigir, Pau.']]
+        tot: [['julia.a', '{nom}, fa tres setmanes que no veig la meva família.'], ['berta.w', 'Estic esgotada. Així no podem continuar.']],
+        negociar: [['laia.h', 'Una setmana més? D\'acord: m\'has convençut amb el pla.'], ['carme.h', 'I la plantilla de comandes que m\'has fet és facilíssima!'], ['julia.h', 'Això és dirigir, {nom}.']]
       })[S.f.prio55] }
     ]
   });

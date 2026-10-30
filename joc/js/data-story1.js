@@ -2,7 +2,7 @@
 window.GD = window.GD || {};
 
 GD.names = {
-  pau: 'Pau', carme: 'Carme', miquel: 'Miquel', julia: 'Júlia', berta: 'Berta', quim: 'Quim', laia: 'Laia Vidal',
+  pau: '{nom}', carme: 'Carme', miquel: 'Miquel', julia: 'Júlia', berta: 'Berta', quim: 'Quim', laia: 'Laia Vidal',
   jordi: 'Jordi', nuria: 'Núria', sergi: 'Sergi', toni: 'Toni', marta: 'Marta', ramon: 'Ramon', amelie: 'Amélie', client: 'Client'
 };
 
@@ -13,14 +13,14 @@ GD.profiles = {
 };
 
 GD.stages = [
-  { id: 1, title: 'Tornar a començar', sub: 'Aprendre els fonaments i aconseguir el primer client', levels: '1–3', minLevel: 1, color: '#ff7aa2', chapters: ['1.1', '1.2', '1.3', '1.4', '1.5'], outro: 'En Pau ja té una cartera inicial, un historial de decisions i una reputació incipient.' },
+  { id: 1, title: 'Tornar a començar', sub: 'Aprendre els fonaments i aconseguir el primer client', levels: '1–3', minLevel: 1, color: '#ff7aa2', chapters: ['1.1', '1.2', '1.3', '1.4', '1.5'], outro: '{En} ja té una cartera inicial, un historial de decisions i una reputació incipient.' },
   { id: 2, title: 'Fer-se un nom a Osona', sub: 'Captar clients i dominar els canals digitals', levels: '4–7', minLevel: 4, color: '#3fc1b0', chapters: ['2.1', '2.2', '2.3', '2.4', '2.5'], outro: 'L\'agència ja té clients de sectors diferents. L\'estratègia empresarial és tan important com la tècnica.' },
   { id: 3, title: 'La fira de les oportunitats', sub: 'Competir, negociar i guanyar projectes', levels: '8–11', minLevel: 7, color: '#f2b134', chapters: ['3.1', '3.2', '3.3', '3.4', '3.5'], outro: 'L\'agència passa de sobreviure amb encàrrecs a gestionar una cartera i un model de negoci.' },
-  { id: 4, title: 'Ja no pots fer-ho tot sol', sub: 'Contractar, delegar i crear processos', levels: '12–15', minLevel: 11, color: '#7a8cff', chapters: ['4.1', '4.2', '4.3', '4.4', '4.5'], outro: 'L\'agència ja és una empresa amb equip, costos fixos, processos i obligacions de direcció.' },
+  { id: 4, title: 'Ja no pots fer-ho tot {g:sol|sola|sol}', sub: 'Contractar, delegar i crear processos', levels: '12–15', minLevel: 11, color: '#7a8cff', chapters: ['4.1', '4.2', '4.3', '4.4', '4.5'], outro: 'L\'agència ja és una empresa amb equip, costos fixos, processos i obligacions de direcció.' },
   { id: 5, title: 'L\'agència sota pressió', sub: 'Gestionar crisis, marges i clients difícils', levels: '16–19', minLevel: 15, color: '#ff6a5a', chapters: ['5.1', '5.2', '5.3', '5.4', '5.5'], outro: 'Has demostrat que pots dirigir quan res no surt com estava previst.' },
   { id: 6, title: 'Créixer sense perdre el nord', sub: 'Especialitzar-se o diversificar', levels: '20–23', minLevel: 19, color: '#a066e0', chapters: ['6.1', '6.2', '6.3', '6.4', '6.5'], outro: 'L\'agència té una identitat definida. El futur dependrà de l\'especialització i la reputació.' },
   { id: 7, title: 'Més enllà de Catalunya', sub: 'Internacionalització i direcció estratègica', levels: '24–27', minLevel: 23, color: '#3aa0e8', chapters: ['7.1', '7.2', '7.3', '7.4', '7.5'], outro: 'La pregunta ja no és quin serà el pròxim client, sinó quina empresa vols ser.' },
-  { id: 8, title: 'L\'empresa que has construït', sub: 'Resolució de l\'arc principal i finals ramificats', levels: '28–30', minLevel: 27, color: '#ffd24a', chapters: ['8.1', '8.2'], outro: 'La història d\'en Pau ha arribat a un final. Però l\'agència continua.' }
+  { id: 8, title: 'L\'empresa que has construït', sub: 'Resolució de l\'arc principal i finals ramificats', levels: '28–30', minLevel: 27, color: '#ffd24a', chapters: ['8.1', '8.2'], outro: 'La història {den} ha arribat a un final. Però l\'agència continua.' }
 ];
 
 GD.chapters = {};
@@ -33,20 +33,20 @@ GD.tbl = tbl;
    ============================================================ */
 CH('1.1', {
   title: 'Una clau, un portàtil i pocs diners', who: 'pau', bg: 'vic', weeks: 1,
-  blurb: 'En Pau torna a Vic amb una idea: muntar una agència de màrqueting digital.',
+  blurb: '{En} torna a Vic amb una idea: muntar una agència de màrqueting digital.',
   steps: [
     { t: 'dlg', lines: [
       ['', 'Vic. Dissabte de mercat. La Plaça Major fa olor de fuet, de cafè i de pluja recent.'],
       ['pau.n', 'Tres anys fora i tot continua igual... Bé, gairebé tot. Ara jo tinc un pla.'],
       ['pau.h', 'Muntaré una agència de màrqueting digital. Aquí, a Osona.'],
-      ['', 'En Pau té un portàtil, pocs estalvis i una clau. La clau obre un despatx petit damunt d\'una merceria.'],
+      ['', '{En} té un portàtil, pocs estalvis i una clau. La clau obre un despatx petit damunt d\'una merceria.'],
       ['bg', 'despatx'],
       ['', 'Una taula, dues cadires, una pissarra i una connexió que va i ve. El primer centre d\'operacions.'],
       ['pau.t', 'A veure els números... Compte bancari: 3.000 €. Lloguer: 350 € al mes. Eines i connexió: 50 €.'],
       ['pau.w', 'Si no entra cap client, això dura uns set mesos. Millor no pensar-hi gaire.'],
       ['pau.n', 'A la llibreta hi tinc idees. Però primer: quin és el meu punt fort?']
     ] },
-    { t: 'choice', key: 'profile', prompt: 'Quin és el punt fort d\'en Pau?', sub: 'Dona una petita bonificació inicial. No determina la teva professió final.', opts: [
+    { t: 'choice', key: 'profile', prompt: 'Quin és el punt fort {den}?', sub: 'Dona una petita bonificació inicial. No determina la teva professió final.', opts: [
       { t: '📊 Perfil orientat a les dades', d: 'T\'agraden els números i entendre què passa de veritat. +1 Analítica', v: 'dades', fx: { skill: { analitica: 1 } } },
       { t: '🎨 Perfil creatiu', d: 'Tens ull per als missatges i les imatges. +1 Creativitat', v: 'creatiu', fx: { skill: { creativitat: 1 } } },
       { t: '🤝 Perfil comercial', d: 'Saps escoltar i convèncer. +1 Comercial', v: 'comercial', fx: { skill: { comercial: 1 } } }
@@ -60,7 +60,7 @@ CH('1.1', {
       { t: '«Ajudem els negocis d\'Osona a aconseguir més clients amb accions mesurables i pressupostos petits.»', v: 'resultat', fx: { xp: 20, rep: 2 }, say: [['pau.h', 'Això sí! Per a qui, quin problema i com ho mesurarem.']] }
     ] },
     { t: 'choice', key: 'serveis', prompt: 'Quins serveis oferiràs al principi?', sub: 'Aquesta decisió determina quines oportunitats arriben amb més facilitat.', opts: [
-      { t: 'Tots: web, xarxes, anuncis, SEO, disseny i vídeo', d: 'Més portes d\'entrada, però és difícil fer-ho tot bé tu sol.', v: 'tots', fx: { log: 'Va decidir oferir tots els serveis des del primer dia.', key: true } },
+      { t: 'Tots: web, xarxes, anuncis, SEO, disseny i vídeo', d: 'Més portes d\'entrada, però és difícil fer-ho tot bé tu {g:sol|sola|sol}.', v: 'tots', fx: { log: 'Va decidir oferir tots els serveis des del primer dia.', key: true } },
       { t: 'Especialitzar-me en 2 o 3: màrqueting local, Google i analítica', d: 'Menys encàrrecs, però més fàcils de fer bé i de recomanar.', v: 'espec', fx: { log: 'Va decidir especialitzar-se en màrqueting local, Google i analítica.', key: true, skill: { estrategia: 0 } } },
       { t: 'Generalista que primer estudia cada cas i després proposa', d: 'Atraus clients que valoren l\'anàlisi abans de l\'acció.', v: 'diagnosi', fx: { log: 'Es va presentar com un professional que primer diagnostica i després proposa.', key: true } }
     ] },
@@ -83,8 +83,8 @@ CH('1.2', {
   steps: [
     { t: 'fx', silent: true, fx: { flags: { met_carme: true } } },
     { t: 'dlg', lines: [
-      ['carme.n', 'Bon dia. Ets el noi dels ordinadors? La Montse de la merceria diu que fas coses d\'internet.'],
-      ['pau.s', 'Eh... sí! Pau Riera, de {agencia}. Passi, passi.'],
+      ['carme.n', 'Bon dia. {g:Ets el noi|Ets la noia|Ets tu qui fa coses} dels ordinadors? La Montse de la merceria diu que fas coses d\'internet.'],
+      ['pau.s', 'Eh... sí! {nomc}, de {agencia}. Passi, passi.'],
       ['carme.n', 'Sóc la Carme, del forn de la cantonada. Fa trenta anys que pasto.'],
       ['carme.t', 'Et seré clara. Hi ha dies que ho venc tot, i d\'altres que a les set del vespre encara tinc mitja fornada a la lleixa.'],
       ['carme.a', 'Ara tothom em diu que m\'he de fer «influencer». Jo no vull pagar perquè algú faci fotos boniques del pa si no venc ni una barra més.']
@@ -109,7 +109,7 @@ CH('1.2', {
       { t: 'Quins dies i hores us sobra més producte?', flag: 'f_hores', note: 'Dimarts i dimecres, de 16 a 19 h.', a: [['carme.t', 'Dimarts i dimecres a la tarda, de quatre a set. Al matí ho venc tot; a la tarda, la lleixa es queda plena.']] },
       { t: 'Qui són els vostres clients i quan venen?', flag: 'f_clients', note: 'Gent gran al matí; famílies de l\'escola a la tarda (cada cop menys).', a: [['carme.n', 'Al matí, gent gran del barri. A la tarda venien moltes famílies a la sortida de l\'escola a buscar el berenar...'], ['carme.w', 'Però fa uns mesos que en venen molt menys.']] },
       { t: 'Què ha canviat aquest darrer any?', flag: 'f_canvi', note: 'Supermercat nou amb forn i l\'escola surt més d\'hora.', a: [['carme.t', 'Van obrir un supermercat amb forn a la carretera. I l\'escola del costat ara surt a dos quarts de cinc; abans sortien a les cinc.'], ['pau.t', '(Potser les famílies passen quan encara no hi ha la fornada de la tarda... o ja no passen per aquí.)']] },
-      { t: 'Teniu fitxa a Google? Què hi diu?', flag: 'f_google', note: 'La fitxa diu que tanqueu a les 14 h!', a: [['carme.s', 'Fitxa a Google? Algú en va fer una fa anys...'], ['', 'En Pau ho mira al mòbil. La fitxa del forn diu: «Obert de 7 a 14 h». Hi ha dues ressenyes del 2019.'], ['pau.s', 'Carme... Google diu a tothom que a la tarda és tancat!'], ['carme.a', 'Què?! Però si obro fins a les vuit!']] },
+      { t: 'Teniu fitxa a Google? Què hi diu?', flag: 'f_google', note: 'La fitxa diu que tanqueu a les 14 h!', a: [['carme.s', 'Fitxa a Google? Algú en va fer una fa anys...'], ['', '{En} ho mira al mòbil. La fitxa del forn diu: «Obert de 7 a 14 h». Hi ha dues ressenyes del 2019.'], ['pau.s', 'Carme... Google diu a tothom que a la tarda és tancat!'], ['carme.a', 'Què?! Però si obro fins a les vuit!']] },
       { t: 'Quins productes es queden a la lleixa?', flag: 'f_producte', note: 'Coca de vidre i pa de motlle a la tarda.', a: [['carme.n', 'A la tarda, sobretot coca de vidre i pa de motlle. Les coques de llardons volen sempre.']] },
       { t: 'Quin pressupost teniu per a això?', flag: 'f_press', note: '300 €, i vol saber on va cada cèntim.', a: [['carme.n', 'Tres-cents euros, com a molt. I vull saber en què es gasten fins a l\'últim cèntim.']] }
     ] },
@@ -123,7 +123,7 @@ CH('1.2', {
       { t: 'Que el forn no té Instagram.', v: 'insta', say: [['carme.t', 'Instagram? Si la meitat de les meves clientes tenen setanta anys...']] },
       { t: 'A la tarda entren menys clients perquè molta gent creu que és tancat i les famílies ja no hi passen a l\'hora de berenar.', v: 'bo', hide: (S) => !(S.f.f_google || S.f.f_canvi), fx: { xp: 30, trust: { carme: 1 }, log: 'Va identificar la causa del problema del forn: informació incorrecta i canvi d\'hàbits.', key: true }, say: [['carme.s', 'Ostres... té tot el sentit. Jo pensava que era culpa del supermercat i prou.']] },
       { t: 'A la tarda hi ha menys clients, però encara no en sé ben bé el perquè.', v: 'mig', say: [['pau.t', 'Hauré de proposar accions prudents i mesurar bé.']] },
-      { t: 'Els preus són massa alts.', v: 'preu', fx: { trust: { carme: -1 } }, say: [['carme.a', 'Els meus preus són els mateixos de fa dos anys, noi.']] }
+      { t: 'Els preus són massa alts.', v: 'preu', fx: { trust: { carme: -1 } }, say: [['carme.a', 'Els meus preus són els mateixos de fa dos anys, {g:noi|noia|maco}.']] }
     ] },
     { t: 'lesson', id: 'L_smart' },
     { t: 'choice', key: 'smart', prompt: 'Quin objectiu proposes per a les properes 4 setmanes?', opts: [
@@ -170,10 +170,10 @@ CH('1.3', {
       { t: 'Seguidors nous', ok: false, why: 'No responen la pregunta del negoci.' }
     ], fx: (S, g) => ({ xp: g * 10, flags: { mesura: g >= 2 } }) },
     { t: 'dlg', bg: 'forn', lines: (S) => {
-      const b = S.f.bud || {}; const L = [['', 'L\'endemà, en Pau presenta el pla a la Carme amb un full imprès i un cafè.']];
+      const b = S.f.bud || {}; const L = [['', 'L\'endemà, {en} presenta el pla a la Carme amb un full imprès i un cafè.']];
       if (S.f.accions && S.f.accions.ids.includes('fitxa')) L.push(['pau.n', 'Primer arreglarem la fitxa de Google: ha de dir que obres a la tarda.']);
       if (S.f.accions && S.f.accions.ids.includes('berenar')) L.push(['pau.h', 'I crearem el «Berenar de tarda»: coca de vidre i suc a preu tancat. Aprofitem el que sobra!'], ['carme.h', 'Això els nens ho voldran, segur.']);
-      if (b.fotos >= 150) L.push(['carme.t', 'Tanta part per a fotos? Les meves coques ja són boniques, noi.']);
+      if (b.fotos >= 150) L.push(['carme.t', 'Tanta part per a fotos? Les meves coques ja són boniques, {g:noi|noia|maco}.']);
       if (b.reserva > 0) L.push(['pau.n', `He reservat ${b.reserva} € per ajustar a mitja campanya si les dades ho demanen.`], ['carme.n', 'Això és de persona prudent.']);
       if (S.f.mesura) L.push(['carme.h', 'I això dels cupons ho podré comptar jo mateixa a la caixa. M\'agrada.']);
       else L.push(['carme.w', 'I com sabré si ha funcionat?'], ['pau.w', 'Doncs... mirarem com va.']);
@@ -182,7 +182,7 @@ CH('1.3', {
     } },
     { t: 'fx', silent: true, fx: (S) => ({ trust: { carme: ((S.f.bud || {}).reserva > 0 ? 1 : 0) + (S.f.mesura ? 1 : 0) - ((S.f.bud || {}).fotos >= 150 ? 1 : 0) } }) },
     { t: 'choice', key: 'feeCarme', who: 'carme', prompt: 'Quins honoraris demanes pel pla i el seguiment de 4 setmanes?', opts: [
-      { t: 'Res: és el primer client i vull referències.', v: 0, fx: { log: 'Va treballar gratis per al primer client.' }, say: [['carme.t', 'Gratis? Res és gratis, noi. Bé... t\'ho pagaré en pa. I parlaré bé de tu.']] },
+      { t: 'Res: és el primer client i vull referències.', v: 0, fx: { log: 'Va treballar gratis per al primer client.' }, say: [['carme.t', 'Gratis? Res és gratis, {g:noi|noia|maco}. Bé... t\'ho pagaré en pa. I parlaré bé de tu.']] },
       { t: '450 €: pla, execució i informe final.', v: 450, say: [['carme.n', 'És just. Si funciona, n\'estaré contenta.']] },
       { t: '900 €: és el preu habitual a Barcelona.', v: 450, fx: { trust: { carme: -1 } }, say: [['carme.a', 'Aquí no som a Barcelona. Tres-cents de campanya i nou-cents per a tu? Ho deixem en 450 i gràcies.']] }
     ] }
@@ -195,8 +195,8 @@ CH('1.4', {
   steps: [
     { t: 'dlg', lines: (S) => {
       const ids = (S.f.accions && S.f.accions.ids) || [];
-      const L = [['', 'Setmana 1 de la campanya. El mòbil d\'en Pau vibra.']];
-      if (ids.includes('fitxa')) L.push(['carme.h', 'Pau! Una senyora m\'ha dit que ha vist a Google que obro a la tarda. Es pensava que tancava!']);
+      const L = [['', 'Setmana 1 de la campanya. El mòbil {den} vibra.']];
+      if (ids.includes('fitxa')) L.push(['carme.h', '{nom}! Una senyora m\'ha dit que ha vist a Google que obro a la tarda. Es pensava que tancava!']);
       if (ids.includes('berenar')) L.push(['carme.n', 'I ja he venut dotze «berenars». Els nens demanen la coca de vidre, qui ho havia de dir.']);
       if (!ids.includes('fitxa') && !ids.includes('berenar')) L.push(['carme.n', 'De moment no noto gaire res, eh.']);
       return L;
@@ -258,9 +258,9 @@ CH('1.4', {
     } },
     { t: 'dlg', bg: 'forn', lines: (S) => {
       const v = S.f.carmeResult;
-      if (v === 'good') return [['carme.h', 'Pau, aquest dimarts he hagut de fer una segona fornada a la tarda! No passava des de fa anys.'], ['carme.n', 'I m\'has explicat cada euro. Això val més que tot.'], ['pau.h', 'Gràcies, Carme. Ho hem fet junts.']];
+      if (v === 'good') return [['carme.h', '{nom}, aquest dimarts he hagut de fer una segona fornada a la tarda! No passava des de fa anys.'], ['carme.n', 'I m\'has explicat cada euro. Això val més que tot.'], ['pau.h', 'Gràcies, Carme. Ho hem fet junts.']];
       if (v === 'mid') return [['carme.n', 'Ha anat bé, eh. No és un miracle, però es nota.'], ...(S.f.mesura ? [['carme.h', 'I almenys sé què ha funcionat i què no. Això m\'agrada.']] : [['carme.t', 'Tot i que no sé ben bé què ha funcionat...']])];
-      return [['carme.w', 'Doncs no he notat gaire diferència, noi.'], ...(S.f.mesura ? [['pau.n', 'Ho sé. Però tenim les dades: el que ha funcionat és clar i el que no també. La propera vegada ho farem millor.'], ['carme.n', 'Almenys ets honest. Això compta.']] : [['pau.w', 'Ho sento, Carme...']])];
+      return [['carme.w', 'Doncs no he notat gaire diferència, {g:noi|noia|maco}.'], ...(S.f.mesura ? [['pau.n', 'Ho sé. Però tenim les dades: el que ha funcionat és clar i el que no també. La propera vegada ho farem millor.'], ['carme.n', 'Almenys {g:ets honest|ets honesta|has estat sincer}. Això compta.']] : [['pau.w', 'Ho sento, Carme...']])];
     } },
     { t: 'reward', money: (S) => S.f.feeCarme || 0, fx: (S) => (S.f.feeCarme === 0 ? { rep: 3 } : null), text: 'Has rebut la primera reputació, experiència en màrqueting local i una possible referència comercial.' }
   ]
@@ -272,14 +272,14 @@ CH('1.5', {
   steps: [
     { t: 'dlg', lines: (S) => [
       ['', 'Ring, ring.'],
-      ['toni.n', 'Ei, ets el Pau? Sóc el Toni, del gimnàs Osona Fit.' + (S.f.carmeResult === 'good' ? ' La Carme del forn diu que ets un crac.' : ' M\'han dit que vas ajudar el forn de la Carme.')],
+      ['toni.n', 'Ei, ets el {nom}? Sóc el Toni, del gimnàs Osona Fit.' + (S.f.carmeResult === 'good' ? ' La Carme del forn diu que ets un crac.' : ' M\'han dit que vas ajudar el forn de la Carme.')],
       ['toni.n', 'Vull anuncis. Ja. Tinc 600 € per a la campanya i et pago 400 € per muntar-la. La vull activa aquest cap de setmana.'],
       ['pau.t', '(400 € em vindrien molt bé... però de publicitat de pagament en sé poca cosa.)']
     ] },
     { t: 'choice', key: 'toni', who: 'toni', prompt: 'Què li dius al Toni?', opts: [
-      { t: 'Acceptar i muntar-la de seguida, tal com ho demana.', v: 'rapid', fx: { log: 'Va acceptar muntar una campanya d\'anuncis a corre-cuita.' }, say: [['pau.h', 'Fet! Divendres la tens activa.'], ['', 'En Pau la munta divendres a la nit, a corre-cuita, copiant passos d\'un vídeo.'], ['', 'Una setmana després...'], ['toni.a', 'Pau! He gastat 300 € i no s\'ha apuntat ningú. Ni un! Això sí, tinc 140 m\'agrada...'], ['pau.w', 'Deixa\'m revisar la configuració. Ara mateix.']] },
+      { t: 'Acceptar i muntar-la de seguida, tal com ho demana.', v: 'rapid', fx: { log: 'Va acceptar muntar una campanya d\'anuncis a corre-cuita.' }, say: [['pau.h', 'Fet! Divendres la tens activa.'], ['', '{En} la munta divendres a la nit, a corre-cuita, copiant passos d\'un vídeo.'], ['', 'Una setmana després...'], ['toni.a', '{nom}! He gastat 300 € i no s\'ha apuntat ningú. Ni un! Això sí, tinc 140 m\'agrada...'], ['pau.w', 'Deixa\'m revisar la configuració. Ara mateix.']] },
       { t: 'Acceptar, però abans definir l\'objectiu i com mesurarem les inscripcions.', v: 'pla', fx: { xp: 20, log: 'Va condicionar la campanya del gimnàs a definir objectiu i mesura.' }, say: [['toni.t', 'Uf, d\'acord, però ràpid. Ah, i ja en tinc una de prova que vaig activar jo mateix. Mira-la.'], ['pau.n', 'Perfecte: abans de fer res, la reviso.']] },
-      { t: 'Declinar: encara no domino prou la publicitat.', v: 'no', say: [['toni.w', 'Bé, ja m\'ho farà el meu cosí.'], ['', 'Dues setmanes després...'], ['toni.a', 'Pau, el meu cosí m\'ho ha muntat i no s\'ha apuntat ningú! Ho pots mirar? Et pago 300 €.'], ['pau.n', 'Això sí que ho puc fer: revisar-ho amb calma.']] }
+      { t: 'Declinar: encara no domino prou la publicitat.', v: 'no', say: [['toni.w', 'Bé, ja m\'ho farà el meu cosí.'], ['', 'Dues setmanes després...'], ['toni.a', '{nom}, el meu cosí m\'ho ha muntat i no s\'ha apuntat ningú! Ho pots mirar? Et pago 300 €.'], ['pau.n', 'Això sí que ho puc fer: revisar-ho amb calma.']] }
     ] },
     { t: 'fx', silent: true, fx: { flags: { met_toni: true } } },
     { t: 'lesson', id: 'L_ads1' },
@@ -317,7 +317,7 @@ CH('1.5', {
       };
     } },
     { t: 'dlg', lines: (S) => [
-      ...(S.f.toniResult === 'good' ? [['toni.h', 'Vint inscripcions! I ara sé quant em costa cada una. Ets un fenomen, Pau.']] : [['toni.n', 'Bé, ha millorat. Seguirem provant.']]),
+      ...(S.f.toniResult === 'good' ? [['toni.h', 'Vint inscripcions! I ara sé quant em costa cada una. Ets un fenomen, {nom}.']] : [['toni.n', 'Bé, ha millorat. Seguirem provant.']]),
       ['clear', ''],
       ['bg', 'despatx:night'],
       ['pau.t', 'Primer client, primera campanya, primer error. I la primera lliçó: les dades no menteixen, però cal saber-les llegir.'],
@@ -335,7 +335,7 @@ CH('2.1', {
   blurb: 'Bones opinions, però dilluns i dimarts el menjador és mig buit.',
   steps: [
     { t: 'dlg', lines: (S) => [
-      ['jordi.n', 'Pau? Sóc el Jordi, de Can Jordi, a Tona.' + (S.trust.carme >= 2 ? ' La Carme m\'ha parlat molt bé de tu.' : '')],
+      ['jordi.n', '{nom}? Sóc el Jordi, de Can Jordi, a Tona.' + (S.trust.carme >= 2 ? ' La Carme m\'ha parlat molt bé de tu.' : '')],
       ['jordi.t', 'Tenim bones ressenyes, el cap de setmana ho omplim. Però dilluns i dimarts... sembla un museu.'],
       ['jordi.n', 'He pensat que hauríem de publicar més a les xarxes. Cada dia un plat. Què et sembla?']
     ] },
@@ -373,7 +373,7 @@ CH('2.1', {
         fx: { rep: verdict === 'good' ? 6 : verdict === 'mid' ? 2 : 0, know: { seo: 1 }, flags: { jordiResult: verdict }, client: verdict === 'good' ? { id: 'jordi', name: 'Can Jordi (manteniment local)', fee: 300 } : null }
       };
     } },
-    { t: 'dlg', lines: (S) => S.f.jordiResult === 'good' ? [['jordi.h', 'Pau, dilluns vam fer quaranta menús! Quaranta! Vull que porteu la fitxa i les ressenyes cada mes.']] :
+    { t: 'dlg', lines: (S) => S.f.jordiResult === 'good' ? [['jordi.h', '{nom}, dilluns vam fer quaranta menús! Quaranta! Vull que porteu la fitxa i les ressenyes cada mes.']] :
       S.f.estr21 === 'desc' ? [['jordi.w', 'Ple de gent, sí... però a final de mes he perdut diners. No ho podem mantenir.'], ['pau.t', 'Lliçó apresa: omplir no és el mateix que guanyar.']] :
         [['jordi.n', 'Ha anat una mica millor, però no gaire. Ja veurem.']] },
     { t: 'reward', money: 600 }
@@ -436,7 +436,7 @@ CH('2.2', {
         fx: { rep: verdict === 'good' ? 7 : verdict === 'mid' ? 3 : -1, trust: { miquel: verdict === 'good' ? 3 : verdict === 'mid' ? 1 : -2 }, know: { creixement: 1 }, flags: { miquelResult: verdict }, client: verdict !== 'bad' ? { id: 'miquel', name: 'Mecanitzats Bellmunt (B2B)', fee: verdict === 'good' ? 900 : 600 } : null, log: `Projecte B2B per a Miquel: ${clients} clients nous.`, key: verdict === 'good' }
       };
     } },
-    { t: 'dlg', lines: (S) => S.f.miquelResult === 'good' ? [['miquel.h', 'Tres empreses noves a la cartera. Això són diners de debò, Pau. Continuem treballant junts.']] :
+    { t: 'dlg', lines: (S) => S.f.miquelResult === 'good' ? [['miquel.h', 'Tres empreses noves a la cartera. Això són diners de debò, {nom}. Continuem treballant junts.']] :
       S.f.miquelResult === 'mid' ? [['miquel.n', 'No està malament. Però vull més qualitat i menys soroll. Continuem uns mesos a veure.']] :
         [['miquel.a', 'Si em portes un informe de m\'agrades, no cal que tornis. Els números que importen són comandes.'], ['pau.w', 'Entesos, Miquel. He après la lliçó.']] },
     { t: 'reward', money: 1800 }
@@ -492,7 +492,7 @@ CH('2.3', {
         fx: { rep: verdict === 'good' ? 6 : verdict === 'mid' ? 3 : 0, know: { web: 1 }, flags: { met_nuria: true, nuriaResult: verdict }, client: verdict !== 'bad' ? { id: 'nuria', name: 'Cansaladeria Núria (botiga en línia)', fee: 600 } : null }
       };
     } },
-    { t: 'dlg', lines: (S) => S.f.nuriaResult === 'good' ? [['nuria.h', 'Pau! M\'ha arribat una comanda de Tarragona i una altra de Figueres! El fuet de Vic, a tot arreu!']] : [['nuria.n', 'Va venent... però esperava més. Ho anirem millorant?'], ['pau.n', 'Sí. Ara tenim dades per saber on millorar.']] },
+    { t: 'dlg', lines: (S) => S.f.nuriaResult === 'good' ? [['nuria.h', '{nom}! M\'ha arribat una comanda de Tarragona i una altra de Figueres! El fuet de Vic, a tot arreu!']] : [['nuria.n', 'Va venent... però esperava més. Ho anirem millorant?'], ['pau.n', 'Sí. Ara tenim dades per saber on millorar.']] },
     { t: 'reward', money: 1500 }
   ]
 });
@@ -502,7 +502,7 @@ CH('2.4', {
   blurb: '8.000 seguidors nous. Quantes vendes? Ni idea.',
   steps: [
     { t: 'dlg', lines: [
-      ['sergi.h', 'Pau, sóc el Sergi, de Cim Trail. Roba de muntanya feta a Osona. Necessito que em portis les xarxes.'],
+      ['sergi.h', '{nom}, sóc el Sergi, de Cim Trail. Roba de muntanya feta a Osona. Necessito que em portis les xarxes.'],
       ['sergi.h', 'L\'última campanya va ser un èxit brutal: 8.000 seguidors nous en un mes!'],
       ['pau.n', 'Felicitats! I quantes vendes va generar?'],
       ['sergi.s', '...'],
@@ -519,7 +519,7 @@ CH('2.4', {
       { t: 'Nombre de publicacions fetes', ok: false, why: 'És activitat, no resultat.' }
     ], fx: (S, g) => ({ xp: g * 12 }) },
     { t: 'dlg', lines: [
-      ['', 'En Pau demana accés a l\'analítica i a la botiga en línia. Tres dies després...'],
+      ['', '{En} demana accés a l\'analítica i a la botiga en línia. Tres dies després...'],
       ['pau.t', 'Dades: el 72 % dels nous seguidors són de fora de l\'Estat i van entrar pel sorteig d\'un mòbil.'],
       ['pau.t', 'Visites des d\'Instagram: 640. Vendes atribuïbles: 9. Vendes totals del mes: igual que l\'any passat.'],
       ['pau.w', 'Com li dic això al Sergi?']
@@ -540,11 +540,11 @@ CH('2.5', {
   blurb: 'Les recomanacions arriben. Saps dir que no?',
   steps: [
     { t: 'dlg', lines: (S) => {
-      const L = [['', 'Mercat de dissabte. En Pau compra pa al forn de la Carme.']];
-      if (S.trust.carme >= 2) L.push(['carme.h', 'Pau! La Pilar de la cafeteria del costat vol que l\'ajudis. I el meu cunyat té una ferreteria a Manlleu.']);
-      else L.push(['carme.n', 'Ei, Pau. La Pilar de la cafeteria m\'ha preguntat per tu. Li he dit que vas fer una feina... correcta.']);
+      const L = [['', 'Mercat de dissabte. {En} compra pa al forn de la Carme.']];
+      if (S.trust.carme >= 2) L.push(['carme.h', '{nom}! La Pilar de la cafeteria del costat vol que l\'ajudis. I el meu cunyat té una ferreteria a Manlleu.']);
+      else L.push(['carme.n', 'Ei, {nom}. La Pilar de la cafeteria m\'ha preguntat per tu. Li he dit que vas fer una feina... correcta.']);
       if (S.trust.miquel >= 2) L.push(['', 'Al vespre, un correu de Miquel: «Et presento el meu proveïdor d\'acer. Necessita ajuda amb la web.»']);
-      L.push(['', 'A més, arriben dos encàrrecs més pel formulari de la web. De cop, en Pau té més feina de la que pot fer.']);
+      L.push(['', 'A més, arriben dos encàrrecs més pel formulari de la web. De cop, {en} té més feina de la que pot fer.']);
       L.push(['pau.w', 'Si ho accepto tot, no dormiré en tres mesos. Si no, potser no tornen a trucar...']);
       return L;
     } },

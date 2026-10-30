@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Panell del professor · Agència Digital</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .prof { max-width: 1200px; margin: 0 auto; padding: 16px; width: 100%; }
+    .prof-h { color: #fff; display: flex; align-items: center; gap: 12px; margin: 8px 0 16px; }
+    .prof-h h1 { margin: 0; font-size: 1.5em; }
+    .prof-h p { margin: 0; opacity: .8; font-size: .9em; }
+    .prof-h img { width: 52px; height: 52px; }
+    .form-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; }
+    .form-row label { display: flex; flex-direction: column; gap: 4px; font-weight: 800; font-size: .88em; flex: 1; min-width: 180px; }
+    .form-row .inp { margin: 0; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 16px; }
+    .table-wrap { overflow-x: auto; }
+    table.res { width: 100%; border-collapse: collapse; font-size: .88em; min-width: 900px; }
+    table.res th { text-align: left; font-size: .78em; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); padding: 8px; border-bottom: 2px solid var(--ink); cursor: pointer; white-space: nowrap; }
+    table.res td { padding: 8px; border-bottom: 1px solid #e4dcf0; vertical-align: middle; }
+    table.res tr:hover td { background: #faf7fd; }
+    .ava-s { width: 38px; height: 38px; border-radius: 50%; overflow: hidden; background: var(--card2); border: 2px solid var(--ink); display: inline-block; vertical-align: middle; margin-right: 8px; }
+    .ava-s svg { width: 100%; height: 160%; margin-top: -10%; }
+    .bar { display: inline-block; width: 70px; height: 8px; background: #eee; border-radius: 4px; overflow: hidden; vertical-align: middle; margin-right: 6px; }
+    .bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--cyan), var(--violet)); }
+    .tag { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: .78em; font-weight: 800; background: #eee; }
+    .tag.file { background: #fff1c4; }
+    .empty { text-align: center; color: var(--muted); padding: 30px; }
+    .modal-box.wide { width: min(820px, 100%); max-height: 90vh; overflow: auto; }
+    .detail-h { display: flex; gap: 14px; align-items: center; margin-bottom: 10px; }
+    .detail-h .ava-s { width: 80px; height: 80px; }
+    .err { color: var(--bad); font-weight: 700; }
+  </style>
+</head>
+<body>
+  <main class="prof">
+    <header class="prof-h"><img src="icons/icon.svg" alt=""><div><h1>Panell del professor</h1><p>Agència Digital · resultats dels alumnes</p></div></header>
+
+    <section class="card">
+      <h3>🔑 Accedir als resultats enviats</h3>
+      <div class="form-row">
+        <label>Contrasenya del professorat<input class="inp" id="pw" type="password" autocomplete="current-password"></label>
+        <label>Codi de classe <small style="font-weight:400">(buit = totes les classes)</small><input class="inp" id="cls" placeholder="Per exemple: 4ESO-B"></label>
+        <button class="btn primary" id="load">Veure resultats</button>
+      </div>
+      <p class="muted small">Els alumnes que escriuen un codi de classe al joc envien els resultats automàticament cada vegada que acaben un capítol. També pots afegir fitxers de resultats que t'hagin enviat (botó de sota).</p>
+      <p id="msg"></p>
+    </section>
+
+    <section class="card">
+      <div class="form-row" style="justify-content:space-between;align-items:center">
+        <h3 style="margin:0">📊 Alumnes</h3>
+        <div class="row-btns" style="margin:0">
+          <label class="btn small" style="flex:none;min-width:0">📂 Afegir fitxers d'alumnes<input type="file" id="files" accept=".json,application/json" multiple hidden></label>
+          <button class="btn small primary" id="csv" disabled>⇩ Exportar a Excel (CSV)</button>
+        </div>
+      </div>
+      <div class="stats" id="stats" style="margin-top:14px"></div>
+      <div class="table-wrap"><table class="res" id="tbl"></table></div>
+    </section>
+  </main>
+  <div id="toasts"></div>
+
+  <script src="js/art.js"></script>
+  <script src="js/data-lessons.js"></script>
+  <script src="js/data-story1.js"></script>
+  <script src="js/professor.js"></script>
+</body>
+</html>

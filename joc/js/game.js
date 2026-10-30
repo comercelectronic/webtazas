@@ -17,7 +17,12 @@
   };
   const SKILL_MAX = 5;
   const CHARS_TRUST = ['carme', 'miquel', 'julia', 'berta', 'quim', 'laia'];
-  const RANKS = ['Emprenedor novell', 'Consultor local', 'Estrateg digital', 'Director d\'equip', 'Gestor de crisis', 'Director d\'agència', 'Director estratègic', 'Referent del sector', 'Llegenda d\'Osona'];
+  const RANKS = {
+    m: ['Emprenedor novell', 'Consultor local', 'Estrateg digital', 'Director d\'equip', 'Gestor de crisis', 'Director d\'agència', 'Director estratègic', 'Referent del sector', 'Llegenda d\'Osona'],
+    f: ['Emprenedora novella', 'Consultora local', 'Estratega digital', 'Directora d\'equip', 'Gestora de crisis', 'Directora d\'agència', 'Directora estratègica', 'Referent del sector', 'Llegenda d\'Osona'],
+    n: ['Primeres passes', 'Consultoria local', 'Estratègia digital', 'Direcció d\'equip', 'Gestió de crisis', 'Direcció d\'agència', 'Direcció estratègica', 'Referent del sector', 'Llegenda d\'Osona']
+  };
+  const API = '/.netlify/functions/joc-resultats';
   const xpNeed = (lvl) => 180 + 75 * Math.ceil(lvl / 4);
   const MAX_LEVEL = 30;
 
@@ -28,6 +33,8 @@
   function newState() {
     return {
       v: 1, agency: 'Píxel d\'Osona', profile: null,
+      player: { id: uid(), name: 'Pau', surname: 'Riera', g: 'm', look: Object.assign({}, ART.PLAYER_DEFAULT) },
+      classe: '', quizLog: {}, syncPending: false, lastSync: 0,
       level: 1, xp: 0, sp: 0,
       skills: { estrategia: 0, creativitat: 0, analitica: 0, comercial: 0, gestio: 0 },
       money: 3000, reserve: 0, week: 1, rep: 5,
@@ -40,6 +47,11 @@
     };
   }
 
+  function uid() {
+    try { if (crypto.randomUUID) return crypto.randomUUID(); } catch (e) { }
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => { const r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 3 | 8)).toString(16); });
+  }
+  function applyPlayer() { if (!S) return; ART.setPlayer(S.player.look); ART.CHARS.pau.name = S.player.name; }
   function save() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(S)); } catch (e) { /* sense emmagatzematge */ } }
   function loadSave() { try { const r = localStorage.getItem(SAVE_KEY); return r ? JSON.parse(r) : null; } catch (e) { return null; } }
   function loadSettings() { try { Object.assign(settings, JSON.parse(localStorage.getItem(SAVE_KEY + '-cfg') || '{}')); } catch (e) { } }
@@ -51,14 +63,30 @@
   const pct = (n) => (Math.round(n * 10) / 10).toLocaleString('ca-ES') + ' %';
   const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const rnd = (a, b) => a + Math.random() * (b - a);
+  // Marcadors del guió: {nom}, {nomc} (nom complet), {en}/{En} («en Pau», «la Marta», «l'Anna»),
+  // {den} («d'en Pau», «de la Marta») i {g:masculí|femení|neutre}.
+  function gi() { return { m: 0, f: 1, n: 2 }[S && S.player ? S.player.g : 'm'] || 0; }
+  function playerRefs() {
+    const p = (S && S.player) || { name: 'Pau', surname: '', g: 'm' };
+    const n = esc(p.name), vow = /^h?[aeiouàèéíòóú]/i.test(p.name);
+    let en, den;
+    if (p.g === 'f') { en = (vow ? 'l\'' : 'la ') + n; den = (vow ? 'de l\'' : 'de la ') + n; }
+    else if (p.g === 'n') { en = n; den = (vow ? 'd\'' : 'de ') + n; }
+    else { en = (vow ? 'l\'' : 'en ') + n; den = (vow ? 'de l\'' : 'd\'en ') + n; }
+    return { nom: n, nomc: esc((p.name + ' ' + (p.surname || '')).trim()), en, En: en.charAt(0).toUpperCase() + en.slice(1), den };
+  }
   function txt(t) {
     if (typeof t === 'function') t = t(S, H);
-    return String(t == null ? '' : t).replace(/\{agencia\}/g, esc(S.agency)).replace(/\{nom\}/g, 'Pau');
+    const r = playerRefs(), g = gi();
+    return String(t == null ? '' : t)
+      .replace(/\{g:([^}]*)\}/g, (_, v) => { const o = v.split('|'); return o[g] != null && o[g] !== '' ? o[g] : o[0]; })
+      .replace(/\{agencia\}/g, esc(S ? S.agency : ''))
+      .replace(/\{(nomc|nom|En|en|den)\}/g, (_, k) => r[k]);
   }
   function stageOf(chId) { return GD.chapters[chId].stage; }
   function stagesDone() { return GD.stages.filter(st => st.chapters.every(c => S.done[c])).length; }
   function rank() { return Math.min(4, Math.floor(stagesDone() / 2)); }
-  function title() { return RANKS[Math.min(RANKS.length - 1, stagesDone())]; }
+  function title() { const L = RANKS[(S && S.player && S.player.g) || 'm']; return L[Math.min(L.length - 1, stagesDone())]; }
   function sk(k) { return S.skills[k] || 0; }
   function weeklyIncome() { return S.clients.reduce((a, c) => a + c.fee, 0) / 4; }
   function weeklyCost() {
@@ -192,6 +220,7 @@
   /* ================= Pantalla de títol ================= */
   function titleScreen() {
     const has = loadSave();
+    ART.setPlayer(has && has.player ? has.player.look : null);
     app().innerHTML = `
       <section class="title-screen">
         <div class="title-bg">${ART.background('vic')}</div>
@@ -201,7 +230,7 @@
           <h1 class="logo"><span>Agència</span><span>Digital</span></h1>
           <p class="tagline">De Vic al món · Un joc de màrqueting i empresa</p>
           <div class="title-btns">
-            ${has ? `<button class="btn big primary" data-act="continue">▶ Continuar partida <small>${esc(has.agency)} · Nivell ${has.level}</small></button>` : ''}
+            ${has ? `<button class="btn big primary" data-act="continue">▶ Continuar partida <small>${has.player ? esc(has.player.name) + ' · ' : ''}${esc(has.agency)} · Nivell ${has.level}</small></button>` : ''}
             <button class="btn big ${has ? '' : 'primary'}" data-act="new">✦ Nova partida</button>
             <button class="btn" data-act="import">⇪ Importar partida</button>
             <button class="btn ghost install-btn" data-act="install" hidden>📲 Instal·lar com a app</button>
@@ -224,7 +253,7 @@
         <div class="hub-body" id="hubBody"></div>
       </main>
       <nav class="tabs">
-        ${[['campanya', '🗺️', 'Campanya'], ['pau', '🧑', 'En Pau'], ['encarrecs', '📨', 'Encàrrecs'], ['biblioteca', '📚', 'Biblioteca'], ['empresa', '🏢', 'Empresa']]
+        ${[['campanya', '🗺️', 'Campanya'], ['pau', '🧑', esc(S.player.name)], ['encarrecs', '📨', 'Encàrrecs'], ['biblioteca', '📚', 'Biblioteca'], ['empresa', '🏢', 'Empresa']]
           .map(([k, i, n]) => `<button class="tab ${hubTab === k ? 'on' : ''}" data-tab="${k}"><span>${i}</span>${n}${k === 'pau' && S.sp ? `<em class="dot">${S.sp}</em>` : ''}</button>`).join('')}
       </nav>`;
     hud();
@@ -250,7 +279,7 @@
       ${S.ending ? `<div class="card ending-mini"><b>Has arribat a un final: ${esc(GD.endings[S.ending].title)}</b><p>Pots continuar en mode lliure amb els encàrrecs o començar una partida nova amb una altra estratègia.</p><button class="btn" data-act="showEnding">Tornar a veure el final</button></div>` : ''}
       ${next ? `<button class="next-mission" data-ch="${next}">
           <span class="nm-ava">${ART.portrait(GD.chapters[next].who || 'pau', 'n', { rank: rank() })}</span>
-          <span class="nm-txt"><small>Següent missió · Capítol ${next}</small><b>${esc(GD.chapters[next].title)}</b><i>${esc(GD.chapters[next].blurb || '')}</i></span>
+          <span class="nm-txt"><small>Següent missió · Capítol ${next}</small><b>${txt(GD.chapters[next].title)}</b><i>${txt(GD.chapters[next].blurb || '')}</i></span>
           <span class="nm-go">▶</span></button>` : ''}
       ${!next && !S.ending ? `<div class="card warn">${levelHint()}</div>` : ''}
       <div class="stages">
@@ -259,10 +288,10 @@
           const prevOk = st.id === 1 || GD.stages[st.id - 2].chapters.every(c => S.done[c]);
           const lock = !prevOk;
           return `<section class="stage ${lock ? 'locked' : ''} ${done === st.chapters.length ? 'complete' : ''}" style="--sc:${st.color}">
-            <header><span class="st-num">${String(st.id).padStart(2, '0')}</span><div><h3>${esc(st.title)}</h3><p>${esc(st.sub)} · Nivells ${st.levels}</p></div><span class="st-prog">${done}/${st.chapters.length}</span></header>
+            <header><span class="st-num">${String(st.id).padStart(2, '0')}</span><div><h3>${txt(st.title)}</h3><p>${esc(st.sub)} · Nivells ${st.levels}</p></div><span class="st-prog">${done}/${st.chapters.length}</span></header>
             ${lock ? '<p class="lockmsg">🔒 Completa l\'etapa anterior per desbloquejar-la.</p>' : `<ol>${st.chapters.map(c => {
               const s = chapterState(c);
-              return `<li class="ch ${s}"><button ${s === 'open' || s === 'done' ? `data-ch="${c}"` : 'disabled'}><span class="ch-id">${c}</span><span class="ch-t">${esc(GD.chapters[c].title)}</span><span class="ch-s">${s === 'done' ? '✔' : s === 'open' ? '▶' : s === 'level' ? `Nv ${st.minLevel}` : '🔒'}</span></button></li>`;
+              return `<li class="ch ${s}"><button ${s === 'open' || s === 'done' ? `data-ch="${c}"` : 'disabled'}><span class="ch-id">${c}</span><span class="ch-t">${txt(GD.chapters[c].title)}</span><span class="ch-s">${s === 'done' ? '✔' : s === 'open' ? '▶' : s === 'level' ? `Nv ${st.minLevel}` : '🔒'}</span></button></li>`;
             }).join('')}</ol>`}
           </section>`;
         }).join('')}
@@ -272,7 +301,7 @@
   function levelHint() {
     const st = GD.stages.find(s => s.chapters.some(c => !S.done[c]));
     if (!st) return 'Has completat la campanya!';
-    if (S.level < st.minLevel) return `🔒 L'etapa <b>${esc(st.title)}</b> requereix nivell ${st.minLevel}. Fes encàrrecs a la pestanya <b>📨 Encàrrecs</b> per guanyar experiència i diners.`;
+    if (S.level < st.minLevel) return `🔒 L'etapa <b>${txt(st.title)}</b> requereix nivell ${st.minLevel}. Fes encàrrecs a la pestanya <b>📨 Encàrrecs</b> per guanyar experiència i diners.`;
     return 'Continua amb la següent missió.';
   }
 
@@ -282,11 +311,12 @@
       <div class="sheet">
         <div class="sheet-ava">${ART.portrait('pau', S.sp ? 'h' : 'n', { rank: rank() })}<span class="rank-badge">${title()}</span></div>
         <div class="sheet-info">
-          <h2>Pau Riera</h2>
-          <p class="muted">${S.f.profile && GD.profiles[S.f.profile] ? GD.profiles[S.f.profile].n : 'Perfil per definir'} · Director de ${esc(S.agency)}</p>
+          <h2>${txt('{nomc}')}</h2>
+          <p class="muted">${S.f.profile && GD.profiles[S.f.profile] ? GD.profiles[S.f.profile].n : 'Perfil per definir'} · ${txt('{g:Director|Directora|Direcció}')} de ${esc(S.agency)}</p>
           <div class="lvl-big">Nivell <b>${S.level}</b><span class="xpbar big"><i style="width:${S.level >= MAX_LEVEL ? 100 : Math.round(S.xp / need * 100)}%"></i></span><small>${S.level >= MAX_LEVEL ? 'Nivell màxim' : `${S.xp} / ${need} EXP`}</small></div>
           <p class="sp ${S.sp ? 'has' : ''}">Punts d'habilitat disponibles: <b>${S.sp}</b></p>
-          <p class="muted small">El vestuari d'en Pau millora a mesura que completes etapes.</p>
+          <p class="muted small">${txt('El vestuari {den} millora a mesura que completes etapes.')}</p>
+          <button class="btn small" data-act="editAvatar">✏️ Canviar aspecte i nom</button>
         </div>
       </div>
       <h3 class="sec">Habilitats</h3>
@@ -337,12 +367,21 @@
           ${S.clients.length ? `<ul class="list">${S.clients.map(c => `<li><b>${esc(c.name)}</b><span>${eur(c.fee)}/mes</span></li>`).join('')}</ul>` : '<p class="muted">Cap client recurrent encara.</p>'}
         </div>
         <div class="card"><h3>👥 Equip i estructura</h3>
-          <ul class="list"><li><b>Pau Riera</b><span>Direcció</span></li>${S.team.map(t => `<li><b>${esc(t.name)}</b><span>${eur(t.salary)}/mes</span></li>`).join('')}
+          <ul class="list"><li><b>${txt('{nomc}')}</b><span>Direcció</span></li>${S.team.map(t => `<li><b>${esc(t.name)}</b><span>${eur(t.salary)}/mes</span></li>`).join('')}
           <li><b>Lloguer</b><span>${eur(S.rent)}/mes</span></li><li><b>Eines</b><span>${eur(S.tools)}/mes</span></li></ul>
         </div>
       </div>
       <div class="card"><h3>📜 Historial de decisions</h3>
         ${S.history.length ? `<ul class="history">${S.history.slice().reverse().map(h => `<li class="${h.key ? 'key' : ''}"><small>Cap. ${h.ch} · S${h.week}</small>${esc(h.t)}</li>`).join('')}</ul>` : '<p class="muted">Les teves decisions apareixeran aquí.</p>'}
+      </div>
+      <div class="card"><h3>🎓 Resultats per al professor</h3>
+        <p class="small">Codi de classe: <b>${S.classe ? esc(S.classe) : '— cap —'}</b>${S.classe ? ` · ${S.syncPending ? '<span class="neg">pendent d\'enviar</span>' : S.lastSync ? 'enviat el ' + new Date(S.lastSync).toLocaleString('ca-ES') : 'encara no enviat'}` : ''}</p>
+        <p class="muted small">Si poses el codi de classe que t'ha donat el professor, el teu nom i els resultats del joc s'envien automàticament cada vegada que acabes un capítol. Si no tens connexió, pots descarregar un fitxer i enviar-l'hi.</p>
+        <div class="row-btns">
+          <button class="btn small" data-act="setClass">🏷️ ${S.classe ? 'Canviar' : 'Posar'} codi de classe</button>
+          ${S.classe ? '<button class="btn small primary" data-act="syncNow">📤 Enviar resultats ara</button>' : ''}
+          <button class="btn small" data-act="downloadResults">⇩ Descarregar fitxer de resultats</button>
+        </div>
       </div>
       <div class="card"><h3>⚙️ Partida</h3>
         <div class="row-btns">
@@ -402,7 +441,7 @@
           const xp = Math.round(g.xp * mult * bonus);
           applyFx({ money, fee: true, xp, rep: ok ? 1 : (o.q < 0.4 ? -1 : 0), know: { [t.area]: ok ? 1 : 0 } }, true);
           const w = advanceWeeks(1);
-          S.stats.gigs++;
+          S.stats.gigs++; queueSync();
           S.gigs.splice(i, 1);
           save();
           panel(`<div class="pn-h"><b>${ok ? '✨ Bona feina!' : o.q >= 0.4 ? '🙂 Correcte, però millorable' : '😓 No ha funcionat'}</b></div>
@@ -484,7 +523,7 @@
       if (c === 'bg') { setBg(t); i++; show(); return; }
       dlg.hidden = false;
       dlg.className = 'dlg ' + (c ? (c === 'pau' ? 'from-left' : 'from-right') : 'narrator');
-      name.textContent = c ? (GD.names[c] || c) : '';
+      name.innerHTML = c ? txt(GD.names[c] || c) : '';
       name.hidden = !c;
       showActors(c, e || 'n');
       full = txt(t);
@@ -517,7 +556,7 @@
     if (S.cur.step === 0) {
       // Targeta de títol del capítol
       const st = GD.stages.find(s => s.id === ch.stage);
-      panel(`<div class="chapter-card" style="--sc:${st.color}"><small>Etapa ${st.id} · ${esc(st.title)}</small><h2><span>Capítol ${ch.id}</span>${esc(ch.title)}</h2>${ch.blurb ? `<p>${esc(ch.blurb)}</p>` : ''}<button class="btn primary big" id="go">Començar ▶</button></div>`, (p) => {
+      panel(`<div class="chapter-card" style="--sc:${st.color}"><small>Etapa ${st.id} · ${txt(st.title)}</small><h2><span>Capítol ${ch.id}</span>${txt(ch.title)}</h2>${ch.blurb ? `<p>${txt(ch.blurb)}</p>` : ''}<button class="btn primary big" id="go">Començar ▶</button></div>`, (p) => {
         p.querySelector('#go').onclick = () => runStep();
       });
       $('#panelWrap').classList.add('center');
@@ -694,7 +733,7 @@
     report() { reportScreen(() => nextStep()); },
     ending(st) {
       const id = GD.computeEnding(S, H);
-      S.ending = id; S.done[curCh.id] = true; S.cur = null;
+      S.ending = id; S.done[curCh.id] = true; S.cur = null; queueSync();
       S.history.push({ ch: curCh.id, week: S.week, t: 'Final aconseguit: ' + GD.endings[id].title, key: true });
       save(); endingScreen(id, true);
     }
@@ -714,8 +753,8 @@
     const first = !S.lessons[id];
     const page = () => panel(`<div class="lesson">
         <div class="ls-h"><small>📚 Lliçó · ${GD.areas[l.area]}</small><h2>${esc(l.title)}</h2><p class="goal">🎯 ${esc(l.goal)}</p></div>
-        ${l.body.map(b => `<p>${b}</p>`).join('')}
-        ${l.example ? `<div class="example"><b>${l.exampleTitle || 'Exemple (cas simulat)'}</b><p>${l.example}</p></div>` : ''}
+        ${l.body.map(b => `<p>${txt(b)}</p>`).join('')}
+        ${l.example ? `<div class="example"><b>${l.exampleTitle || 'Exemple (cas simulat)'}</b><p>${txt(l.example)}</p></div>` : ''}
         ${l.errors ? `<div class="errors"><b>⚠️ Errors freqüents</b><ul>${l.errors.map(e => `<li>${e}</li>`).join('')}</ul></div>` : ''}
         ${l.source ? `<p class="source">Font: ${l.source}</p>` : ''}
         <button class="btn primary" id="quiz">Fer l'exercici ✍️</button>
@@ -728,6 +767,10 @@
       if (qi >= l.quiz.length) {
         const pass = score >= Math.ceil(l.quiz.length / 2);
         const prev = S.lessons[id];
+        // Registre per al professor: primer intent, millor resultat i nombre d'intents
+        const ql = S.quizLog[id] || (S.quizLog[id] = { first: score, best: 0, tries: 0, total: l.quiz.length });
+        ql.tries++; ql.best = Math.max(ql.best, score);
+        queueSync();
         if (pass || !inMission) {
           S.lessons[id] = { best: Math.max(prev ? prev.best : 0, score), tries: (prev ? prev.tries : 0) + 1 };
           if (pass && first) applyFx({ xp: 20 + 15 * score, know: { [l.area]: 1 } }, true);
@@ -780,13 +823,14 @@
     const stage = GD.stages.find(s => s.id === ch.stage);
     const stageComplete = !wasDone && stage.chapters.every(c => S.done[c]);
     S.cur = null;
+    queueSync();
     S.gigs = []; // nous encàrrecs disponibles
     save();
     const summary = st.text ? txt(st.text) : '';
     sceneShell(ch.bg || 'despatx');
     showActors('pau', 'h');
     panel(`<div class="reward">
-        <div class="rw-h"><small>Capítol ${ch.id} completat</small><h2>${esc(ch.title)}</h2></div>
+        <div class="rw-h"><small>Capítol ${ch.id} completat</small><h2>${txt(ch.title)}</h2></div>
         ${summary ? `<p>${summary}</p>` : ''}
         ${replay ? '<p class="muted">Mode repàs: aquesta partida ja tenia el capítol completat, no es tornen a sumar recompenses.</p>' : `
         <div class="metrics">
@@ -796,7 +840,7 @@
           <div class="metric"><small>${w.n} setmanes de despeses i quotes</small><b>${w.inc - w.cost >= 0 ? '+' : ''}${eur(w.inc - w.cost)}</b></div>
         </div>
         ${Object.keys(run.trust).length ? `<p class="trustline">${Object.entries(run.trust).map(([k, v]) => `<span class="${v >= 0 ? 'pos' : 'neg'}">${GD.names[k]} ${v >= 0 ? '♥ +' + v : '💔 ' + v}</span>`).join('')}</p>` : ''}`}
-        ${stageComplete ? `<div class="stage-clear" style="--sc:${stage.color}"><b>🌸 Etapa ${stage.id} superada!</b><p>${esc(stage.outro || '')}</p><p>Nou rang: <b>${title()}</b></p></div>` : ''}
+        ${stageComplete ? `<div class="stage-clear" style="--sc:${stage.color}"><b>🌸 Etapa ${stage.id} superada!</b><p>${txt(stage.outro || '')}</p><p>Nou rang: <b>${title()}</b></p></div>` : ''}
         <button class="btn primary big" data-act="hub">Tornar al centre d'operacions</button>
       </div>`);
     if (stageComplete) petals($('.scene'), 30);
@@ -840,7 +884,7 @@
         <div class="ending-cast">${(e.cast || ['pau']).map(c => `<span>${c === 'pau' ? ART.portrait('pau', 'h', { rank: rank() }) : ART.portrait(c, S.trust[c] >= 2 ? 'h' : 'n')}</span>`).join('')}</div>
         ${e.text.map(p => `<p>${txt(p)}</p>`).join('')}
         ${(GD.epilogue(S, H) || []).map(p => `<p class="epi">${txt(p)}</p>`).join('')}
-        <p class="muted">Habilitats d'en Pau: ${Object.entries(SKILLS).map(([k, s]) => `${s.i} ${s.n} ${S.skills[k]}`).join(' · ')}</p>
+        <p class="muted">${txt('Habilitats {den}')}: ${Object.entries(SKILLS).map(([k, s]) => `${s.i} ${s.n} ${S.skills[k]}`).join(' · ')}</p>
         <div class="row-btns center"><button class="btn primary" data-act="hub">Mode lliure</button><button class="btn" data-act="new">Nova partida</button></div>
       </div></section>`;
     petals($('.ending-petals'), 30);
@@ -855,10 +899,10 @@
     d.querySelector('#y').onclick = () => { d.remove(); yes(); };
     d.querySelector('#n').onclick = () => d.remove();
   }
-  function textBox(title, value, onOk) {
+  function textBox(title, value, onOk, okLabel) {
     const d = document.createElement('div');
     d.className = 'modal';
-    d.innerHTML = `<div class="modal-box"><p><b>${title}</b></p><textarea class="inp" rows="5">${esc(value || '')}</textarea><div class="row-btns">${onOk ? '<button class="btn primary" id="y">Importar</button>' : '<button class="btn primary" id="cp">Copiar</button>'}<button class="btn" id="n">Tancar</button></div></div>`;
+    d.innerHTML = `<div class="modal-box"><p><b>${title}</b></p><textarea class="inp" rows="5">${esc(value || '')}</textarea><div class="row-btns">${onOk ? `<button class="btn primary" id="y">${okLabel || 'Importar'}</button>` : '<button class="btn primary" id="cp">Copiar</button>'}<button class="btn" id="n">Tancar</button></div></div>`;
     document.body.appendChild(d);
     const ta = d.querySelector('textarea');
     if (!onOk) { ta.select(); d.querySelector('#cp').onclick = () => { ta.select(); try { navigator.clipboard.writeText(ta.value); toast('Codi copiat'); } catch (e) { document.execCommand('copy'); } }; }
@@ -866,14 +910,149 @@
     d.querySelector('#n').onclick = () => d.remove();
   }
 
+  /* ================= Creació del personatge ================= */
+  const normClass = (v) => String(v || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toUpperCase().trim().replace(/\s+/g, '-').replace(/[^A-Z0-9_-]/g, '').slice(0, 32);
+
+  function setupScreen(editing) {
+    const base = editing ? S : newState();
+    const d = { name: editing ? S.player.name : '', surname: editing ? S.player.surname : '', g: base.player.g, classe: base.classe, look: JSON.parse(JSON.stringify(base.player.look)) };
+    const O = ART.LOOK_OPTIONS;
+    app().innerHTML = `<section class="setup">
+      <div class="setup-preview"><div class="setup-ava" id="sAva"></div><p class="setup-example" id="sEx"></p></div>
+      <div class="setup-form card">
+        <h2>${editing ? 'Canvia el teu personatge' : 'Crea el teu personatge'}</h2>
+        <div class="row2">
+          <label>Nom<input class="inp" id="sName" maxlength="20" value="${esc(d.name)}" placeholder="Per exemple: Marta" autocomplete="given-name"></label>
+          <label>Cognom <small>(opcional)</small><input class="inp" id="sSur" maxlength="24" value="${esc(d.surname)}" placeholder="Per exemple: Puig" autocomplete="family-name"></label>
+        </div>
+        <p class="lbl">Com vols que et tractin al joc?</p>
+        <div class="seg" id="sG">${[['m', 'Masculí («en»)'], ['f', 'Femení («la»)'], ['n', 'Neutre (sense article)']].map(([k, n]) => `<button data-g="${k}">${n}</button>`).join('')}</div>
+        <p class="lbl">Pentinat</p>
+        <div class="styles" id="sStyle">${O.style.map(([k, n]) => `<button data-style="${k}" title="${n}"><span></span><small>${n}</small></button>`).join('')}</div>
+        <p class="lbl">Color dels cabells</p>
+        <div class="swatches" id="sHair">${O.hair.map(c => `<button data-hair="${c}" style="background:${c}" aria-label="Color ${c}"></button>`).join('')}</div>
+        <p class="lbl">Color dels ulls</p>
+        <div class="swatches" id="sEye">${O.eye.map(c => `<button data-eye="${c}" style="background:${c}" aria-label="Color ${c}"></button>`).join('')}</div>
+        <p class="lbl">To de pell</p>
+        <div class="swatches" id="sSkin">${O.skin.map(c => `<button data-skin="${c}" style="background:${c}" aria-label="To ${c}"></button>`).join('')}</div>
+        <p class="lbl">Complement</p>
+        <div class="seg" id="sAcc">${O.acc.map(([k, n]) => `<button data-acc="${k}">${n}</button>`).join('')}</div>
+        <p class="lbl">Codi de classe <small>(opcional, te'l dona el professor)</small></p>
+        <input class="inp" id="sClass" maxlength="32" value="${esc(d.classe)}" placeholder="Per exemple: 4ESO-B">
+        <p class="muted small">Si poses un codi de classe, el teu nom i els resultats del joc s'enviaran al teu professor.</p>
+        <div class="row-btns">
+          <button class="btn primary big" id="sGo">${editing ? 'Desar canvis' : 'Començar l\'aventura ▶'}</button>
+          <button class="btn ghost" id="sBack">${editing ? 'Cancel·lar' : 'Tornar'}</button>
+        </div>
+      </div></section>`;
+    const draw = () => {
+      ART.setPlayer(d.look);
+      $('#sAva').innerHTML = ART.portrait('pau', 'h', { rank: editing ? rank() : 0 });
+      const prevS = S; S = { player: { name: d.name || 'Pau', surname: d.surname, g: d.g }, agency: base.agency };
+      $('#sEx').innerHTML = txt('«{En} torna a Vic amb una idea: muntar una agència de màrqueting digital.»');
+      S = prevS;
+      document.querySelectorAll('#sG [data-g]').forEach(b => b.classList.toggle('on', b.dataset.g === d.g));
+      document.querySelectorAll('#sAcc [data-acc]').forEach(b => b.classList.toggle('on', (d.look.acc[0] || '') === b.dataset.acc));
+      ['style', 'hair', 'eye', 'skin'].forEach(k => document.querySelectorAll(`[data-${k}]`).forEach(b => b.classList.toggle('on', b.dataset[k] === d.look[k])));
+      document.querySelectorAll('#sStyle [data-style]').forEach(b => {
+        const look = Object.assign({}, d.look, { style: b.dataset.style, acc: [] });
+        ART.setPlayer(look); b.querySelector('span').innerHTML = ART.portrait('pau', 'n', { rank: 0 });
+      });
+      ART.setPlayer(d.look);
+    };
+    $('#sName').oninput = (e) => { d.name = e.target.value.trim(); draw(); };
+    $('#sSur').oninput = (e) => { d.surname = e.target.value.trim(); draw(); };
+    $('#sClass').oninput = (e) => { d.classe = e.target.value; };
+    document.querySelector('.setup').addEventListener('click', (e) => {
+      const b = e.target.closest('button'); if (!b) return;
+      if (b.dataset.g) d.g = b.dataset.g;
+      else if (b.dataset.acc != null) d.look.acc = b.dataset.acc ? [b.dataset.acc] : [];
+      else if (b.dataset.style) d.look.style = b.dataset.style;
+      else if (b.dataset.hair) d.look.hair = b.dataset.hair;
+      else if (b.dataset.eye) d.look.eye = b.dataset.eye;
+      else if (b.dataset.skin) d.look.skin = b.dataset.skin;
+      else return;
+      draw();
+    });
+    $('#sBack').onclick = () => editing ? hubScreen('pau') : titleScreen();
+    $('#sGo').onclick = () => {
+      if (!d.name) { $('#sName').focus(); toast('Escriu el teu nom', 'bad'); return; }
+      if (!editing) S = base;
+      Object.assign(S.player, { name: d.name, surname: d.surname, g: d.g, look: d.look });
+      const c = normClass(d.classe);
+      if (c !== S.classe) { S.classe = c; S.lastSync = 0; }
+      applyPlayer(); save(); queueSync();
+      if (editing) { toast('Personatge actualitzat', 'good'); hubScreen('pau'); } else startChapter('1.1');
+    };
+    draw();
+  }
+
+  /* ================= Resultats per al professor ================= */
+  function buildSummary() {
+    const lessonIds = Object.keys(GD.lessons);
+    const passed = lessonIds.filter(id => S.lessons[id]);
+    const logs = Object.entries(S.quizLog || {});
+    const avg = (f) => logs.length ? Math.round(logs.reduce((a, [, q]) => a + f(q) / q.total, 0) / logs.length * 100) : null;
+    const curStageObj = GD.stages.find(s => s.chapters.some(c => !S.done[c]));
+    return {
+      v: 1, id: S.player.id, classe: S.classe,
+      nom: S.player.name, cognom: S.player.surname || '', tractament: S.player.g,
+      aspecte: S.player.look,
+      agencia: S.agency, perfil: S.f.profile || '',
+      actualitzat: new Date().toISOString(), iniciat: new Date(S.started).toISOString(),
+      nivell: S.level, setmana: S.week,
+      etapaActual: curStageObj ? curStageObj.id : 8, etapesCompletades: stagesDone(),
+      capitolsCompletats: Object.keys(S.done).filter(c => GD.chapters[c]).length, capitolsTotal: Object.keys(GD.chapters).length,
+      capitolActual: S.cur ? S.cur.id : '',
+      llicons: Object.fromEntries(lessonIds.filter(id => S.quizLog && S.quizLog[id]).map(id => [id, Object.assign({ superada: !!S.lessons[id] }, S.quizLog[id])])),
+      llicionsSuperades: passed.length, llicionsTotal: lessonIds.length,
+      mitjanaPrimerIntent: avg(q => q.first), mitjanaMillor: avg(q => q.best),
+      reputacio: S.rep, liquiditat: Math.round(S.money + S.reserve), clients: S.clients.length, equip: S.team.length + 1,
+      cami: S.f.path || '', final: S.ending ? GD.endings[S.ending].title : '',
+      habilitats: S.skills, coneixement: S.know, confianca: S.trust,
+      encarrecs: S.stats.gigs, campanyes: S.stats.campaigns, campanyesBones: S.stats.good,
+      decisions: S.history.filter(h => h.key).map(h => `Cap. ${h.ch}: ${h.t}`)
+    };
+  }
+  let syncTimer = null;
+  function queueSync() {
+    if (!S || !S.classe) return;
+    S.syncPending = true; save();
+    clearTimeout(syncTimer);
+    syncTimer = setTimeout(() => doSync(false), 1200);
+  }
+  async function doSync(manual) {
+    if (!S || !S.classe) return;
+    try {
+      const r = await fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'submit', classe: S.classe, id: S.player.id, data: buildSummary() }) });
+      if (!r.ok) throw new Error((await r.json().catch(() => ({}))).error || 'Error ' + r.status);
+      S.syncPending = false; S.lastSync = Date.now(); save();
+      if (manual) { toast('📤 Resultats enviats al professor', 'good'); if ($('.hub')) hubScreen('empresa'); }
+    } catch (e) {
+      if (manual) toast('No s\'han pogut enviar els resultats (' + esc(e.message || 'sense connexió') + '). Torna-ho a provar o descarrega el fitxer.', 'bad');
+    }
+  }
+  function downloadResults() {
+    const data = buildSummary();
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    const nm = normClass((S.player.name + '-' + (S.player.surname || '')).replace(/-$/, '')).toLowerCase() || 'alumne';
+    a.href = URL.createObjectURL(blob); a.download = `agencia-digital_${nm}.json`;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  }
+  window.addEventListener('online', () => { if (S && S.syncPending) doSync(false); });
+
   function newGame() {
-    const go = () => { S = newState(); save(); startChapter('1.1'); };
+    const go = () => setupScreen(false);
     if (loadSave()) confirmBox('Començar una partida nova esborrarà la partida desada. Vols continuar?', go); else go();
   }
   function continueGame() {
     S = loadSave();
     if (!S) return titleScreen();
     S = Object.assign(newState(), S);
+    applyPlayer();
+    if (S.syncPending) queueSync();
     if (S.cur && GD.chapters[S.cur.id]) startChapter(S.cur.id, true); else hubScreen('campanya');
   }
 
@@ -900,12 +1079,19 @@
       case 'useReserve': S.money += S.reserve; S.reserve = 0; save(); hubScreen('empresa'); break;
       case 'export': textBox('Codi de la teva partida (copia\'l i enganxa\'l a l\'altre dispositiu):', btoa(unescape(encodeURIComponent(JSON.stringify(S))))); break;
       case 'import': textBox('Enganxa el codi de la partida:', '', (v) => {
-        try { const d = JSON.parse(decodeURIComponent(escape(atob(v)))); if (!d || !d.v) throw 0; S = Object.assign(newState(), d); save(); toast('Partida importada', 'good'); hubScreen('campanya'); }
+        try { const d = JSON.parse(decodeURIComponent(escape(atob(v)))); if (!d || !d.v) throw 0; S = Object.assign(newState(), d); applyPlayer(); save(); toast('Partida importada', 'good'); hubScreen('campanya'); }
         catch (e) { toast('El codi no és vàlid', 'bad'); }
       }); break;
       case 'speed': settings.speed = settings.speed <= 8 ? 18 : settings.speed <= 18 ? 32 : 6; saveSettings(); hubScreen('empresa'); break;
       case 'reset': confirmBox('Segur que vols esborrar la partida? No es pot desfer.', () => { try { localStorage.removeItem(SAVE_KEY); } catch (e) { } S = null; titleScreen(); }); break;
       case 'install': doInstall(); break;
+      case 'editAvatar': setupScreen(true); break;
+      case 'syncNow': doSync(true); break;
+      case 'downloadResults': downloadResults(); break;
+      case 'setClass': textBox('Codi de classe (te\'l dona el professor):', S.classe, (v) => {
+        S.classe = normClass(v); S.lastSync = 0; save();
+        if (S.classe) { toast('Codi desat: ' + esc(S.classe), 'good'); doSync(true); } else hubScreen('empresa');
+      }, 'Desar'); break;
       case 'sceneMenu': confirmBox('Vols sortir de la missió? El progrés de la missió es desa i la podràs reprendre.', () => { const c = S.cur; save(); hubScreen('campanya'); S.cur = c; save(); }); break;
     }
   });

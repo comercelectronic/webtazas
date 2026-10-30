@@ -38,14 +38,14 @@
     steps: [
       { t: 'fx', silent: true, fx: { flags: { met_marta2: true } } },
       { t: 'dlg', lines: (S) => [
-        ['marta.n', (S.f.met_marta ? 'Pau, ens vam conèixer a la fira, recordes? ' : '') + 'Marta Coll, directora de màrqueting de Làctics de la Plana.'],
+        ['marta.n', (S.f.met_marta ? '{nom}, ens vam conèixer a la fira, recordes? ' : '') + 'Marta Coll, directora de màrqueting de Làctics de la Plana.'],
         ['marta.n', 'Volem una agència per a tot l\'any: llançament de iogurts, botiga en línia i campanyes. Uns 6.000 € al mes d\'honoraris.'],
         ['marta.t', 'Però us aviso: informes mensuals al comitè, tres nivells d\'aprovació i coordinació amb el nostre equip de vendes i el de qualitat.'],
         ['pau.t', '(És més del doble del que factura qualsevol altre client. Podem assumir-ho sense descuidar la resta?)']
       ] },
       { t: 'choice', key: 'gran62', prompt: 'Com respons a la Marta?', opts: [
         { t: 'Acceptar i adaptar l\'agència: responsable de compte, una persona de suport, KPI pactats i calendari d\'aprovacions', v: 'preparat', req: { money: 4000 }, fx: { client: { id: 'marta', name: 'Làctics de la Plana', fee: 6000 }, hire: { id: 'suport', name: 'Arnau (suport de comptes)', salary: 2200 }, rep: 6, xp: 50, log: 'Va guanyar el primer client gran amb un pla de recursos.', key: true }, say: [['marta.h', 'Això és professionalitat. Signem.']] },
-        { t: 'Acceptar sense canviar res: ja ens en sortirem', v: 'sensepla', fx: { client: { id: 'marta', name: 'Làctics de la Plana', fee: 6000 }, trust: { carme: -1, miquel: -1, julia: -1 }, rep: -2, flags: { sobrecarrega: 2 }, log: 'Va acceptar un client gran sense capacitat.', key: true }, say: [['', 'Dos mesos després: la Carme espera una resposta des de fa tres setmanes i Miquel ha rebut un informe amb errors.'], ['julia.a', 'Pau, no arribem. Els altres clients ho noten.']] },
+        { t: 'Acceptar sense canviar res: ja ens en sortirem', v: 'sensepla', fx: { client: { id: 'marta', name: 'Làctics de la Plana', fee: 6000 }, trust: { carme: -1, miquel: -1, julia: -1 }, rep: -2, flags: { sobrecarrega: 2 }, log: 'Va acceptar un client gran sense capacitat.', key: true }, say: [['', 'Dos mesos després: la Carme espera una resposta des de fa tres setmanes i Miquel ha rebut un informe amb errors.'], ['julia.a', '{nom}, no arribem. Els altres clients ho noten.']] },
         { t: 'Proposar una fase pilot de 3 mesos per demostrar valor i ajustar recursos', v: 'pilot', fx: { client: { id: 'marta', name: 'Làctics de la Plana (pilot)', fee: 3000 }, rep: 4, xp: 40, flags: { martaPilot: true }, log: 'Va proposar una fase pilot al client gran.' }, say: [['marta.t', 'Prudent. M\'agrada. Si el pilot funciona, ampliem.']] },
         { t: 'Declinar: ara no tenim capacitat', v: 'no', say: [['marta.n', 'Ho entenc. Potser més endavant.']] }
       ] }
@@ -63,7 +63,7 @@
       ] },
       { t: 'lesson', id: 'L_financament' },
       { t: 'choice', key: 'inv63', prompt: 'Què fas amb l\'oferta de Ramon?', opts: [
-        { t: 'Acceptar: 80.000 € pel 30 %', v: 'acceptar', fx: (S) => ({ money: 80000, hire: { id: 'nous', name: 'Equip nou (4 persones)', salary: 9600 }, rent: Math.max(S.rent, 1600), flags: { creixementRapid: true, inversor: true }, log: 'Va acceptar 80.000 € d\'un inversor pel 30 % de l\'agència.', key: true }), say: [['ramon.h', 'Excel·lent. Ara, a créixer!'], ['julia.w', 'Pau... amb cinc persones més, les despeses fixes es tripliquen.']] },
+        { t: 'Acceptar: 80.000 € pel 30 %', v: 'acceptar', fx: (S) => ({ money: 80000, hire: { id: 'nous', name: 'Equip nou (4 persones)', salary: 9600 }, rent: Math.max(S.rent, 1600), flags: { creixementRapid: true, inversor: true }, log: 'Va acceptar 80.000 € d\'un inversor pel 30 % de l\'agència.', key: true }), say: [['ramon.h', 'Excel·lent. Ara, a créixer!'], ['julia.w', '{nom}... amb cinc persones més, les despeses fixes es tripliquen.']] },
         { t: 'Negociar: 50.000 € pel 15 %, sense seient al consell i amb objectius realistes', v: 'negociar', req: { skill: 'comercial', min: 3 }, fx: { money: 50000, hire: { id: 'nous', name: 'Equip nou (2 persones)', salary: 4800 }, flags: { inversor: true }, xp: 60, log: 'Va negociar una entrada d\'inversor moderada i amb control.', key: true }, say: [['ramon.t', 'Negocies bé. D\'acord.']] },
         { t: 'Rebutjar l\'oferta', v: 'rebutjar', fx: { log: 'Va rebutjar l\'oferta de l\'inversor.' }, say: [['ramon.n', 'Respecto la decisió. Si canvies d\'opinió, ja saps on sóc.']] },
         { t: 'Créixer amb beneficis propis, pas a pas', v: 'propis', fx: { rep: 1, flags: { autofinancat: true, equilibri: 2 }, log: 'Va decidir créixer amb beneficis propis.', key: true }, say: [['pau.h', 'Més lent, però l\'empresa continua sent nostra.']] }
@@ -75,7 +75,7 @@
     title: 'La marca de l\'agència', who: 'berta', bg: 'despatx', weeks: 1,
     blurb: 'Com es presenta l\'agència al mercat? Quins projectes rebutja?',
     steps: [
-      { t: 'dlg', lines: [['berta.h', 'Pau, és hora que l\'agència tingui una marca pròpia de veritat. Una promesa. Quina és la nostra?']] },
+      { t: 'dlg', lines: [['berta.h', '{nom}, és hora que l\'agència tingui una marca pròpia de veritat. Una promesa. Quina és la nostra?']] },
       { t: 'lesson', id: 'L_marca' },
       { t: 'choice', key: 'marca64', prompt: 'Quina promesa farà l\'agència?', opts: (S) => [
         { t: ({ A: '«Fem créixer els negocis d\'Osona amb dades i proximitat.»', B: '«Creixement mesurable: si no es pot demostrar, no ho venem.»', C: '«Marques amb ànima que venen.»' })[S.f.path || 'A'], v: 'coherent', d: 'Coherent amb el camí triat.', fx: { rep: 5, xp: 40, log: 'Va definir una promesa de marca coherent amb la seva especialitat.' } },
@@ -95,7 +95,7 @@
     blurb: 'Un client important amenaça de marxar.',
     steps: [
       { t: 'dlg', lines: [
-        ['miquel.a', 'Pau, et seré franc. Fa mesos que tinc la sensació que ja no m\'aporteu gaire. Els informes són iguals cada mes.'],
+        ['miquel.a', '{nom}, et seré franc. Fa mesos que tinc la sensació que ja no m\'aporteu gaire. Els informes són iguals cada mes.'],
         ['miquel.t', 'M\'han trucat de Vidal & Co. M\'ho estic pensant.']
       ] },
       { t: 'lesson', id: 'L_ltv' },
@@ -177,17 +177,17 @@
 
   CH('7.3', {
     title: 'L\'equip creix', who: 'julia', bg: 'oficina', weeks: 2,
-    blurb: 'L\'empresa ja no pot dependre de la supervisió directa d\'en Pau.',
+    blurb: 'L\'empresa ja no pot dependre de la supervisió directa {den}.',
     steps: [
       { t: 'dlg', lines: (S) => [
-        ['julia.w', 'Pau, tot passa per tu. Si estàs malalt una setmana, l\'agència s\'atura.'],
+        ['julia.w', '{nom}, tot passa per tu. Si estàs malalt una setmana, l\'agència s\'atura.'],
         S.f.cremat ? ['berta.w', 'I l\'equip encara arrossega el cansament dels mesos d\'hores extres.'] : ['berta.n', 'Necessitem rols clars i objectius per equips.']
       ] },
       { t: 'lesson', id: 'L_lideratge' },
       { t: 'choice', key: 'equip73', prompt: 'Com organitzes l\'equip?', opts: [
-        { t: 'Responsables per àrea (analítica, creativitat, comptes) amb objectius trimestrals; en Pau es dedica a direcció i clients clau', v: 'responsables', fx: (S) => ({ hire: { id: 'comptes', name: 'Responsable de comptes', salary: 2800 }, trust: { julia: 2, berta: 2 }, rep: 3, xp: 50, flags: { cremat: false }, log: 'Va crear una estructura amb responsables per àrea.', key: true }) },
+        { t: 'Responsables per àrea (analítica, creativitat, comptes) amb objectius trimestrals; {en} es dedica a direcció i clients clau', v: 'responsables', fx: (S) => ({ hire: { id: 'comptes', name: 'Responsable de comptes', salary: 2800 }, trust: { julia: 2, berta: 2 }, rep: 3, xp: 50, flags: { cremat: false }, log: 'Va crear una estructura amb responsables per àrea.', key: true }) },
         { t: 'Contractar molts perfils júnior perquè facin la feina', v: 'juniors', fx: { hire: { id: 'juniors', name: 'Tres perfils júnior', salary: 5400 }, trust: { julia: -1, berta: -1 }, log: 'Va contractar tres juniors sense responsables.' }, say: [['julia.a', 'I qui els forma? Jo no tinc temps!']] },
-        { t: 'Continuar com fins ara: tot passa per en Pau', v: 'igual', fx: { trust: { julia: -2, berta: -2 }, rep: -2 }, say: [['berta.w', 'Pau... així no creixerem mai.']] }
+        { t: 'Continuar com fins ara: tot passa per {en}', v: 'igual', fx: { trust: { julia: -2, berta: -2 }, rep: -2 }, say: [['berta.w', '{nom}... així no creixerem mai.']] }
       ] }
     ]
   });
@@ -197,7 +197,7 @@
     blurb: 'Oficina a Barcelona o equips distribuïts des d\'Osona?',
     steps: [
       { t: 'dlg', lines: (S) => [
-        ['laia.n', S.f.laiaAliada ? 'Pau, si obriu oficina a Barcelona, us podria cedir un espai a prop de la nostra. Seria bo per als dos.' : 'He sentit que esteu pensant en Barcelona. Benvinguts a la competència directa.'],
+        ['laia.n', S.f.laiaAliada ? '{nom}, si obriu oficina a Barcelona, us podria cedir un espai a prop de la nostra. Seria bo per als dos.' : 'He sentit que esteu pensant en Barcelona. Benvinguts a la competència directa.'],
         ['pau.t', 'Barcelona vol dir clients grans i talent. També lloguers alts i més complexitat.']
       ] },
       { t: 'choice', key: 'seu74', prompt: 'Què decideixes?', opts: [
@@ -244,12 +244,12 @@
     steps: [
       { t: 'dlg', lines: (S) => {
         const t = S.trust, L = [['', 'Deu anys després d\'aquell despatx damunt la merceria. Festa de l\'agència a la Plaça Major.']];
-        L.push(t.carme >= 4 ? ['carme.h', 'El forn té cua cada tarda. I tot va començar amb una fitxa de Google mal posada. Ets de casa, Pau.'] : t.carme >= 1 ? ['carme.n', 'Ens has ajudat, Pau. No sempre has tingut temps per a nosaltres, però ens has ajudat.'] : ['carme.w', 'Fa temps que no ens veiem, Pau. Massa feina, suposo.']);
+        L.push(t.carme >= 4 ? ['carme.h', 'El forn té cua cada tarda. I tot va començar amb una fitxa de Google mal posada. Ets de casa, {nom}.'] : t.carme >= 1 ? ['carme.n', 'Ens has ajudat, {nom}. No sempre has tingut temps per a nosaltres, però ens has ajudat.'] : ['carme.w', 'Fa temps que no ens veiem, {nom}. Massa feina, suposo.']);
         L.push(t.miquel >= 4 ? ['miquel.h', 'Has portat comandes de veritat a la fàbrica. La quarta generació ja ven a l\'estranger.'] : t.miquel >= 1 ? ['miquel.n', 'Bona feina, en general. Les oportunitats han estat reals.'] : ['miquel.t', 'Esperava més qualitat en les oportunitats, la veritat.']);
         if (S.f.met_julia) L.push(t.julia >= 3 ? ['julia.h', 'Les dades no menteixen: hem construït una empresa sòlida. I he après tant com tu.'] : ['julia.t', 'Les xifres tenen llums i ombres. Ho veurem a l\'informe.']);
         if (S.f.met_berta) L.push(t.berta >= 3 ? ['berta.h', 'Tenim una identitat pròpia. Els clients ens reconeixen. Això no té preu.'] : ['berta.n', 'Hem fet coses boniques. Algunes, fins i tot efectives.']);
-        if (S.f.met_quim) L.push(S.f.quimFora ? ['quim.n', 'Encara et guardo una mica de rancúnia, nano. Però reconec que eres seriós.'] : t.quim >= 1 ? ['quim.h', 'Amb tu he après que «tot el digital» no existeix. I ara venc més que mai.'] : ['quim.t', 'Ha estat una relació... intensa.']);
-        if (S.f.met_laia) L.push(t.laia >= 2 ? ['laia.h', 'Competència, sòcia i amiga. Qui ho havia de dir, aquell dia a la fira?'] : ['laia.n', 'Has crescut molt, Pau. Ens continuarem trobant als concursos.']);
+        if (S.f.met_quim) L.push(S.f.quimFora ? ['quim.n', 'Encara et guardo una mica de rancúnia, {g:nano|nena|nano}. Però reconec que {g:eres seriós|eres seriosa|vas ser seriós}.'] : t.quim >= 1 ? ['quim.h', 'Amb tu he après que «tot el digital» no existeix. I ara venc més que mai.'] : ['quim.t', 'Ha estat una relació... intensa.']);
+        if (S.f.met_laia) L.push(t.laia >= 2 ? ['laia.h', 'Competència, sòcia i amiga. Qui ho havia de dir, aquell dia a la fira?'] : ['laia.n', 'Has crescut molt, {nom}. Ens continuarem trobant als concursos.']);
         L.push(['pau.t', 'La Júlia ha preparat un informe final. És hora de mirar enrere amb honestedat.']);
         return L;
       } },
@@ -263,13 +263,13 @@
     steps: [
       { t: 'dlg', lines: (S) => [
         ['', 'La mateixa setmana arriben tres propostes.'],
-        ['laia.n', S.f.laiaAliada ? 'Pau, el meu grup vol comprar {agencia}. Mantindríeu la marca i l\'equip. Seria una fusió entre iguals.' : 'Un grup internacional vol comprar {agencia}. M\'han demanat que t\'ho faci arribar.'],
+        ['laia.n', S.f.laiaAliada ? '{nom}, el meu grup vol comprar {agencia}. Mantindríeu la marca i l\'equip. Seria una fusió entre iguals.' : 'Un grup internacional vol comprar {agencia}. M\'han demanat que t\'ho faci arribar.'],
         ['ramon.n', S.f.inversor ? 'Com a soci, et proposo l\'expansió: oficines a França i Portugal en dos anys.' : 'Si voleu fer el salt internacional, hi ha capital disponible. França i Portugal.'],
         ['julia.n', 'I l\'opció de consolidar-nos a Catalunya: créixer amb calma, ser referents aquí.'],
         ['pau.t', 'Quin futur vull per a l\'empresa que hem construït?']
       ] },
       { t: 'choice', key: 'final', prompt: 'La decisió final', opts: [
-        { t: '🤝 Vendre l\'agència', d: 'Una nova etapa per a en Pau, amb l\'equip protegit.', v: 'vendre' },
+        { t: '🤝 Vendre l\'agència', d: 'Una nova etapa per a {en}, amb l\'equip protegit.', v: 'vendre' },
         { t: '🌍 Expandir-la internacionalment', d: 'França, Portugal i més enllà.', v: 'expandir', req: (S) => S.f.franca && S.rep >= 50, },
         { t: '🏔️ Consolidar-la a Catalunya', d: 'Créixer amb calma i ser referents aquí.', v: 'consolidar' },
         { t: '🌿 Rebutjar-les totes i mantenir l\'agència tal com és', d: 'Triar projectes, cuidar l\'equip i tenir vida.', v: 'vida', req: (S) => !S.f.creixementRapid }
@@ -287,22 +287,22 @@
   GD.endings = {
     osona: { title: 'Final 1 — L\'orgull d\'Osona', bg: 'vic', cast: ['pau', 'carme', 'miquel', 'julia'], text: [
       '{agencia} es manté independent, rendible i arrelada al territori. Té una cartera estable, clients fidels i un equip petit que s\'estima la feina.',
-      'En Pau ha prioritzat la qualitat, les relacions i la sostenibilitat. Quan algú d\'Osona pregunta «qui em pot ajudar amb el màrqueting?», la resposta sol ser la mateixa.'
+      '{En} ha prioritzat la qualitat, les relacions i la sostenibilitat. Quan algú d\'Osona pregunta «qui em pot ajudar amb el màrqueting?», la resposta sol ser la mateixa.'
     ] },
     referents: { title: 'Final 2 — Referents en una especialitat', bg: 'oficina', cast: ['pau', 'julia', 'berta', 'marta'], text: [
       '{agencia} s\'ha convertit en un referent tècnic. Rep projectes complexos, treballa amb clients grans i és coneguda per la qualitat dels resultats.',
-      'Les universitats conviden en Pau a fer classes i els competidors estudien els seus casos.'
+      'Les universitats conviden {en} a fer classes i els competidors estudien els seus casos.'
     ] },
     grup: { title: 'Final 3 — El grup internacional', bg: 'franca', cast: ['pau', 'amelie', 'ramon', 'laia'], text: [
-      '{agencia} ha crescut a diversos mercats. En Pau dirigeix equips a Vic, Barcelona i Lió, i unitats de negoci que ell mai no havia imaginat.',
+      '{agencia} ha crescut a diversos mercats. {En} dirigeix equips a Vic, Barcelona i Lió, i unitats de negoci que ell mai no havia imaginat.',
       'Ha après a equilibrar creixement, rendibilitat i complexitat. Alguns dies troba a faltar aquell despatx damunt la merceria.'
     ] },
     ordre: { title: 'Final 4 — Tornar a posar ordre', bg: 'despatx:night', cast: ['pau', 'julia'], text: [
       'L\'empresa va créixer massa de pressa i va acumular problemes de tresoreria i gestió. Ha calgut reduir l\'estructura i renegociar deutes.',
-      'No és una derrota: {agencia} és ara més petita, però ordenada. En Pau ha après la lliçó més cara de totes: créixer no és el mateix que millorar.'
+      'No és una derrota: {agencia} és ara més petita, però ordenada. {En} ha après la lliçó més cara de totes: créixer no és el mateix que millorar.'
     ] },
     vida: { title: 'Final 5 — La vida que volies', bg: 'vic', cast: ['pau', 'carme', 'berta'], text: [
-      'En Pau ha decidit no perseguir el creixement indefinit. Ha construït una empresa viable que li permet triar projectes, cuidar l\'equip i tenir temps per a la vida.',
+      '{En} ha decidit no perseguir el creixement indefinit. Ha construït una empresa viable que li permet triar projectes, cuidar l\'equip i tenir temps per a la vida.',
       'Els dissabtes continua comprant el pa al forn de la Carme. I continua fent preguntes abans de proposar res.'
     ] }
   };
@@ -325,7 +325,7 @@
     if (S.trust.miquel >= 4) E.push('Mecanitzats Bellmunt exporta a cinc països. Miquel encara diu que «els m\'agrades no paguen nòmines».');
     if (S.f.met_julia && S.trust.julia >= 3) E.push('La Júlia és sòcia de l\'agència i fa classes d\'analítica a la universitat.');
     if (S.f.met_berta && S.trust.berta >= 3) E.push('La Berta ha guanyat un premi de creativitat amb una campanya que, a més, va vendre.');
-    if (S.f.laiaAliada || S.trust.laia >= 2) E.push('La Laia i en Pau comparteixen projectes cada any. La competència s\'ha convertit en aliança.');
+    if (S.f.laiaAliada || S.trust.laia >= 2) E.push('La Laia i {en} comparteixen projectes cada any. La competència s\'ha convertit en aliança.');
     if (S.f.sergiEngany) E.push('El Sergi va acabar descobrint que aquella primera campanya no havia venut res. Mai no ho va oblidar.');
     if (S.f.quimFora) E.push('En Quim va passar per quatre agències més. Totes amb «tot el digital».');
     return E;

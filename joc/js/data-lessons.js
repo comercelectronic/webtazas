@@ -517,7 +517,7 @@ GD.lessons = {
       'Els <b>objectius per equip</b> han d\'estar alineats amb l\'estratègia de l\'empresa i tenir indicadors.',
       'Gestionar talent inclou feedback periòdic, formació, reconeixement i càrregues de feina sostenibles.'
     ],
-    example: 'L\'agència crea tres responsables (estratègia, analítica i creativitat) amb objectius trimestrals. En Pau deixa de revisar cada peça i es dedica a clients grans i direcció.',
+    example: 'L\'agència crea tres responsables (estratègia, analítica i creativitat) amb objectius trimestrals. {En} deixa de revisar cada peça i es dedica a clients grans i direcció.',
     errors: ['Microgestionar-ho tot.', 'Rols ambigus.', 'Sobrecarregar les persones més competents.'],
     quiz: [
       { q: 'Quin és el canvi principal del director quan l\'equip creix?', o: ['Treballar més hores', 'Passar de fer les tasques a dirigir i definir objectius', 'Fer totes les revisions'], c: 1, why: 'Si tot passa per tu, ets el coll d\'ampolla.' },
