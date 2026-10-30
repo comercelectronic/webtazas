@@ -8,6 +8,14 @@ Es juga des del navegador i es pot instal·lar com a app (PWA) al mòbil o a l'o
 - **Instal·lar com a app:** a Android/Chrome/Edge surt el botó «📲 Instal·lar com a app». A l'iPhone/iPad: Safari → Compartir → «Afegeix a la pantalla d'inici».
 - **Partida:** es desa automàticament al dispositiu. Per passar-la d'un dispositiu a un altre (web ↔ app), fes servir Empresa → Exportar / Importar partida.
 
+## Idiomes
+
+El joc i el panell del professor es poden fer servir en **català, castellà i anglès** (selector a la pantalla inicial, a la pestanya Empresa i al panell del professor). Per defecte s'usa l'idioma del navegador.
+
+- El text original és en català dins dels fitxers de dades i de la interfície, embolcallat amb `T('…')`.
+- `js/i18n.js` busca la traducció pel hash del text català als diccionaris `js/i18n-es.js` i `js/i18n-en.js`. Si una frase no té traducció, es mostra en català.
+- Si canvies o afegeixes un text en català, cal afegir-ne la traducció als diccionaris (la clau és `T.hash('text català')`).
+
 ## Personatge i resultats per al professorat
 
 - **Creació del personatge:** en començar, l'alumne tria nom, cognom, tractament (masculí «en», femení «la» o neutre sense article), pentinat, colors, to de pell i complement. El nom i el tractament substitueixen «Pau» a tot el guió (marcadors `{nom}`, `{nomc}`, `{en}`, `{En}`, `{den}` i `{g:masculí|femení|neutre}` als fitxers de dades). Es pot canviar després des de la pestanya del personatge.

@@ -7,20 +7,20 @@
   // Fitxa visual de cada personatge
   const CHARS = {
     pau:    { name: 'Pau',        skin: '#f8dcc6', hair: '#3b2a24', hi: '#6b4c3e', eye: '#c47a28', style: 'spiky',  outfit: 'pau' },
-    carme:  { name: 'Carme',      skin: '#f3d0b4', hair: '#8c5a46', hi: '#b98572', eye: '#7a4a2a', style: 'bun',    outfit: 'apron', oc: '#c8424b', age: 1 },
-    miquel: { name: 'Miquel',     skin: '#efcdb2', hair: '#9aa0a8', hi: '#cfd3d8', eye: '#3c5a80', style: 'neat',   outfit: 'shirt', oc: '#2f4a6d', acc: ['glassesRect'], age: 1 },
-    julia:  { name: 'Júlia',      skin: '#f9e0cf', hair: '#1f2433', hi: '#4a5577', eye: '#2f9a6e', style: 'bob',    outfit: 'cardigan', oc: '#7a5ac8', acc: ['glassesRound'] },
-    berta:  { name: 'Berta',      skin: '#fbe1cf', hair: '#e2577a', hi: '#ff9bb4', eye: '#e08a2c', style: 'wavy',   outfit: 'shirt', oc: '#f2b134', acc: ['beret', 'earrings'] },
-    quim:   { name: 'Quim',       skin: '#f4d2b6', hair: '#e9c25a', hi: '#fff0a8', eye: '#5a7a2a', style: 'slick',  outfit: 'polo', oc: '#ee7b30', acc: ['sunglasses'] },
-    laia:   { name: 'Laia Vidal', skin: '#f6d8c8', hair: '#151320', hi: '#4d4470', eye: '#8a3fd1', style: 'long',   outfit: 'blazer', oc: '#1d1b2b', acc: ['earrings'] },
-    jordi:  { name: 'Jordi',      skin: '#eec7a6', hair: '#4a2f22', hi: '#7a5444', eye: '#6b3d1f', style: 'neat',   outfit: 'chef', oc: '#ffffff', age: 1 },
-    nuria:  { name: 'Núria',      skin: '#f6d6bf', hair: '#a3451f', hi: '#de7a4c', eye: '#3f7a3a', style: 'pony',   outfit: 'apron', oc: '#3f7a3a' },
-    sergi:  { name: 'Sergi',      skin: '#f2cfb3', hair: '#26313f', hi: '#55657a', eye: '#2a6fb0', style: 'spiky',  outfit: 'hoodie', oc: '#d63c6b' },
-    toni:   { name: 'Toni',       skin: '#e8be9c', hair: '#141414', hi: '#444', eye: '#4b2e1c', style: 'buzz',   outfit: 'polo', oc: '#1f9d55' },
-    marta:  { name: 'Marta',      skin: '#f7dccb', hair: '#5a3b2a', hi: '#8c6450', eye: '#5a3fa0', style: 'long',   outfit: 'blazer', oc: '#2e6c8a', acc: ['earrings'] },
-    ramon:  { name: 'Ramon',      skin: '#eccaae', hair: '#d8d8d8', hi: '#ffffff', eye: '#2d4a6a', style: 'slick',  outfit: 'suit', oc: '#2a2a35', age: 1 },
-    amelie: { name: 'Amélie',     skin: '#fae3d3', hair: '#e7c46f', hi: '#fff2b8', eye: '#2c7fb8', style: 'bob',    outfit: 'blazer', oc: '#7a1f3d' },
-    client: { name: 'Client',     skin: '#f1d0b6', hair: '#5a4030', hi: '#8a6a55', eye: '#5a3a20', style: 'neat',   outfit: 'shirt', oc: '#6a7a8a' }
+    carme:  { name: T('Carme'),      skin: '#f3d0b4', hair: '#8c5a46', hi: '#b98572', eye: '#7a4a2a', style: 'bun',    outfit: 'apron', oc: '#c8424b', age: 1 },
+    miquel: { name: T('Miquel'),     skin: '#efcdb2', hair: '#9aa0a8', hi: '#cfd3d8', eye: '#3c5a80', style: 'neat',   outfit: 'shirt', oc: '#2f4a6d', acc: ['glassesRect'], age: 1 },
+    julia:  { name: T('Júlia'),      skin: '#f9e0cf', hair: '#1f2433', hi: '#4a5577', eye: '#2f9a6e', style: 'bob',    outfit: 'cardigan', oc: '#7a5ac8', acc: ['glassesRound'] },
+    berta:  { name: T('Berta'),      skin: '#fbe1cf', hair: '#e2577a', hi: '#ff9bb4', eye: '#e08a2c', style: 'wavy',   outfit: 'shirt', oc: '#f2b134', acc: ['beret', 'earrings'] },
+    quim:   { name: T('Quim'),       skin: '#f4d2b6', hair: '#e9c25a', hi: '#fff0a8', eye: '#5a7a2a', style: 'slick',  outfit: 'polo', oc: '#ee7b30', acc: ['sunglasses'] },
+    laia:   { name: T('Laia Vidal'), skin: '#f6d8c8', hair: '#151320', hi: '#4d4470', eye: '#8a3fd1', style: 'long',   outfit: 'blazer', oc: '#1d1b2b', acc: ['earrings'] },
+    jordi:  { name: T('Jordi'),      skin: '#eec7a6', hair: '#4a2f22', hi: '#7a5444', eye: '#6b3d1f', style: 'neat',   outfit: 'chef', oc: '#ffffff', age: 1 },
+    nuria:  { name: T('Núria'),      skin: '#f6d6bf', hair: '#a3451f', hi: '#de7a4c', eye: '#3f7a3a', style: 'pony',   outfit: 'apron', oc: '#3f7a3a' },
+    sergi:  { name: T('Sergi'),      skin: '#f2cfb3', hair: '#26313f', hi: '#55657a', eye: '#2a6fb0', style: 'spiky',  outfit: 'hoodie', oc: '#d63c6b' },
+    toni:   { name: T('Toni'),       skin: '#e8be9c', hair: '#141414', hi: '#444', eye: '#4b2e1c', style: 'buzz',   outfit: 'polo', oc: '#1f9d55' },
+    marta:  { name: T('Marta'),      skin: '#f7dccb', hair: '#5a3b2a', hi: '#8c6450', eye: '#5a3fa0', style: 'long',   outfit: 'blazer', oc: '#2e6c8a', acc: ['earrings'] },
+    ramon:  { name: T('Ramon'),      skin: '#eccaae', hair: '#d8d8d8', hi: '#ffffff', eye: '#2d4a6a', style: 'slick',  outfit: 'suit', oc: '#2a2a35', age: 1 },
+    amelie: { name: T('Amélie'),     skin: '#fae3d3', hair: '#e7c46f', hi: '#fff2b8', eye: '#2c7fb8', style: 'bob',    outfit: 'blazer', oc: '#7a1f3d' },
+    client: { name: T('Client'),     skin: '#f1d0b6', hair: '#5a4030', hi: '#8a6a55', eye: '#5a3a20', style: 'neat',   outfit: 'shirt', oc: '#6a7a8a' }
   };
 
   // Vestuari d'en Pau segons el rang (millora visible del personatge)
@@ -232,13 +232,13 @@
       <g fill="#d98c3e" stroke="#9a5a22" stroke-width="3">${[0, 1, 2, 3, 4].map(i => `<ellipse cx="${130 + i * 100}" cy="135" rx="40" ry="18"/>`).join('')}${[0, 1, 2, 3].map(i => `<ellipse cx="${170 + i * 110}" cy="235" rx="46" ry="20"/>`).join('')}</g>
       <g fill="#f2c26a" stroke="#b07a2a" stroke-width="3">${[0, 1, 2, 3, 4, 5].map(i => `<rect x="${110 + i * 80}" y="315" width="60" height="30" rx="12"/>`).join('')}</g>
       <rect x="680" y="120" width="240" height="180" rx="8" fill="#2f3a32" stroke="#8a5a3e" stroke-width="10"/>
-      <g fill="#fff" font-family="M PLUS Rounded 1c, sans-serif" font-size="26"><text x="710" y="170">Pa de pagès</text><text x="710" y="210">Coca de vidre</text><text x="710" y="250">Croissants</text></g>
+      <g fill="#fff" font-family="M PLUS Rounded 1c, sans-serif" font-size="26"><text x="710" y="170">${T("Pa de pagès")}</text><text x="710" y="210">${T("Coca de vidre")}</text><text x="710" y="250">${T("Croissants")}</text></g>
       <rect x="0" y="420" width="1000" height="180" fill="#a8683e"/><rect x="0" y="420" width="1000" height="20" fill="#c98a5a"/>`,
     restaurant: () => `<rect width="1000" height="600" fill="#5a2f2a"/><rect y="0" width="1000" height="380" fill="#7a3f36"/>
       <g fill="#ffd27a">${[150, 400, 650, 880].map(x => `<path d="M${x} 0 V70"/><circle cx="${x}" cy="90" r="22" opacity=".9"/><circle cx="${x}" cy="90" r="70" opacity=".12"/>`).join('')}</g>
       <g stroke="#ffd27a" stroke-width="3">${[150, 400, 650, 880].map(x => `<line x1="${x}" y1="0" x2="${x}" y2="70"/>`).join('')}</g>
       <g>${[180, 520, 840].map(x => `<ellipse cx="${x}" cy="470" rx="130" ry="34" fill="#fff"/><rect x="${x - 8}" y="480" width="16" height="110" fill="#3a1f1a"/><rect x="${x - 30}" y="420" width="8" height="40" fill="#8fd3a0"/><circle cx="${x + 40}" cy="455" r="10" fill="#f2f2f2" stroke="#ccc"/>`).join('')}</g>
-      <rect x="600" y="140" width="300" height="160" rx="8" fill="#2a2a2a" stroke="#c8a06a" stroke-width="8"/><text x="640" y="200" fill="#fff" font-family="M PLUS Rounded 1c, sans-serif" font-size="30">Menú del dia</text>`,
+      <rect x="600" y="140" width="300" height="160" rx="8" fill="#2a2a2a" stroke="#c8a06a" stroke-width="8"/><text x="640" y="200" fill="#fff" font-family="M PLUS Rounded 1c, sans-serif" font-size="30">${T("Menú del dia")}</text>`,
     fabrica: () => `${defs(sky('sk', 'day'))}<rect width="1000" height="600" fill="#cdd6e0"/>
       ${[60, 300, 540, 780].map(x => `<rect x="${x}" y="60" width="170" height="130" fill="url(#sk)" stroke="#6a7a8a" stroke-width="8"/>`).join('')}
       <rect y="380" width="1000" height="220" fill="#8a96a3"/><rect y="380" width="1000" height="12" fill="#f2c94c"/>
@@ -254,7 +254,7 @@
     fira: () => `<rect width="1000" height="600" fill="#e8ecf7"/><rect y="0" width="1000" height="50" fill="#3a3f7a"/>
       <g>${Array.from({ length: 10 }, (_, i) => `<circle cx="${i * 110 + 40}" cy="50" r="8" fill="#fff6c8"/>`).join('')}</g>
       ${[{ x: 40, c: '#e45a7a' }, { x: 360, c: '#25b3a3' }, { x: 680, c: '#f2b134' }].map(s => `<rect x="${s.x}" y="120" width="280" height="60" fill="${s.c}"/><rect x="${s.x + 10}" y="180" width="260" height="200" fill="#fff" stroke="#ccd" stroke-width="4"/><rect x="${s.x + 30}" y="210" width="90" height="120" rx="6" fill="${s.c}" opacity=".35"/><rect x="${s.x}" y="380" width="280" height="40" fill="#556"/>`).join('')}
-      <g fill="#fff" font-family="M PLUS Rounded 1c, sans-serif" font-size="26" font-weight="700"><text x="70" y="160">FIRA EMPRESA</text><text x="390" y="160">OSONA DIGITAL</text><text x="720" y="160">INDÚSTRIA 4.0</text></g>
+      <g fill="#fff" font-family="M PLUS Rounded 1c, sans-serif" font-size="26" font-weight="700"><text x="70" y="160">${T("FIRA EMPRESA")}</text><text x="390" y="160">${T("OSONA DIGITAL")}</text><text x="720" y="160">${T("INDÚSTRIA 4.0")}</text></g>
       <rect y="440" width="1000" height="160" fill="#b8bfd6"/>`,
     barcelona: () => `${defs(sky('sk', 'sunset'))}<rect width="1000" height="600" fill="url(#sk)"/>${clouds(.6)}
       <rect y="420" width="1000" height="180" fill="#4a7ac8" opacity=".6"/>
@@ -289,11 +289,11 @@
     Object.assign(CHARS.pau, { style: l.style, hair: l.hair, hi: shade(l.hair, 50), eye: l.eye, skin: l.skin, acc: (l.acc || []).slice() });
   }
   const LOOK_OPTIONS = {
-    style: [['spiky', 'Punxegut'], ['neat', 'Curt clàssic'], ['buzz', 'Molt curt'], ['slick', 'Pentinat enrere'], ['bob', 'Mitja melena'], ['long', 'Llarg'], ['pony', 'Cua'], ['wavy', 'Ondulat'], ['bun', 'Monyo']],
+    style: [['spiky', T('Punxegut')], ['neat', T('Curt clàssic')], ['buzz', T('Molt curt')], ['slick', T('Pentinat enrere')], ['bob', T('Mitja melena')], ['long', T('Llarg')], ['pony', T('Cua')], ['wavy', T('Ondulat')], ['bun', T('Monyo')]],
     hair: ['#3b2a24', '#141414', '#6b4226', '#a3451f', '#e9c25a', '#d8d8d8', '#e2577a', '#3a6fd6', '#2f9a6e', '#7a5ac8'],
     eye: ['#c47a28', '#5a3a20', '#2a6fb0', '#2f9a6e', '#8a3fd1', '#c8424b'],
     skin: ['#fbe1cf', '#f8dcc6', '#eec7a6', '#d9a57e', '#b97f57', '#8a5a3c'],
-    acc: [['', 'Cap'], ['glassesRound', 'Ulleres rodones'], ['glassesRect', 'Ulleres quadrades'], ['earrings', 'Arracades']]
+    acc: [['', T('Cap')], ['glassesRound', T('Ulleres rodones')], ['glassesRect', T('Ulleres quadrades')], ['earrings', T('Arracades')]]
   };
 
   window.ART = { portrait, background, CHARS, PAU_OUTFITS, setPlayer, LOOK_OPTIONS, PLAYER_DEFAULT };

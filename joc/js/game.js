@@ -9,18 +9,18 @@
 
   /* ================= Constants de joc ================= */
   const SKILLS = {
-    estrategia:  { n: 'Estratègia',  i: '🧭', d: 'Diagnòstics més encertats i plans més sòlids. +qualitat a totes les campanyes.' },
-    creativitat: { n: 'Creativitat', i: '🎨', d: 'Missatges i continguts que connecten. +resultats en marca, xarxes i anuncis.' },
-    analitica:   { n: 'Analítica',   i: '📊', d: 'Llegeixes les dades amb rigor. +precisió i opcions de diàleg basades en dades.' },
-    comercial:   { n: 'Comercial',   i: '🤝', d: 'Negocies millor. +5% als honoraris per nivell i més confiança dels clients.' },
-    gestio:      { n: 'Direcció',    i: '🏢', d: 'Organitzes equip i diners. −4% de despeses fixes per nivell i més marge en crisis.' }
+    estrategia:  { n: T('Estratègia'),  i: '🧭', d: T('Diagnòstics més encertats i plans més sòlids. +qualitat a totes les campanyes.') },
+    creativitat: { n: T('Creativitat'), i: '🎨', d: T('Missatges i continguts que connecten. +resultats en marca, xarxes i anuncis.') },
+    analitica:   { n: T('Analítica'),   i: '📊', d: T('Llegeixes les dades amb rigor. +precisió i opcions de diàleg basades en dades.') },
+    comercial:   { n: T('Comercial'),   i: '🤝', d: T('Negocies millor. +5% als honoraris per nivell i més confiança dels clients.') },
+    gestio:      { n: T('Direcció'),    i: '🏢', d: T('Organitzes equip i diners. −4% de despeses fixes per nivell i més marge en crisis.') }
   };
   const SKILL_MAX = 5;
   const CHARS_TRUST = ['carme', 'miquel', 'julia', 'berta', 'quim', 'laia'];
   const RANKS = {
-    m: ['Emprenedor novell', 'Consultor local', 'Estrateg digital', 'Director d\'equip', 'Gestor de crisis', 'Director d\'agència', 'Director estratègic', 'Referent del sector', 'Llegenda d\'Osona'],
-    f: ['Emprenedora novella', 'Consultora local', 'Estratega digital', 'Directora d\'equip', 'Gestora de crisis', 'Directora d\'agència', 'Directora estratègica', 'Referent del sector', 'Llegenda d\'Osona'],
-    n: ['Primeres passes', 'Consultoria local', 'Estratègia digital', 'Direcció d\'equip', 'Gestió de crisis', 'Direcció d\'agència', 'Direcció estratègica', 'Referent del sector', 'Llegenda d\'Osona']
+    m: [T('Emprenedor novell'), T('Consultor local'), T('Estrateg digital'), T('Director d\'equip'), T('Gestor de crisis'), T('Director d\'agència'), T('Director estratègic'), T('Referent del sector'), T('Llegenda d\'Osona')],
+    f: [T('Emprenedora novella'), T('Consultora local'), T('Estratega digital'), T('Directora d\'equip'), T('Gestora de crisis'), T('Directora d\'agència'), T('Directora estratègica'), T('Referent del sector'), T('Llegenda d\'Osona')],
+    n: [T('Primeres passes'), T('Consultoria local'), T('Estratègia digital'), T('Direcció d\'equip'), T('Gestió de crisis'), T('Direcció d\'agència'), T('Direcció estratègica'), T('Referent del sector'), T('Llegenda d\'Osona')]
   };
   const API = '/.netlify/functions/joc-resultats';
   const xpNeed = (lvl) => 180 + 75 * Math.ceil(lvl / 4);
@@ -32,7 +32,7 @@
 
   function newState() {
     return {
-      v: 1, agency: 'Píxel d\'Osona', profile: null,
+      v: 1, agency: T('Píxel d\'Osona'), profile: null,
       player: { id: uid(), name: 'Pau', surname: 'Riera', g: 'm', look: Object.assign({}, ART.PLAYER_DEFAULT) },
       classe: '', quizLog: {}, syncPending: false, lastSync: 0,
       level: 1, xp: 0, sp: 0,
@@ -59,8 +59,8 @@
 
   /* ================= Utilitats ================= */
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
-  const eur = (n) => (Math.round(n)).toLocaleString('ca-ES') + ' €';
-  const pct = (n) => (Math.round(n * 10) / 10).toLocaleString('ca-ES') + ' %';
+  const eur = (n) => (Math.round(n)).toLocaleString(LOCALE) + ' €';
+  const pct = (n) => (Math.round(n * 10) / 10).toLocaleString(LOCALE) + ' %';
   const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const rnd = (a, b) => a + Math.random() * (b - a);
   // Marcadors del guió: {nom}, {nomc} (nom complet), {en}/{En} («en Pau», «la Marta», «l'Anna»),
@@ -70,7 +70,9 @@
     const p = (S && S.player) || { name: 'Pau', surname: '', g: 'm' };
     const n = esc(p.name), vow = /^h?[aeiouàèéíòóú]/i.test(p.name);
     let en, den;
-    if (p.g === 'f') { en = (vow ? 'l\'' : 'la ') + n; den = (vow ? 'de l\'' : 'de la ') + n; }
+    if (LANG === 'es') { en = n; den = 'de ' + n; }
+    else if (LANG === 'en') { en = n; den = n + '\u2019s'; }
+    else if (p.g === 'f') { en = (vow ? 'l\'' : 'la ') + n; den = (vow ? 'de l\'' : 'de la ') + n; }
     else if (p.g === 'n') { en = n; den = (vow ? 'd\'' : 'de ') + n; }
     else { en = (vow ? 'l\'' : 'en ') + n; den = (vow ? 'de l\'' : 'd\'en ') + n; }
     return { nom: n, nomc: esc((p.name + ' ' + (p.surname || '')).trim()), en, En: en.charAt(0).toUpperCase() + en.slice(1), den };
@@ -132,7 +134,7 @@
       notes.push((m > 0 ? '+' : '') + eur(m));
     }
     if (fx.reserve) { S.money -= fx.reserve; S.reserve += fx.reserve; }
-    if (fx.rep) { S.rep = clamp(S.rep + fx.rep, 0, 100); if (RUN) RUN.rep += fx.rep; notes.push((fx.rep > 0 ? '+' : '') + fx.rep + ' reputació'); }
+    if (fx.rep) { S.rep = clamp(S.rep + fx.rep, 0, 100); if (RUN) RUN.rep += fx.rep; notes.push((fx.rep > 0 ? '+' : '') + fx.rep + T(' reputació')); }
     if (fx.trust) for (const k in fx.trust) {
       S.trust[k] = clamp((S.trust[k] || 0) + fx.trust[k], -5, 10);
       if (RUN) RUN.trust[k] = (RUN.trust[k] || 0) + fx.trust[k];
@@ -141,10 +143,10 @@
     if (fx.know) for (const k in fx.know) { S.know[k] = (S.know[k] || 0) + fx.know[k]; if (RUN) RUN.know[k] = (RUN.know[k] || 0) + fx.know[k]; }
     if (fx.skill) for (const k in fx.skill) S.skills[k] = clamp(S.skills[k] + fx.skill[k], 0, SKILL_MAX);
     if (fx.flags) Object.assign(S.f, fx.flags);
-    if (fx.client) { S.clients = S.clients.filter(c => c.id !== fx.client.id); S.clients.push(fx.client); notes.push(`Nou client recurrent: ${fx.client.name}`); }
-    if (fx.dropClient) { const c = S.clients.find(x => x.id === fx.dropClient); if (c) { S.clients = S.clients.filter(x => x.id !== fx.dropClient); notes.push(`Deixes de treballar amb ${c.name}`); } }
+    if (fx.client) { S.clients = S.clients.filter(c => c.id !== fx.client.id); S.clients.push(fx.client); notes.push(T("Nou client recurrent: {0}", [fx.client.name])); }
+    if (fx.dropClient) { const c = S.clients.find(x => x.id === fx.dropClient); if (c) { S.clients = S.clients.filter(x => x.id !== fx.dropClient); notes.push(T("Deixes de treballar amb {0}", [c.name])); } }
     if (fx.clientFee) for (const k in fx.clientFee) { const c = S.clients.find(x => x.id === k); if (c) c.fee = Math.max(0, c.fee + fx.clientFee[k]); }
-    if (fx.hire) { if (!S.team.some(t => t.id === fx.hire.id)) { S.team.push(fx.hire); notes.push(`S'incorpora ${fx.hire.name} a l'equip`); } }
+    if (fx.hire) { if (!S.team.some(t => t.id === fx.hire.id)) { S.team.push(fx.hire); notes.push(T("S'incorpora {0} a l'equip", [fx.hire.name])); } }
     if (fx.fire) S.team = S.team.filter(t => t.id !== fx.fire);
     if (fx.rent != null) S.rent = fx.rent;
     if (fx.tools != null) S.tools = fx.tools;
@@ -182,7 +184,7 @@
   function levelUpFx() {
     const d = document.createElement('div');
     d.className = 'levelup';
-    d.innerHTML = `<div class="lu-lines"></div><div class="lu-box"><div class="lu-t">LEVEL UP!</div><div class="lu-s">Nivell ${S.level} · +1 punt d'habilitat</div></div>`;
+    d.innerHTML = `<div class="lu-lines"></div><div class="lu-box"><div class="lu-t">${T("LEVEL UP!")}</div><div class="lu-s">${T("Nivell")} ${S.level} ${T("· +1 punt d'habilitat")}</div></div>`;
     document.body.appendChild(d);
     petals(d, 24);
     setTimeout(() => d.classList.add('out'), 1900);
@@ -213,7 +215,7 @@
         <span class="chip ${S.money < 0 ? 'neg' : ''}" title="Liquiditat">💶 ${eur(S.money)}</span>
         <span class="chip" title="Reputació">⭐ ${S.rep}</span>
         <span class="chip" title="Setmana">📅 S${S.week}</span>
-        <span class="chip lvl" title="Nivell i experiència">Nv ${S.level}<i class="xpbar"><i style="width:${S.level >= MAX_LEVEL ? 100 : Math.round(S.xp / need * 100)}%"></i></i></span>
+        <span class="chip lvl" title="Nivell i experiència">${T("Nv")} ${S.level}<i class="xpbar"><i style="width:${S.level >= MAX_LEVEL ? 100 : Math.round(S.xp / need * 100)}%"></i></i></span>
       </div>`;
   }
 
@@ -227,15 +229,16 @@
         <div class="title-petals"></div>
         <div class="title-content">
           <div class="title-ava">${ART.portrait('pau', 'h', { rank: 0 })}</div>
-          <h1 class="logo"><span>Agència</span><span>Digital</span></h1>
-          <p class="tagline">De Vic al món · Un joc de màrqueting i empresa</p>
+          <h1 class="logo"><span>${T("Agència")}</span><span>${T("Digital")}</span></h1>
+          <p class="tagline">${T("De Vic al món · Un joc de màrqueting i empresa")}</p>
           <div class="title-btns">
-            ${has ? `<button class="btn big primary" data-act="continue">▶ Continuar partida <small>${has.player ? esc(has.player.name) + ' · ' : ''}${esc(has.agency)} · Nivell ${has.level}</small></button>` : ''}
-            <button class="btn big ${has ? '' : 'primary'}" data-act="new">✦ Nova partida</button>
-            <button class="btn" data-act="import">⇪ Importar partida</button>
-            <button class="btn ghost install-btn" data-act="install" hidden>📲 Instal·lar com a app</button>
+            ${has ? `<button class="btn big primary" data-act="continue">${T("▶ Continuar partida")} <small>${has.player ? esc(has.player.name) + ' · ' : ''}${esc(has.agency)} ${T("· Nivell")} ${has.level}</small></button>` : ''}
+            <button class="btn big ${has ? '' : 'primary'}" data-act="new">${T("✦ Nova partida")}</button>
+            <button class="btn" data-act="import">${T("⇪ Importar partida")}</button>
+            <div class="langs">${LANGS.map(([k, n]) => `<button class="${k === LANG ? 'on' : ''}" data-lang="${k}">${n}</button>`).join('')}</div>
+            <button class="btn ghost install-btn" data-act="install" hidden>${T("📲 Instal·lar com a app")}</button>
           </div>
-          <p class="fine">Personatges, empreses i resultats de les campanyes són ficticis i simulats.</p>
+          <p class="fine">${T("Personatges, empreses i resultats de les campanyes són ficticis i simulats.")}</p>
         </div>
       </section>`;
     petals($('.title-petals'), 18);
@@ -253,7 +256,7 @@
         <div class="hub-body" id="hubBody"></div>
       </main>
       <nav class="tabs">
-        ${[['campanya', '🗺️', 'Campanya'], ['pau', '🧑', esc(S.player.name)], ['encarrecs', '📨', 'Encàrrecs'], ['biblioteca', '📚', 'Biblioteca'], ['empresa', '🏢', 'Empresa']]
+        ${[['campanya', '🗺️', T('Campanya')], ['pau', '🧑', esc(S.player.name)], ['encarrecs', '📨', T('Encàrrecs')], ['biblioteca', '📚', T('Biblioteca')], ['empresa', '🏢', T('Empresa')]]
           .map(([k, i, n]) => `<button class="tab ${hubTab === k ? 'on' : ''}" data-tab="${k}"><span>${i}</span>${n}${k === 'pau' && S.sp ? `<em class="dot">${S.sp}</em>` : ''}</button>`).join('')}
       </nav>`;
     hud();
@@ -276,10 +279,10 @@
   function tabCampanya(el) {
     const next = Object.keys(GD.chapters).find(c => chapterState(c) === 'open');
     el.innerHTML = `
-      ${S.ending ? `<div class="card ending-mini"><b>Has arribat a un final: ${esc(GD.endings[S.ending].title)}</b><p>Pots continuar en mode lliure amb els encàrrecs o començar una partida nova amb una altra estratègia.</p><button class="btn" data-act="showEnding">Tornar a veure el final</button></div>` : ''}
+      ${S.ending ? `<div class="card ending-mini"><b>${T("Has arribat a un final:")} ${esc(GD.endings[S.ending].title)}</b><p>${T("Pots continuar en mode lliure amb els encàrrecs o començar una partida nova amb una altra estratègia.")}</p><button class="btn" data-act="showEnding">${T("Tornar a veure el final")}</button></div>` : ''}
       ${next ? `<button class="next-mission" data-ch="${next}">
           <span class="nm-ava">${ART.portrait(GD.chapters[next].who || 'pau', 'n', { rank: rank() })}</span>
-          <span class="nm-txt"><small>Següent missió · Capítol ${next}</small><b>${txt(GD.chapters[next].title)}</b><i>${txt(GD.chapters[next].blurb || '')}</i></span>
+          <span class="nm-txt"><small>${T("Següent missió · Capítol")} ${next}</small><b>${txt(GD.chapters[next].title)}</b><i>${txt(GD.chapters[next].blurb || '')}</i></span>
           <span class="nm-go">▶</span></button>` : ''}
       ${!next && !S.ending ? `<div class="card warn">${levelHint()}</div>` : ''}
       <div class="stages">
@@ -288,10 +291,10 @@
           const prevOk = st.id === 1 || GD.stages[st.id - 2].chapters.every(c => S.done[c]);
           const lock = !prevOk;
           return `<section class="stage ${lock ? 'locked' : ''} ${done === st.chapters.length ? 'complete' : ''}" style="--sc:${st.color}">
-            <header><span class="st-num">${String(st.id).padStart(2, '0')}</span><div><h3>${txt(st.title)}</h3><p>${esc(st.sub)} · Nivells ${st.levels}</p></div><span class="st-prog">${done}/${st.chapters.length}</span></header>
-            ${lock ? '<p class="lockmsg">🔒 Completa l\'etapa anterior per desbloquejar-la.</p>' : `<ol>${st.chapters.map(c => {
+            <header><span class="st-num">${String(st.id).padStart(2, '0')}</span><div><h3>${txt(st.title)}</h3><p>${esc(st.sub)} ${T("· Nivells")} ${st.levels}</p></div><span class="st-prog">${done}/${st.chapters.length}</span></header>
+            ${lock ? T('<p class="lockmsg">🔒 Completa l\'etapa anterior per desbloquejar-la.</p>') : `<ol>${st.chapters.map(c => {
               const s = chapterState(c);
-              return `<li class="ch ${s}"><button ${s === 'open' || s === 'done' ? `data-ch="${c}"` : 'disabled'}><span class="ch-id">${c}</span><span class="ch-t">${txt(GD.chapters[c].title)}</span><span class="ch-s">${s === 'done' ? '✔' : s === 'open' ? '▶' : s === 'level' ? `Nv ${st.minLevel}` : '🔒'}</span></button></li>`;
+              return `<li class="ch ${s}"><button ${s === 'open' || s === 'done' ? `data-ch="${c}"` : 'disabled'}><span class="ch-id">${c}</span><span class="ch-t">${txt(GD.chapters[c].title)}</span><span class="ch-s">${s === 'done' ? '✔' : s === 'open' ? '▶' : s === 'level' ? T("Nv {0}", [st.minLevel]) : '🔒'}</span></button></li>`;
             }).join('')}</ol>`}
           </section>`;
         }).join('')}
@@ -300,9 +303,9 @@
 
   function levelHint() {
     const st = GD.stages.find(s => s.chapters.some(c => !S.done[c]));
-    if (!st) return 'Has completat la campanya!';
-    if (S.level < st.minLevel) return `🔒 L'etapa <b>${txt(st.title)}</b> requereix nivell ${st.minLevel}. Fes encàrrecs a la pestanya <b>📨 Encàrrecs</b> per guanyar experiència i diners.`;
-    return 'Continua amb la següent missió.';
+    if (!st) return T('Has completat la campanya!');
+    if (S.level < st.minLevel) return `${T("🔒 L'etapa")} <b>${txt(st.title)}</b> ${T("requereix nivell")} ${st.minLevel}${T(". Fes encàrrecs a la pestanya")} <b>${T("📨 Encàrrecs")}</b> ${T("per guanyar experiència i diners.")}`;
+    return T('Continua amb la següent missió.');
   }
 
   function tabPau(el) {
@@ -311,24 +314,24 @@
       <div class="sheet">
         <div class="sheet-ava">${ART.portrait('pau', S.sp ? 'h' : 'n', { rank: rank() })}<span class="rank-badge">${title()}</span></div>
         <div class="sheet-info">
-          <h2>${txt('{nomc}')}</h2>
-          <p class="muted">${S.f.profile && GD.profiles[S.f.profile] ? GD.profiles[S.f.profile].n : 'Perfil per definir'} · ${txt('{g:Director|Directora|Direcció}')} de ${esc(S.agency)}</p>
-          <div class="lvl-big">Nivell <b>${S.level}</b><span class="xpbar big"><i style="width:${S.level >= MAX_LEVEL ? 100 : Math.round(S.xp / need * 100)}%"></i></span><small>${S.level >= MAX_LEVEL ? 'Nivell màxim' : `${S.xp} / ${need} EXP`}</small></div>
-          <p class="sp ${S.sp ? 'has' : ''}">Punts d'habilitat disponibles: <b>${S.sp}</b></p>
-          <p class="muted small">${txt('El vestuari {den} millora a mesura que completes etapes.')}</p>
-          <button class="btn small" data-act="editAvatar">✏️ Canviar aspecte i nom</button>
+          <h2>${txt(T('{nomc}'))}</h2>
+          <p class="muted">${S.f.profile && GD.profiles[S.f.profile] ? GD.profiles[S.f.profile].n : T('Perfil per definir')} · ${txt(T('{g:Director|Directora|Direcció}'))} de ${esc(S.agency)}</p>
+          <div class="lvl-big">${T("Nivell")} <b>${S.level}</b><span class="xpbar big"><i style="width:${S.level >= MAX_LEVEL ? 100 : Math.round(S.xp / need * 100)}%"></i></span><small>${S.level >= MAX_LEVEL ? T('Nivell màxim') : T("{0} / {1} EXP", [S.xp, need])}</small></div>
+          <p class="sp ${S.sp ? 'has' : ''}">${T("Punts d'habilitat disponibles:")} <b>${S.sp}</b></p>
+          <p class="muted small">${txt(T('El vestuari {den} millora a mesura que completes etapes.'))}</p>
+          <button class="btn small" data-act="editAvatar">${T("✏️ Canviar aspecte i nom")}</button>
         </div>
       </div>
-      <h3 class="sec">Habilitats</h3>
+      <h3 class="sec">${T("Habilitats")}</h3>
       <div class="skills">
         ${Object.entries(SKILLS).map(([k, s]) => `
           <div class="skill">
             <div class="sk-h"><span class="sk-i">${s.i}</span><b>${s.n}</b><span class="pips">${Array.from({ length: SKILL_MAX }, (_, i) => `<i class="${i < S.skills[k] ? 'on' : ''}"></i>`).join('')}</span></div>
             <p>${s.d}</p>
-            <button class="btn small" data-skill="${k}" ${S.sp && S.skills[k] < SKILL_MAX ? '' : 'disabled'}>${S.skills[k] >= SKILL_MAX ? 'Màxim' : '+ Millorar'}</button>
+            <button class="btn small" data-skill="${k}" ${S.sp && S.skills[k] < SKILL_MAX ? '' : 'disabled'}>${S.skills[k] >= SKILL_MAX ? T('Màxim') : T('+ Millorar')}</button>
           </div>`).join('')}
       </div>
-      <h3 class="sec">Coneixement per àrees</h3>
+      <h3 class="sec">${T("Coneixement per àrees")}</h3>
       <div class="know">${Object.entries(GD.areas).map(([k, n]) => `<div class="kn"><span>${n}</span><span class="kbar"><i style="width:${Math.min(100, (S.know[k] || 0) * 20)}%"></i></span><b>${S.know[k] || 0}</b></div>`).join('')}</div>`;
   }
 
@@ -336,12 +339,12 @@
     const ids = Object.keys(GD.lessons);
     const byArea = {};
     ids.forEach(id => { const l = GD.lessons[id]; (byArea[l.area] = byArea[l.area] || []).push(id); });
-    el.innerHTML = `<p class="muted">Les lliçons es desbloquegen durant les missions. Pots repassar-les i repetir-ne l'exercici quan vulguis.</p>
+    el.innerHTML = `<p class="muted">${T("Les lliçons es desbloquegen durant les missions. Pots repassar-les i repetir-ne l'exercici quan vulguis.")}</p>
       ${Object.entries(GD.areas).map(([a, n]) => byArea[a] ? `
         <h3 class="sec">${n}</h3>
         <div class="lessons">${byArea[a].map(id => {
           const l = GD.lessons[id], r = S.lessons[id];
-          return `<button class="lesson-card ${r ? '' : 'locked'}" ${r ? `data-lesson="${id}"` : 'disabled'}><b>${r ? esc(l.title) : '🔒 ' + esc(l.title)}</b><small>${r ? `Millor resultat: ${r.best}/${l.quiz.length}` : 'Es desbloqueja en una missió'}</small></button>`;
+          return `<button class="lesson-card ${r ? '' : 'locked'}" ${r ? `data-lesson="${id}"` : 'disabled'}><b>${r ? esc(l.title) : '🔒 ' + esc(l.title)}</b><small>${r ? T("Millor resultat: {0}/{1}", [r.best, l.quiz.length]) : T('Es desbloqueja en una missió')}</small></button>`;
         }).join('')}</div>` : '').join('')}`;
   }
 
@@ -349,50 +352,51 @@
     const inc = weeklyIncome() * 4, cost = weeklyCost() * 4;
     el.innerHTML = `
       <div class="grid2">
-        <div class="card"><h3>💶 Finances</h3>
-          <dl class="kv"><dt>Liquiditat</dt><dd class="${S.money < 0 ? 'neg' : ''}">${eur(S.money)}</dd>
-          <dt>Reserva per imprevistos</dt><dd>${eur(S.reserve)}</dd>
-          <dt>Ingressos recurrents / mes</dt><dd>${eur(inc)}</dd>
-          <dt>Despeses fixes / mes</dt><dd>${eur(cost)}</dd>
-          <dt>Resultat recurrent / mes</dt><dd class="${inc - cost < 0 ? 'neg' : 'pos'}">${eur(inc - cost)}</dd>
-          <dt>Ingressos acumulats</dt><dd>${eur(S.stats.income)}</dd>
-          <dt>Despeses acumulades</dt><dd>${eur(S.stats.expenses)}</dd></dl>
-          <p class="muted small">Recorda: el pressupost publicitari d'un client no és ingrés de l'agència. Només ho són els honoraris.</p>
-          ${S.reserve > 0 ? `<button class="btn small" data-act="useReserve">Moure la reserva a liquiditat</button>` : ''}
+        <div class="card"><h3>${T("💶 Finances")}</h3>
+          <dl class="kv"><dt>${T("Liquiditat")}</dt><dd class="${S.money < 0 ? 'neg' : ''}">${eur(S.money)}</dd>
+          <dt>${T("Reserva per imprevistos")}</dt><dd>${eur(S.reserve)}</dd>
+          <dt>${T("Ingressos recurrents / mes")}</dt><dd>${eur(inc)}</dd>
+          <dt>${T("Despeses fixes / mes")}</dt><dd>${eur(cost)}</dd>
+          <dt>${T("Resultat recurrent / mes")}</dt><dd class="${inc - cost < 0 ? 'neg' : 'pos'}">${eur(inc - cost)}</dd>
+          <dt>${T("Ingressos acumulats")}</dt><dd>${eur(S.stats.income)}</dd>
+          <dt>${T("Despeses acumulades")}</dt><dd>${eur(S.stats.expenses)}</dd></dl>
+          <p class="muted small">${T("Recorda: el pressupost publicitari d'un client no és ingrés de l'agència. Només ho són els honoraris.")}</p>
+          ${S.reserve > 0 ? `<button class="btn small" data-act="useReserve">${T("Moure la reserva a liquiditat")}</button>` : ''}
         </div>
-        <div class="card"><h3>🤝 Relacions</h3>
-          ${CHARS_TRUST.filter(c => S.f['met_' + c]).map(c => `<div class="rel"><span class="rel-ava">${ART.portrait(c, S.trust[c] >= 3 ? 'h' : S.trust[c] < 0 ? 'w' : 'n')}</span><b>${GD.names[c]}</b><span class="hearts">${trustHearts(S.trust[c])}</span></div>`).join('') || '<p class="muted">Encara no coneixes ningú.</p>'}
+        <div class="card"><h3>${T("🤝 Relacions")}</h3>
+          ${CHARS_TRUST.filter(c => S.f['met_' + c]).map(c => `<div class="rel"><span class="rel-ava">${ART.portrait(c, S.trust[c] >= 3 ? 'h' : S.trust[c] < 0 ? 'w' : 'n')}</span><b>${GD.names[c]}</b><span class="hearts">${trustHearts(S.trust[c])}</span></div>`).join('') || T('<p class="muted">Encara no coneixes ningú.</p>')}
         </div>
-        <div class="card"><h3>📁 Clients recurrents</h3>
-          ${S.clients.length ? `<ul class="list">${S.clients.map(c => `<li><b>${esc(c.name)}</b><span>${eur(c.fee)}/mes</span></li>`).join('')}</ul>` : '<p class="muted">Cap client recurrent encara.</p>'}
+        <div class="card"><h3>${T("📁 Clients recurrents")}</h3>
+          ${S.clients.length ? `<ul class="list">${S.clients.map(c => `<li><b>${esc(c.name)}</b><span>${eur(c.fee)}/mes</span></li>`).join('')}</ul>` : T('<p class="muted">Cap client recurrent encara.</p>')}
         </div>
-        <div class="card"><h3>👥 Equip i estructura</h3>
-          <ul class="list"><li><b>${txt('{nomc}')}</b><span>Direcció</span></li>${S.team.map(t => `<li><b>${esc(t.name)}</b><span>${eur(t.salary)}/mes</span></li>`).join('')}
-          <li><b>Lloguer</b><span>${eur(S.rent)}/mes</span></li><li><b>Eines</b><span>${eur(S.tools)}/mes</span></li></ul>
+        <div class="card"><h3>${T("👥 Equip i estructura")}</h3>
+          <ul class="list"><li><b>${txt(T('{nomc}'))}</b><span>${T("Direcció")}</span></li>${S.team.map(t => `<li><b>${esc(t.name)}</b><span>${eur(t.salary)}/mes</span></li>`).join('')}
+          <li><b>${T("Lloguer")}</b><span>${eur(S.rent)}/mes</span></li><li><b>${T("Eines")}</b><span>${eur(S.tools)}/mes</span></li></ul>
         </div>
       </div>
-      <div class="card"><h3>📜 Historial de decisions</h3>
-        ${S.history.length ? `<ul class="history">${S.history.slice().reverse().map(h => `<li class="${h.key ? 'key' : ''}"><small>Cap. ${h.ch} · S${h.week}</small>${esc(h.t)}</li>`).join('')}</ul>` : '<p class="muted">Les teves decisions apareixeran aquí.</p>'}
+      <div class="card"><h3>${T("📜 Historial de decisions")}</h3>
+        ${S.history.length ? `<ul class="history">${S.history.slice().reverse().map(h => `<li class="${h.key ? 'key' : ''}"><small>${T("Cap.")} ${h.ch} · S${h.week}</small>${esc(h.t)}</li>`).join('')}</ul>` : T('<p class="muted">Les teves decisions apareixeran aquí.</p>')}
       </div>
-      <div class="card"><h3>🎓 Resultats per al professor</h3>
-        <p class="small">Codi de classe: <b>${S.classe ? esc(S.classe) : '— cap —'}</b>${S.classe ? ` · ${S.syncPending ? '<span class="neg">pendent d\'enviar</span>' : S.lastSync ? 'enviat el ' + new Date(S.lastSync).toLocaleString('ca-ES') : 'encara no enviat'}` : ''}</p>
-        <p class="muted small">Si poses el codi de classe que t'ha donat el professor, el teu nom i els resultats del joc s'envien automàticament cada vegada que acabes un capítol. Si no tens connexió, pots descarregar un fitxer i enviar-l'hi.</p>
+      <div class="card"><h3>${T("🎓 Resultats per al professor")}</h3>
+        <p class="small">${T("Codi de classe:")} <b>${S.classe ? esc(S.classe) : T('— cap —')}</b>${S.classe ? ` · ${S.syncPending ? T('<span class="neg">pendent d\'enviar</span>') : S.lastSync ? T('enviat el ') + new Date(S.lastSync).toLocaleString(LOCALE) : T('encara no enviat')}` : ''}</p>
+        <p class="muted small">${T("Si poses el codi de classe que t'ha donat el professor, el teu nom i els resultats del joc s'envien automàticament cada vegada que acabes un capítol. Si no tens connexió, pots descarregar un fitxer i enviar-l'hi.")}</p>
         <div class="row-btns">
-          <button class="btn small" data-act="setClass">🏷️ ${S.classe ? 'Canviar' : 'Posar'} codi de classe</button>
-          ${S.classe ? '<button class="btn small primary" data-act="syncNow">📤 Enviar resultats ara</button>' : ''}
-          <button class="btn small" data-act="downloadResults">⇩ Descarregar fitxer de resultats</button>
+          <button class="btn small" data-act="setClass">🏷️ ${S.classe ? T('Canviar') : T('Posar')} ${T("codi de classe")}</button>
+          ${S.classe ? T('<button class="btn small primary" data-act="syncNow">📤 Enviar resultats ara</button>') : ''}
+          <button class="btn small" data-act="downloadResults">${T("⇩ Descarregar fitxer de resultats")}</button>
         </div>
       </div>
-      <div class="card"><h3>⚙️ Partida</h3>
+      <div class="card"><h3>${T("⚙️ Partida")}</h3>
         <div class="row-btns">
-          <button class="btn small" data-act="export">⇩ Exportar partida</button>
-          <button class="btn small" data-act="import">⇪ Importar partida</button>
-          <button class="btn small" data-act="speed">Velocitat del text: ${settings.speed <= 8 ? 'ràpida' : settings.speed <= 18 ? 'normal' : 'lenta'}</button>
-          <button class="btn small install-btn" data-act="install" hidden>📲 Instal·lar app</button>
-          <button class="btn small danger" data-act="reset">Esborrar partida</button>
-          <button class="btn small ghost" data-act="title">Pantalla inicial</button>
+          <button class="btn small" data-act="export">${T("⇩ Exportar partida")}</button>
+          <button class="btn small" data-act="import">${T("⇪ Importar partida")}</button>
+          <span class="langs small">🌐 ${LANGS.map(([k, n]) => `<button class="${k === LANG ? 'on' : ''}" data-lang="${k}">${n}</button>`).join('')}</span>
+          <button class="btn small" data-act="speed">${T("Velocitat del text:")} ${settings.speed <= 8 ? T('ràpida') : settings.speed <= 18 ? T('normal') : T('lenta')}</button>
+          <button class="btn small install-btn" data-act="install" hidden>${T("📲 Instal·lar app")}</button>
+          <button class="btn small danger" data-act="reset">${T("Esborrar partida")}</button>
+          <button class="btn small ghost" data-act="title">${T("Pantalla inicial")}</button>
         </div>
-        <p class="muted small">La partida es desa automàticament en aquest dispositiu. Per continuar-la en un altre (web ↔ app), exporta-la i importa-la allà.</p>
+        <p class="muted small">${T("La partida es desa automàticament en aquest dispositiu. Per continuar-la en un altre (web ↔ app), exporta-la i importa-la allà.")}</p>
       </div>`;
     updateInstallBtn();
   }
@@ -414,12 +418,12 @@
   }
   function tabGigs(el) {
     if (!S.gigs || !S.gigs.length) genGigs();
-    el.innerHTML = `<p class="muted">Petits encàrrecs que arriben per recomanacions. Cada encàrrec dura una setmana, et fa guanyar experiència i diners, i posa a prova el que has après.</p>
+    el.innerHTML = `<p class="muted">${T("Petits encàrrecs que arriben per recomanacions. Cada encàrrec dura una setmana, et fa guanyar experiència i diners, i posa a prova el que has après.")}</p>
       <div class="gigs">${S.gigs.map((g, i) => {
         const t = GD.gigs.find(x => x.id === g.id);
-        return `<div class="gig card"><span class="gig-ava">${ART.portrait(t.who || 'client', 'n')}</span><div><b>${esc(t.title)}</b><p>${esc(t.intro)}</p><small>💶 ${eur(g.pay)} · ✨ ${g.xp} EXP · 1 setmana</small></div><button class="btn primary" data-gig="${i}">Acceptar</button></div>`;
+        return `<div class="gig card"><span class="gig-ava">${ART.portrait(t.who || 'client', 'n')}</span><div><b>${esc(t.title)}</b><p>${esc(t.intro)}</p><small>💶 ${eur(g.pay)} · ✨ ${g.xp} ${T("EXP · 1 setmana")}</small></div><button class="btn primary" data-gig="${i}">${T("Acceptar")}</button></div>`;
       }).join('')}</div>
-      <button class="btn ghost small" data-act="refreshGigs">↻ Buscar altres encàrrecs (−1 setmana)</button>`;
+      <button class="btn ghost small" data-act="refreshGigs">${T("↻ Buscar altres encàrrecs (−1 setmana)")}</button>`;
   }
 
   function playGig(i) {
@@ -430,7 +434,7 @@
     const qPool = [];
     learned.forEach(id => GD.lessons[id].quiz.forEach(q => qPool.push({ id, q })));
     const extra = qPool.length ? qPool[Math.floor(Math.random() * qPool.length)] : null;
-    panel(`<div class="pn-h"><b>${esc(t.title)}</b><small>Encàrrec</small></div><p>${esc(t.problem)}</p>
+    panel(`<div class="pn-h"><b>${esc(t.title)}</b><small>${T("Encàrrec")}</small></div><p>${esc(t.problem)}</p>
       <div class="opts">${t.opts.map((o, k) => `<button class="opt" data-k="${k}"><b>${esc(o.t)}</b></button>`).join('')}</div>`, (root) => {
       root.querySelectorAll('.opt').forEach(b => b.onclick = () => {
         const o = t.opts[+b.dataset.k];
@@ -444,18 +448,18 @@
           S.stats.gigs++; queueSync();
           S.gigs.splice(i, 1);
           save();
-          panel(`<div class="pn-h"><b>${ok ? '✨ Bona feina!' : o.q >= 0.4 ? '🙂 Correcte, però millorable' : '😓 No ha funcionat'}</b></div>
+          panel(`<div class="pn-h"><b>${ok ? T('✨ Bona feina!') : o.q >= 0.4 ? T('🙂 Correcte, però millorable') : T('😓 No ha funcionat')}</b></div>
             <p>${esc(o.r)}</p>
-            <dl class="kv"><dt>Honoraris cobrats</dt><dd>${eur(money * (1 + 0.05 * sk('comercial')))}</dd><dt>Experiència</dt><dd>+${xp} EXP</dd><dt>Balanç de la setmana</dt><dd>+${eur(w.inc)} / −${eur(w.cost)}</dd></dl>
-            <button class="btn primary" data-act="hubGigs">Tornar al despatx</button>`);
+            <dl class="kv"><dt>${T("Honoraris cobrats")}</dt><dd>${eur(money * (1 + 0.05 * sk('comercial')))}</dd><dt>${T("Experiència")}</dt><dd>+${xp} ${T("EXP")}</dd><dt>${T("Balanç de la setmana")}</dt><dd>+${eur(w.inc)} / −${eur(w.cost)}</dd></dl>
+            <button class="btn primary" data-act="hubGigs">${T("Tornar al despatx")}</button>`);
         };
         if (extra) {
           const q = extra.q;
-          panel(`<div class="pn-h"><b>Pregunta del client</b><small>Repàs: ${esc(GD.lessons[extra.id].title)}</small></div><p>${esc(t.opts[+b.dataset.k].t)} — d'acord. Però abans, una pregunta:</p><p class="quiz-q">${esc(q.q)}</p>
+          panel(`<div class="pn-h"><b>${T("Pregunta del client")}</b><small>${T("Repàs:")} ${esc(GD.lessons[extra.id].title)}</small></div><p>${esc(t.opts[+b.dataset.k].t)} ${T("— d'acord. Però abans, una pregunta:")}</p><p class="quiz-q">${esc(q.q)}</p>
             <div class="opts">${q.o.map((x, k) => `<button class="opt" data-a="${k}">${esc(x)}</button>`).join('')}</div>`, (r2) => {
             r2.querySelectorAll('[data-a]').forEach(bb => bb.onclick = () => {
               const right = +bb.dataset.a === q.c;
-              toast(right ? '✔ Resposta correcta: +50% EXP' : '✘ ' + esc(q.why), right ? 'good' : 'bad');
+              toast(right ? T('✔ Resposta correcta: +50% EXP') : '✘ ' + esc(q.why), right ? 'good' : 'bad');
               finish(right ? 1.5 : 1);
             });
           });
@@ -556,7 +560,7 @@
     if (S.cur.step === 0) {
       // Targeta de títol del capítol
       const st = GD.stages.find(s => s.id === ch.stage);
-      panel(`<div class="chapter-card" style="--sc:${st.color}"><small>Etapa ${st.id} · ${txt(st.title)}</small><h2><span>Capítol ${ch.id}</span>${txt(ch.title)}</h2>${ch.blurb ? `<p>${txt(ch.blurb)}</p>` : ''}<button class="btn primary big" id="go">Començar ▶</button></div>`, (p) => {
+      panel(`<div class="chapter-card" style="--sc:${st.color}"><small>${T("Etapa")} ${st.id} · ${txt(st.title)}</small><h2><span>${T("Capítol")} ${ch.id}</span>${txt(ch.title)}</h2>${ch.blurb ? `<p>${txt(ch.blurb)}</p>` : ''}<button class="btn primary big" id="go">${T("Començar ▶")}</button></div>`, (p) => {
         p.querySelector('#go').onclick = () => runStep();
       });
       $('#panelWrap').classList.add('center');
@@ -581,7 +585,7 @@
     const st = steps[S.cur.step];
     if (st.bg) setBg(st.bg);
     const h = STEP[st.t];
-    if (!h) { console.warn('Pas desconegut', st); return nextStep(); }
+    if (!h) { console.warn(T('Pas desconegut'), st); return nextStep(); }
     h(st);
   }
 
@@ -596,9 +600,9 @@
   function reqLabel(r) {
     if (!r) return '';
     if (r.label) return r.label;
-    if (r.skill) return `Requereix ${SKILLS[r.skill].n} ${r.min}`;
-    if (r.money) return `Requereix ${eur(r.money)}`;
-    return 'No disponible';
+    if (r.skill) return T("Requereix {0} {1}", [SKILLS[r.skill].n, r.min]);
+    if (r.money) return T("Requereix {0}", [eur(r.money)]);
+    return T('No disponible');
   }
 
   const STEP = {
@@ -610,7 +614,7 @@
       panel(`<div class="pn-h"><b>${txt(st.prompt)}</b></div>${st.help ? `<p class="muted">${txt(st.help)}</p>` : ''}
         <input class="inp" id="inp" maxlength="${st.max || 28}" value="${esc(S[st.key] || st.def || '')}" />
         <div class="sugg">${(st.sugg || []).map(s => `<button class="chipbtn">${esc(s)}</button>`).join('')}</div>
-        <button class="btn primary" id="ok">Confirmar</button>`, (p) => {
+        <button class="btn primary" id="ok">${T("Confirmar")}</button>`, (p) => {
         const inp = p.querySelector('#inp');
         p.querySelectorAll('.chipbtn').forEach(b => b.onclick = () => { inp.value = b.textContent; });
         p.querySelector('#ok').onclick = () => {
@@ -644,13 +648,13 @@
       const used = S.cur.cache[key] = S.cur.cache[key] || [];
       const left = st.time - used.reduce((a, i) => a + (st.opts[i].cost || 1), 0);
       if (st.who) showActors(st.who, 'n');
-      panel(`<div class="pn-h"><b>${txt(st.prompt)}</b><small>⏳ Temps disponible: ${'●'.repeat(Math.max(0, left))}${'○'.repeat(Math.max(0, st.time - left))}</small></div>
+      panel(`<div class="pn-h"><b>${txt(st.prompt)}</b><small>${T("⏳ Temps disponible:")} ${'●'.repeat(Math.max(0, left))}${'○'.repeat(Math.max(0, st.time - left))}</small></div>
         ${st.info ? `<p class="muted">${txt(st.info)}</p>` : ''}
         <div class="opts">${st.opts.map((o, i) => {
           const done = used.includes(i); const ok = reqOk(o.req); const can = !done && ok && (o.cost || 1) <= left;
           return `<button class="opt ${done ? 'done' : ''} ${ok ? '' : 'locked'}" data-i="${i}" ${can ? '' : 'disabled'}><b>${done ? '✔ ' : '🔍 '}${txt(o.t)}</b>${done && o.note ? `<small>${txt(o.note)}</small>` : ''}${!ok ? `<em>🔒 ${reqLabel(o.req)}</em>` : ''}</button>`;
         }).join('')}</div>
-        <button class="btn primary" id="enough">${left > 0 ? 'Ja en tinc prou' : 'Continuar'}</button>`, (p) => {
+        <button class="btn primary" id="enough">${left > 0 ? T('Ja en tinc prou') : T('Continuar')}</button>`, (p) => {
         p.querySelectorAll('.opt').forEach(b => b.onclick = () => {
           const i = +b.dataset.i, o = st.opts[i];
           used.push(i);
@@ -670,11 +674,11 @@
       const stepv = st.step || 50;
       const draw = (p) => {
         const used = Object.values(alloc).reduce((a, b) => a + b, 0);
-        p.innerHTML = `<div class="pn-h"><b>${txt(st.prompt)}</b><small>Pressupost: ${eur(st.total)} · Per assignar: <b class="${used > st.total ? 'neg' : ''}">${eur(st.total - used)}</b></small></div>
+        p.innerHTML = `<div class="pn-h"><b>${txt(st.prompt)}</b><small>${T("Pressupost:")} ${eur(st.total)} ${T("· Per assignar:")} <b class="${used > st.total ? 'neg' : ''}">${eur(st.total - used)}</b></small></div>
           ${st.info ? `<p class="muted">${txt(st.info)}</p>` : ''}
           <div class="budget">${st.items.map(it => `<div class="bud"><div><b>${txt(it.t)}</b><small>${txt(it.d || '')}</small></div>
             <div class="bud-ctl"><button class="rb" data-m="${it.id}">−</button><span>${eur(alloc[it.id])}</span><button class="rb" data-p="${it.id}">+</button></div></div>`).join('')}</div>
-          <button class="btn primary" id="ok" ${used === st.total || (st.allowLeft && used <= st.total) ? '' : 'disabled'}>${used === st.total || st.allowLeft ? 'Confirmar repartiment' : 'Has d\'assignar tot el pressupost'}</button>`;
+          <button class="btn primary" id="ok" ${used === st.total || (st.allowLeft && used <= st.total) ? '' : 'disabled'}>${used === st.total || st.allowLeft ? T('Confirmar repartiment') : T('Has d\'assignar tot el pressupost')}</button>`;
         p.querySelectorAll('[data-m]').forEach(b => b.onclick = () => { alloc[b.dataset.m] = Math.max(0, alloc[b.dataset.m] - stepv); draw(p); });
         p.querySelectorAll('[data-p]').forEach(b => b.onclick = () => { if (used + stepv <= st.total) { alloc[b.dataset.p] += stepv; draw(p); } });
         p.querySelector('#ok').onclick = () => { S.f[st.key] = Object.assign({}, alloc); applyFx(st.fx); save(); nextStep(); };
@@ -685,10 +689,10 @@
     multi(st) {
       const sel = new Set();
       const draw = (p) => {
-        p.innerHTML = `<div class="pn-h"><b>${txt(st.prompt)}</b><small>Tria'n ${st.pick} · Seleccionades: ${sel.size}</small></div>
+        p.innerHTML = `<div class="pn-h"><b>${txt(st.prompt)}</b><small>${T("Tria'n")} ${st.pick} ${T("· Seleccionades:")} ${sel.size}</small></div>
           ${st.info ? `<div class="info">${txt(st.info)}</div>` : ''}
           <div class="opts multi">${st.opts.map((o, i) => `<button class="opt ${sel.has(i) ? 'sel' : ''}" data-i="${i}"><b>${sel.has(i) ? '☑' : '☐'} ${txt(o.t)}</b></button>`).join('')}</div>
-          <button class="btn primary" id="ok" ${sel.size === st.pick ? '' : 'disabled'}>Confirmar</button>`;
+          <button class="btn primary" id="ok" ${sel.size === st.pick ? '' : 'disabled'}>${T("Confirmar")}</button>`;
         p.querySelectorAll('.opt').forEach(b => b.onclick = () => {
           const i = +b.dataset.i;
           if (sel.has(i)) sel.delete(i); else if (sel.size < st.pick) sel.add(i);
@@ -702,9 +706,9 @@
           if (st.fx) applyFx(st.fx(S, good, maxGood));
           save();
           // Retroacció de cada opció
-          p.innerHTML = `<div class="pn-h"><b>${good === maxGood ? '✨ Perfecte!' : good >= maxGood / 2 ? '🙂 Força bé' : '🤔 Cal repassar-ho'}</b><small>${good} de ${maxGood} encerts</small></div>
+          p.innerHTML = `<div class="pn-h"><b>${good === maxGood ? T('✨ Perfecte!') : good >= maxGood / 2 ? T('🙂 Força bé') : T('🤔 Cal repassar-ho')}</b><small>${good} de ${maxGood} encerts</small></div>
             <ul class="feedback">${st.opts.map((o, i) => `<li class="${o.ok ? 'ok' : 'ko'} ${sel.has(i) ? 'picked' : ''}"><b>${sel.has(i) ? '☑' : '☐'} ${txt(o.t)}</b><small>${o.ok ? '✔' : '✘'} ${txt(o.why || '')}</small></li>`).join('')}</ul>
-            <button class="btn primary" id="cont">Continuar</button>`;
+            <button class="btn primary" id="cont">${T("Continuar")}</button>`;
           p.querySelector('#cont').onclick = () => nextStep();
         };
       };
@@ -716,14 +720,14 @@
       let r = S.cur.cache[key];
       if (!r) { r = st.calc(S, H); S.cur.cache[key] = r; applyFx(r.fx); S.stats.campaigns++; if (r.verdict === 'good') S.stats.good++; save(); }
       const vcls = { good: 'good', mid: 'mid', bad: 'bad' }[r.verdict] || 'mid';
-      panel(`<div class="pn-h"><b>📈 ${txt(r.title || 'Resultats')}</b><small>Resultats simulats</small></div>
+      panel(`<div class="pn-h"><b>📈 ${txt(r.title || T('Resultats'))}</b><small>${T("Resultats simulats")}</small></div>
         ${r.intro ? `<p>${txt(r.intro)}</p>` : ''}
         <div class="metrics">${(r.metrics || []).map(([l, v, cls]) => `<div class="metric ${cls || ''}"><small>${l}</small><b data-count>${v}</b></div>`).join('')}</div>
         ${r.chart ? chart(r.chart) : ''}
         <div class="verdict ${vcls}">${txt(r.summary || '')}</div>
-        <h4>Per què ha passat?</h4>
+        <h4>${T("Per què ha passat?")}</h4>
         <ul class="factors">${(r.factors || []).map(([g, t]) => `<li class="${g === true ? 'ok' : g === false ? 'ko' : 'neu'}">${g === true ? '▲' : g === false ? '▼' : '●'} ${txt(t)}</li>`).join('')}</ul>
-        <button class="btn primary" id="cont">Continuar</button>`, (p) => {
+        <button class="btn primary" id="cont">${T("Continuar")}</button>`, (p) => {
         p.querySelector('#cont').onclick = () => nextStep(r.go);
       });
     },
@@ -734,7 +738,7 @@
     ending(st) {
       const id = GD.computeEnding(S, H);
       S.ending = id; S.done[curCh.id] = true; S.cur = null; queueSync();
-      S.history.push({ ch: curCh.id, week: S.week, t: 'Final aconseguit: ' + GD.endings[id].title, key: true });
+      S.history.push({ ch: curCh.id, week: S.week, t: T('Final aconseguit: ') + GD.endings[id].title, key: true });
       save(); endingScreen(id, true);
     }
   };
@@ -752,13 +756,13 @@
     if (!l) { done(); return; }
     const first = !S.lessons[id];
     const page = () => panel(`<div class="lesson">
-        <div class="ls-h"><small>📚 Lliçó · ${GD.areas[l.area]}</small><h2>${esc(l.title)}</h2><p class="goal">🎯 ${esc(l.goal)}</p></div>
+        <div class="ls-h"><small>${T("📚 Lliçó ·")} ${GD.areas[l.area]}</small><h2>${esc(l.title)}</h2><p class="goal">🎯 ${esc(l.goal)}</p></div>
         ${l.body.map(b => `<p>${txt(b)}</p>`).join('')}
-        ${l.example ? `<div class="example"><b>${l.exampleTitle || 'Exemple (cas simulat)'}</b><p>${txt(l.example)}</p></div>` : ''}
-        ${l.errors ? `<div class="errors"><b>⚠️ Errors freqüents</b><ul>${l.errors.map(e => `<li>${e}</li>`).join('')}</ul></div>` : ''}
-        ${l.source ? `<p class="source">Font: ${l.source}</p>` : ''}
-        <button class="btn primary" id="quiz">Fer l'exercici ✍️</button>
-        ${!inMission ? '<button class="btn ghost" id="back">Tornar a la biblioteca</button>' : ''}
+        ${l.example ? `<div class="example"><b>${l.exampleTitle || T('Exemple (cas simulat)')}</b><p>${txt(l.example)}</p></div>` : ''}
+        ${l.errors ? `<div class="errors"><b>${T("⚠️ Errors freqüents")}</b><ul>${l.errors.map(e => `<li>${e}</li>`).join('')}</ul></div>` : ''}
+        ${l.source ? `<p class="source">${T("Font:")} ${l.source}</p>` : ''}
+        <button class="btn primary" id="quiz">${T("Fer l'exercici ✍️")}</button>
+        ${!inMission ? T('<button class="btn ghost" id="back">Tornar a la biblioteca</button>') : ''}
       </div>`, (p) => {
       p.querySelector('#quiz').onclick = () => quiz(0, 0);
       const b = p.querySelector('#back'); if (b) b.onclick = done;
@@ -776,17 +780,17 @@
           if (pass && first) applyFx({ xp: 20 + 15 * score, know: { [l.area]: 1 } }, true);
           save();
         }
-        panel(`<div class="pn-h"><b>${score === l.quiz.length ? '🌸 Perfecte!' : pass ? '✔ Superat' : '✘ Encara no'}</b><small>${score} de ${l.quiz.length} respostes correctes</small></div>
-          ${pass && first ? `<p class="good-t">+${20 + 15 * score} EXP · +1 coneixement en ${GD.areas[l.area]}</p>` : ''}
-          ${!pass && inMission ? '<p>Necessites encertar almenys la meitat de les preguntes per aplicar-ho a la missió. Repassa la lliçó i torna-ho a provar.</p>' : ''}
-          <div class="row-btns">${!pass && inMission ? '<button class="btn primary" id="retry">Repassar la lliçó</button>' : '<button class="btn primary" id="cont">Continuar</button>'}</div>`, (p) => {
+        panel(`<div class="pn-h"><b>${score === l.quiz.length ? T('🌸 Perfecte!') : pass ? T('✔ Superat') : T('✘ Encara no')}</b><small>${score} de ${l.quiz.length} ${T("respostes correctes")}</small></div>
+          ${pass && first ? `<p class="good-t">+${20 + 15 * score} ${T("EXP · +1 coneixement en")} ${GD.areas[l.area]}</p>` : ''}
+          ${!pass && inMission ? T('<p>Necessites encertar almenys la meitat de les preguntes per aplicar-ho a la missió. Repassa la lliçó i torna-ho a provar.</p>') : ''}
+          <div class="row-btns">${!pass && inMission ? T('<button class="btn primary" id="retry">Repassar la lliçó</button>') : T('<button class="btn primary" id="cont">Continuar</button>')}</div>`, (p) => {
           const r = p.querySelector('#retry'); if (r) r.onclick = page;
           const c = p.querySelector('#cont'); if (c) c.onclick = done;
         });
         return;
       }
       const q = l.quiz[qi];
-      panel(`<div class="pn-h"><b>Exercici ${qi + 1}/${l.quiz.length}</b><small>${esc(l.title)}</small></div>
+      panel(`<div class="pn-h"><b>${T("Exercici")} ${qi + 1}/${l.quiz.length}</b><small>${esc(l.title)}</small></div>
         <p class="quiz-q">${q.q}</p>
         <div class="opts">${q.o.map((o, i) => `<button class="opt" data-i="${i}">${o}</button>`).join('')}</div>`, (p) => {
         p.querySelectorAll('.opt').forEach(b => b.onclick = () => {
@@ -795,7 +799,7 @@
           if (!ok) b.classList.add('wrong');
           const fb = document.createElement('div');
           fb.className = 'quiz-fb ' + (ok ? 'ok' : 'ko');
-          fb.innerHTML = `<b>${ok ? '✔ Correcte' : '✘ Incorrecte'}</b><p>${q.why}</p><button class="btn primary">Següent</button>`;
+          fb.innerHTML = `<b>${ok ? T('✔ Correcte') : T('✘ Incorrecte')}</b><p>${q.why}</p><button class="btn primary">${T("Següent")}</button>`;
           p.appendChild(fb);
           fb.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
           fb.querySelector('button').onclick = () => quiz(qi + 1, score + (ok ? 1 : 0));
@@ -830,18 +834,18 @@
     sceneShell(ch.bg || 'despatx');
     showActors('pau', 'h');
     panel(`<div class="reward">
-        <div class="rw-h"><small>Capítol ${ch.id} completat</small><h2>${txt(ch.title)}</h2></div>
+        <div class="rw-h"><small>${T("Capítol")} ${ch.id} completat</small><h2>${txt(ch.title)}</h2></div>
         ${summary ? `<p>${summary}</p>` : ''}
-        ${replay ? '<p class="muted">Mode repàs: aquesta partida ja tenia el capítol completat, no es tornen a sumar recompenses.</p>' : `
+        ${replay ? T('<p class="muted">Mode repàs: aquesta partida ja tenia el capítol completat, no es tornen a sumar recompenses.</p>') : `
         <div class="metrics">
-          <div class="metric good"><small>Experiència</small><b>+${run.xp}</b></div>
-          <div class="metric ${run.money < 0 ? 'bad' : ''}"><small>Diners del capítol</small><b>${run.money >= 0 ? '+' : ''}${eur(run.money)}</b></div>
-          <div class="metric ${run.rep < 0 ? 'bad' : 'good'}"><small>Reputació</small><b>${run.rep >= 0 ? '+' : ''}${run.rep}</b></div>
-          <div class="metric"><small>${w.n} setmanes de despeses i quotes</small><b>${w.inc - w.cost >= 0 ? '+' : ''}${eur(w.inc - w.cost)}</b></div>
+          <div class="metric good"><small>${T("Experiència")}</small><b>+${run.xp}</b></div>
+          <div class="metric ${run.money < 0 ? 'bad' : ''}"><small>${T("Diners del capítol")}</small><b>${run.money >= 0 ? '+' : ''}${eur(run.money)}</b></div>
+          <div class="metric ${run.rep < 0 ? 'bad' : 'good'}"><small>${T("Reputació")}</small><b>${run.rep >= 0 ? '+' : ''}${run.rep}</b></div>
+          <div class="metric"><small>${w.n} ${T("setmanes de despeses i quotes")}</small><b>${w.inc - w.cost >= 0 ? '+' : ''}${eur(w.inc - w.cost)}</b></div>
         </div>
         ${Object.keys(run.trust).length ? `<p class="trustline">${Object.entries(run.trust).map(([k, v]) => `<span class="${v >= 0 ? 'pos' : 'neg'}">${GD.names[k]} ${v >= 0 ? '♥ +' + v : '💔 ' + v}</span>`).join('')}</p>` : ''}`}
-        ${stageComplete ? `<div class="stage-clear" style="--sc:${stage.color}"><b>🌸 Etapa ${stage.id} superada!</b><p>${txt(stage.outro || '')}</p><p>Nou rang: <b>${title()}</b></p></div>` : ''}
-        <button class="btn primary big" data-act="hub">Tornar al centre d'operacions</button>
+        ${stageComplete ? `<div class="stage-clear" style="--sc:${stage.color}"><b>${T("🌸 Etapa")} ${stage.id} ${T("superada!")}</b><p>${txt(stage.outro || '')}</p><p>${T("Nou rang:")} <b>${title()}</b></p></div>` : ''}
+        <button class="btn primary big" data-act="hub">${T("Tornar al centre d'operacions")}</button>
       </div>`);
     if (stageComplete) petals($('.scene'), 30);
     hud();
@@ -853,24 +857,24 @@
     const best = Object.entries(S.know).sort((a, b) => b[1] - a[1]).slice(0, 3).filter(x => x[1] > 0).map(x => GD.areas[x[0]]);
     const keys = S.history.filter(h => h.key).slice(-8);
     panel(`<div class="report">
-      <div class="ls-h"><small>Capítol 8.1</small><h2>Informe de tota una carrera</h2></div>
+      <div class="ls-h"><small>${T("Capítol 8.1")}</small><h2>${T("Informe de tota una carrera")}</h2></div>
       <div class="metrics">
-        <div class="metric"><small>Ingressos acumulats</small><b>${eur(S.stats.income)}</b></div>
-        <div class="metric"><small>Despeses acumulades</small><b>${eur(S.stats.expenses)}</b></div>
-        <div class="metric ${S.money < 0 ? 'bad' : 'good'}"><small>Liquiditat actual</small><b>${eur(S.money + S.reserve)}</b></div>
-        <div class="metric"><small>Reputació</small><b>${S.rep}/100</b></div>
-        <div class="metric"><small>Clients recurrents</small><b>${S.clients.length}</b></div>
-        <div class="metric"><small>Equip</small><b>${S.team.length + 1} persones</b></div>
-        <div class="metric"><small>Campanyes amb bon resultat</small><b>${S.stats.good}/${S.stats.campaigns}</b></div>
-        <div class="metric"><small>Encàrrecs lliures</small><b>${S.stats.gigs}</b></div>
+        <div class="metric"><small>${T("Ingressos acumulats")}</small><b>${eur(S.stats.income)}</b></div>
+        <div class="metric"><small>${T("Despeses acumulades")}</small><b>${eur(S.stats.expenses)}</b></div>
+        <div class="metric ${S.money < 0 ? 'bad' : 'good'}"><small>${T("Liquiditat actual")}</small><b>${eur(S.money + S.reserve)}</b></div>
+        <div class="metric"><small>${T("Reputació")}</small><b>${S.rep}/100</b></div>
+        <div class="metric"><small>${T("Clients recurrents")}</small><b>${S.clients.length}</b></div>
+        <div class="metric"><small>${T("Equip")}</small><b>${S.team.length + 1} persones</b></div>
+        <div class="metric"><small>${T("Campanyes amb bon resultat")}</small><b>${S.stats.good}/${S.stats.campaigns}</b></div>
+        <div class="metric"><small>${T("Encàrrecs lliures")}</small><b>${S.stats.gigs}</b></div>
       </div>
-      <p><b>Especialitats dominades:</b> ${best.join(', ') || '—'}</p>
-      <p><b>Risc financer:</b> ${S.money + S.reserve < 0 ? 'Alt: l\'empresa té números vermells.' : S.money + S.reserve < weeklyCost() * 8 ? 'Mitjà: la liquiditat cobreix menys de dos mesos de despeses.' : 'Baix: hi ha coixí per fer front a imprevistos.'}</p>
-      <h4>Relacions</h4>
+      <p><b>${T("Especialitats dominades:")}</b> ${best.join(', ') || '—'}</p>
+      <p><b>${T("Risc financer:")}</b> ${S.money + S.reserve < 0 ? T('Alt: l\'empresa té números vermells.') : S.money + S.reserve < weeklyCost() * 8 ? T('Mitjà: la liquiditat cobreix menys de dos mesos de despeses.') : T('Baix: hi ha coixí per fer front a imprevistos.')}</p>
+      <h4>${T("Relacions")}</h4>
       <p class="trustline">${CHARS_TRUST.filter(c => S.f['met_' + c]).map(c => `<span class="${t[c] >= 0 ? 'pos' : 'neg'}">${GD.names[c]} ${trustHearts(t[c])}</span>`).join('')}</p>
-      <h4>Les decisions que han marcat la història</h4>
-      <ul class="history">${keys.map(h => `<li class="key"><small>Cap. ${h.ch}</small>${esc(h.t)}</li>`).join('') || '<li>—</li>'}</ul>
-      <button class="btn primary" id="cont">Continuar</button></div>`, (p) => { p.querySelector('#cont').onclick = done; });
+      <h4>${T("Les decisions que han marcat la història")}</h4>
+      <ul class="history">${keys.map(h => `<li class="key"><small>${T("Cap.")} ${h.ch}</small>${esc(h.t)}</li>`).join('') || '<li>—</li>'}</ul>
+      <button class="btn primary" id="cont">${T("Continuar")}</button></div>`, (p) => { p.querySelector('#cont').onclick = done; });
   }
 
   function endingScreen(id, fresh) {
@@ -879,13 +883,13 @@
       <div class="bg">${ART.background(e.bg || 'vic')}</div>
       <div class="ending-petals"></div>
       <div class="ending-box">
-        <small>${fresh ? 'Final aconseguit' : 'El teu final'}</small>
+        <small>${fresh ? T('Final aconseguit') : T('El teu final')}</small>
         <h1>${esc(e.title)}</h1>
         <div class="ending-cast">${(e.cast || ['pau']).map(c => `<span>${c === 'pau' ? ART.portrait('pau', 'h', { rank: rank() }) : ART.portrait(c, S.trust[c] >= 2 ? 'h' : 'n')}</span>`).join('')}</div>
         ${e.text.map(p => `<p>${txt(p)}</p>`).join('')}
         ${(GD.epilogue(S, H) || []).map(p => `<p class="epi">${txt(p)}</p>`).join('')}
-        <p class="muted">${txt('Habilitats {den}')}: ${Object.entries(SKILLS).map(([k, s]) => `${s.i} ${s.n} ${S.skills[k]}`).join(' · ')}</p>
-        <div class="row-btns center"><button class="btn primary" data-act="hub">Mode lliure</button><button class="btn" data-act="new">Nova partida</button></div>
+        <p class="muted">${txt(T('Habilitats {den}'))}: ${Object.entries(SKILLS).map(([k, s]) => `${s.i} ${s.n} ${S.skills[k]}`).join(' · ')}</p>
+        <div class="row-btns center"><button class="btn primary" data-act="hub">${T("Mode lliure")}</button><button class="btn" data-act="new">${T("Nova partida")}</button></div>
       </div></section>`;
     petals($('.ending-petals'), 30);
   }
@@ -894,7 +898,7 @@
   function confirmBox(msg, yes) {
     const d = document.createElement('div');
     d.className = 'modal';
-    d.innerHTML = `<div class="modal-box"><p>${msg}</p><div class="row-btns"><button class="btn danger" id="y">Sí</button><button class="btn" id="n">Cancel·lar</button></div></div>`;
+    d.innerHTML = `<div class="modal-box"><p>${msg}</p><div class="row-btns"><button class="btn danger" id="y">${T("Sí")}</button><button class="btn" id="n">${T("Cancel·lar")}</button></div></div>`;
     document.body.appendChild(d);
     d.querySelector('#y').onclick = () => { d.remove(); yes(); };
     d.querySelector('#n').onclick = () => d.remove();
@@ -902,10 +906,10 @@
   function textBox(title, value, onOk, okLabel) {
     const d = document.createElement('div');
     d.className = 'modal';
-    d.innerHTML = `<div class="modal-box"><p><b>${title}</b></p><textarea class="inp" rows="5">${esc(value || '')}</textarea><div class="row-btns">${onOk ? `<button class="btn primary" id="y">${okLabel || 'Importar'}</button>` : '<button class="btn primary" id="cp">Copiar</button>'}<button class="btn" id="n">Tancar</button></div></div>`;
+    d.innerHTML = `<div class="modal-box"><p><b>${title}</b></p><textarea class="inp" rows="5">${esc(value || '')}</textarea><div class="row-btns">${onOk ? `<button class="btn primary" id="y">${okLabel || T('Importar')}</button>` : T('<button class="btn primary" id="cp">Copiar</button>')}<button class="btn" id="n">${T("Tancar")}</button></div></div>`;
     document.body.appendChild(d);
     const ta = d.querySelector('textarea');
-    if (!onOk) { ta.select(); d.querySelector('#cp').onclick = () => { ta.select(); try { navigator.clipboard.writeText(ta.value); toast('Codi copiat'); } catch (e) { document.execCommand('copy'); } }; }
+    if (!onOk) { ta.select(); d.querySelector('#cp').onclick = () => { ta.select(); try { navigator.clipboard.writeText(ta.value); toast(T('Codi copiat')); } catch (e) { document.execCommand('copy'); } }; }
     else d.querySelector('#y').onclick = () => { onOk(ta.value.trim()); d.remove(); };
     d.querySelector('#n').onclick = () => d.remove();
   }
@@ -920,36 +924,36 @@
     app().innerHTML = `<section class="setup">
       <div class="setup-preview"><div class="setup-ava" id="sAva"></div><p class="setup-example" id="sEx"></p></div>
       <div class="setup-form card">
-        <h2>${editing ? 'Canvia el teu personatge' : 'Crea el teu personatge'}</h2>
+        <h2>${editing ? T('Canvia el teu personatge') : T('Crea el teu personatge')}</h2>
         <div class="row2">
-          <label>Nom<input class="inp" id="sName" maxlength="20" value="${esc(d.name)}" placeholder="Per exemple: Marta" autocomplete="given-name"></label>
-          <label>Cognom <small>(opcional)</small><input class="inp" id="sSur" maxlength="24" value="${esc(d.surname)}" placeholder="Per exemple: Puig" autocomplete="family-name"></label>
+          <label>${T("Nom")}<input class="inp" id="sName" maxlength="20" value="${esc(d.name)}" placeholder="Per exemple: Marta" autocomplete="given-name"></label>
+          <label>${T("Cognom")} <small>${T("(opcional)")}</small><input class="inp" id="sSur" maxlength="24" value="${esc(d.surname)}" placeholder="Per exemple: Puig" autocomplete="family-name"></label>
         </div>
-        <p class="lbl">Com vols que et tractin al joc?</p>
-        <div class="seg" id="sG">${[['m', 'Masculí («en»)'], ['f', 'Femení («la»)'], ['n', 'Neutre (sense article)']].map(([k, n]) => `<button data-g="${k}">${n}</button>`).join('')}</div>
-        <p class="lbl">Pentinat</p>
+        <p class="lbl">${T("Com vols que et tractin al joc?")}</p>
+        <div class="seg" id="sG">${[['m', T('Masculí («en»)')], ['f', T('Femení («la»)')], ['n', T('Neutre (sense article)')]].map(([k, n]) => `<button data-g="${k}">${n}</button>`).join('')}</div>
+        <p class="lbl">${T("Pentinat")}</p>
         <div class="styles" id="sStyle">${O.style.map(([k, n]) => `<button data-style="${k}" title="${n}"><span></span><small>${n}</small></button>`).join('')}</div>
-        <p class="lbl">Color dels cabells</p>
+        <p class="lbl">${T("Color dels cabells")}</p>
         <div class="swatches" id="sHair">${O.hair.map(c => `<button data-hair="${c}" style="background:${c}" aria-label="Color ${c}"></button>`).join('')}</div>
-        <p class="lbl">Color dels ulls</p>
+        <p class="lbl">${T("Color dels ulls")}</p>
         <div class="swatches" id="sEye">${O.eye.map(c => `<button data-eye="${c}" style="background:${c}" aria-label="Color ${c}"></button>`).join('')}</div>
-        <p class="lbl">To de pell</p>
+        <p class="lbl">${T("To de pell")}</p>
         <div class="swatches" id="sSkin">${O.skin.map(c => `<button data-skin="${c}" style="background:${c}" aria-label="To ${c}"></button>`).join('')}</div>
-        <p class="lbl">Complement</p>
+        <p class="lbl">${T("Complement")}</p>
         <div class="seg" id="sAcc">${O.acc.map(([k, n]) => `<button data-acc="${k}">${n}</button>`).join('')}</div>
-        <p class="lbl">Codi de classe <small>(opcional, te'l dona el professor)</small></p>
+        <p class="lbl">${T("Codi de classe")} <small>${T("(opcional, te'l dona el professor)")}</small></p>
         <input class="inp" id="sClass" maxlength="32" value="${esc(d.classe)}" placeholder="Per exemple: 4ESO-B">
-        <p class="muted small">Si poses un codi de classe, el teu nom i els resultats del joc s'enviaran al teu professor.</p>
+        <p class="muted small">${T("Si poses un codi de classe, el teu nom i els resultats del joc s'enviaran al teu professor.")}</p>
         <div class="row-btns">
-          <button class="btn primary big" id="sGo">${editing ? 'Desar canvis' : 'Començar l\'aventura ▶'}</button>
-          <button class="btn ghost" id="sBack">${editing ? 'Cancel·lar' : 'Tornar'}</button>
+          <button class="btn primary big" id="sGo">${editing ? T('Desar canvis') : T('Començar l\'aventura ▶')}</button>
+          <button class="btn ghost" id="sBack">${editing ? T('Cancel·lar') : T('Tornar')}</button>
         </div>
       </div></section>`;
     const draw = () => {
       ART.setPlayer(d.look);
       $('#sAva').innerHTML = ART.portrait('pau', 'h', { rank: editing ? rank() : 0 });
       const prevS = S; S = { player: { name: d.name || 'Pau', surname: d.surname, g: d.g }, agency: base.agency };
-      $('#sEx').innerHTML = txt('«{En} torna a Vic amb una idea: muntar una agència de màrqueting digital.»');
+      $('#sEx').innerHTML = txt(T('«{En} torna a Vic amb una idea: muntar una agència de màrqueting digital.»'));
       S = prevS;
       document.querySelectorAll('#sG [data-g]').forEach(b => b.classList.toggle('on', b.dataset.g === d.g));
       document.querySelectorAll('#sAcc [data-acc]').forEach(b => b.classList.toggle('on', (d.look.acc[0] || '') === b.dataset.acc));
@@ -976,13 +980,13 @@
     });
     $('#sBack').onclick = () => editing ? hubScreen('pau') : titleScreen();
     $('#sGo').onclick = () => {
-      if (!d.name) { $('#sName').focus(); toast('Escriu el teu nom', 'bad'); return; }
+      if (!d.name) { $('#sName').focus(); toast(T('Escriu el teu nom'), 'bad'); return; }
       if (!editing) S = base;
       Object.assign(S.player, { name: d.name, surname: d.surname, g: d.g, look: d.look });
       const c = normClass(d.classe);
       if (c !== S.classe) { S.classe = c; S.lastSync = 0; }
       applyPlayer(); save(); queueSync();
-      if (editing) { toast('Personatge actualitzat', 'good'); hubScreen('pau'); } else startChapter('1.1');
+      if (editing) { toast(T('Personatge actualitzat'), 'good'); hubScreen('pau'); } else startChapter('1.1');
     };
     draw();
   }
@@ -995,7 +999,7 @@
     const avg = (f) => logs.length ? Math.round(logs.reduce((a, [, q]) => a + f(q) / q.total, 0) / logs.length * 100) : null;
     const curStageObj = GD.stages.find(s => s.chapters.some(c => !S.done[c]));
     return {
-      v: 1, id: S.player.id, classe: S.classe,
+      v: 1, id: S.player.id, classe: S.classe, idioma: LANG,
       nom: S.player.name, cognom: S.player.surname || '', tractament: S.player.g,
       aspecte: S.player.look,
       agencia: S.agency, perfil: S.f.profile || '',
@@ -1011,7 +1015,7 @@
       cami: S.f.path || '', final: S.ending ? GD.endings[S.ending].title : '',
       habilitats: S.skills, coneixement: S.know, confianca: S.trust,
       encarrecs: S.stats.gigs, campanyes: S.stats.campaigns, campanyesBones: S.stats.good,
-      decisions: S.history.filter(h => h.key).map(h => `Cap. ${h.ch}: ${h.t}`)
+      decisions: S.history.filter(h => h.key).map(h => T("Cap. {0}: {1}", [h.ch, h.t]))
     };
   }
   let syncTimer = null;
@@ -1027,9 +1031,9 @@
       const r = await fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'submit', classe: S.classe, id: S.player.id, data: buildSummary() }) });
       if (!r.ok) throw new Error((await r.json().catch(() => ({}))).error || 'Error ' + r.status);
       S.syncPending = false; S.lastSync = Date.now(); save();
-      if (manual) { toast('📤 Resultats enviats al professor', 'good'); if ($('.hub')) hubScreen('empresa'); }
+      if (manual) { toast(T('📤 Resultats enviats al professor'), 'good'); if ($('.hub')) hubScreen('empresa'); }
     } catch (e) {
-      if (manual) toast('No s\'han pogut enviar els resultats (' + esc(e.message || 'sense connexió') + '). Torna-ho a provar o descarrega el fitxer.', 'bad');
+      if (manual) toast(T('No s\'han pogut enviar els resultats (') + esc(e.message || T('sense connexió')) + T('). Torna-ho a provar o descarrega el fitxer.'), 'bad');
     }
   }
   function downloadResults() {
@@ -1045,7 +1049,7 @@
 
   function newGame() {
     const go = () => setupScreen(false);
-    if (loadSave()) confirmBox('Començar una partida nova esborrarà la partida desada. Vols continuar?', go); else go();
+    if (loadSave()) confirmBox(T('Començar una partida nova esborrarà la partida desada. Vols continuar?'), go); else go();
   }
   function continueGame() {
     S = loadSave();
@@ -1057,13 +1061,15 @@
   }
 
   document.addEventListener('click', (ev) => {
+    const lb = ev.target.closest('[data-lang]');
+    if (lb && !lb.closest('.setup')) { if (lb.dataset.lang !== LANG) setLang(lb.dataset.lang); return; }
     const b = ev.target.closest('[data-act],[data-ch],[data-tab],[data-skill],[data-lesson],[data-gig]');
     if (!b || b.disabled) return;
     if (b.dataset.ch) { startChapter(b.dataset.ch); return; }
     if (b.dataset.tab) { hubScreen(b.dataset.tab); return; }
     if (b.dataset.skill) {
       const k = b.dataset.skill;
-      if (S.sp > 0 && S.skills[k] < SKILL_MAX) { S.sp--; S.skills[k]++; save(); toast(`${SKILLS[k].i} ${SKILLS[k].n} puja a ${S.skills[k]}`, 'good'); hubScreen('pau'); }
+      if (S.sp > 0 && S.skills[k] < SKILL_MAX) { S.sp--; S.skills[k]++; save(); toast(T("{0} {1} puja a {2}", [SKILLS[k].i, SKILLS[k].n, S.skills[k]]), 'good'); hubScreen('pau'); }
       return;
     }
     if (b.dataset.lesson) { sceneShell('despatx'); showActors('pau', 't'); lessonFlow(b.dataset.lesson, false, () => hubScreen('biblioteca')); return; }
@@ -1075,24 +1081,24 @@
       case 'hubGigs': hubScreen('encarrecs'); break;
       case 'title': titleScreen(); break;
       case 'showEnding': endingScreen(S.ending, false); break;
-      case 'refreshGigs': advanceWeeks(1); genGigs(); save(); hubScreen('encarrecs'); toast('Ha passat una setmana. Nous encàrrecs disponibles.'); break;
+      case 'refreshGigs': advanceWeeks(1); genGigs(); save(); hubScreen('encarrecs'); toast(T('Ha passat una setmana. Nous encàrrecs disponibles.')); break;
       case 'useReserve': S.money += S.reserve; S.reserve = 0; save(); hubScreen('empresa'); break;
-      case 'export': textBox('Codi de la teva partida (copia\'l i enganxa\'l a l\'altre dispositiu):', btoa(unescape(encodeURIComponent(JSON.stringify(S))))); break;
-      case 'import': textBox('Enganxa el codi de la partida:', '', (v) => {
-        try { const d = JSON.parse(decodeURIComponent(escape(atob(v)))); if (!d || !d.v) throw 0; S = Object.assign(newState(), d); applyPlayer(); save(); toast('Partida importada', 'good'); hubScreen('campanya'); }
-        catch (e) { toast('El codi no és vàlid', 'bad'); }
+      case 'export': textBox(T('Codi de la teva partida (copia\'l i enganxa\'l a l\'altre dispositiu):'), btoa(unescape(encodeURIComponent(JSON.stringify(S))))); break;
+      case 'import': textBox(T('Enganxa el codi de la partida:'), '', (v) => {
+        try { const d = JSON.parse(decodeURIComponent(escape(atob(v)))); if (!d || !d.v) throw 0; S = Object.assign(newState(), d); applyPlayer(); save(); toast(T('Partida importada'), 'good'); hubScreen('campanya'); }
+        catch (e) { toast(T('El codi no és vàlid'), 'bad'); }
       }); break;
       case 'speed': settings.speed = settings.speed <= 8 ? 18 : settings.speed <= 18 ? 32 : 6; saveSettings(); hubScreen('empresa'); break;
-      case 'reset': confirmBox('Segur que vols esborrar la partida? No es pot desfer.', () => { try { localStorage.removeItem(SAVE_KEY); } catch (e) { } S = null; titleScreen(); }); break;
+      case 'reset': confirmBox(T('Segur que vols esborrar la partida? No es pot desfer.'), () => { try { localStorage.removeItem(SAVE_KEY); } catch (e) { } S = null; titleScreen(); }); break;
       case 'install': doInstall(); break;
       case 'editAvatar': setupScreen(true); break;
       case 'syncNow': doSync(true); break;
       case 'downloadResults': downloadResults(); break;
-      case 'setClass': textBox('Codi de classe (te\'l dona el professor):', S.classe, (v) => {
+      case 'setClass': textBox(T('Codi de classe (te\'l dona el professor):'), S.classe, (v) => {
         S.classe = normClass(v); S.lastSync = 0; save();
-        if (S.classe) { toast('Codi desat: ' + esc(S.classe), 'good'); doSync(true); } else hubScreen('empresa');
-      }, 'Desar'); break;
-      case 'sceneMenu': confirmBox('Vols sortir de la missió? El progrés de la missió es desa i la podràs reprendre.', () => { const c = S.cur; save(); hubScreen('campanya'); S.cur = c; save(); }); break;
+        if (S.classe) { toast(T('Codi desat: ') + esc(S.classe), 'good'); doSync(true); } else hubScreen('empresa');
+      }, T('Desar')); break;
+      case 'sceneMenu': confirmBox(T('Vols sortir de la missió? El progrés de la missió es desa i la podràs reprendre.'), () => { const c = S.cur; save(); hubScreen('campanya'); S.cur = c; save(); }); break;
     }
   });
 
@@ -1105,7 +1111,7 @@
   }
   function doInstall() {
     if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt.userChoice.finally(() => { deferredPrompt = null; updateInstallBtn(); }); }
-    else confirmBox('A l\'iPhone o iPad: toca el botó <b>Compartir</b> de Safari i després <b>«Afegeix a la pantalla d\'inici»</b>.', () => { });
+    else confirmBox(T('A l\'iPhone o iPad: toca el botó <b>Compartir</b> de Safari i després <b>«Afegeix a la pantalla d\'inici»</b>.'), () => { });
   }
   if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => { }));

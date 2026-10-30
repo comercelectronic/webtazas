@@ -40,25 +40,25 @@
 </head>
 <body>
   <main class="prof">
-    <header class="prof-h"><img src="icons/icon.svg" alt=""><div><h1>Panell del professor</h1><p>Agència Digital · resultats dels alumnes</p></div></header>
+    <header class="prof-h"><img src="icons/icon.svg" alt=""><div style="flex:1"><h1 data-t>Panell del professor</h1><p data-t>Agència Digital · resultats dels alumnes</p></div><div class="langs" id="langs"></div></header>
 
     <section class="card">
-      <h3>🔑 Accedir als resultats enviats</h3>
+      <h3 data-t>🔑 Accedir als resultats enviats</h3>
       <div class="form-row">
-        <label>Contrasenya del professorat<input class="inp" id="pw" type="password" autocomplete="current-password"></label>
-        <label>Codi de classe <small style="font-weight:400">(buit = totes les classes)</small><input class="inp" id="cls" placeholder="Per exemple: 4ESO-B"></label>
-        <button class="btn primary" id="load">Veure resultats</button>
+        <label><span data-t>Contrasenya del professorat</span><input class="inp" id="pw" type="password" autocomplete="current-password"></label>
+        <label><span data-t>Codi de classe</span> <small style="font-weight:400" data-t>(buit = totes les classes)</small><input class="inp" id="cls" placeholder="Per exemple: 4ESO-B" data-t-ph></label>
+        <button class="btn primary" id="load" data-t>Veure resultats</button>
       </div>
-      <p class="muted small">Els alumnes que escriuen un codi de classe al joc envien els resultats automàticament cada vegada que acaben un capítol. També pots afegir fitxers de resultats que t'hagin enviat (botó de sota).</p>
+      <p class="muted small" data-t>Els alumnes que escriuen un codi de classe al joc envien els resultats automàticament cada vegada que acaben un capítol. També pots afegir fitxers de resultats que t'hagin enviat (botó de sota).</p>
       <p id="msg"></p>
     </section>
 
     <section class="card">
       <div class="form-row" style="justify-content:space-between;align-items:center">
-        <h3 style="margin:0">📊 Alumnes</h3>
+        <h3 style="margin:0" data-t>📊 Alumnes</h3>
         <div class="row-btns" style="margin:0">
-          <label class="btn small" style="flex:none;min-width:0">📂 Afegir fitxers d'alumnes<input type="file" id="files" accept=".json,application/json" multiple hidden></label>
-          <button class="btn small primary" id="csv" disabled>⇩ Exportar a Excel (CSV)</button>
+          <label class="btn small" style="flex:none;min-width:0"><span data-t>📂 Afegir fitxers d'alumnes</span><input type="file" id="files" accept=".json,application/json" multiple hidden></label>
+          <button class="btn small primary" id="csv" disabled data-t>⇩ Exportar a Excel (CSV)</button>
         </div>
       </div>
       <div class="stats" id="stats" style="margin-top:14px"></div>
@@ -67,6 +67,7 @@
   </main>
   <div id="toasts"></div>
 
+  <script src="js/i18n.js"></script>
   <script src="js/art.js"></script>
   <script src="js/data-lessons.js"></script>
   <script src="js/data-story1.js"></script>

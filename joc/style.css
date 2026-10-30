@@ -437,3 +437,11 @@ button { font-family: inherit; font-size: inherit; color: inherit; cursor: point
   .setup-ava { width: 120px; flex: none; margin: 0; }
   .setup-example { margin: 0; }
 }
+
+/* Selector d'idioma */
+.langs { display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; }
+.langs button { background: rgba(255, 255, 255, .15); color: #fff; border: 2px solid rgba(255, 255, 255, .55); border-radius: 999px; padding: 4px 12px; font-weight: 700; font-size: .85em; }
+.langs button.on { background: #fff; color: var(--ink); border-color: #fff; }
+.card .langs, span.langs { display: inline-flex; align-items: center; }
+.card .langs button { background: #fff; color: var(--txt); border-color: #d9cdee; }
+.card .langs button.on { background: var(--pink); color: #fff; border-color: var(--ink); }
