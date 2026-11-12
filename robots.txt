@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
-Disallow: /admin-estoc.html
+Disallow: /admin/
+Disallow: /newsletter/confirmar/
+Disallow: /newsletter/baixa/
 
 Sitemap: https://tassademots.cat/sitemap.xml

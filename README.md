@@ -1,185 +1,66 @@
-<!-- ☕ TAZASJOY - Web de Tazas Divertidas 🌈 -->
+# Tassa de Mots — botiga en línia
 
-# 🌈 TazasJoy - Web de Tazas Divertidas
+Tasses amb paraules catalanes poc habituals. Web estàtica generada a partir de
+dades + Netlify Functions per al pagament (Stripe), l'estoc, les valoracions i
+la newsletter.
 
-¡Bienvenido a TazasJoy! Una tienda online moderna y colorida de tazas con diseños únicos y divertidos.
+## Com està organitzat
 
-## ✨ Características
+| Carpeta / fitxer | Què hi ha |
+| --- | --- |
+| `data/catalog.json` | Les tasses: nom, categoria, definicions, imatges i relacionades. |
+| `data/site.json` | **Preu únic (`unitPriceCents`)**, enviament, packs, categories, dades legals del titular i fitxa tècnica. |
+| `scripts/` | Generador de pàgines (`npm run build`). |
+| `assets/` | Estils, JavaScript, icones i tipografies (allotjades al propi web, sense Google Fonts). |
+| `netlify/functions/` | Pagament, webhook de Stripe, estoc, valoracions, newsletter i administració. |
+| `tests/` | Proves de les funcions (`npm test`). |
+| `index.html`, `tasses/`, `newsletter/`, etc. | **Generats.** No els editis a mà: es tornen a crear a cada build. |
+| `joc/` | Projecte independent (joc «Agència Digital»). |
 
-### 🎨 Diseño Moderno
-- **Tipografías Display Premium**: Playfair Display para títulos llamativos, Fredoka para textos secundarios
-- **Gradientes Dinámicos**: Combinaciones de colores vibrantes en toda la web
-- **Animaciones Suaves**: Transiciones y efectos hover profesionales
+El preu que es mostra a la web, el de la cistella i el que es cobra a Stripe
+surten del mateix valor (`data/site.json → unitPriceCents`, en cèntims).
 
-### 🎯 Secciones Principales
+## Ordres
 
-1. **Hero Section** 🚀
-   - Título impactante con tipografía extra grande
-   - Tazas flotantes animadas
-   - Llamada a la acción prominente
-
-2. **Características** ✨
-   - Diseños únicos
-   - Eco-friendly
-   - Envío rápido
-
-3. **Galería de Productos** 🛍️
-   - 6 productos con gradientes exclusivos
-   - Tarjetas interactivas con efecto hover
-   - Sistema de carrito simulado
-   - Ratings de clientes
-
-4. **Promoción Especial** 🎁
-   - Oferta destacada con fondo degradado
-
-5. **Testimonios** 💬
-   - Opiniones de clientes verificados
-   - Avatares y nombres reales
-
-6. **Contacto** 📧
-   - Formulario interactivo
-   - Información de contacto
-   - Validación de entrada
-
-## 🛠️ Tecnologías Utilizadas
-
-- **HTML5**: Estructura semántica
-- **CSS3**: 
-  - Flexbox y CSS Grid
-  - Gradientes lineales
-  - Animaciones y transiciones
-  - Media queries responsivas
-- **JavaScript Vanilla**: 
-  - Interactividad sin dependencias
-  - Scroll smooth
-  - Validación de formularios
-  - Efectos visuales dinámicos
-
-## 🎨 Paleta de Colores
-
-```
-Primario:       #FF6B6B (Rojo Coral)
-Secundario:     #4ECDC4 (Verde Menta)
-Acento:         #FFE66D (Amarillo Dorado)
-Oscuro:         #2C3E50 (Azul Oscuro)
-Claro:          #F7F7F7 (Gris Claro)
+```bash
+npm install
+npm run build   # genera les pàgines i avisa de les dades pendents
+npm test        # proves de pagament, estoc, valoracions i newsletter
 ```
 
-## 📱 Responsividad
+Netlify executa `npm run build` a cada desplegament.
 
-La web está completamente optimizada para:
-- 📱 Dispositivos móviles (480px y menos)
-- 📱 Tablets (768px)
-- 💻 Computadoras de escritorio
+## Configuració a Netlify
 
-## 🚀 Características JavaScript
+Variables d'entorn (Site settings → Environment variables):
 
-### Interactividad
-- ✅ Smooth scroll en navegación
-- ✅ Efectos ripple en botones
-- ✅ Validación de formulario de contacto
-- ✅ Notificaciones toast
-- ✅ Carrito de compras simulado
-- ✅ Animación de escritura en títulos
+| Variable | Per a què |
+| --- | --- |
+| `STRIPE_SECRET_KEY` | Pagaments. Comença per `sk_test_` (proves) o `sk_live_` (real). |
+| `STRIPE_WEBHOOK_SECRET` | Webhook de Stripe (`whsec_...`). Endpoint: `/.netlify/functions/stripe-webhook`, esdeveniments `checkout.session.completed` i `checkout.session.async_payment_succeeded`. |
+| `ADMIN_PASSWORD` | Contrasenya de `/admin/` (valoracions, newsletter i estoc). |
+| `RESEND_API_KEY` | Enviament de correus de la newsletter ([resend.com](https://resend.com)). |
+| `NEWSLETTER_FROM` | Remitent verificat a Resend, p. ex. `Tassa de Mots <hola@tassademots.cat>`. |
+| `SITE_URL` | Adreça pública, p. ex. `https://tassademots.cat` (per als enllaços dels correus). |
+| `HASH_SALT` | Text aleatori llarg per xifrar els identificadors anti-abús. |
 
-### Observadores
-- 🔍 Intersection Observer para animaciones al scroll
-- 🔍 Detección de visibilidad de elementos
+Altres passos:
+- **Formulari de contacte:** activa *Forms → Form detection* a Netlify. Els missatges hi apareixen i pots activar-ne l'avís per correu.
+- **Resend:** cal verificar el domini del remitent (registres DNS) abans d'enviar.
+- **Stripe:** activa els rebuts per correu als clients (Settings → Customer emails) si vols que en rebin.
+- **Netlify Blobs** (estoc, valoracions, newsletter) no necessita configuració.
 
-## 📁 Estructura de Archivos
+## Administració (`/admin/`)
 
-```
-webtazas/
-├── index.html          # Página principal
-├── styles.css          # Estilos CSS
-├── script.js           # JavaScript interactivo
-└── README.md           # Este archivo
-```
+- **Valoracions:** cap es publica sense aprovació. Les sospitoses arriben marcades.
+- **Newsletter:** llistat amb data i origen del consentiment, exportació CSV, esborrat i enviament de correus (amb prova prèvia). Cada correu inclou la baixa amb un clic.
+- **Estoc i vendes:** buit = sense límit; amb un número, la tassa deixa de vendre's a 0. Les vendes compten només pagaments confirmats.
 
-## 🎯 Cómo Usar
+## Abans de publicar
 
-1. **Clonar el repositorio**
-   ```bash
-   git clone https://github.com/comercelectronic/webtazas.git
-   cd webtazas
-   ```
+`npm run build` llista les dades que falten a `data/site.json` (titular, NIF,
+domicili, IVA, transportista i fitxa tècnica de les tasses). Mentre falten, es
+veuen marcades com a `[Pendent: ...]` a les pàgines legals.
 
-2. **Abrir en el navegador**
-   - Simplemente abre el archivo `index.html` en tu navegador favorito
-   - ¡No requiere servidor local!
-
-3. **Personalizar**
-   - Modifica colores en las variables CSS (`:root`)
-   - Edita textos en `index.html`
-   - Ajusta animaciones en `styles.css`
-
-## 💡 Características Destacadas
-
-### 🎨 Tipografía Display
-- **Playfair Display 900**: Para títulos grandes y llamativos
-- **Fredoka 600**: Para textos secundarios y botones
-- **Poppins 400-700**: Para cuerpo de texto
-
-### ✨ Animaciones
-- Efecto float en tazas del hero
-- Bounce en emojis de productos
-- Slide-in en componentes
-- Hover effects en tarjetas
-- Ripple effect en botones
-
-### 🌐 Compatibilidad
-- ✅ Chrome/Edge (Chromium)
-- ✅ Firefox
-- ✅ Safari
-- ✅ Navegadores móviles
-
-## 📝 Notas de Desarrollo
-
-### Colores de Productos
-Cada producto tiene un gradiente único:
-1. Rojo Coral → Rosa
-2. Rosa Fucsia → Magenta
-3. Azul Índigo → Púrpura
-4. Rosa Flúor → Rojo
-5. Naranja → Amarillo
-6. Turquesa → Rosa
-
-### Formulario de Contacto
-- Validación simple en cliente
-- Notificación de éxito
-- Reset automático
-
-### Carrito de Compras
-- Contador simulado
-- Notificaciones personalizadas por producto
-- Feedback visual
-
-## 🎁 Funcionalidades Futuras
-
-- [ ] Backend integrado
-- [ ] Base de datos real
-- [ ] Carrito persistente
-- [ ] Sistema de usuarios
-- [ ] Pasarela de pagos
-- [ ] Blog de recetas de café
-- [ ] Sistema de reseñas avanzado
-- [ ] Chat en vivo
-
-## 📧 Contacto
-
-**Email**: contacto@tazasjoy.com
-**Teléfono**: +34 123 456 789
-**Website**: www.tazasjoy.com
-
-## 📄 Licencia
-
-Este proyecto está bajo licencia MIT. Siéntete libre de usar, modificar y distribuir.
-
----
-
-### 🌟 ¡Hecho con ☕ y ❤️ para amantes del café!
-
-Gracias por visitar TazasJoy. Esperamos que disfrutes navegando por nuestra colección de tazas divertidas.
-
-**Última actualización**: 2024
-**Versión**: 1.0.0
+Els textos legals són una base de treball: cal que els revisi un professional
+(els comentaris `REVISIÓ JURÍDICA` dins de `scripts/legal.js` indiquen on).

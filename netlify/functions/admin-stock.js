@@ -1,48 +1,35 @@
-// Endpoint protegit per contrasenya (variable d'entorn ADMIN_PASSWORD a
-// Netlify) perquè puguis consultar i actualitzar l'estoc de cada producte
-// des de la pàgina admin-estoc.html, sense haver de tocar codi.
-const { PRODUCT_SLUGS, stockStore, readStock } = require('./lib/stock');
+// Estoc i vendes per a /admin/ (contrasenya ADMIN_PASSWORD).
+//   GET  → { stock: {slug: n|null}, sales: {slug: unitats venudes} }
+//   POST {slug, stock}       stock = número ≥ 0, o null per tornar a "sense límit"
+const { PRODUCT_SLUGS } = require('./lib/catalog');
+const { json, parseJson, store, requireAdmin } = require('./lib/http');
+const { stockStore, readStock } = require('./lib/stock');
 
 exports.handler = async function (event) {
-  if (!process.env.ADMIN_PASSWORD) {
-    console.error('Falta la variable d\'entorn ADMIN_PASSWORD a Netlify.');
-    return { statusCode: 500, body: JSON.stringify({ error: 'La pàgina d\'administració no està configurada.' }) };
-  }
+  const denied = await requireAdmin(event);
+  if (denied) return denied;
+  const st = stockStore(event);
 
-  const store = stockStore(event);
+  const payload = async () => ({
+    stock: await readStock(st),
+    sales: (await store(event, 'sales').get('counts', { type: 'json' })) || {},
+  });
 
-  if (event.httpMethod === 'GET') {
-    const password = event.headers['x-admin-password'];
-    if (password !== process.env.ADMIN_PASSWORD) {
-      return { statusCode: 401, body: JSON.stringify({ error: 'Contrasenya incorrecta.' }) };
-    }
-    const stock = await readStock(store);
-    return { statusCode: 200, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(stock) };
-  }
+  if (event.httpMethod === 'GET') return json(200, await payload());
 
   if (event.httpMethod === 'POST') {
-    let body;
-    try {
-      body = JSON.parse(event.body || '{}');
-    } catch (e) {
-      return { statusCode: 400, body: JSON.stringify({ error: 'Petició no vàlida.' }) };
-    }
-
-    if (body.password !== process.env.ADMIN_PASSWORD) {
-      return { statusCode: 401, body: JSON.stringify({ error: 'Contrasenya incorrecta.' }) };
-    }
-    if (!PRODUCT_SLUGS.includes(body.slug)) {
-      return { statusCode: 400, body: JSON.stringify({ error: 'Producte desconegut.' }) };
+    const { body, error } = parseJson(event);
+    if (error) return error;
+    if (!PRODUCT_SLUGS.includes(body.slug)) return json(400, { error: 'Producte desconegut.' });
+    if (body.stock === null || body.stock === '') {
+      await st.delete(body.slug);
+      return json(200, await payload());
     }
     const qty = parseInt(body.stock, 10);
-    if (!Number.isFinite(qty) || qty < 0) {
-      return { statusCode: 400, body: JSON.stringify({ error: 'La quantitat ha de ser un número de 0 o més.' }) };
-    }
-
-    await store.set(body.slug, String(qty));
-    const stock = await readStock(store);
-    return { statusCode: 200, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(stock) };
+    if (!Number.isFinite(qty) || qty < 0 || qty > 100000) return json(400, { error: 'La quantitat ha de ser un número de 0 o més.' });
+    await st.set(body.slug, String(qty));
+    return json(200, await payload());
   }
 
-  return { statusCode: 405, body: 'Method Not Allowed' };
+  return json(405, { error: 'Method Not Allowed' });
 };
