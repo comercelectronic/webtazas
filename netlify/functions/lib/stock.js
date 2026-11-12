@@ -13,15 +13,24 @@
 const { getStore, connectLambda } = require('@netlify/blobs');
 
 const PRODUCT_SLUGS = [
-  'fer-volar-coloms',
-  'aneu-a-fer-punyetes',
-  'qui-no-plora-no-mama',
-  'cofoi',
-  'escarransit',
-  'esbojarrat',
-  'carallot-oficial',
+  'aixopluc',
+  'arrel',
+  'bocamoll',
+  'bonanca',
+  'cagadubtes',
+  'caliu',
+  'corco',
+  'deler',
+  'escalfacadires',
+  'llepafils',
+  'manefla',
+  'moixaina',
+  'niu',
+  'pocatraca',
+  'rosada',
+  'solell',
+  'ventijol',
   'arsenal-insults',
-  'no-em-toquis-ovaris',
 ];
 
 // Les Netlify Functions clàssiques (exports.handler) no tenen l'entorn de

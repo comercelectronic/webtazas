@@ -12,15 +12,24 @@
 const { stockStore, readStock } = require('./lib/stock');
 
 const PRODUCTS = {
-  'fer-volar-coloms': { name: 'Fer Volar Coloms', price: 1890, image: 'images/mug-coloms.jpg' },
-  'aneu-a-fer-punyetes': { name: 'Aneu a Fer Punyetes', price: 1890, image: 'images/mug-punyetes.jpg' },
-  'qui-no-plora-no-mama': { name: 'Qui no plora, no mama', price: 1490, image: null },
-  'cofoi': { name: 'Cofoi', price: 1550, image: null },
-  'escarransit': { name: 'Escarransit', price: 1550, image: null },
-  'esbojarrat': { name: 'Esbojarrat', price: 1550, image: null },
-  'carallot-oficial': { name: 'Carallot Oficial', price: 1690, image: null },
-  'arsenal-insults': { name: "L'Arsenal d'Insults", price: 1890, image: 'images/mug-insults-front.jpg' },
-  'no-em-toquis-ovaris': { name: 'No em Toquis els Ovaris', price: 1890, image: 'images/mug-no-toquis-front.jpg' },
+  'aixopluc': { name: 'Aixopluc', price: 1690, image: 'images/mug-aixopluc-front.jpg' },
+  'arrel': { name: 'Arrel', price: 1690, image: 'images/mug-arrel-front.jpg' },
+  'bocamoll': { name: 'Bocamoll', price: 1690, image: 'images/mug-bocamoll-front.jpg' },
+  'bonanca': { name: 'Bonança', price: 1690, image: 'images/mug-bonanca-front.jpg' },
+  'cagadubtes': { name: 'Cagadubtes', price: 1690, image: 'images/mug-cagadubtes-front.jpg' },
+  'caliu': { name: 'Caliu', price: 1690, image: 'images/mug-caliu-front.jpg' },
+  'corco': { name: 'Corcó', price: 1690, image: 'images/mug-corco-front.jpg' },
+  'deler': { name: 'Deler', price: 1690, image: 'images/mug-deler-front.jpg' },
+  'escalfacadires': { name: 'Escalfacadires', price: 1690, image: 'images/mug-escalfacadires-front.jpg' },
+  'llepafils': { name: 'Llepafils', price: 1690, image: 'images/mug-llepafils-front.jpg' },
+  'manefla': { name: 'Manefla', price: 1690, image: 'images/mug-manefla-front.jpg' },
+  'moixaina': { name: 'Moixaina', price: 1690, image: 'images/mug-moixaina-front.jpg' },
+  'niu': { name: 'Niu', price: 1690, image: 'images/mug-niu-front.jpg' },
+  'pocatraca': { name: 'Pocatraça', price: 1690, image: 'images/mug-pocatraca-front.jpg' },
+  'rosada': { name: 'Rosada', price: 1690, image: 'images/mug-rosada-front.jpg' },
+  'solell': { name: 'Solell', price: 1690, image: 'images/mug-solell-front.jpg' },
+  'ventijol': { name: 'Ventijol', price: 1690, image: 'images/mug-ventijol-front.jpg' },
+  'arsenal-insults': { name: "L'Arsenal d'Insults", price: 1690, image: 'images/mug-insults-front.jpg' },
 };
 
 // Tarifa d'enviament fixa, en cèntims. Ajusta-la a les teves tarifes reals

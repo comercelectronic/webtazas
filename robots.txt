@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin-estoc.html
 
-Sitemap: https://sensesucre.cat/sitemap.xml
+Sitemap: https://tassademots.cat/sitemap.xml
