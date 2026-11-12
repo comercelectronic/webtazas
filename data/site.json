@@ -1,0 +1,87 @@
+{
+  "brand": "Tassa de Mots",
+  "tagline": "Paraules catalanes que es mereixen una tassa",
+  "siteUrl": "https://tassademots.cat",
+  "contactEmail": "hola@tassademots.cat",
+  "locale": "ca_ES",
+
+  "newsletterConsent": {
+    "version": "2026-11",
+    "text": "Vull rebre per correu electrònic la newsletter de Tassa de Mots amb novetats, nous dissenys, ofertes i descomptes. Sé que em puc donar de baixa en qualsevol moment."
+  },
+
+  "unitPriceCents": 795,
+  "currency": "EUR",
+  "maxQtyPerItem": 20,
+
+  "shipping": {
+    "costCents": 495,
+    "minBusinessDays": 3,
+    "maxBusinessDays": 7,
+    "countries": ["ES", "FR", "PT", "AD", "IT", "DE"],
+    "countriesLabel": "Espanya, Andorra, França, Portugal, Itàlia i Alemanya",
+    "carrier": null
+  },
+
+  "productSpecs": [
+    { "label": "Material", "value": "Ceràmica" },
+    { "label": "Capacitat", "value": null },
+    { "label": "Mides", "value": null },
+    { "label": "Rentaplats", "value": null },
+    { "label": "Microones", "value": null },
+    { "label": "Cures recomanades", "value": null }
+  ],
+
+  "legal": {
+    "ownerName": null,
+    "taxId": null,
+    "address": null,
+    "registryData": null,
+    "vatInfo": null
+  },
+
+  "packs": [
+    {
+      "id": "casa",
+      "name": "Per a la família",
+      "text": "Tres paraules per a la gent que t'ha vist créixer.",
+      "slugs": ["niu", "arrel", "aixopluc"]
+    },
+    {
+      "id": "parella",
+      "name": "Per a la parella",
+      "text": "Una per a cadascú, per al cafè de cada matí.",
+      "slugs": ["deler", "caliu"]
+    },
+    {
+      "id": "feina",
+      "name": "Per a la feina",
+      "text": "Per a aquell company que tots coneixem (o per a tu).",
+      "slugs": ["escalfacadires", "manefla", "bocamoll"]
+    }
+  ],
+
+  "categories": [
+    {
+      "id": "amor",
+      "name": "Paraules d'amor",
+      "singular": "Paraula d'amor",
+      "text": "Per dir-li a algú, cada matí, el que significa per a tu.",
+      "cover": "aixopluc"
+    },
+    {
+      "id": "caracter",
+      "name": "Paraules de caràcter",
+      "singular": "Paraula de caràcter",
+      "text": "Per riure's de les manies de tothom. Començant per les teves.",
+      "cover": "cagadubtes"
+    },
+    {
+      "id": "insults",
+      "name": "Insults d'autor",
+      "singular": "Insult d'autor",
+      "text": "Setze insults catalans en una sola tassa.",
+      "cover": "arsenal-insults"
+    }
+  ]
+}

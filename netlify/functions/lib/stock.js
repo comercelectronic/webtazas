@@ -1,57 +1,20 @@
-// Lògica compartida de l'estoc, feta servir per get-stock, admin-stock,
-// create-checkout-session i stripe-webhook.
-//
-// L'estoc es desa a Netlify Blobs (un magatzem clau-valor inclòs amb
-// Netlify, sense necessitat de donar-se d'alta enlloc més). Cada clau és
-// l'slug d'un producte i el valor és el nombre d'unitats disponibles, com
-// a text.
-//
-// Si un producte no té cap entrada desada, es considera "no controlat":
-// es pot comprar sense límit, exactament com fins ara. Això evita que la
-// botiga deixi de vendre res just després de desplegar aquesta funcionalitat,
-// abans que ningú hagi posat cap quantitat real a la pàgina d'administració.
-const { getStore, connectLambda } = require('@netlify/blobs');
+// L'estoc es desa a Netlify Blobs: cada clau és l'slug d'un producte i el
+// valor, les unitats disponibles. Un producte sense entrada es considera
+// "no controlat" i es ven sense límit (com abans d'activar l'estoc).
+const { store } = require('./http');
+const { PRODUCT_SLUGS } = require('./catalog');
 
-const PRODUCT_SLUGS = [
-  'aixopluc',
-  'arrel',
-  'bocamoll',
-  'bonanca',
-  'cagadubtes',
-  'caliu',
-  'corco',
-  'deler',
-  'escalfacadires',
-  'llepafils',
-  'manefla',
-  'moixaina',
-  'niu',
-  'pocatraca',
-  'rosada',
-  'solell',
-  'ventijol',
-  'arsenal-insults',
-];
-
-// Les Netlify Functions clàssiques (exports.handler) no tenen l'entorn de
-// Netlify Blobs configurat automàticament: cal "connectar" l'esdeveniment
-// de la petició abans de demanar l'store.
 function stockStore(event) {
-  connectLambda(event);
-  return getStore('stock');
+  return store(event, 'stock');
 }
 
 // Retorna { slug: number|null } per a tots els productes. null = no controlat.
-async function readStock(store) {
+async function readStock(st) {
   const result = {};
   await Promise.all(
     PRODUCT_SLUGS.map(async (slug) => {
-      const raw = await store.get(slug);
-      if (raw === null || raw === undefined) {
-        result[slug] = null;
-        return;
-      }
-      const n = parseInt(raw, 10);
+      const raw = await st.get(slug);
+      const n = raw === null || raw === undefined ? NaN : parseInt(raw, 10);
       result[slug] = Number.isFinite(n) ? n : null;
     })
   );

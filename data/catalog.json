@@ -1,0 +1,509 @@
+[
+  {
+    "slug": "aixopluc",
+    "name": "Aixopluc",
+    "category": "amor",
+    "new": true,
+    "phonetic": "[ə·ʃu·ˈpluk] m.",
+    "intro": "Tu ets el meu",
+    "tagline": null,
+    "def1": "Lloc on trobar recer de la pluja i del mal temps.",
+    "def2": "Persona amb qui et sents a recer, passi el que passi.",
+    "summary": "Persona amb qui et sents a recer, passi el que passi.",
+    "description": null,
+    "metaDescription": "Tassa «Tu ets el meu aixopluc»: persona amb qui et sents a recer, passi el que passi. Paraula catalana amb definició de diccionari.",
+    "images": {
+      "front": "/images/mug-aixopluc-front.jpg",
+      "back": "/images/mug-aixopluc-back.jpg",
+      "width": 750,
+      "height": 880
+    },
+    "alt": {
+      "front": "Tassa blanca amb la frase «Tu ets el meu aixopluc» i una il·lustració",
+      "back": "Revers de la tassa amb la definició de diccionari de «aixopluc»"
+    },
+    "related": [
+      "arrel",
+      "niu"
+    ]
+  },
+  {
+    "slug": "arrel",
+    "name": "Arrel",
+    "category": "amor",
+    "new": true,
+    "phonetic": "[ə·ˈrel] f.",
+    "intro": "Tu ets la meva",
+    "tagline": "allò que et sosté i et fa créixer",
+    "def1": "Part de la planta que la subjecta a terra i la nodreix.",
+    "def2": "Persona d'on véns, que et sosté sense fer soroll i et fa créixer.",
+    "summary": "Persona d'on véns, que et sosté sense fer soroll i et fa créixer.",
+    "description": null,
+    "metaDescription": "Tassa «Tu ets la meva arrel»: persona d'on véns, que et sosté sense fer soroll i et fa créixer. Paraula catalana amb definició de diccionari.",
+    "images": {
+      "front": "/images/mug-arrel-front.jpg",
+      "back": "/images/mug-arrel-back.jpg",
+      "width": 750,
+      "height": 880
+    },
+    "alt": {
+      "front": "Tassa blanca amb la frase «Tu ets la meva arrel» i una il·lustració",
+      "back": "Revers de la tassa amb la definició de diccionari de «arrel»"
+    },
+    "related": [
+      "niu",
+      "caliu"
+    ]
+  },
+  {
+    "slug": "bocamoll",
+    "name": "Bocamoll",
+    "category": "caracter",
+    "new": true,
+    "phonetic": "[bo·kə·ˈmoʎ] m. i f.",
+    "intro": "Sóc un",
+    "tagline": "un secret? fins a l'hora del cafè",
+    "def1": "Persona que no sap guardar un secret.",
+    "def2": "Qui revela la sorpresa abans que arribi l'homenatjat.",
+    "summary": "Qui revela la sorpresa abans que arribi l'homenatjat.",
+    "description": null,
+    "metaDescription": "Tassa «Sóc un bocamoll»: qui revela la sorpresa abans que arribi l'homenatjat. Paraula catalana amb definició de diccionari.",
+    "images": {
+      "front": "/images/mug-bocamoll-front.jpg",
+      "back": "/images/mug-bocamoll-back.jpg",
+      "width": 750,
+      "height": 880
+    },
+    "alt": {
+      "front": "Tassa blanca amb la frase «Sóc un bocamoll» i una il·lustració",
+      "back": "Revers de la tassa amb la definició de diccionari de «bocamoll»"
+    },
+    "related": [
+      "manefla",
+      "corco"
+    ]
+  },
+  {
+    "slug": "bonanca",
+    "name": "Bonança",
+    "category": "amor",
+    "new": true,
+    "phonetic": "[bu·ˈnan·sə] f.",
+    "intro": "Tu ets la meva",
+    "tagline": "la calma del mar després de la tempesta",
+    "def1": "Calma del mar i del temps després de la tempesta.",
+    "def2": "Persona que et porta pau quan tot trontolla.",
+    "summary": "Persona que et porta pau quan tot trontolla.",
+    "description": null,
+    "metaDescription": "Tassa «Tu ets la meva bonança»: persona que et porta pau quan tot trontolla. Paraula catalana amb definició de diccionari.",
+    "images": {
+      "front": "/images/mug-bonanca-front.jpg",
+      "back": "/images/mug-bonanca-back.jpg",
+      "width": 750,
+      "height": 880
+    },
+    "alt": {
+      "front": "Tassa blanca amb la frase «Tu ets la meva bonança» i una il·lustració",
+      "back": "Revers de la tassa amb la definició de diccionari de «bonança»"
+    },
+    "related": [
+      "caliu",
+      "solell"
+    ]
+  },
+  {
+    "slug": "cagadubtes",
+    "name": "Cagadubtes",
+    "category": "caracter",
+    "new": true,
+    "phonetic": "[ˌka·ɣə·ˈðup·təs] m. i f. col·loq.",
+    "intro": "Sóc un",
+    "tagline": "potser sí, potser no, ja t'ho diré",
+    "def1": "Persona que no s'acaba de decidir mai.",
+    "def2": "Qui triga vint minuts a triar l'entrepà i al final demana el mateix de sempre.",
+    "summary": "Qui triga vint minuts a triar l'entrepà i al final demana el mateix de sempre.",
+    "description": null,
+    "metaDescription": "Tassa «Sóc un cagadubtes»: qui triga vint minuts a triar l'entrepà i al final demana el mateix de sempre. Paraula catalana amb definició de diccionari.",
+    "images": {
+      "front": "/images/mug-cagadubtes-front.jpg",
+      "back": "/images/mug-cagadubtes-back.jpg",
+      "width": 750,
+      "height": 880
+    },
+    "alt": {
+      "front": "Tassa blanca amb la frase «Sóc un cagadubtes» i una il·lustració",
+      "back": "Revers de la tassa amb la definició de diccionari de «cagadubtes»"
+    },
+    "related": [
+      "pocatraca",
+      "llepafils"
+    ]
+  },
+  {
+    "slug": "caliu",
+    "name": "Caliu",
+    "category": "amor",
+    "new": true,
+    "phonetic": "[kə·ˈliw] m.",
+    "intro": "Tu ets el meu",
+    "tagline": "brasa que queda sota la cendra i manté l'escalfor",
+    "def1": "Brasa colgada sota la cendra que conserva l'escalfor.",
+    "def2": "Escalfor afectuosa d'algú que, passi el que passi, no s'apaga.",
+    "summary": "Escalfor afectuosa d'algú que, passi el que passi, no s'apaga.",
+    "description": null,
+    "metaDescription": "Tassa «Tu ets el meu caliu»: escalfor afectuosa d'algú que, passi el que passi, no s'apaga. Paraula catalana amb definició de diccionari.",
+    "images": {
+      "front": "/images/mug-caliu-front.jpg",
+      "back": "/images/mug-caliu-back.jpg",
+      "width": 750,
+      "height": 880
+    },
+    "alt": {
+      "front": "Tassa blanca amb la frase «Tu ets el meu caliu» i una il·lustració",
+      "back": "Revers de la tassa amb la definició de diccionari de «caliu»"
+    },
+    "related": [
+      "bonanca",
+      "deler"
+    ]
+  },
+  {
+    "slug": "corco",
+    "name": "Corcó",
+    "category": "caracter",
+    "new": true,
+    "phonetic": "[kur·ˈko] m.",
+    "intro": "Sóc un",
+    "tagline": "només una preguntetaaa...",
+    "def1": "Larva d'insecte que rosega la fusta per dins.",
+    "def2": "Persona que insisteix i insisteix fins que aconsegueix el que vol.",
+    "summary": "Persona que insisteix i insisteix fins que aconsegueix el que vol.",
+    "description": null,
+    "metaDescription": "Tassa «Sóc un corcó»: persona que insisteix i insisteix fins que aconsegueix el que vol. Paraula catalana amb definició de diccionari.",
+    "images": {
+      "front": "/images/mug-corco-front.jpg",
+      "back": "/images/mug-corco-back.jpg",
+      "width": 750,
+      "height": 880
+    },
+    "alt": {
+      "front": "Tassa blanca amb la frase «Sóc un corcó» i una il·lustració",
+      "back": "Revers de la tassa amb la definició de diccionari de «corcó»"
+    },
+    "related": [
+      "manefla",
+      "bocamoll"
+    ]
+  },
+  {
+    "slug": "deler",
+    "name": "Deler",
+    "category": "amor",
+    "new": true,
+    "phonetic": "[də·ˈle] m.",
+    "intro": "Tu ets el meu",
+    "tagline": "desig ardent, ganes immenses",
+    "def1": "Desig ardent d'alguna cosa.",
+    "def2": "Ganes immenses de tornar-te a veure, encara que fa una estona que ens hem dit adeu.",
+    "summary": "Ganes immenses de tornar-te a veure, encara que fa una estona que ens hem dit adeu.",
+    "description": null,
+    "metaDescription": "Tassa «Tu ets el meu deler»: ganes immenses de tornar-te a veure, encara que fa una estona que ens hem dit adeu. Paraula catalana amb definició de diccionari.",
+    "images": {
+      "front": "/images/mug-deler-front.jpg",
+      "back": "/images/mug-deler-back.jpg",
+      "width": 750,
+      "height": 880
+    },
+    "alt": {
+      "front": "Tassa blanca amb la frase «Tu ets el meu deler» i una il·lustració",
+      "back": "Revers de la tassa amb la definició de diccionari de «deler»"
+    },
+    "related": [
+      "caliu",
+      "moixaina"
+    ]
+  },
+  {
+    "slug": "escalfacadires",
+    "name": "Escalfacadires",
+    "category": "caracter",
+    "new": true,
+    "phonetic": "[əs·ˌkal·fə·kə·ˈði·rəs] m. i f. col·loq.",
+    "intro": "Sóc un",
+    "tagline": "de 9 a 5, sense despentinar-se",
+    "def1": "Persona que passa hores asseguda sense fer gaire res.",
+    "def2": "Col·lega amb un talent especial per semblar molt ocupat davant la pantalla.",
+    "summary": "Col·lega amb un talent especial per semblar molt ocupat davant la pantalla.",
+    "description": null,
+    "metaDescription": "Tassa «Sóc un escalfacadires»: col·lega amb un talent especial per semblar molt ocupat davant la pantalla. Paraula catalana amb definició de diccionari.",
+    "images": {
+      "front": "/images/mug-escalfacadires-front.jpg",
+      "back": "/images/mug-escalfacadires-back.jpg",
+      "width": 750,
+      "height": 880
+    },
+    "alt": {
+      "front": "Tassa blanca amb la frase «Sóc un escalfacadires» i una il·lustració",
+      "back": "Revers de la tassa amb la definició de diccionari de «escalfacadires»"
+    },
+    "related": [
+      "pocatraca",
+      "llepafils"
+    ]
+  },
+  {
+    "slug": "llepafils",
+    "name": "Llepafils",
+    "category": "caracter",
+    "new": true,
+    "phonetic": "[ʎə·pə·ˈfils] m. i f.",
+    "intro": "Sóc un",
+    "tagline": "això no, això tampoc",
+    "def1": "Persona molt primmirada amb el menjar.",
+    "def2": "Qui sempre troba un però, del cafè a l'aire condicionat.",
+    "summary": "Qui sempre troba un però, del cafè a l'aire condicionat.",
+    "description": null,
+    "metaDescription": "Tassa «Sóc un llepafils»: qui sempre troba un però, del cafè a l'aire condicionat. Paraula catalana amb definició de diccionari.",
+    "images": {
+      "front": "/images/mug-llepafils-front.jpg",
+      "back": "/images/mug-llepafils-back.jpg",
+      "width": 750,
+      "height": 880
+    },
+    "alt": {
+      "front": "Tassa blanca amb la frase «Sóc un llepafils» i una il·lustració",
+      "back": "Revers de la tassa amb la definició de diccionari de «llepafils»"
+    },
+    "related": [
+      "cagadubtes",
+      "escalfacadires"
+    ]
+  },
+  {
+    "slug": "manefla",
+    "name": "Manefla",
+    "category": "caracter",
+    "new": true,
+    "phonetic": "[mə·ˈnɛ·flə] m. i f. col·loq.",
+    "intro": "Sóc un",
+    "tagline": "sap el que passa abans que passi",
+    "def1": "Persona que es fica en els afers dels altres.",
+    "def2": "Col·lega que s'assabenta de tots els xafardeigs de l'oficina abans que ningú.",
+    "summary": "Col·lega que s'assabenta de tots els xafardeigs de l'oficina abans que ningú.",
+    "description": null,
+    "metaDescription": "Tassa «Sóc un manefla»: col·lega que s'assabenta de tots els xafardeigs de l'oficina abans que ningú. Paraula catalana amb definició de diccionari.",
+    "images": {
+      "front": "/images/mug-manefla-front.jpg",
+      "back": "/images/mug-manefla-back.jpg",
+      "width": 750,
+      "height": 880
+    },
+    "alt": {
+      "front": "Tassa blanca amb la frase «Sóc un manefla» i una il·lustració",
+      "back": "Revers de la tassa amb la definició de diccionari de «manefla»"
+    },
+    "related": [
+      "corco",
+      "bocamoll"
+    ]
+  },
+  {
+    "slug": "moixaina",
+    "name": "Moixaina",
+    "category": "amor",
+    "new": true,
+    "phonetic": "[mu·ˈʃaj·nə] f.",
+    "intro": "Tu ets la meva",
+    "tagline": "carícia tendra, amanyac",
+    "def1": "Carícia tendra, amanyac.",
+    "def2": "Persona que fa més suau qualsevol dia.",
+    "summary": "Persona que fa més suau qualsevol dia.",
+    "description": null,
+    "metaDescription": "Tassa «Tu ets la meva moixaina»: persona que fa més suau qualsevol dia. Paraula catalana amb definició de diccionari.",
+    "images": {
+      "front": "/images/mug-moixaina-front.jpg",
+      "back": "/images/mug-moixaina-back.jpg",
+      "width": 750,
+      "height": 880
+    },
+    "alt": {
+      "front": "Tassa blanca amb la frase «Tu ets la meva moixaina» i una il·lustració",
+      "back": "Revers de la tassa amb la definició de diccionari de «moixaina»"
+    },
+    "related": [
+      "deler",
+      "rosada"
+    ]
+  },
+  {
+    "slug": "niu",
+    "name": "Niu",
+    "category": "amor",
+    "new": true,
+    "phonetic": "[ˈniw] m.",
+    "intro": "Tu ets el meu",
+    "tagline": "lloc càlid on sempre es pot tornar",
+    "def1": "Recer que fan els ocells per covar i criar els petits.",
+    "def2": "Casa càlida on tota la família torna i on sempre hi ha lloc per a tu.",
+    "summary": "Casa càlida on tota la família torna i on sempre hi ha lloc per a tu.",
+    "description": null,
+    "metaDescription": "Tassa «Tu ets el meu niu»: casa càlida on tota la família torna i on sempre hi ha lloc per a tu. Paraula catalana amb definició de diccionari.",
+    "images": {
+      "front": "/images/mug-niu-front.jpg",
+      "back": "/images/mug-niu-back.jpg",
+      "width": 750,
+      "height": 880
+    },
+    "alt": {
+      "front": "Tassa blanca amb la frase «Tu ets el meu niu» i una il·lustració",
+      "back": "Revers de la tassa amb la definició de diccionari de «niu»"
+    },
+    "related": [
+      "arrel",
+      "aixopluc"
+    ]
+  },
+  {
+    "slug": "pocatraca",
+    "name": "Pocatraça",
+    "category": "caracter",
+    "new": true,
+    "phonetic": "[ˌpo·kə·ˈtra·sə] m. i f.",
+    "intro": "Sóc un",
+    "tagline": "si es pot vessar, ho vessaré",
+    "def1": "Persona que té poca habilitat amb les mans.",
+    "def2": "Qui encalla la impressora només de mirar-la.",
+    "summary": "Qui encalla la impressora només de mirar-la.",
+    "description": null,
+    "metaDescription": "Tassa «Sóc un pocatraça»: qui encalla la impressora només de mirar-la. Paraula catalana amb definició de diccionari.",
+    "images": {
+      "front": "/images/mug-pocatraca-front.jpg",
+      "back": "/images/mug-pocatraca-back.jpg",
+      "width": 750,
+      "height": 880
+    },
+    "alt": {
+      "front": "Tassa blanca amb la frase «Sóc un pocatraça» i una il·lustració",
+      "back": "Revers de la tassa amb la definició de diccionari de «pocatraça»"
+    },
+    "related": [
+      "escalfacadires",
+      "cagadubtes"
+    ]
+  },
+  {
+    "slug": "rosada",
+    "name": "Rosada",
+    "category": "amor",
+    "new": true,
+    "phonetic": "[ru·ˈza·ðə] f.",
+    "intro": "Tu ets la meva",
+    "tagline": "gotetes que la matinada deixa sobre l'herba",
+    "def1": "Gotes d'aigua que es formen de matinada sobre l'herba.",
+    "def2": "Persona que fa que cada matí sembli nou.",
+    "summary": "Persona que fa que cada matí sembli nou.",
+    "description": null,
+    "metaDescription": "Tassa «Tu ets la meva rosada»: persona que fa que cada matí sembli nou. Paraula catalana amb definició de diccionari.",
+    "images": {
+      "front": "/images/mug-rosada-front.jpg",
+      "back": "/images/mug-rosada-back.jpg",
+      "width": 750,
+      "height": 880
+    },
+    "alt": {
+      "front": "Tassa blanca amb la frase «Tu ets la meva rosada» i una il·lustració",
+      "back": "Revers de la tassa amb la definició de diccionari de «rosada»"
+    },
+    "related": [
+      "moixaina",
+      "ventijol"
+    ]
+  },
+  {
+    "slug": "solell",
+    "name": "Solell",
+    "category": "amor",
+    "new": true,
+    "phonetic": "[su·ˈleʎ] m.",
+    "intro": "Tu ets el meu",
+    "tagline": "racó on toca el sol de ple",
+    "def1": "Lloc on toca molt el sol.",
+    "def2": "Persona al costat de la qual sempre s'hi està bé, faci el temps que faci.",
+    "summary": "Persona al costat de la qual sempre s'hi està bé, faci el temps que faci.",
+    "description": null,
+    "metaDescription": "Tassa «Tu ets el meu solell»: persona al costat de la qual sempre s'hi està bé, faci el temps que faci. Paraula catalana amb definició de diccionari.",
+    "images": {
+      "front": "/images/mug-solell-front.jpg",
+      "back": "/images/mug-solell-back.jpg",
+      "width": 750,
+      "height": 880
+    },
+    "alt": {
+      "front": "Tassa blanca amb la frase «Tu ets el meu solell» i una il·lustració",
+      "back": "Revers de la tassa amb la definició de diccionari de «solell»"
+    },
+    "related": [
+      "bonanca",
+      "ventijol"
+    ]
+  },
+  {
+    "slug": "ventijol",
+    "name": "Ventijol",
+    "category": "amor",
+    "new": true,
+    "phonetic": "[bən·ti·ˈʒɔl] m.",
+    "intro": "Tu ets el meu",
+    "tagline": "vent suau i agradable",
+    "def1": "Vent suau i agradable.",
+    "def2": "Persona que fa més lleugers els dies feixucs.",
+    "summary": "Persona que fa més lleugers els dies feixucs.",
+    "description": null,
+    "metaDescription": "Tassa «Tu ets el meu ventijol»: persona que fa més lleugers els dies feixucs. Paraula catalana amb definició de diccionari.",
+    "images": {
+      "front": "/images/mug-ventijol-front.jpg",
+      "back": "/images/mug-ventijol-back.jpg",
+      "width": 750,
+      "height": 880
+    },
+    "alt": {
+      "front": "Tassa blanca amb la frase «Tu ets el meu ventijol» i una il·lustració",
+      "back": "Revers de la tassa amb la definició de diccionari de «ventijol»"
+    },
+    "related": [
+      "rosada",
+      "solell"
+    ]
+  },
+  {
+    "slug": "arsenal-insults",
+    "name": "L'Arsenal d'Insults",
+    "category": "insults",
+    "new": false,
+    "phonetic": null,
+    "intro": null,
+    "tagline": null,
+    "def1": null,
+    "def2": null,
+    "summary": "Setze insults catalans repartits pel davant i el darrere d'una sola tassa.",
+    "description": [
+      "Per a qui considera que un sol insult mai és suficient. Setze paraules catalanes ben triades —capsigrany, llepaculs, pixapins, cagadubtes, bufanúvols, matusser, ganàpia, dropo, talòs, bocamoll, estaquirot, mitja merda, broc gros, cap de fava, poca-solta i pardal d'alt riu— repartides pel davant i el darrere de la tassa en un disseny tipogràfic acolorit.",
+      "Gira-la i descobreix-les totes."
+    ],
+    "metaDescription": "Tassa amb setze insults catalans ben triats, repartits pel davant i el darrere.",
+    "images": {
+      "front": "/images/mug-insults-front.jpg",
+      "back": "/images/mug-insults-back.jpg",
+      "width": 567,
+      "height": 656
+    },
+    "alt": {
+      "front": "Tassa blanca amb interior vermell i un núvol de paraules: cagadubtes, bufanúvols, dropo, capsigrany, estaquirot",
+      "back": "Revers de la tassa amb més insults catalans: llepaculs, pixapins, talòs, cap de fava, broc gros"
+    },
+    "related": [
+      "cagadubtes",
+      "manefla"
+    ]
+  }
+]

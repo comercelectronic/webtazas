@@ -1,10 +1,14 @@
 {
-  "name": "sense-sucre",
+  "name": "tassa-de-mots",
   "private": true,
   "version": "1.0.0",
-  "description": "Tasses catalanes Sense Sucre — lloc web i funcions de pagament (Netlify Functions + Stripe).",
+  "description": "Tassa de Mots — botiga en línia (pàgines generades des de data/ + Netlify Functions).",
   "dependencies": {
     "@netlify/blobs": "^11.1.6",
     "stripe": "^16.0.0"
+  },
+  "scripts": {
+    "build": "node scripts/build.js",
+    "test": "node --test tests/functions.test.js"
   }
 }
