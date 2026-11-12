@@ -1149,12 +1149,28 @@ body.intro-active {
   margin-bottom: 1rem;
 }
 
+.pd-intro-line {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.1rem;
+  color: var(--color-primary);
+  margin-bottom: 0.2rem;
+}
+
 .pd-title {
   font-family: var(--font-display);
   font-weight: 400;
   font-size: clamp(1.8rem, 4vw, 2.6rem);
   margin-bottom: 0.6rem;
   color: var(--color-dark);
+}
+
+.pd-tagline {
+  font-style: italic;
+  color: #7a6f63;
+  font-size: 0.95rem;
+  margin: -0.3rem 0 1rem;
 }
 
 .pd-info .rating {
