@@ -60,11 +60,11 @@ test('checkout: cobra el preu únic de data/site.json i l\'enviament configurat'
   const res = await fn('create-checkout-session')(ev('POST', { items: [{ id: 'aixopluc', qty: 2 }, { id: 'niu', qty: 1 }, { id: 'aixopluc', qty: 1 }] }));
   assert.strictEqual(res.statusCode, 200);
   const s = stripeSessions[0];
-  assert.strictEqual(site.unitPriceCents, 795);
-  assert.deepStrictEqual(s.line_items.map((l) => [l.quantity, l.price_data.unit_amount]), [[3, 795], [1, 795]]);
+  assert.strictEqual(site.unitPriceCents, 595);
+  assert.deepStrictEqual(s.line_items.map((l) => [l.quantity, l.price_data.unit_amount]), [[3, 595], [1, 595]]);
   assert.strictEqual(s.shipping_options[0].shipping_rate_data.fixed_amount.amount, site.shipping.costCents);
   const total = s.line_items.reduce((t, l) => t + l.quantity * l.price_data.unit_amount, 0) + site.shipping.costCents;
-  assert.strictEqual(total, 4 * 795 + 495);
+  assert.strictEqual(total, 4 * 595 + 495);
   assert.strictEqual(s.metadata.items, 'aixopluc:3,niu:1');
   assert.match(s.success_url, /^https:\/\/botiga\.test\/gracies\//);
 });

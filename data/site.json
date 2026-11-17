@@ -8,7 +8,7 @@
     "version": "2026-11",
     "text": "Vull rebre per correu electrònic la newsletter de Tassa de Mots amb novetats, nous dissenys, ofertes i descomptes. Sé que em puc donar de baixa en qualsevol moment."
   },
-  "unitPriceCents": 795,
+  "unitPriceCents": 595,
   "currency": "EUR",
   "maxQtyPerItem": 20,
   "shipping": {
@@ -62,8 +62,8 @@
   "packs": [
     {
       "id": "casa",
-      "name": "Per a la família",
-      "text": "Tres paraules per a la gent que t'ha vist créixer.",
+      "name": "Pack Família",
+      "text": "Per a la gent que t'ha vist créixer i que sempre és casa.",
       "slugs": [
         "niu",
         "arrel",
@@ -72,8 +72,8 @@
     },
     {
       "id": "parella",
-      "name": "Per a la parella",
-      "text": "Una per a cadascú, per al cafè de cada matí.",
+      "name": "Pack Parella",
+      "text": "Una per a cadascú. Per al cafè de cada matí, junts.",
       "slugs": [
         "deler",
         "caliu"
@@ -81,8 +81,8 @@
     },
     {
       "id": "feina",
-      "name": "Per a la feina",
-      "text": "Per a aquell company que tots coneixem (o per a tu).",
+      "name": "Pack Feina",
+      "text": "Per a aquell company que tots coneixem. O per a tu, que ja ens entenem.",
       "slugs": [
         "escalfacadires",
         "manefla",
@@ -91,7 +91,7 @@
     },
     {
       "id": "cafe",
-      "name": "Per als addictes al cafè",
+      "name": "Pack Cafè",
       "text": "Tres maneres de dir que, sense cafè, millor no parlar.",
       "slugs": [
         "cafe-sol",
@@ -128,6 +128,49 @@
       "singular": "Frase amb humor",
       "text": "Jocs de paraules i frases enginyoses per començar el dia amb un somriure.",
       "cover": "cafe-sol"
+    }
+  ],
+  "recommender": [
+    {
+      "id": "estimes",
+      "label": "Per a algú que estimes",
+      "categories": [
+        "amor"
+      ],
+      "tags": []
+    },
+    {
+      "id": "humor",
+      "label": "Per a algú amb molt d'humor",
+      "categories": [
+        "humor"
+      ],
+      "tags": []
+    },
+    {
+      "id": "caracter",
+      "label": "Per a algú amb caràcter",
+      "categories": [
+        "caracter",
+        "insults"
+      ],
+      "tags": []
+    },
+    {
+      "id": "cafe",
+      "label": "Per a un amant del cafè",
+      "categories": [],
+      "tags": [
+        "cafe"
+      ]
+    },
+    {
+      "id": "especial",
+      "label": "Per a algú especial",
+      "categories": [],
+      "tags": [
+        "especial"
+      ]
     }
   ]
 }

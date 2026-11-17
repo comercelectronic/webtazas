@@ -63,12 +63,13 @@ function product(p) {
 <div class="container">${breadcrumb(crumbs)}</div>
 <section class="product container">
   <div class="gallery" data-gallery>
-    <div class="gallery__main">
-      ${productImg(p, 'front', { eager: true, cls: 'gallery__img' })}
+    <div class="gallery__track" data-gallery-track tabindex="0" role="region" aria-label="Fotos de la tassa (llisca per veure-les totes)">
+      <figure class="gallery__slide">${productImg(p, 'front', { eager: true, cls: 'gallery__img' })}<figcaption class="gallery__label">${views[0]}</figcaption></figure>
+      <figure class="gallery__slide">${productImg(p, 'back', { cls: 'gallery__img' })}<figcaption class="gallery__label">${views[1]}</figcaption></figure>
     </div>
-    <div class="gallery__thumbs" role="group" aria-label="Fotos de la tassa">
-      <button type="button" class="gallery__thumb is-active" aria-pressed="true" data-src="${p.images.front}" data-alt="${esc(p.alt.front)}">${productImg(p, 'front', { alt: '' })}<span>${views[0]}</span></button>
-      <button type="button" class="gallery__thumb" aria-pressed="false" data-src="${p.images.back}" data-alt="${esc(p.alt.back)}">${productImg(p, 'back', { alt: '' })}<span>${views[1]}</span></button>
+    <div class="gallery__thumbs" role="group" aria-label="Tria la foto">
+      <button type="button" class="gallery__thumb is-active" aria-pressed="true" data-slide="0">${productImg(p, 'front', { alt: '' })}<span>${views[0]}</span></button>
+      <button type="button" class="gallery__thumb" aria-pressed="false" data-slide="1">${productImg(p, 'back', { alt: '' })}<span>${views[1]}</span></button>
     </div>
   </div>
 
@@ -103,7 +104,7 @@ function product(p) {
       <details open>
         <summary>Característiques</summary>
         ${specs()}
-        ${p.sides === 1 ? '' : '<p>Disseny imprès al davant i al darrere de la tassa.</p>'}
+        <p>${p.sides === 1 ? 'Missatge i il·lustració originals de Tassa de Mots.' : 'Disseny imprès al davant i al darrere de la tassa: el missatge i la definició.'}</p>
       </details>
       <details>
         <summary>Enviament</summary>

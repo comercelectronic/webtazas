@@ -29,6 +29,9 @@
     "related": [
       "tallat",
       "sense-cafe-no-soc-persona"
+    ],
+    "tags": [
+      "cafe"
     ]
   },
   {
@@ -61,6 +64,9 @@
     "related": [
       "cafe-sol",
       "mala-llet"
+    ],
+    "tags": [
+      "cafe"
     ]
   },
   {
@@ -93,6 +99,9 @@
     "related": [
       "tallat",
       "mes-cara-que-esquena"
+    ],
+    "tags": [
+      "cafe"
     ]
   },
   {
@@ -125,6 +134,9 @@
     "related": [
       "cafe-sol",
       "coses-que-perden-el-fil"
+    ],
+    "tags": [
+      "cafe"
     ]
   },
   {
@@ -157,7 +169,8 @@
     "related": [
       "coses-que-perden-el-fil",
       "mala-llet"
-    ]
+    ],
+    "tags": []
   },
   {
     "slug": "coses-que-perden-el-fil",
@@ -189,7 +202,8 @@
     "related": [
       "coses-que-s-escalfen-de-seguida",
       "coses-que-no-serveixen-per-a-res"
-    ]
+    ],
+    "tags": []
   },
   {
     "slug": "coses-que-no-serveixen-per-a-res",
@@ -221,7 +235,8 @@
     "related": [
       "coses-que-perden-el-fil",
       "coses-que-es-veuen-millor-de-lluny"
-    ]
+    ],
+    "tags": []
   },
   {
     "slug": "coses-que-es-veuen-millor-de-lluny",
@@ -253,7 +268,8 @@
     "related": [
       "coses-que-no-serveixen-per-a-res",
       "mes-cara-que-esquena"
-    ]
+    ],
+    "tags": []
   },
   {
     "slug": "tros-de-pa",
@@ -285,6 +301,9 @@
     "related": [
       "aixopluc",
       "niu"
+    ],
+    "tags": [
+      "especial"
     ]
   },
   {
@@ -317,7 +336,8 @@
     "related": [
       "mes-pesat-que-una-vaca-en-bracos",
       "arsenal-insults"
-    ]
+    ],
+    "tags": []
   },
   {
     "slug": "mes-pesat-que-una-vaca-en-bracos",
@@ -349,7 +369,8 @@
     "related": [
       "mes-inutil-que-un-cendrer-de-moto",
       "mes-cara-que-esquena"
-    ]
+    ],
+    "tags": []
   },
   {
     "slug": "mes-cara-que-esquena",
@@ -381,7 +402,8 @@
     "related": [
       "mes-pesat-que-una-vaca-en-bracos",
       "mala-llet"
-    ]
+    ],
+    "tags": []
   },
   {
     "slug": "aixopluc",
@@ -409,6 +431,9 @@
     "related": [
       "arrel",
       "niu"
+    ],
+    "tags": [
+      "especial"
     ]
   },
   {
@@ -437,7 +462,8 @@
     "related": [
       "niu",
       "caliu"
-    ]
+    ],
+    "tags": []
   },
   {
     "slug": "bocamoll",
@@ -465,7 +491,8 @@
     "related": [
       "manefla",
       "corco"
-    ]
+    ],
+    "tags": []
   },
   {
     "slug": "bonanca",
@@ -493,6 +520,9 @@
     "related": [
       "caliu",
       "solell"
+    ],
+    "tags": [
+      "especial"
     ]
   },
   {
@@ -521,7 +551,8 @@
     "related": [
       "pocatraca",
       "llepafils"
-    ]
+    ],
+    "tags": []
   },
   {
     "slug": "caliu",
@@ -549,6 +580,9 @@
     "related": [
       "bonanca",
       "deler"
+    ],
+    "tags": [
+      "especial"
     ]
   },
   {
@@ -577,7 +611,8 @@
     "related": [
       "manefla",
       "bocamoll"
-    ]
+    ],
+    "tags": []
   },
   {
     "slug": "deler",
@@ -605,7 +640,8 @@
     "related": [
       "caliu",
       "moixaina"
-    ]
+    ],
+    "tags": []
   },
   {
     "slug": "escalfacadires",
@@ -633,7 +669,8 @@
     "related": [
       "pocatraca",
       "llepafils"
-    ]
+    ],
+    "tags": []
   },
   {
     "slug": "llepafils",
@@ -661,7 +698,8 @@
     "related": [
       "cagadubtes",
       "escalfacadires"
-    ]
+    ],
+    "tags": []
   },
   {
     "slug": "manefla",
@@ -689,7 +727,8 @@
     "related": [
       "corco",
       "bocamoll"
-    ]
+    ],
+    "tags": []
   },
   {
     "slug": "moixaina",
@@ -717,7 +756,8 @@
     "related": [
       "deler",
       "rosada"
-    ]
+    ],
+    "tags": []
   },
   {
     "slug": "niu",
@@ -745,6 +785,9 @@
     "related": [
       "arrel",
       "aixopluc"
+    ],
+    "tags": [
+      "especial"
     ]
   },
   {
@@ -773,7 +816,8 @@
     "related": [
       "escalfacadires",
       "cagadubtes"
-    ]
+    ],
+    "tags": []
   },
   {
     "slug": "rosada",
@@ -801,7 +845,8 @@
     "related": [
       "moixaina",
       "ventijol"
-    ]
+    ],
+    "tags": []
   },
   {
     "slug": "solell",
@@ -829,6 +874,9 @@
     "related": [
       "bonanca",
       "ventijol"
+    ],
+    "tags": [
+      "especial"
     ]
   },
   {
@@ -857,7 +905,8 @@
     "related": [
       "rosada",
       "solell"
-    ]
+    ],
+    "tags": []
   },
   {
     "slug": "arsenal-insults",
@@ -888,6 +937,7 @@
     "related": [
       "cagadubtes",
       "manefla"
-    ]
+    ],
+    "tags": []
   }
 ]

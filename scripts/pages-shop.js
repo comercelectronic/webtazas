@@ -4,9 +4,10 @@ const { productCard, productGrid, newsletterForm, sectionHead, trustList, breadc
 const newProducts = catalog.filter((p) => p.new);
 
 const FAQ = [
-  ['Quant costa cada tassa?', `Totes les tasses costen ${PRICE}. L'enviament costa ${SHIPPING} per comanda i el veuràs a la cistella abans de pagar.`],
+  ['Quant costa cada tassa?', `Totes les tasses costen ${PRICE}, sigui quina sigui la paraula. Els packs no tenen recàrrecs: pagues ${PRICE} per cada tassa que inclouen.`],
+  ['Quant costa l\'enviament?', `${SHIPPING} per comanda, tant si compres una tassa com si en compres deu. El veuràs a la cistella abans de pagar.`],
   ['Quant triga a arribar?', `El termini estimat és de ${DELIVERY} des del pagament. Enviem a ${site.shipping.countriesLabel}.`],
-  ['Puc tornar una tassa?', 'Sí. Tens 14 dies naturals des que la reps per desistir de la compra, sense haver de donar explicacions.'],
+  ['Puc tornar una tassa?', 'Sí. Tens 14 dies naturals des que la reps per desistir de la compra, sense haver de donar explicacions. A la pàgina d\'enviaments i devolucions t\'expliquem com fer-ho.'],
   ['Com es paga?', 'Amb targeta, a la pàgina de pagament segur de Stripe. Nosaltres no veiem ni guardem les dades de la teva targeta.'],
   ['Les opinions que publiqueu són reals?', "Sí. Només publiquem valoracions que ens envien persones a través de la web, i les revisem una a una abans de publicar-les. No n'inventem ni en paguem."],
 ];
@@ -14,18 +15,38 @@ const FAQ = [
 function packCard(pack) {
   const items = pack.slugs.map((s) => BY_SLUG[s]);
   const total = euro(site.unitPriceCents * items.length);
-  return `<article class="pack">
-  <div class="pack__media">${items.map((p) => `<a href="${productUrl(p)}" tabindex="-1" aria-hidden="true">${productImg(p, 'front', { alt: '' })}</a>`).join('')}</div>
+  return `<article class="pack pack--${pack.id}">
+  <div class="pack__media" aria-hidden="true">${items.map((p) => `<span class="pack__mug">${productImg(p, 'front', { alt: '' })}</span>`).join('')}</div>
   <div class="pack__body">
+    <p class="pack__count">${items.length} tasses</p>
     <h3 class="pack__title">${esc(pack.name)}</h3>
     <p class="pack__text">${esc(pack.text)}</p>
-    <p class="pack__items">${items.map((p) => `<a href="${productUrl(p)}">${esc(p.name)}</a>`).join(' · ')}</p>
+    <p class="pack__items">${items.map((p) => `<a href="${productUrl(p)}">${esc(p.name)}</a>`).join('<span aria-hidden="true"> · </span>')}</p>
     <div class="pack__foot">
-      <span class="price">${total}<small> · ${items.length} tasses</small></span>
-      <button type="button" class="btn btn--primary" data-add-pack="${pack.slugs.join(',')}">Afegeix-les totes</button>
+      <span class="price price--lg">${total}</span>
+      <button type="button" class="btn btn--primary" data-add-pack="${pack.slugs.join(',')}">Afegeix el pack a la cistella<span class="sr-only"> (${esc(pack.name)}, ${total})</span></button>
     </div>
   </div>
 </article>`;
+}
+
+function recommenderSlugs(r) {
+  return catalog.filter((p) => r.categories.includes(p.category) || (p.tags || []).some((t) => r.tags.includes(t))).map((p) => p.slug);
+}
+
+function recommender() {
+  const opts = site.recommender.map((r) => ({ ...r, slugs: recommenderSlugs(r) }));
+  const first = opts[0];
+  return `<section class="section finder" id="recomanador" aria-labelledby="finder-title">
+  <div class="container">
+    ${sectionHead('Recomanador', 'Troba la tassa perfecta', 'Per a qui busques una tassa?', { id: 'finder-title' })}
+    <div class="finder__options" role="group" aria-label="Per a qui busques una tassa?">
+      ${opts.map((r, i) => `<button type="button" class="finder__option" aria-pressed="${i === 0}" data-finder-option="${r.id}" data-slugs="${r.slugs.join(',')}">${esc(r.label)}</button>`).join('')}
+    </div>
+    <p class="finder__status" role="status" aria-live="polite" data-finder-status>${first.slugs.length} tasses ${esc(first.label.toLowerCase())}</p>
+    <div class="grid finder__results" data-finder-results>${first.slugs.map((s) => productCard(BY_SLUG[s])).join('')}</div>
+  </div>
+</section>`;
 }
 
 function contactSection() {
@@ -50,27 +71,26 @@ function contactSection() {
 }
 
 function home() {
-  const hero = [BY_SLUG.aixopluc, BY_SLUG.niu, BY_SLUG.cagadubtes];
-  const featured = ['cafe-sol', 'tros-de-pa', 'mes-cara-que-esquena', 'sense-cafe-no-soc-persona', 'coses-que-es-veuen-millor-de-lluny', 'mala-llet', 'mes-inutil-que-un-cendrer-de-moto', 'coses-que-no-serveixen-per-a-res'].map((s) => BY_SLUG[s]);
+  const heroMug = BY_SLUG.aixopluc;
   const explain = BY_SLUG.caliu;
+  const featured = newProducts.slice(0, 8);
 
   const main = `
 <section class="hero" aria-labelledby="hero-title">
   <div class="container hero__grid">
     <div class="hero__copy">
-      <p class="eyebrow">Novetat · ${newProducts.length} dissenys nous</p>
-      <h1 class="hero__title" id="hero-title">Regala una paraula que digui <em>exactament</em> el que sents</h1>
-      <p class="hero__lead">Tasses amb paraules i expressions catalanes: per dir t'estimo, per riure's de les manies de cadascú o per començar el dia amb humor. Totes a <strong>${PRICE}</strong>.</p>
+      <p class="hero__badge">Totes les tasses a <strong>${PRICE}</strong></p>
+      <h1 class="hero__title" id="hero-title">Paraules que es converteixen en <em>regals</em>.</h1>
+      <p class="hero__lead">Tasses amb paraules i expressions catalanes. Per dir t'estimo, per riure, per sorprendre o per començar el dia amb un somriure.</p>
       <div class="hero__ctas">
-        <a class="btn btn--primary btn--lg" href="/tasses/">Veure totes les tasses ${icon('arrow')}</a>
-        <a class="btn btn--ghost btn--lg" href="#categories">Troba la paraula per a algú</a>
+        <a class="btn btn--primary btn--lg" href="/tasses/">Descobreix les tasses ${icon('arrow')}</a>
+        <a class="btn btn--ghost btn--lg" href="#recomanador">Troba el regal perfecte</a>
       </div>
       ${trustList('trust--inline')}
     </div>
     <div class="hero__media">
-      <a class="hero__photo hero__photo--main" href="${productUrl(hero[0])}">${productImg(hero[0], 'front', { eager: true })}<span class="sr-only">Veure la tassa ${esc(hero[0].name)}</span></a>
-      <a class="hero__photo hero__photo--a" href="${productUrl(hero[1])}" tabindex="-1" aria-hidden="true">${productImg(hero[1], 'back', { alt: '' })}</a>
-      <a class="hero__photo hero__photo--b" href="${productUrl(hero[2])}" tabindex="-1" aria-hidden="true">${productImg(hero[2], 'front', { alt: '' })}</a>
+      <a class="hero__photo" href="${productUrl(heroMug)}">${productImg(heroMug, 'front', { eager: true, alt: `Tassa «${heroMug.intro} ${heroMug.name.toLowerCase()}», vista de davant` })}<span class="sr-only">Veure la tassa ${esc(heroMug.name)}</span></a>
+      <figure class="hero__inset" aria-hidden="true">${productImg(heroMug, 'back', { alt: '' })}<figcaption>Al darrere, la definició</figcaption></figure>
     </div>
   </div>
 </section>
@@ -78,60 +98,66 @@ function home() {
 <section class="section explain" aria-labelledby="explain-title">
   <div class="container explain__grid">
     <figure class="explain__pair">
-      <div class="explain__side">${productImg(explain, 'front', { alt: `Davant de la tassa: «${explain.intro} ${explain.name.toLowerCase()}»` })}<figcaption><strong>Davant</strong> El missatge</figcaption></div>
-      <div class="explain__side">${productImg(explain, 'back', { alt: `Darrere de la tassa: definició de «${explain.name.toLowerCase()}»` })}<figcaption><strong>Darrere</strong> La definició</figcaption></div>
+      <div class="explain__side">${productImg(explain, 'front', { alt: `Davant de la tassa: «${explain.intro} ${explain.name.toLowerCase()}»` })}<figcaption><strong>Davant</strong> El missatge, per a qui la rep</figcaption></div>
+      <div class="explain__side">${productImg(explain, 'back', { alt: `Darrere de la tassa: definició de «${explain.name.toLowerCase()}»` })}<figcaption><strong>Darrere</strong> La definició, per entendre-ho tot</figcaption></div>
     </figure>
     <div>
-      ${sectionHead('Què fa diferent una tassa de Mots', 'Una paraula, dues definicions', '', { id: 'explain-title' })}
+      ${sectionHead('Què fa diferent una Tassa de Mots', 'Una paraula, dues definicions.', '', { id: 'explain-title' })}
       <ol class="steps">
-        <li><span class="steps__n">1</span><div><h3>Paraules que gairebé ja no es diuen</h3><p>Caliu, aixopluc, bocamoll, llepafils… Paraules catalanes que es mereixen una segona vida.</p></div></li>
-        <li><span class="steps__n">2</span><div><h3>La del diccionari i la teva</h3><p>Al darrere, la definició de sempre i una de nova, pensada per a una persona.</p></div></li>
-        <li><span class="steps__n">3</span><div><h3>Pensades per regalar</h3><p>Per dir «tu ets el meu aixopluc» sense haver-ho de dir en veu alta. O per confessar que ets un cagadubtes.</p></div></li>
+        <li><span class="steps__n">1</span><div><h3>Paraules catalanes que es mereixen una segona vida</h3><p>Caliu, aixopluc, bocamoll, llepafils… Paraules i expressions de sempre que diuen molt amb molt poc.</p></div></li>
+        <li><span class="steps__n">2</span><div><h3>Una definició de diccionari i una amb personalitat</h3><p>La del diccionari, per si de cas. I una de nostra, pensada per a la persona que tindrà la tassa a les mans.</p></div></li>
+        <li><span class="steps__n">3</span><div><h3>Un regal que explica alguna cosa sense haver de dir-la</h3><p>Per dir «tu ets el meu caliu» sense posar-te vermell. O per confessar, amb tota la calma, que ets un cagadubtes.</p></div></li>
       </ol>
     </div>
   </div>
 </section>
 
-<section class="section" id="categories" aria-labelledby="cat-title">
+<section class="section section--white" id="categories" aria-labelledby="cat-title">
   <div class="container">
-    ${sectionHead('Categories', 'Per a qui és la tassa?', '', { id: 'cat-title' })}
+    ${sectionHead('Categories', 'Quina paraula busques?', '', { id: 'cat-title' })}
     <div class="categories">
       ${CATEGORIES.map((c) => `<a class="category category--${c.id}" href="${c.path}">
         ${productImg(BY_SLUG[c.cover], 'front', { alt: '' })}
-        <span class="category__body"><span class="category__name">${esc(c.name)}</span><span class="category__text">${esc(c.text)}</span><span class="category__count">${c.products.length} ${c.products.length === 1 ? 'tassa' : 'tasses'} ${icon('arrow')}</span></span>
+        <span class="category__body"><span class="category__name">${esc(c.name)}</span><span class="category__text">${esc(c.text)}</span><span class="category__count">Veure les ${c.products.length} ${c.products.length === 1 ? 'tassa' : 'tasses'} ${icon('arrow')}</span></span>
       </a>`).join('')}
     </div>
   </div>
 </section>
 
-<section class="section section--tint" aria-labelledby="new-title">
+<section class="section" aria-labelledby="new-title">
   <div class="container">
-    ${sectionHead('Novetats', 'Acabades d\'arribar', `${newProducts.length} dissenys nous: frases enginyoses, expressions de tota la vida i un tros de pa. Totes a ${PRICE}.`, { id: 'new-title' })}
+    ${sectionHead('Novetats', 'Acabades d\'arribar.', `Frases enginyoses, expressions de tota la vida i un tros de pa. Totes a ${PRICE}.`, { id: 'new-title' })}
     ${productGrid(featured)}
     <p class="section-cta"><a class="btn btn--ghost btn--lg" href="/tasses/">Veure les ${catalog.length} tasses ${icon('arrow')}</a></p>
   </div>
 </section>
 
-<section class="section" aria-labelledby="best-title" data-bestsellers hidden>
+<section class="section section--white" aria-labelledby="best-title" data-bestsellers hidden>
   <div class="container">
-    ${sectionHead('Els més venuts', 'Les que més s\'emporten', 'Calculat a partir de les comandes pagades a la botiga.', { id: 'best-title' })}
+    ${sectionHead('Més venudes', 'Les que més s\'emporten.', 'Calculat a partir de les comandes pagades a la botiga.', { id: 'best-title' })}
     <div class="grid" data-bestsellers-grid></div>
   </div>
-  ${catalog.map((p) => `<template data-card-template="${p.slug}">${productCard(p)}</template>`).join('')}
 </section>
+${catalog.map((p) => `<template data-card-template="${p.slug}">${productCard(p)}</template>`).join('')}
 
-<section class="section" id="packs" aria-labelledby="packs-title">
+<section class="section packs-section" id="packs" aria-labelledby="packs-title">
   <div class="container">
-    ${sectionHead('Per regalar', 'Combinacions que funcionen', `Al preu de sempre: ${PRICE} per tassa, sense recàrrecs.`, { id: 'packs-title' })}
+    ${sectionHead('Packs per regalar', 'Un regal, diverses paraules.', 'Hi ha persones que es mereixen més d\'una tassa.', { id: 'packs-title' })}
     <div class="packs">${site.packs.map(packCard).join('')}</div>
+    <p class="packs__note">El preu de cada pack és la suma de les tasses a ${PRICE}. L'enviament (${SHIPPING}) es paga una sola vegada per comanda.</p>
   </div>
 </section>
 
-<section class="section section--tint" aria-labelledby="reviews-title">
+${recommender()}
+
+<section class="section section--white" aria-labelledby="reviews-title">
   <div class="container">
-    ${sectionHead('Opinions', 'El que en diuen', '', { id: 'reviews-title' })}
+    ${sectionHead('Opinions', 'El que en diuen.', '', { id: 'reviews-title' })}
     <div class="latest-reviews" data-latest-reviews>
-      <p class="empty-note">Encara no hi ha opinions publicades. Quan rebis la teva tassa, pots deixar-ne una a la seva fitxa: les llegim totes abans de publicar-les i no n'inventem cap.</p>
+      <div class="empty-note empty-note--invite">
+        <p class="empty-note__title">Encara no hi ha opinions publicades.</p>
+        <p>Si ja tens la teva tassa, ens encantarà saber què en penses. Pots deixar la teva opinió a la fitxa de la tassa: les llegim totes abans de publicar-les i no n'inventem cap.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -147,8 +173,8 @@ function home() {
   <div class="container newsletter-band__inner">
     <div>
       <p class="eyebrow eyebrow--light">Newsletter</p>
-      <h2 class="section-title" id="nl-title">Paraules noves, abans que ningú</h2>
-      <p>T'escriurem quan tinguem nous dissenys, ofertes o descomptes. Res més.</p>
+      <h2 class="section-title" id="nl-title">Paraules noves, abans que ningú.</h2>
+      <p>Subscriu-te i descobreix les noves paraules, dissenys i novetats de Tassa de Mots.</p>
     </div>
     ${newsletterForm('inici', 'home')}
   </div>
@@ -170,8 +196,8 @@ ${contactSection()}`;
 
   return {
     path: '/',
-    title: `${site.brand} · Tasses amb paraules catalanes per regalar`,
-    description: `Tasses amb paraules i expressions catalanes amb humor. Regals originals per a la parella, la família o la feina, a ${PRICE}.`,
+    title: `Tasses amb paraules catalanes per regalar · ${site.brand}`,
+    description: `Tasses originals amb paraules i expressions catalanes: regals en català per a parelles, amics, família o la feina. Totes a ${PRICE}.`,
     jsonld,
     bodyClass: 'page-home',
     main,
