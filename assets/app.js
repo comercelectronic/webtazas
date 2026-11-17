@@ -278,18 +278,65 @@
   if (finder) {
     var finderResults = $('[data-finder-results]', finder);
     var finderStatus = $('[data-finder-status]', finder);
+    var finderMore = $('[data-finder-more]', finder);
+    var finderShow = parseInt(finderResults.getAttribute('data-show'), 10) || 4;
     $$('[data-finder-option]', finder).forEach(function (btn) {
       btn.addEventListener('click', function () {
         $$('[data-finder-option]', finder).forEach(function (b) { b.setAttribute('aria-pressed', String(b === btn)); });
         var slugs = btn.getAttribute('data-slugs').split(',').filter(Boolean);
         var frag = document.createDocumentFragment();
-        slugs.forEach(function (s) {
+        slugs.slice(0, finderShow).forEach(function (s) {
           var tpl = $('template[data-card-template="' + s + '"]');
           if (tpl) frag.appendChild(tpl.content.cloneNode(true));
         });
         finderResults.replaceChildren(frag);
         finderStatus.textContent = slugs.length + ' tasses ' + btn.textContent.toLowerCase();
+        if (finderMore) {
+          finderMore.href = btn.getAttribute('data-href');
+          finderMore.firstChild.textContent = 'Veure-les totes (' + slugs.length + ') ';
+        }
       });
+    });
+  }
+
+  // ---------- Hero: la paraula canvia sola (amb botó per aturar-la) ----------
+  var heroStage = $('[data-hero-words]');
+  if (heroStage) {
+    var heroWords = $$('[data-hero-word]', heroStage);
+    var heroPause = $('[data-hero-pause]', heroStage);
+    var heroIdx = 0;
+    var heroTimer = null;
+    var showWord = function (i) {
+      heroWords.forEach(function (w, j) { w.hidden = i !== j; w.classList.toggle('is-active', i === j); });
+    };
+    var heroStart = function () { heroTimer = setInterval(function () { heroIdx = (heroIdx + 1) % heroWords.length; showWord(heroIdx); }, 4500); };
+    var heroStop = function () { clearInterval(heroTimer); heroTimer = null; };
+    if (heroWords.length > 1 && !reducedMotion) {
+      heroPause.hidden = false;
+      heroStart();
+      heroPause.addEventListener('click', function () {
+        var paused = heroTimer === null;
+        if (paused) heroStart(); else heroStop();
+        heroPause.setAttribute('aria-pressed', String(!paused));
+        heroPause.innerHTML = icon(paused ? 'pause' : 'play') + '<span class="sr-only">' + (paused ? 'Atura' : 'Reprèn') + ' el canvi de paraules</span>';
+      });
+      heroStage.addEventListener('focusin', function (e) { if (heroTimer && e.target !== heroPause) heroPause.click(); });
+    }
+  }
+
+  // ---------- Tassa que gira (davant / darrere) ----------
+  var flipFig = $('[data-flip]');
+  if (flipFig) {
+    var flipBtn = $('[data-flip-toggle]', flipFig);
+    var flipLabel = $('[data-flip-label]', flipFig);
+    var flipImgs = $$('.flip__img', flipFig);
+    flipImgs[1].setAttribute('aria-hidden', 'true');
+    flipBtn.addEventListener('click', function () {
+      var on = flipFig.classList.toggle('is-flipped');
+      flipBtn.setAttribute('aria-pressed', String(on));
+      flipLabel.textContent = on ? 'Darrere: la definició' : 'Davant: el missatge';
+      flipImgs[0].setAttribute('aria-hidden', String(on));
+      flipImgs[1].setAttribute('aria-hidden', String(!on));
     });
   }
 

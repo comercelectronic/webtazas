@@ -17,13 +17,13 @@
 <meta name="theme-color" content="#F4EFE6">
 <link rel="preload" href="/assets/fonts/lora.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/styles.css?v=0db29dba8f">
+<link rel="stylesheet" href="/assets/styles.css?v=30bcf70589">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Tassa de Mots","url":"https://tassademots.cat/","logo":"https://tassademots.cat/favicon.svg"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Tassa de Mots","url":"https://tassademots.cat/","inLanguage":"ca"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Quant costa cada tassa?","acceptedAnswer":{"@type":"Answer","text":"Totes les tasses costen 5,95 €, sigui quina sigui la paraula. Els packs no tenen recàrrecs: pagues 5,95 € per cada tassa que inclouen."}},{"@type":"Question","name":"Quant costa l'enviament?","acceptedAnswer":{"@type":"Answer","text":"4,95 € per comanda, tant si compres una tassa com si en compres deu. El veuràs a la cistella abans de pagar."}},{"@type":"Question","name":"Quant triga a arribar?","acceptedAnswer":{"@type":"Answer","text":"El termini estimat és de 3–7 dies feiners des del pagament. Enviem a Espanya, Andorra, França, Portugal, Itàlia i Alemanya."}},{"@type":"Question","name":"Puc tornar una tassa?","acceptedAnswer":{"@type":"Answer","text":"Sí. Tens 14 dies naturals des que la reps per desistir de la compra, sense haver de donar explicacions. A la pàgina d'enviaments i devolucions t'expliquem com fer-ho."}},{"@type":"Question","name":"Com es paga?","acceptedAnswer":{"@type":"Answer","text":"Amb targeta, a la pàgina de pagament segur de Stripe. Nosaltres no veiem ni guardem les dades de la teva targeta."}},{"@type":"Question","name":"Les opinions que publiqueu són reals?","acceptedAnswer":{"@type":"Answer","text":"Sí. Només publiquem valoracions que ens envien persones a través de la web, i les revisem una a una abans de publicar-les. No n'inventem ni en paguem."}}]}</script>
-<script defer src="/assets/catalog.js?v=0db29dba8f"></script>
-<script defer src="/assets/app.js?v=0db29dba8f"></script>
+<script defer src="/assets/catalog.js?v=30bcf70589"></script>
+<script defer src="/assets/app.js?v=30bcf70589"></script>
 
 </head>
 <body class="page-home">
@@ -49,34 +49,77 @@
 </header>
 <main id="main">
 
-<section class="hero" aria-labelledby="hero-title">
+<section class="hero hero--bold" aria-labelledby="hero-title">
   <div class="container hero__grid">
     <div class="hero__copy">
-      <p class="hero__badge">Totes les tasses a <strong>5,95 €</strong></p>
-      <h1 class="hero__title" id="hero-title">Paraules que es converteixen en <em>regals</em>.</h1>
-      <p class="hero__lead">Tasses amb paraules i expressions catalanes. Per dir t'estimo, per riure, per sorprendre o per començar el dia amb un somriure.</p>
+      <h1 class="hero__title" id="hero-title">Hi ha coses que costen de dir. <em>Per això hi ha tasses.</em></h1>
+      <p class="hero__lead">Paraules i expressions catalanes per regalar: per dir t'estimo, per riure o per començar el dia amb un somriure.</p>
       <div class="hero__ctas">
-        <a class="btn btn--primary btn--lg" href="/tasses/">Descobreix les tasses <svg class="icon " aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow"></use></svg></a>
-        <a class="btn btn--ghost btn--lg" href="#recomanador">Troba el regal perfecte</a>
+        <a class="btn btn--light btn--lg" href="/tasses/">Regala una paraula <svg class="icon " aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow"></use></svg></a>
+        <a class="btn btn--outline-light btn--lg" href="#recomanador">Troba la tassa per a qui vulguis</a>
       </div>
-      <ul class="trust trust--inline">
-  <li><svg class="icon " aria-hidden="true" focusable="false"><use href="/assets/icons.svg#lock"></use></svg><span>Pagament segur amb Stripe</span></li>
-  <li><svg class="icon " aria-hidden="true" focusable="false"><use href="/assets/icons.svg#truck"></use></svg><span>Enviament en 3–7 dies feiners · 4,95 €</span></li>
-  <li><svg class="icon " aria-hidden="true" focusable="false"><use href="/assets/icons.svg#return"></use></svg><span>14 dies per desistir de la compra</span></li>
-</ul>
+      <ul class="hero__trust">
+        <li><svg class="icon " aria-hidden="true" focusable="false"><use href="/assets/icons.svg#lock"></use></svg> Pagament segur amb Stripe</li>
+        <li><svg class="icon " aria-hidden="true" focusable="false"><use href="/assets/icons.svg#truck"></use></svg> Enviament 4,95 €</li>
+        <li><svg class="icon " aria-hidden="true" focusable="false"><use href="/assets/icons.svg#return"></use></svg> 14 dies per desistir</li>
+      </ul>
     </div>
-    <div class="hero__media">
-      <a class="hero__photo" href="/tasses/aixopluc/"><img class="" src="/images/mug-aixopluc-front.jpg" alt="Tassa «Tu ets el meu aixopluc», vista de davant" width="750" height="880" fetchpriority="high" decoding="async"><span class="sr-only">Veure la tassa Aixopluc</span></a>
-      <figure class="hero__inset" aria-hidden="true"><img class="" src="/images/mug-aixopluc-back.jpg" alt="" width="750" height="880" loading="lazy" decoding="async"><figcaption>Al darrere, la definició</figcaption></figure>
+    <div class="hero__stage" data-hero-words>
+      <p class="hero__sticker" aria-label="Totes les tasses a 5,95 €"><span>Totes a</span><strong>5,95 €</strong></p>
+      <div class="hero-word is-active" data-hero-word>
+  <div class="hero-word__card">
+    <p class="hero-word__head"><span class="hero-word__word">aixopluc</span> <span class="hero-word__ipa">[ə·ʃu·ˈpluk] m.</span></p>
+    <ol class="hero-word__defs"><li>Lloc on trobar recer de la pluja i del mal temps.</li><li>Persona amb qui et sents a recer, passi el que passi.</li></ol>
+  </div>
+  <a class="hero-word__mug" href="/tasses/aixopluc/" tabindex="-1" aria-hidden="true"><img class="" src="/images/mug-aixopluc-front.jpg" alt="" width="750" height="880" fetchpriority="high" decoding="async"></a>
+  <p class="hero-word__link"><a href="/tasses/aixopluc/">Veure la tassa «Tu ets el meu aixopluc» <svg class="icon " aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow"></use></svg></a></p>
+</div><div class="hero-word" data-hero-word hidden>
+  <div class="hero-word__card">
+    <p class="hero-word__head"><span class="hero-word__word">cagadubtes</span> <span class="hero-word__ipa">[ˌka·ɣə·ˈðup·təs] m. i f. col·loq.</span></p>
+    <ol class="hero-word__defs"><li>Persona que no s&#39;acaba de decidir mai.</li><li>Qui triga vint minuts a triar l&#39;entrepà i al final demana el mateix de sempre.</li></ol>
+  </div>
+  <a class="hero-word__mug" href="/tasses/cagadubtes/" tabindex="-1" aria-hidden="true"><img class="" src="/images/mug-cagadubtes-front.jpg" alt="" width="750" height="880" loading="lazy" decoding="async"></a>
+  <p class="hero-word__link"><a href="/tasses/cagadubtes/">Veure la tassa «Sóc un cagadubtes» <svg class="icon " aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow"></use></svg></a></p>
+</div><div class="hero-word" data-hero-word hidden>
+  <div class="hero-word__card">
+    <p class="hero-word__head"><span class="hero-word__word">caliu</span> <span class="hero-word__ipa">[kə·ˈliw] m.</span></p>
+    <ol class="hero-word__defs"><li>Brasa colgada sota la cendra que conserva l&#39;escalfor.</li><li>Escalfor afectuosa d&#39;algú que, passi el que passi, no s&#39;apaga.</li></ol>
+  </div>
+  <a class="hero-word__mug" href="/tasses/caliu/" tabindex="-1" aria-hidden="true"><img class="" src="/images/mug-caliu-front.jpg" alt="" width="750" height="880" loading="lazy" decoding="async"></a>
+  <p class="hero-word__link"><a href="/tasses/caliu/">Veure la tassa «Tu ets el meu caliu» <svg class="icon " aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow"></use></svg></a></p>
+</div><div class="hero-word" data-hero-word hidden>
+  <div class="hero-word__card">
+    <p class="hero-word__head"><span class="hero-word__word">bocamoll</span> <span class="hero-word__ipa">[bo·kə·ˈmoʎ] m. i f.</span></p>
+    <ol class="hero-word__defs"><li>Persona que no sap guardar un secret.</li><li>Qui revela la sorpresa abans que arribi l&#39;homenatjat.</li></ol>
+  </div>
+  <a class="hero-word__mug" href="/tasses/bocamoll/" tabindex="-1" aria-hidden="true"><img class="" src="/images/mug-bocamoll-front.jpg" alt="" width="750" height="880" loading="lazy" decoding="async"></a>
+  <p class="hero-word__link"><a href="/tasses/bocamoll/">Veure la tassa «Sóc un bocamoll» <svg class="icon " aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow"></use></svg></a></p>
+</div>
+      <button type="button" class="hero__pause" data-hero-pause aria-pressed="false" hidden><svg class="icon " aria-hidden="true" focusable="false"><use href="/assets/icons.svg#pause"></use></svg><span class="sr-only">Atura el canvi de paraules</span></button>
     </div>
+  </div>
+</section>
+
+<section class="promo" aria-labelledby="promo-title">
+  <div class="container promo__inner">
+    <p class="promo__tag">Aquest Nadal</p>
+    <h2 class="promo__title" id="promo-title">L'amic invisible més fàcil de l'any: <span>5,95 €</span></h2>
+    <p class="promo__text">Una paraula diferent per a cada persona del grup. I l'enviament, un sol cop per comanda.</p>
+    <a class="btn btn--light" href="/tasses/">Tria-les ara <svg class="icon " aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow"></use></svg></a>
   </div>
 </section>
 
 <section class="section explain" aria-labelledby="explain-title">
   <div class="container explain__grid">
-    <figure class="explain__pair">
-      <div class="explain__side"><img class="" src="/images/mug-caliu-front.jpg" alt="Davant de la tassa: «Tu ets el meu caliu»" width="750" height="880" loading="lazy" decoding="async"><figcaption><strong>Davant</strong> El missatge, per a qui la rep</figcaption></div>
-      <div class="explain__side"><img class="" src="/images/mug-caliu-back.jpg" alt="Darrere de la tassa: definició de «caliu»" width="750" height="880" loading="lazy" decoding="async"><figcaption><strong>Darrere</strong> La definició, per entendre-ho tot</figcaption></div>
+    <figure class="flip" data-flip>
+      <div class="flip__stage">
+        <img class="flip__img flip__img--front" src="/images/mug-caliu-front.jpg" alt="Davant de la tassa: «Tu ets el meu caliu»" width="750" height="880" loading="lazy" decoding="async">
+        <img class="flip__img flip__img--back" src="/images/mug-caliu-back.jpg" alt="Darrere de la tassa: definició de «caliu»" width="750" height="880" loading="lazy" decoding="async">
+      </div>
+      <figcaption class="flip__bar">
+        <span class="flip__label" data-flip-label>Davant: el missatge</span>
+        <button type="button" class="btn btn--small" data-flip-toggle aria-pressed="false">Gira la tassa</button>
+      </figcaption>
     </figure>
     <div>
       <div class="section-head">
@@ -100,32 +143,180 @@
   <h2 class="section-title" id="cat-title">Quina paraula busques?</h2>
   
 </div>
-    <div class="categories">
-      <a class="category category--amor" href="/tasses/paraules-d-amor/">
-        <img class="" src="/images/mug-aixopluc-front.jpg" alt="" width="750" height="880" loading="lazy" decoding="async">
-        <span class="category__body"><span class="category__name">Paraules d&#39;amor</span><span class="category__text">Per dir-li a algú, cada matí, el que significa per a tu.</span><span class="category__count">Veure les 11 tasses <svg class="icon " aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow"></use></svg></span></span>
-      </a><a class="category category--caracter" href="/tasses/paraules-de-caracter/">
-        <img class="" src="/images/mug-cagadubtes-front.jpg" alt="" width="750" height="880" loading="lazy" decoding="async">
-        <span class="category__body"><span class="category__name">Paraules de caràcter</span><span class="category__text">Per riure&#39;s de les manies de tothom. Començant per les teves.</span><span class="category__count">Veure les 7 tasses <svg class="icon " aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow"></use></svg></span></span>
-      </a><a class="category category--insults" href="/tasses/insults-d-autor/">
-        <img class="" src="/images/mug-insults-front.jpg" alt="" width="567" height="656" loading="lazy" decoding="async">
-        <span class="category__body"><span class="category__name">Insults d&#39;autor</span><span class="category__text">Insults i comparacions catalanes de tota la vida, amb molta gràcia i poca mala intenció.</span><span class="category__count">Veure les 4 tasses <svg class="icon " aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow"></use></svg></span></span>
-      </a><a class="category category--humor" href="/tasses/frases-amb-humor/">
-        <img class="" src="/images/mug-cafe-sol-front.jpg" alt="" width="750" height="880" loading="lazy" decoding="async">
-        <span class="category__body"><span class="category__name">Frases amb humor</span><span class="category__text">Jocs de paraules i frases enginyoses per començar el dia amb un somriure.</span><span class="category__count">Veure les 8 tasses <svg class="icon " aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow"></use></svg></span></span>
+    <div class="wordtiles">
+      <a class="wordtile wordtile--amor" href="/tasses/paraules-d-amor/">
+        <span class="wordtile__word" aria-hidden="true">caliu</span>
+        <span class="wordtile__name">Paraules d&#39;amor</span>
+        <span class="wordtile__text">Per dir-li a algú, cada matí, el que significa per a tu.</span>
+        <span class="wordtile__count">11 tasses <svg class="icon " aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow"></use></svg></span>
+      </a><a class="wordtile wordtile--caracter" href="/tasses/paraules-de-caracter/">
+        <span class="wordtile__word" aria-hidden="true">cagadubtes</span>
+        <span class="wordtile__name">Paraules de caràcter</span>
+        <span class="wordtile__text">Per riure&#39;s de les manies de tothom. Començant per les teves.</span>
+        <span class="wordtile__count">7 tasses <svg class="icon " aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow"></use></svg></span>
+      </a><a class="wordtile wordtile--insults" href="/tasses/insults-d-autor/">
+        <span class="wordtile__word" aria-hidden="true">capsigrany</span>
+        <span class="wordtile__name">Insults d&#39;autor</span>
+        <span class="wordtile__text">Insults i comparacions catalanes de tota la vida, amb molta gràcia i poca mala intenció.</span>
+        <span class="wordtile__count">4 tasses <svg class="icon " aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow"></use></svg></span>
+      </a><a class="wordtile wordtile--humor" href="/tasses/frases-amb-humor/">
+        <span class="wordtile__word" aria-hidden="true">tallat</span>
+        <span class="wordtile__name">Frases amb humor</span>
+        <span class="wordtile__text">Jocs de paraules i frases enginyoses per començar el dia amb un somriure.</span>
+        <span class="wordtile__count">8 tasses <svg class="icon " aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow"></use></svg></span>
       </a>
     </div>
   </div>
 </section>
 
-<section class="section" aria-labelledby="new-title">
+<section class="section packs-section" id="packs" aria-labelledby="packs-title">
+  <div class="container">
+    <div class="section-head">
+  <p class="eyebrow">Packs per regalar</p>
+  <h2 class="section-title" id="packs-title">Un regal, diverses paraules.</h2>
+  <p class="section-text">Hi ha persones que es mereixen més d'una tassa.</p>
+</div>
+    <div class="packs"><article class="pack pack--casa">
+  <div class="pack__media" aria-hidden="true"><span class="pack__mug"><img class="" src="/images/mug-niu-front.jpg" alt="" width="750" height="880" loading="lazy" decoding="async"></span><span class="pack__mug"><img class="" src="/images/mug-arrel-front.jpg" alt="" width="750" height="880" loading="lazy" decoding="async"></span><span class="pack__mug"><img class="" src="/images/mug-aixopluc-front.jpg" alt="" width="750" height="880" loading="lazy" decoding="async"></span></div>
+  <div class="pack__body">
+    <p class="pack__count">3 tasses</p>
+    <h3 class="pack__title">Pack Família</h3>
+    <p class="pack__text">Per a la gent que t&#39;ha vist créixer i que sempre és casa.</p>
+    <p class="pack__items"><a href="/tasses/niu/">Niu</a><span aria-hidden="true"> · </span><a href="/tasses/arrel/">Arrel</a><span aria-hidden="true"> · </span><a href="/tasses/aixopluc/">Aixopluc</a></p>
+    <div class="pack__foot">
+      <span class="price price--lg">17,85 €</span>
+      <button type="button" class="btn btn--primary" data-add-pack="niu,arrel,aixopluc">Afegeix el pack a la cistella<span class="sr-only"> (Pack Família, 17,85 €)</span></button>
+    </div>
+  </div>
+</article><article class="pack pack--parella">
+  <div class="pack__media" aria-hidden="true"><span class="pack__mug"><img class="" src="/images/mug-deler-front.jpg" alt="" width="750" height="880" loading="lazy" decoding="async"></span><span class="pack__mug"><img class="" src="/images/mug-caliu-front.jpg" alt="" width="750" height="880" loading="lazy" decoding="async"></span></div>
+  <div class="pack__body">
+    <p class="pack__count">2 tasses</p>
+    <h3 class="pack__title">Pack Parella</h3>
+    <p class="pack__text">Una per a cadascú. Per al cafè de cada matí, junts.</p>
+    <p class="pack__items"><a href="/tasses/deler/">Deler</a><span aria-hidden="true"> · </span><a href="/tasses/caliu/">Caliu</a></p>
+    <div class="pack__foot">
+      <span class="price price--lg">11,90 €</span>
+      <button type="button" class="btn btn--primary" data-add-pack="deler,caliu">Afegeix el pack a la cistella<span class="sr-only"> (Pack Parella, 11,90 €)</span></button>
+    </div>
+  </div>
+</article><article class="pack pack--feina">
+  <div class="pack__media" aria-hidden="true"><span class="pack__mug"><img class="" src="/images/mug-escalfacadires-front.jpg" alt="" width="750" height="880" loading="lazy" decoding="async"></span><span class="pack__mug"><img class="" src="/images/mug-manefla-front.jpg" alt="" width="750" height="880" loading="lazy" decoding="async"></span><span class="pack__mug"><img class="" src="/images/mug-bocamoll-front.jpg" alt="" width="750" height="880" loading="lazy" decoding="async"></span></div>
+  <div class="pack__body">
+    <p class="pack__count">3 tasses</p>
+    <h3 class="pack__title">Pack Feina</h3>
+    <p class="pack__text">Per a aquell company que tots coneixem. O per a tu, que ja ens entenem.</p>
+    <p class="pack__items"><a href="/tasses/escalfacadires/">Escalfacadires</a><span aria-hidden="true"> · </span><a href="/tasses/manefla/">Manefla</a><span aria-hidden="true"> · </span><a href="/tasses/bocamoll/">Bocamoll</a></p>
+    <div class="pack__foot">
+      <span class="price price--lg">17,85 €</span>
+      <button type="button" class="btn btn--primary" data-add-pack="escalfacadires,manefla,bocamoll">Afegeix el pack a la cistella<span class="sr-only"> (Pack Feina, 17,85 €)</span></button>
+    </div>
+  </div>
+</article><article class="pack pack--cafe">
+  <div class="pack__media" aria-hidden="true"><span class="pack__mug"><img class="" src="/images/mug-cafe-sol-front.jpg" alt="" width="750" height="880" loading="lazy" decoding="async"></span><span class="pack__mug"><img class="" src="/images/mug-tallat-front.jpg" alt="" width="750" height="880" loading="lazy" decoding="async"></span><span class="pack__mug"><img class="" src="/images/mug-sense-cafe-no-soc-persona-front.jpg" alt="" width="750" height="880" loading="lazy" decoding="async"></span></div>
+  <div class="pack__body">
+    <p class="pack__count">3 tasses</p>
+    <h3 class="pack__title">Pack Cafè</h3>
+    <p class="pack__text">Tres maneres de dir que, sense cafè, millor no parlar.</p>
+    <p class="pack__items"><a href="/tasses/cafe-sol/">Un cafè sol</a><span aria-hidden="true"> · </span><a href="/tasses/tallat/">Tallat</a><span aria-hidden="true"> · </span><a href="/tasses/sense-cafe-no-soc-persona/">Sense cafè no sóc persona</a></p>
+    <div class="pack__foot">
+      <span class="price price--lg">17,85 €</span>
+      <button type="button" class="btn btn--primary" data-add-pack="cafe-sol,tallat,sense-cafe-no-soc-persona">Afegeix el pack a la cistella<span class="sr-only"> (Pack Cafè, 17,85 €)</span></button>
+    </div>
+  </div>
+</article></div>
+    <p class="packs__note">El preu de cada pack és la suma de les tasses a 5,95 €. L'enviament (4,95 €) es paga una sola vegada per comanda.</p>
+  </div>
+</section>
+
+<section class="section finder" id="recomanador" aria-labelledby="finder-title">
+  <div class="container">
+    <div class="section-head">
+  <p class="eyebrow">Recomanador</p>
+  <h2 class="section-title" id="finder-title">Troba la tassa perfecta</h2>
+  <p class="section-text">Per a qui busques una tassa?</p>
+</div>
+    <div class="finder__options" role="group" aria-label="Per a qui busques una tassa?">
+      <button type="button" class="finder__option" aria-pressed="true" data-finder-option="estimes" data-slugs="tros-de-pa,aixopluc,arrel,bonanca,caliu,deler,moixaina,niu,rosada,solell,ventijol" data-href="/tasses/paraules-d-amor/">Per a algú que estimes</button><button type="button" class="finder__option" aria-pressed="false" data-finder-option="humor" data-slugs="cafe-sol,tallat,mala-llet,sense-cafe-no-soc-persona,coses-que-s-escalfen-de-seguida,coses-que-perden-el-fil,coses-que-no-serveixen-per-a-res,coses-que-es-veuen-millor-de-lluny" data-href="/tasses/frases-amb-humor/">Per a algú amb molt d&#39;humor</button><button type="button" class="finder__option" aria-pressed="false" data-finder-option="caracter" data-slugs="mes-inutil-que-un-cendrer-de-moto,mes-pesat-que-una-vaca-en-bracos,mes-cara-que-esquena,bocamoll,cagadubtes,corco,escalfacadires,llepafils,manefla,pocatraca,arsenal-insults" data-href="/tasses/">Per a algú amb caràcter</button><button type="button" class="finder__option" aria-pressed="false" data-finder-option="cafe" data-slugs="cafe-sol,tallat,mala-llet,sense-cafe-no-soc-persona" data-href="/tasses/">Per a un amant del cafè</button><button type="button" class="finder__option" aria-pressed="false" data-finder-option="especial" data-slugs="tros-de-pa,aixopluc,bonanca,caliu,niu,solell" data-href="/tasses/">Per a algú especial</button>
+    </div>
+    <p class="finder__status" role="status" aria-live="polite" data-finder-status>11 tasses per a algú que estimes</p>
+    <div class="grid finder__results" data-finder-results data-show="4"><article class="card" data-product="tros-de-pa" data-category="amor">
+  <a class="card__media" href="/tasses/tros-de-pa/" tabindex="-1" aria-hidden="true">
+    <img class="card__img" src="/images/mug-tros-de-pa-front.jpg" alt="Tassa blanca amb la frase «Ets un tros de pa» i una il·lustració" width="750" height="880" loading="lazy" decoding="async">
+    <img class="card__img card__img--back" src="/images/mug-tros-de-pa-back.jpg" alt="" width="750" height="880" loading="lazy" decoding="async">
+    <span class="card__stock" data-stock-badge hidden></span>
+  </a>
+  <div class="card__body">
+    <p class="chip chip--amor">Paraula d&#39;amor</p>
+    <h3 class="card__title"><a href="/tasses/tros-de-pa/">Tros de pa</a></h3>
+    <p class="card__text">Per a la persona més bona que coneixes.</p>
+    <p class="card__rating" data-rating hidden></p>
+    <div class="card__foot">
+      <span class="price">5,95 €</span>
+      <button type="button" class="btn btn--small" data-add="tros-de-pa">Afegeix<span class="sr-only"> «Tros de pa» a la cistella</span></button>
+    </div>
+  </div>
+</article><article class="card" data-product="aixopluc" data-category="amor">
+  <a class="card__media" href="/tasses/aixopluc/" tabindex="-1" aria-hidden="true">
+    <img class="card__img" src="/images/mug-aixopluc-front.jpg" alt="Tassa blanca amb la frase «Tu ets el meu aixopluc» i una il·lustració" width="750" height="880" loading="lazy" decoding="async">
+    <img class="card__img card__img--back" src="/images/mug-aixopluc-back.jpg" alt="" width="750" height="880" loading="lazy" decoding="async">
+    <span class="card__stock" data-stock-badge hidden></span>
+  </a>
+  <div class="card__body">
+    <p class="chip chip--amor">Paraula d&#39;amor</p>
+    <h3 class="card__title"><a href="/tasses/aixopluc/">Aixopluc</a></h3>
+    <p class="card__text">Persona amb qui et sents a recer, passi el que passi.</p>
+    <p class="card__rating" data-rating hidden></p>
+    <div class="card__foot">
+      <span class="price">5,95 €</span>
+      <button type="button" class="btn btn--small" data-add="aixopluc">Afegeix<span class="sr-only"> «Aixopluc» a la cistella</span></button>
+    </div>
+  </div>
+</article><article class="card" data-product="arrel" data-category="amor">
+  <a class="card__media" href="/tasses/arrel/" tabindex="-1" aria-hidden="true">
+    <img class="card__img" src="/images/mug-arrel-front.jpg" alt="Tassa blanca amb la frase «Tu ets la meva arrel» i una il·lustració" width="750" height="880" loading="lazy" decoding="async">
+    <img class="card__img card__img--back" src="/images/mug-arrel-back.jpg" alt="" width="750" height="880" loading="lazy" decoding="async">
+    <span class="card__stock" data-stock-badge hidden></span>
+  </a>
+  <div class="card__body">
+    <p class="chip chip--amor">Paraula d&#39;amor</p>
+    <h3 class="card__title"><a href="/tasses/arrel/">Arrel</a></h3>
+    <p class="card__text">Persona d&#39;on véns, que et sosté sense fer soroll i et fa créixer.</p>
+    <p class="card__rating" data-rating hidden></p>
+    <div class="card__foot">
+      <span class="price">5,95 €</span>
+      <button type="button" class="btn btn--small" data-add="arrel">Afegeix<span class="sr-only"> «Arrel» a la cistella</span></button>
+    </div>
+  </div>
+</article><article class="card" data-product="bonanca" data-category="amor">
+  <a class="card__media" href="/tasses/bonanca/" tabindex="-1" aria-hidden="true">
+    <img class="card__img" src="/images/mug-bonanca-front.jpg" alt="Tassa blanca amb la frase «Tu ets la meva bonança» i una il·lustració" width="750" height="880" loading="lazy" decoding="async">
+    <img class="card__img card__img--back" src="/images/mug-bonanca-back.jpg" alt="" width="750" height="880" loading="lazy" decoding="async">
+    <span class="card__stock" data-stock-badge hidden></span>
+  </a>
+  <div class="card__body">
+    <p class="chip chip--amor">Paraula d&#39;amor</p>
+    <h3 class="card__title"><a href="/tasses/bonanca/">Bonança</a></h3>
+    <p class="card__text">Persona que et porta pau quan tot trontolla.</p>
+    <p class="card__rating" data-rating hidden></p>
+    <div class="card__foot">
+      <span class="price">5,95 €</span>
+      <button type="button" class="btn btn--small" data-add="bonanca">Afegeix<span class="sr-only"> «Bonança» a la cistella</span></button>
+    </div>
+  </div>
+</article></div>
+    <p class="section-cta"><a class="btn btn--ghost btn--lg" href="/tasses/paraules-d-amor/" data-finder-more>Veure-les totes (11) <svg class="icon " aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow"></use></svg></a></p>
+  </div>
+</section>
+
+<section class="section section--white" aria-labelledby="new-title">
   <div class="container">
     <div class="section-head">
   <p class="eyebrow">Novetats</p>
   <h2 class="section-title" id="new-title">Acabades d'arribar.</h2>
-  <p class="section-text">Frases enginyoses, expressions de tota la vida i un tros de pa. Totes a 5,95 €.</p>
+  <p class="section-text">Frases enginyoses, expressions de tota la vida i un tros de pa.</p>
 </div>
-    <div class="grid"><article class="card" data-product="cafe-sol" data-category="humor">
+    <div class="rail" tabindex="0" role="region" aria-label="Novetats (llisca per veure'n més)"><article class="card" data-product="cafe-sol" data-category="humor">
   <a class="card__media" href="/tasses/cafe-sol/" tabindex="-1" aria-hidden="true">
     <img class="card__img" src="/images/mug-cafe-sol-front.jpg" alt="Tassa blanca amb la frase «Avui només vull un cafè sol» i una il·lustració" width="750" height="880" loading="lazy" decoding="async">
     <img class="card__img card__img--back" src="/images/mug-cafe-sol-back.jpg" alt="" width="750" height="880" loading="lazy" decoding="async">
@@ -141,8 +332,7 @@
       <button type="button" class="btn btn--small" data-add="cafe-sol">Afegeix<span class="sr-only"> «Un cafè sol» a la cistella</span></button>
     </div>
   </div>
-</article>
-<article class="card" data-product="tallat" data-category="humor">
+</article><article class="card" data-product="tallat" data-category="humor">
   <a class="card__media" href="/tasses/tallat/" tabindex="-1" aria-hidden="true">
     <img class="card__img" src="/images/mug-tallat-front.jpg" alt="Tassa blanca amb la frase «Avui estic una mica tallat» i una il·lustració" width="750" height="880" loading="lazy" decoding="async">
     <img class="card__img card__img--back" src="/images/mug-tallat-back.jpg" alt="" width="750" height="880" loading="lazy" decoding="async">
@@ -158,8 +348,7 @@
       <button type="button" class="btn btn--small" data-add="tallat">Afegeix<span class="sr-only"> «Tallat» a la cistella</span></button>
     </div>
   </div>
-</article>
-<article class="card" data-product="mala-llet" data-category="humor">
+</article><article class="card" data-product="mala-llet" data-category="humor">
   <a class="card__media" href="/tasses/mala-llet/" tabindex="-1" aria-hidden="true">
     <img class="card__img" src="/images/mug-mala-llet-front.jpg" alt="Tassa blanca amb la frase «Compte, que avui tinc mala llet» i una il·lustració" width="750" height="880" loading="lazy" decoding="async">
     <img class="card__img card__img--back" src="/images/mug-mala-llet-back.jpg" alt="" width="750" height="880" loading="lazy" decoding="async">
@@ -175,8 +364,7 @@
       <button type="button" class="btn btn--small" data-add="mala-llet">Afegeix<span class="sr-only"> «Mala llet» a la cistella</span></button>
     </div>
   </div>
-</article>
-<article class="card" data-product="sense-cafe-no-soc-persona" data-category="humor">
+</article><article class="card" data-product="sense-cafe-no-soc-persona" data-category="humor">
   <a class="card__media" href="/tasses/sense-cafe-no-soc-persona/" tabindex="-1" aria-hidden="true">
     <img class="card__img" src="/images/mug-sense-cafe-no-soc-persona-front.jpg" alt="Tassa blanca amb la frase «Sense cafè no sóc persona. Amb cafè, tampoc gaire.» i una il·lustració" width="750" height="880" loading="lazy" decoding="async">
     <img class="card__img card__img--back" src="/images/mug-sense-cafe-no-soc-persona-back.jpg" alt="" width="750" height="880" loading="lazy" decoding="async">
@@ -192,8 +380,7 @@
       <button type="button" class="btn btn--small" data-add="sense-cafe-no-soc-persona">Afegeix<span class="sr-only"> «Sense cafè no sóc persona» a la cistella</span></button>
     </div>
   </div>
-</article>
-<article class="card" data-product="coses-que-s-escalfen-de-seguida" data-category="humor">
+</article><article class="card" data-product="coses-que-s-escalfen-de-seguida" data-category="humor">
   <a class="card__media" href="/tasses/coses-que-s-escalfen-de-seguida/" tabindex="-1" aria-hidden="true">
     <img class="card__img" src="/images/mug-coses-que-s-escalfen-de-seguida-front.jpg" alt="Tassa blanca amb la frase «Coses que s&#39;escalfen de seguida» i una il·lustració" width="750" height="880" loading="lazy" decoding="async">
     <img class="card__img card__img--back" src="/images/mug-coses-que-s-escalfen-de-seguida-back.jpg" alt="" width="750" height="880" loading="lazy" decoding="async">
@@ -209,8 +396,7 @@
       <button type="button" class="btn btn--small" data-add="coses-que-s-escalfen-de-seguida">Afegeix<span class="sr-only"> «Coses que s&#39;escalfen de seguida» a la cistella</span></button>
     </div>
   </div>
-</article>
-<article class="card" data-product="coses-que-perden-el-fil" data-category="humor">
+</article><article class="card" data-product="coses-que-perden-el-fil" data-category="humor">
   <a class="card__media" href="/tasses/coses-que-perden-el-fil/" tabindex="-1" aria-hidden="true">
     <img class="card__img" src="/images/mug-coses-que-perden-el-fil-front.jpg" alt="Tassa blanca amb la frase «Coses que perden el fil» i una il·lustració" width="750" height="880" loading="lazy" decoding="async">
     <img class="card__img card__img--back" src="/images/mug-coses-que-perden-el-fil-back.jpg" alt="" width="750" height="880" loading="lazy" decoding="async">
@@ -226,46 +412,12 @@
       <button type="button" class="btn btn--small" data-add="coses-que-perden-el-fil">Afegeix<span class="sr-only"> «Coses que perden el fil» a la cistella</span></button>
     </div>
   </div>
-</article>
-<article class="card" data-product="coses-que-no-serveixen-per-a-res" data-category="humor">
-  <a class="card__media" href="/tasses/coses-que-no-serveixen-per-a-res/" tabindex="-1" aria-hidden="true">
-    <img class="card__img" src="/images/mug-coses-que-no-serveixen-per-a-res-front.jpg" alt="Tassa blanca amb la frase «Coses que no serveixen per a res» i una il·lustració" width="750" height="880" loading="lazy" decoding="async">
-    <img class="card__img card__img--back" src="/images/mug-coses-que-no-serveixen-per-a-res-back.jpg" alt="" width="750" height="880" loading="lazy" decoding="async">
-    <span class="card__stock" data-stock-badge hidden></span>
-  </a>
-  <div class="card__body">
-    <p class="chip chip--humor">Frase amb humor</p>
-    <h3 class="card__title"><a href="/tasses/coses-que-no-serveixen-per-a-res/">Coses que no serveixen per a res</a></h3>
-    <p class="card__text">Una bombeta fosa, un bolígraf sense tinta… i aquella reunió.</p>
-    <p class="card__rating" data-rating hidden></p>
-    <div class="card__foot">
-      <span class="price">5,95 €</span>
-      <button type="button" class="btn btn--small" data-add="coses-que-no-serveixen-per-a-res">Afegeix<span class="sr-only"> «Coses que no serveixen per a res» a la cistella</span></button>
-    </div>
-  </div>
-</article>
-<article class="card" data-product="coses-que-es-veuen-millor-de-lluny" data-category="humor">
-  <a class="card__media" href="/tasses/coses-que-es-veuen-millor-de-lluny/" tabindex="-1" aria-hidden="true">
-    <img class="card__img" src="/images/mug-coses-que-es-veuen-millor-de-lluny-front.jpg" alt="Tassa blanca amb la frase «Coses que es veuen millor de lluny» i una il·lustració" width="750" height="880" loading="lazy" decoding="async">
-    <img class="card__img card__img--back" src="/images/mug-coses-que-es-veuen-millor-de-lluny-back.jpg" alt="" width="750" height="880" loading="lazy" decoding="async">
-    <span class="card__stock" data-stock-badge hidden></span>
-  </a>
-  <div class="card__body">
-    <p class="chip chip--humor">Frase amb humor</p>
-    <h3 class="card__title"><a href="/tasses/coses-que-es-veuen-millor-de-lluny/">Coses que es veuen millor de lluny</a></h3>
-    <p class="card__text">La lluna, els focs artificials… i el teu ex.</p>
-    <p class="card__rating" data-rating hidden></p>
-    <div class="card__foot">
-      <span class="price">5,95 €</span>
-      <button type="button" class="btn btn--small" data-add="coses-que-es-veuen-millor-de-lluny">Afegeix<span class="sr-only"> «Coses que es veuen millor de lluny» a la cistella</span></button>
-    </div>
-  </div>
 </article></div>
     <p class="section-cta"><a class="btn btn--ghost btn--lg" href="/tasses/">Veure les 30 tasses <svg class="icon " aria-hidden="true" focusable="false"><use href="/assets/icons.svg#arrow"></use></svg></a></p>
   </div>
 </section>
 
-<section class="section section--white" aria-labelledby="best-title" data-bestsellers hidden>
+<section class="section" aria-labelledby="best-title" data-bestsellers hidden>
   <div class="container">
     <div class="section-head">
   <p class="eyebrow">Més venudes</p>
@@ -757,258 +909,7 @@
   </div>
 </article></template>
 
-<section class="section packs-section" id="packs" aria-labelledby="packs-title">
-  <div class="container">
-    <div class="section-head">
-  <p class="eyebrow">Packs per regalar</p>
-  <h2 class="section-title" id="packs-title">Un regal, diverses paraules.</h2>
-  <p class="section-text">Hi ha persones que es mereixen més d'una tassa.</p>
-</div>
-    <div class="packs"><article class="pack pack--casa">
-  <div class="pack__media" aria-hidden="true"><span class="pack__mug"><img class="" src="/images/mug-niu-front.jpg" alt="" width="750" height="880" loading="lazy" decoding="async"></span><span class="pack__mug"><img class="" src="/images/mug-arrel-front.jpg" alt="" width="750" height="880" loading="lazy" decoding="async"></span><span class="pack__mug"><img class="" src="/images/mug-aixopluc-front.jpg" alt="" width="750" height="880" loading="lazy" decoding="async"></span></div>
-  <div class="pack__body">
-    <p class="pack__count">3 tasses</p>
-    <h3 class="pack__title">Pack Família</h3>
-    <p class="pack__text">Per a la gent que t&#39;ha vist créixer i que sempre és casa.</p>
-    <p class="pack__items"><a href="/tasses/niu/">Niu</a><span aria-hidden="true"> · </span><a href="/tasses/arrel/">Arrel</a><span aria-hidden="true"> · </span><a href="/tasses/aixopluc/">Aixopluc</a></p>
-    <div class="pack__foot">
-      <span class="price price--lg">17,85 €</span>
-      <button type="button" class="btn btn--primary" data-add-pack="niu,arrel,aixopluc">Afegeix el pack a la cistella<span class="sr-only"> (Pack Família, 17,85 €)</span></button>
-    </div>
-  </div>
-</article><article class="pack pack--parella">
-  <div class="pack__media" aria-hidden="true"><span class="pack__mug"><img class="" src="/images/mug-deler-front.jpg" alt="" width="750" height="880" loading="lazy" decoding="async"></span><span class="pack__mug"><img class="" src="/images/mug-caliu-front.jpg" alt="" width="750" height="880" loading="lazy" decoding="async"></span></div>
-  <div class="pack__body">
-    <p class="pack__count">2 tasses</p>
-    <h3 class="pack__title">Pack Parella</h3>
-    <p class="pack__text">Una per a cadascú. Per al cafè de cada matí, junts.</p>
-    <p class="pack__items"><a href="/tasses/deler/">Deler</a><span aria-hidden="true"> · </span><a href="/tasses/caliu/">Caliu</a></p>
-    <div class="pack__foot">
-      <span class="price price--lg">11,90 €</span>
-      <button type="button" class="btn btn--primary" data-add-pack="deler,caliu">Afegeix el pack a la cistella<span class="sr-only"> (Pack Parella, 11,90 €)</span></button>
-    </div>
-  </div>
-</article><article class="pack pack--feina">
-  <div class="pack__media" aria-hidden="true"><span class="pack__mug"><img class="" src="/images/mug-escalfacadires-front.jpg" alt="" width="750" height="880" loading="lazy" decoding="async"></span><span class="pack__mug"><img class="" src="/images/mug-manefla-front.jpg" alt="" width="750" height="880" loading="lazy" decoding="async"></span><span class="pack__mug"><img class="" src="/images/mug-bocamoll-front.jpg" alt="" width="750" height="880" loading="lazy" decoding="async"></span></div>
-  <div class="pack__body">
-    <p class="pack__count">3 tasses</p>
-    <h3 class="pack__title">Pack Feina</h3>
-    <p class="pack__text">Per a aquell company que tots coneixem. O per a tu, que ja ens entenem.</p>
-    <p class="pack__items"><a href="/tasses/escalfacadires/">Escalfacadires</a><span aria-hidden="true"> · </span><a href="/tasses/manefla/">Manefla</a><span aria-hidden="true"> · </span><a href="/tasses/bocamoll/">Bocamoll</a></p>
-    <div class="pack__foot">
-      <span class="price price--lg">17,85 €</span>
-      <button type="button" class="btn btn--primary" data-add-pack="escalfacadires,manefla,bocamoll">Afegeix el pack a la cistella<span class="sr-only"> (Pack Feina, 17,85 €)</span></button>
-    </div>
-  </div>
-</article><article class="pack pack--cafe">
-  <div class="pack__media" aria-hidden="true"><span class="pack__mug"><img class="" src="/images/mug-cafe-sol-front.jpg" alt="" width="750" height="880" loading="lazy" decoding="async"></span><span class="pack__mug"><img class="" src="/images/mug-tallat-front.jpg" alt="" width="750" height="880" loading="lazy" decoding="async"></span><span class="pack__mug"><img class="" src="/images/mug-sense-cafe-no-soc-persona-front.jpg" alt="" width="750" height="880" loading="lazy" decoding="async"></span></div>
-  <div class="pack__body">
-    <p class="pack__count">3 tasses</p>
-    <h3 class="pack__title">Pack Cafè</h3>
-    <p class="pack__text">Tres maneres de dir que, sense cafè, millor no parlar.</p>
-    <p class="pack__items"><a href="/tasses/cafe-sol/">Un cafè sol</a><span aria-hidden="true"> · </span><a href="/tasses/tallat/">Tallat</a><span aria-hidden="true"> · </span><a href="/tasses/sense-cafe-no-soc-persona/">Sense cafè no sóc persona</a></p>
-    <div class="pack__foot">
-      <span class="price price--lg">17,85 €</span>
-      <button type="button" class="btn btn--primary" data-add-pack="cafe-sol,tallat,sense-cafe-no-soc-persona">Afegeix el pack a la cistella<span class="sr-only"> (Pack Cafè, 17,85 €)</span></button>
-    </div>
-  </div>
-</article></div>
-    <p class="packs__note">El preu de cada pack és la suma de les tasses a 5,95 €. L'enviament (4,95 €) es paga una sola vegada per comanda.</p>
-  </div>
-</section>
-
-<section class="section finder" id="recomanador" aria-labelledby="finder-title">
-  <div class="container">
-    <div class="section-head">
-  <p class="eyebrow">Recomanador</p>
-  <h2 class="section-title" id="finder-title">Troba la tassa perfecta</h2>
-  <p class="section-text">Per a qui busques una tassa?</p>
-</div>
-    <div class="finder__options" role="group" aria-label="Per a qui busques una tassa?">
-      <button type="button" class="finder__option" aria-pressed="true" data-finder-option="estimes" data-slugs="tros-de-pa,aixopluc,arrel,bonanca,caliu,deler,moixaina,niu,rosada,solell,ventijol">Per a algú que estimes</button><button type="button" class="finder__option" aria-pressed="false" data-finder-option="humor" data-slugs="cafe-sol,tallat,mala-llet,sense-cafe-no-soc-persona,coses-que-s-escalfen-de-seguida,coses-que-perden-el-fil,coses-que-no-serveixen-per-a-res,coses-que-es-veuen-millor-de-lluny">Per a algú amb molt d&#39;humor</button><button type="button" class="finder__option" aria-pressed="false" data-finder-option="caracter" data-slugs="mes-inutil-que-un-cendrer-de-moto,mes-pesat-que-una-vaca-en-bracos,mes-cara-que-esquena,bocamoll,cagadubtes,corco,escalfacadires,llepafils,manefla,pocatraca,arsenal-insults">Per a algú amb caràcter</button><button type="button" class="finder__option" aria-pressed="false" data-finder-option="cafe" data-slugs="cafe-sol,tallat,mala-llet,sense-cafe-no-soc-persona">Per a un amant del cafè</button><button type="button" class="finder__option" aria-pressed="false" data-finder-option="especial" data-slugs="tros-de-pa,aixopluc,bonanca,caliu,niu,solell">Per a algú especial</button>
-    </div>
-    <p class="finder__status" role="status" aria-live="polite" data-finder-status>11 tasses per a algú que estimes</p>
-    <div class="grid finder__results" data-finder-results><article class="card" data-product="tros-de-pa" data-category="amor">
-  <a class="card__media" href="/tasses/tros-de-pa/" tabindex="-1" aria-hidden="true">
-    <img class="card__img" src="/images/mug-tros-de-pa-front.jpg" alt="Tassa blanca amb la frase «Ets un tros de pa» i una il·lustració" width="750" height="880" loading="lazy" decoding="async">
-    <img class="card__img card__img--back" src="/images/mug-tros-de-pa-back.jpg" alt="" width="750" height="880" loading="lazy" decoding="async">
-    <span class="card__stock" data-stock-badge hidden></span>
-  </a>
-  <div class="card__body">
-    <p class="chip chip--amor">Paraula d&#39;amor</p>
-    <h3 class="card__title"><a href="/tasses/tros-de-pa/">Tros de pa</a></h3>
-    <p class="card__text">Per a la persona més bona que coneixes.</p>
-    <p class="card__rating" data-rating hidden></p>
-    <div class="card__foot">
-      <span class="price">5,95 €</span>
-      <button type="button" class="btn btn--small" data-add="tros-de-pa">Afegeix<span class="sr-only"> «Tros de pa» a la cistella</span></button>
-    </div>
-  </div>
-</article><article class="card" data-product="aixopluc" data-category="amor">
-  <a class="card__media" href="/tasses/aixopluc/" tabindex="-1" aria-hidden="true">
-    <img class="card__img" src="/images/mug-aixopluc-front.jpg" alt="Tassa blanca amb la frase «Tu ets el meu aixopluc» i una il·lustració" width="750" height="880" loading="lazy" decoding="async">
-    <img class="card__img card__img--back" src="/images/mug-aixopluc-back.jpg" alt="" width="750" height="880" loading="lazy" decoding="async">
-    <span class="card__stock" data-stock-badge hidden></span>
-  </a>
-  <div class="card__body">
-    <p class="chip chip--amor">Paraula d&#39;amor</p>
-    <h3 class="card__title"><a href="/tasses/aixopluc/">Aixopluc</a></h3>
-    <p class="card__text">Persona amb qui et sents a recer, passi el que passi.</p>
-    <p class="card__rating" data-rating hidden></p>
-    <div class="card__foot">
-      <span class="price">5,95 €</span>
-      <button type="button" class="btn btn--small" data-add="aixopluc">Afegeix<span class="sr-only"> «Aixopluc» a la cistella</span></button>
-    </div>
-  </div>
-</article><article class="card" data-product="arrel" data-category="amor">
-  <a class="card__media" href="/tasses/arrel/" tabindex="-1" aria-hidden="true">
-    <img class="card__img" src="/images/mug-arrel-front.jpg" alt="Tassa blanca amb la frase «Tu ets la meva arrel» i una il·lustració" width="750" height="880" loading="lazy" decoding="async">
-    <img class="card__img card__img--back" src="/images/mug-arrel-back.jpg" alt="" width="750" height="880" loading="lazy" decoding="async">
-    <span class="card__stock" data-stock-badge hidden></span>
-  </a>
-  <div class="card__body">
-    <p class="chip chip--amor">Paraula d&#39;amor</p>
-    <h3 class="card__title"><a href="/tasses/arrel/">Arrel</a></h3>
-    <p class="card__text">Persona d&#39;on véns, que et sosté sense fer soroll i et fa créixer.</p>
-    <p class="card__rating" data-rating hidden></p>
-    <div class="card__foot">
-      <span class="price">5,95 €</span>
-      <button type="button" class="btn btn--small" data-add="arrel">Afegeix<span class="sr-only"> «Arrel» a la cistella</span></button>
-    </div>
-  </div>
-</article><article class="card" data-product="bonanca" data-category="amor">
-  <a class="card__media" href="/tasses/bonanca/" tabindex="-1" aria-hidden="true">
-    <img class="card__img" src="/images/mug-bonanca-front.jpg" alt="Tassa blanca amb la frase «Tu ets la meva bonança» i una il·lustració" width="750" height="880" loading="lazy" decoding="async">
-    <img class="card__img card__img--back" src="/images/mug-bonanca-back.jpg" alt="" width="750" height="880" loading="lazy" decoding="async">
-    <span class="card__stock" data-stock-badge hidden></span>
-  </a>
-  <div class="card__body">
-    <p class="chip chip--amor">Paraula d&#39;amor</p>
-    <h3 class="card__title"><a href="/tasses/bonanca/">Bonança</a></h3>
-    <p class="card__text">Persona que et porta pau quan tot trontolla.</p>
-    <p class="card__rating" data-rating hidden></p>
-    <div class="card__foot">
-      <span class="price">5,95 €</span>
-      <button type="button" class="btn btn--small" data-add="bonanca">Afegeix<span class="sr-only"> «Bonança» a la cistella</span></button>
-    </div>
-  </div>
-</article><article class="card" data-product="caliu" data-category="amor">
-  <a class="card__media" href="/tasses/caliu/" tabindex="-1" aria-hidden="true">
-    <img class="card__img" src="/images/mug-caliu-front.jpg" alt="Tassa blanca amb la frase «Tu ets el meu caliu» i una il·lustració" width="750" height="880" loading="lazy" decoding="async">
-    <img class="card__img card__img--back" src="/images/mug-caliu-back.jpg" alt="" width="750" height="880" loading="lazy" decoding="async">
-    <span class="card__stock" data-stock-badge hidden></span>
-  </a>
-  <div class="card__body">
-    <p class="chip chip--amor">Paraula d&#39;amor</p>
-    <h3 class="card__title"><a href="/tasses/caliu/">Caliu</a></h3>
-    <p class="card__text">Escalfor afectuosa d&#39;algú que, passi el que passi, no s&#39;apaga.</p>
-    <p class="card__rating" data-rating hidden></p>
-    <div class="card__foot">
-      <span class="price">5,95 €</span>
-      <button type="button" class="btn btn--small" data-add="caliu">Afegeix<span class="sr-only"> «Caliu» a la cistella</span></button>
-    </div>
-  </div>
-</article><article class="card" data-product="deler" data-category="amor">
-  <a class="card__media" href="/tasses/deler/" tabindex="-1" aria-hidden="true">
-    <img class="card__img" src="/images/mug-deler-front.jpg" alt="Tassa blanca amb la frase «Tu ets el meu deler» i una il·lustració" width="750" height="880" loading="lazy" decoding="async">
-    <img class="card__img card__img--back" src="/images/mug-deler-back.jpg" alt="" width="750" height="880" loading="lazy" decoding="async">
-    <span class="card__stock" data-stock-badge hidden></span>
-  </a>
-  <div class="card__body">
-    <p class="chip chip--amor">Paraula d&#39;amor</p>
-    <h3 class="card__title"><a href="/tasses/deler/">Deler</a></h3>
-    <p class="card__text">Ganes immenses de tornar-te a veure, encara que fa una estona que ens hem dit adeu.</p>
-    <p class="card__rating" data-rating hidden></p>
-    <div class="card__foot">
-      <span class="price">5,95 €</span>
-      <button type="button" class="btn btn--small" data-add="deler">Afegeix<span class="sr-only"> «Deler» a la cistella</span></button>
-    </div>
-  </div>
-</article><article class="card" data-product="moixaina" data-category="amor">
-  <a class="card__media" href="/tasses/moixaina/" tabindex="-1" aria-hidden="true">
-    <img class="card__img" src="/images/mug-moixaina-front.jpg" alt="Tassa blanca amb la frase «Tu ets la meva moixaina» i una il·lustració" width="750" height="880" loading="lazy" decoding="async">
-    <img class="card__img card__img--back" src="/images/mug-moixaina-back.jpg" alt="" width="750" height="880" loading="lazy" decoding="async">
-    <span class="card__stock" data-stock-badge hidden></span>
-  </a>
-  <div class="card__body">
-    <p class="chip chip--amor">Paraula d&#39;amor</p>
-    <h3 class="card__title"><a href="/tasses/moixaina/">Moixaina</a></h3>
-    <p class="card__text">Persona que fa més suau qualsevol dia.</p>
-    <p class="card__rating" data-rating hidden></p>
-    <div class="card__foot">
-      <span class="price">5,95 €</span>
-      <button type="button" class="btn btn--small" data-add="moixaina">Afegeix<span class="sr-only"> «Moixaina» a la cistella</span></button>
-    </div>
-  </div>
-</article><article class="card" data-product="niu" data-category="amor">
-  <a class="card__media" href="/tasses/niu/" tabindex="-1" aria-hidden="true">
-    <img class="card__img" src="/images/mug-niu-front.jpg" alt="Tassa blanca amb la frase «Tu ets el meu niu» i una il·lustració" width="750" height="880" loading="lazy" decoding="async">
-    <img class="card__img card__img--back" src="/images/mug-niu-back.jpg" alt="" width="750" height="880" loading="lazy" decoding="async">
-    <span class="card__stock" data-stock-badge hidden></span>
-  </a>
-  <div class="card__body">
-    <p class="chip chip--amor">Paraula d&#39;amor</p>
-    <h3 class="card__title"><a href="/tasses/niu/">Niu</a></h3>
-    <p class="card__text">Casa càlida on tota la família torna i on sempre hi ha lloc per a tu.</p>
-    <p class="card__rating" data-rating hidden></p>
-    <div class="card__foot">
-      <span class="price">5,95 €</span>
-      <button type="button" class="btn btn--small" data-add="niu">Afegeix<span class="sr-only"> «Niu» a la cistella</span></button>
-    </div>
-  </div>
-</article><article class="card" data-product="rosada" data-category="amor">
-  <a class="card__media" href="/tasses/rosada/" tabindex="-1" aria-hidden="true">
-    <img class="card__img" src="/images/mug-rosada-front.jpg" alt="Tassa blanca amb la frase «Tu ets la meva rosada» i una il·lustració" width="750" height="880" loading="lazy" decoding="async">
-    <img class="card__img card__img--back" src="/images/mug-rosada-back.jpg" alt="" width="750" height="880" loading="lazy" decoding="async">
-    <span class="card__stock" data-stock-badge hidden></span>
-  </a>
-  <div class="card__body">
-    <p class="chip chip--amor">Paraula d&#39;amor</p>
-    <h3 class="card__title"><a href="/tasses/rosada/">Rosada</a></h3>
-    <p class="card__text">Persona que fa que cada matí sembli nou.</p>
-    <p class="card__rating" data-rating hidden></p>
-    <div class="card__foot">
-      <span class="price">5,95 €</span>
-      <button type="button" class="btn btn--small" data-add="rosada">Afegeix<span class="sr-only"> «Rosada» a la cistella</span></button>
-    </div>
-  </div>
-</article><article class="card" data-product="solell" data-category="amor">
-  <a class="card__media" href="/tasses/solell/" tabindex="-1" aria-hidden="true">
-    <img class="card__img" src="/images/mug-solell-front.jpg" alt="Tassa blanca amb la frase «Tu ets el meu solell» i una il·lustració" width="750" height="880" loading="lazy" decoding="async">
-    <img class="card__img card__img--back" src="/images/mug-solell-back.jpg" alt="" width="750" height="880" loading="lazy" decoding="async">
-    <span class="card__stock" data-stock-badge hidden></span>
-  </a>
-  <div class="card__body">
-    <p class="chip chip--amor">Paraula d&#39;amor</p>
-    <h3 class="card__title"><a href="/tasses/solell/">Solell</a></h3>
-    <p class="card__text">Persona al costat de la qual sempre s&#39;hi està bé, faci el temps que faci.</p>
-    <p class="card__rating" data-rating hidden></p>
-    <div class="card__foot">
-      <span class="price">5,95 €</span>
-      <button type="button" class="btn btn--small" data-add="solell">Afegeix<span class="sr-only"> «Solell» a la cistella</span></button>
-    </div>
-  </div>
-</article><article class="card" data-product="ventijol" data-category="amor">
-  <a class="card__media" href="/tasses/ventijol/" tabindex="-1" aria-hidden="true">
-    <img class="card__img" src="/images/mug-ventijol-front.jpg" alt="Tassa blanca amb la frase «Tu ets el meu ventijol» i una il·lustració" width="750" height="880" loading="lazy" decoding="async">
-    <img class="card__img card__img--back" src="/images/mug-ventijol-back.jpg" alt="" width="750" height="880" loading="lazy" decoding="async">
-    <span class="card__stock" data-stock-badge hidden></span>
-  </a>
-  <div class="card__body">
-    <p class="chip chip--amor">Paraula d&#39;amor</p>
-    <h3 class="card__title"><a href="/tasses/ventijol/">Ventijol</a></h3>
-    <p class="card__text">Persona que fa més lleugers els dies feixucs.</p>
-    <p class="card__rating" data-rating hidden></p>
-    <div class="card__foot">
-      <span class="price">5,95 €</span>
-      <button type="button" class="btn btn--small" data-add="ventijol">Afegeix<span class="sr-only"> «Ventijol» a la cistella</span></button>
-    </div>
-  </div>
-</article></div>
-  </div>
-</section>
-
-<section class="section section--white" aria-labelledby="reviews-title">
+<section class="section" aria-labelledby="reviews-title">
   <div class="container">
     <div class="section-head">
   <p class="eyebrow">Opinions</p>
@@ -1024,7 +925,7 @@
   </div>
 </section>
 
-<section class="section" aria-labelledby="faq-title">
+<section class="section section--white" aria-labelledby="faq-title">
   <div class="container narrow">
     <div class="section-head">
   <p class="eyebrow">Preguntes freqüents</p>

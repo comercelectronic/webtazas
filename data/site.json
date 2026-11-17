@@ -106,28 +106,32 @@
       "name": "Paraules d'amor",
       "singular": "Paraula d'amor",
       "text": "Per dir-li a algú, cada matí, el que significa per a tu.",
-      "cover": "aixopluc"
+      "cover": "aixopluc",
+      "word": "caliu"
     },
     {
       "id": "caracter",
       "name": "Paraules de caràcter",
       "singular": "Paraula de caràcter",
       "text": "Per riure's de les manies de tothom. Començant per les teves.",
-      "cover": "cagadubtes"
+      "cover": "cagadubtes",
+      "word": "cagadubtes"
     },
     {
       "id": "insults",
       "name": "Insults d'autor",
       "singular": "Insult d'autor",
       "text": "Insults i comparacions catalanes de tota la vida, amb molta gràcia i poca mala intenció.",
-      "cover": "arsenal-insults"
+      "cover": "arsenal-insults",
+      "word": "capsigrany"
     },
     {
       "id": "humor",
       "name": "Frases amb humor",
       "singular": "Frase amb humor",
       "text": "Jocs de paraules i frases enginyoses per començar el dia amb un somriure.",
-      "cover": "cafe-sol"
+      "cover": "cafe-sol",
+      "word": "tallat"
     }
   ],
   "recommender": [
@@ -172,5 +176,11 @@
         "especial"
       ]
     }
+  ],
+  "heroWords": [
+    "aixopluc",
+    "cagadubtes",
+    "caliu",
+    "bocamoll"
   ]
 }

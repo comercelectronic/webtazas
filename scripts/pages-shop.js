@@ -35,16 +35,22 @@ function recommenderSlugs(r) {
 }
 
 function recommender() {
-  const opts = site.recommender.map((r) => ({ ...r, slugs: recommenderSlugs(r) }));
+  const opts = site.recommender.map((r) => ({
+    ...r,
+    slugs: recommenderSlugs(r),
+    href: r.categories.length === 1 ? CATEGORY_BY_ID[r.categories[0]].path : '/tasses/',
+  }));
   const first = opts[0];
+  const SHOW = 4;
   return `<section class="section finder" id="recomanador" aria-labelledby="finder-title">
   <div class="container">
     ${sectionHead('Recomanador', 'Troba la tassa perfecta', 'Per a qui busques una tassa?', { id: 'finder-title' })}
     <div class="finder__options" role="group" aria-label="Per a qui busques una tassa?">
-      ${opts.map((r, i) => `<button type="button" class="finder__option" aria-pressed="${i === 0}" data-finder-option="${r.id}" data-slugs="${r.slugs.join(',')}">${esc(r.label)}</button>`).join('')}
+      ${opts.map((r, i) => `<button type="button" class="finder__option" aria-pressed="${i === 0}" data-finder-option="${r.id}" data-slugs="${r.slugs.join(',')}" data-href="${r.href}">${esc(r.label)}</button>`).join('')}
     </div>
     <p class="finder__status" role="status" aria-live="polite" data-finder-status>${first.slugs.length} tasses ${esc(first.label.toLowerCase())}</p>
-    <div class="grid finder__results" data-finder-results>${first.slugs.map((s) => productCard(BY_SLUG[s])).join('')}</div>
+    <div class="grid finder__results" data-finder-results data-show="${SHOW}">${first.slugs.slice(0, SHOW).map((x) => productCard(BY_SLUG[x])).join('')}</div>
+    <p class="section-cta"><a class="btn btn--ghost btn--lg" href="${first.href}" data-finder-more>Veure-les totes (${first.slugs.length}) ${icon('arrow')}</a></p>
   </div>
 </section>`;
 }
@@ -70,36 +76,66 @@ function contactSection() {
 </section>`;
 }
 
+function heroWord(p, i) {
+  return `<div class="hero-word${i === 0 ? ' is-active' : ''}" data-hero-word${i === 0 ? '' : ' hidden'}>
+  <div class="hero-word__card">
+    <p class="hero-word__head"><span class="hero-word__word">${esc(p.name.toLowerCase())}</span> <span class="hero-word__ipa">${esc(p.phonetic)}</span></p>
+    <ol class="hero-word__defs"><li>${esc(p.def1)}</li><li>${esc(p.def2)}</li></ol>
+  </div>
+  <a class="hero-word__mug" href="${productUrl(p)}" tabindex="-1" aria-hidden="true">${productImg(p, 'front', { eager: i === 0, alt: '' })}</a>
+  <p class="hero-word__link"><a href="${productUrl(p)}">Veure la tassa «${esc(p.intro)} ${esc(p.name.toLowerCase())}» ${icon('arrow')}</a></p>
+</div>`;
+}
+
 function home() {
-  const heroMug = BY_SLUG.aixopluc;
-  const explain = BY_SLUG.caliu;
-  const featured = newProducts.slice(0, 8);
+  const words = site.heroWords.map((x) => BY_SLUG[x]);
+  const flip = BY_SLUG.caliu;
+  const fresh = newProducts.slice(0, 6);
 
   const main = `
-<section class="hero" aria-labelledby="hero-title">
+<section class="hero hero--bold" aria-labelledby="hero-title">
   <div class="container hero__grid">
     <div class="hero__copy">
-      <p class="hero__badge">Totes les tasses a <strong>${PRICE}</strong></p>
-      <h1 class="hero__title" id="hero-title">Paraules que es converteixen en <em>regals</em>.</h1>
-      <p class="hero__lead">Tasses amb paraules i expressions catalanes. Per dir t'estimo, per riure, per sorprendre o per començar el dia amb un somriure.</p>
+      <h1 class="hero__title" id="hero-title">Hi ha coses que costen de dir. <em>Per això hi ha tasses.</em></h1>
+      <p class="hero__lead">Paraules i expressions catalanes per regalar: per dir t'estimo, per riure o per començar el dia amb un somriure.</p>
       <div class="hero__ctas">
-        <a class="btn btn--primary btn--lg" href="/tasses/">Descobreix les tasses ${icon('arrow')}</a>
-        <a class="btn btn--ghost btn--lg" href="#recomanador">Troba el regal perfecte</a>
+        <a class="btn btn--light btn--lg" href="/tasses/">Regala una paraula ${icon('arrow')}</a>
+        <a class="btn btn--outline-light btn--lg" href="#recomanador">Troba la tassa per a qui vulguis</a>
       </div>
-      ${trustList('trust--inline')}
+      <ul class="hero__trust">
+        <li>${icon('lock')} Pagament segur amb Stripe</li>
+        <li>${icon('truck')} Enviament ${SHIPPING}</li>
+        <li>${icon('return')} 14 dies per desistir</li>
+      </ul>
     </div>
-    <div class="hero__media">
-      <a class="hero__photo" href="${productUrl(heroMug)}">${productImg(heroMug, 'front', { eager: true, alt: `Tassa «${heroMug.intro} ${heroMug.name.toLowerCase()}», vista de davant` })}<span class="sr-only">Veure la tassa ${esc(heroMug.name)}</span></a>
-      <figure class="hero__inset" aria-hidden="true">${productImg(heroMug, 'back', { alt: '' })}<figcaption>Al darrere, la definició</figcaption></figure>
+    <div class="hero__stage" data-hero-words>
+      <p class="hero__sticker" aria-label="Totes les tasses a ${PRICE}"><span>Totes a</span><strong>${PRICE}</strong></p>
+      ${words.map(heroWord).join('')}
+      <button type="button" class="hero__pause" data-hero-pause aria-pressed="false" hidden>${icon('pause')}<span class="sr-only">Atura el canvi de paraules</span></button>
     </div>
+  </div>
+</section>
+
+<section class="promo" aria-labelledby="promo-title">
+  <div class="container promo__inner">
+    <p class="promo__tag">Aquest Nadal</p>
+    <h2 class="promo__title" id="promo-title">L'amic invisible més fàcil de l'any: <span>${PRICE}</span></h2>
+    <p class="promo__text">Una paraula diferent per a cada persona del grup. I l'enviament, un sol cop per comanda.</p>
+    <a class="btn btn--light" href="/tasses/">Tria-les ara ${icon('arrow')}</a>
   </div>
 </section>
 
 <section class="section explain" aria-labelledby="explain-title">
   <div class="container explain__grid">
-    <figure class="explain__pair">
-      <div class="explain__side">${productImg(explain, 'front', { alt: `Davant de la tassa: «${explain.intro} ${explain.name.toLowerCase()}»` })}<figcaption><strong>Davant</strong> El missatge, per a qui la rep</figcaption></div>
-      <div class="explain__side">${productImg(explain, 'back', { alt: `Darrere de la tassa: definició de «${explain.name.toLowerCase()}»` })}<figcaption><strong>Darrere</strong> La definició, per entendre-ho tot</figcaption></div>
+    <figure class="flip" data-flip>
+      <div class="flip__stage">
+        ${productImg(flip, 'front', { cls: 'flip__img flip__img--front', alt: `Davant de la tassa: «${flip.intro} ${flip.name.toLowerCase()}»` })}
+        ${productImg(flip, 'back', { cls: 'flip__img flip__img--back', alt: `Darrere de la tassa: definició de «${flip.name.toLowerCase()}»` })}
+      </div>
+      <figcaption class="flip__bar">
+        <span class="flip__label" data-flip-label>Davant: el missatge</span>
+        <button type="button" class="btn btn--small" data-flip-toggle aria-pressed="false">Gira la tassa</button>
+      </figcaption>
     </figure>
     <div>
       ${sectionHead('Què fa diferent una Tassa de Mots', 'Una paraula, dues definicions.', '', { id: 'explain-title' })}
@@ -115,30 +151,16 @@ function home() {
 <section class="section section--white" id="categories" aria-labelledby="cat-title">
   <div class="container">
     ${sectionHead('Categories', 'Quina paraula busques?', '', { id: 'cat-title' })}
-    <div class="categories">
-      ${CATEGORIES.map((c) => `<a class="category category--${c.id}" href="${c.path}">
-        ${productImg(BY_SLUG[c.cover], 'front', { alt: '' })}
-        <span class="category__body"><span class="category__name">${esc(c.name)}</span><span class="category__text">${esc(c.text)}</span><span class="category__count">Veure les ${c.products.length} ${c.products.length === 1 ? 'tassa' : 'tasses'} ${icon('arrow')}</span></span>
+    <div class="wordtiles">
+      ${CATEGORIES.map((c) => `<a class="wordtile wordtile--${c.id}" href="${c.path}">
+        <span class="wordtile__word" aria-hidden="true">${esc(c.word)}</span>
+        <span class="wordtile__name">${esc(c.name)}</span>
+        <span class="wordtile__text">${esc(c.text)}</span>
+        <span class="wordtile__count">${c.products.length} tasses ${icon('arrow')}</span>
       </a>`).join('')}
     </div>
   </div>
 </section>
-
-<section class="section" aria-labelledby="new-title">
-  <div class="container">
-    ${sectionHead('Novetats', 'Acabades d\'arribar.', `Frases enginyoses, expressions de tota la vida i un tros de pa. Totes a ${PRICE}.`, { id: 'new-title' })}
-    ${productGrid(featured)}
-    <p class="section-cta"><a class="btn btn--ghost btn--lg" href="/tasses/">Veure les ${catalog.length} tasses ${icon('arrow')}</a></p>
-  </div>
-</section>
-
-<section class="section section--white" aria-labelledby="best-title" data-bestsellers hidden>
-  <div class="container">
-    ${sectionHead('Més venudes', 'Les que més s\'emporten.', 'Calculat a partir de les comandes pagades a la botiga.', { id: 'best-title' })}
-    <div class="grid" data-bestsellers-grid></div>
-  </div>
-</section>
-${catalog.map((p) => `<template data-card-template="${p.slug}">${productCard(p)}</template>`).join('')}
 
 <section class="section packs-section" id="packs" aria-labelledby="packs-title">
   <div class="container">
@@ -150,7 +172,23 @@ ${catalog.map((p) => `<template data-card-template="${p.slug}">${productCard(p)}
 
 ${recommender()}
 
-<section class="section section--white" aria-labelledby="reviews-title">
+<section class="section section--white" aria-labelledby="new-title">
+  <div class="container">
+    ${sectionHead('Novetats', 'Acabades d\'arribar.', `Frases enginyoses, expressions de tota la vida i un tros de pa.`, { id: 'new-title' })}
+    <div class="rail" tabindex="0" role="region" aria-label="Novetats (llisca per veure'n més)">${fresh.map((p) => productCard(p)).join('')}</div>
+    <p class="section-cta"><a class="btn btn--ghost btn--lg" href="/tasses/">Veure les ${catalog.length} tasses ${icon('arrow')}</a></p>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="best-title" data-bestsellers hidden>
+  <div class="container">
+    ${sectionHead('Més venudes', 'Les que més s\'emporten.', 'Calculat a partir de les comandes pagades a la botiga.', { id: 'best-title' })}
+    <div class="grid" data-bestsellers-grid></div>
+  </div>
+</section>
+${catalog.map((p) => `<template data-card-template="${p.slug}">${productCard(p)}</template>`).join('')}
+
+<section class="section" aria-labelledby="reviews-title">
   <div class="container">
     ${sectionHead('Opinions', 'El que en diuen.', '', { id: 'reviews-title' })}
     <div class="latest-reviews" data-latest-reviews>
@@ -162,7 +200,7 @@ ${recommender()}
   </div>
 </section>
 
-<section class="section" aria-labelledby="faq-title">
+<section class="section section--white" aria-labelledby="faq-title">
   <div class="container narrow">
     ${sectionHead('Preguntes freqüents', 'Abans de comprar', '', { id: 'faq-title' })}
     <div class="faq">${FAQ.map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}</div>

@@ -22,6 +22,7 @@
   --terra: #B66F54;      /* terracota (accents i text gran) */
   --terra-dark: #8A4A33; /* terracota per a text petit (contrast AA) */
   --terra-soft: #F3E2D9;
+  --terra-deep: #9C5640; /* fons del hero: text blanc amb contrast AA */
   --sage: #89917A;       /* verd sàlvia */
   --sage-dark: #565D4A;
   --sage-soft: #E6E8DF;
@@ -75,7 +76,7 @@ p { margin: 0 0 1em; }
 .btn:active { transform: translateY(1px); }
 .btn .icon { width: 18px; height: 18px; }
 .btn--primary { background: var(--ink); color: var(--white); }
-.btn--primary:hover { background: var(--terra); }
+.btn--primary:hover { background: var(--terra-dark); }
 .btn--ghost { background: transparent; color: var(--ink); border-color: var(--ink); }
 .btn--ghost:hover { background: var(--ink); color: var(--white); }
 .btn--small { min-height: 38px; padding: 7px 16px; font-size: .88rem; background: var(--ink); color: var(--white); }
@@ -177,6 +178,103 @@ p { margin: 0 0 1em; }
   .hero__inset { width: 36%; }
 }
 
+/* ---------- Hero tipogràfic ---------- */
+.btn--light { background: var(--white); color: var(--ink); }
+.btn--light:hover { background: var(--ink); color: var(--white); }
+.btn--outline-light { background: transparent; color: var(--white); border-color: rgba(255, 254, 252, .75); }
+.btn--outline-light:hover { background: var(--white); color: var(--ink); border-color: var(--white); }
+.hero--bold { background: var(--terra-deep); color: var(--white); padding: clamp(36px, 6vw, 84px) 0 clamp(44px, 7vw, 96px); position: relative; overflow: hidden; }
+.hero--bold::before { content: ""; position: absolute; right: -12%; top: -30%; width: 60%; aspect-ratio: 1; border-radius: 50%; background: rgba(255, 254, 252, .06); pointer-events: none; }
+.hero--bold .hero__grid { grid-template-columns: 1fr 1.05fr; position: relative; }
+.hero--bold .hero__title { color: var(--white); font-size: clamp(2.3rem, 4.8vw, 3.8rem); }
+.hero--bold .hero__title em { color: #F6DDD0; display: block; }
+.hero--bold .hero__lead { color: #F7ECE6; }
+.hero__trust { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: .9rem; color: #F7ECE6; }
+.hero__trust li { display: inline-flex; align-items: center; gap: 8px; }
+.hero__stage { position: relative; }
+.hero-word { display: grid; grid-template-columns: 1fr 1fr; align-items: start; position: relative; }
+.hero-word.is-active { animation: wordIn .6s ease both; }
+@keyframes wordIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.hero-word__card { grid-column: 1 / -1; background: var(--white); color: var(--ink); border-radius: var(--radius-lg); padding: 30px 32px 96px; width: 84%; box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .55); }
+.hero-word__head { margin: 0 0 14px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
+.hero-word__word { font-family: var(--serif); font-weight: 600; font-size: clamp(2.6rem, 5vw, 4rem); line-height: 1; letter-spacing: -0.02em; }
+.hero-word__ipa { font-family: var(--serif); font-style: italic; color: var(--ink-3); font-size: 1rem; }
+.hero-word__defs { margin: 0; padding-left: 1.3em; display: grid; gap: 8px; font-size: 1.05rem; color: var(--ink-2); }
+.hero-word__defs li::marker { color: var(--terra-dark); font-weight: 700; }
+.hero-word__defs li:last-child { color: var(--ink); font-family: var(--serif); font-style: italic; font-size: 1.15rem; }
+.hero-word__link { grid-column: 1; grid-row: 2; margin: 18px 0 0; font-size: .92rem; }
+.hero-word__link a { color: var(--white); text-underline-offset: 3px; }
+.hero-word__link .icon { width: 16px; height: 16px; vertical-align: -3px; }
+.hero-word__mug { grid-column: 2; grid-row: 2; justify-self: end; margin-top: -84px; width: 100%; max-width: 250px; border-radius: var(--radius-lg); overflow: hidden; border: 6px solid var(--white); background: var(--white); box-shadow: 0 30px 60px -28px rgba(0, 0, 0, .6); transform: rotate(5deg); transition: transform .3s; position: relative; z-index: 2; }
+.hero-word__mug:hover { transform: rotate(2deg) scale(1.02); }
+.hero-word__mug img { aspect-ratio: 4 / 5; object-fit: cover; width: 100%; }
+.hero__sticker { position: absolute; z-index: 3; right: 0; top: -22px; width: 104px; height: 104px; border-radius: 50%; background: #C4C9B5; color: var(--ink); display: grid; place-content: center; text-align: center; margin: 0; transform: rotate(-12deg); box-shadow: 0 14px 30px -14px rgba(0, 0, 0, .6); line-height: 1.1; }
+.hero__sticker span { font-size: .74rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+.hero__sticker strong { font-family: var(--serif); font-size: 1.6rem; }
+.hero__pause { position: absolute; left: 0; bottom: 0; width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255, 254, 252, .6); background: transparent; color: var(--white); display: grid; place-items: center; cursor: pointer; }
+.hero__pause:hover { background: rgba(255, 254, 252, .12); }
+@media (max-width: 900px) {
+  .hero--bold .hero__grid { grid-template-columns: 1fr; gap: 36px; }
+  .hero__stage { padding-top: 10px; }
+  .hero-word__card { width: 100%; padding: 22px 22px 84px; }
+  .hero-word__mug { max-width: 200px; margin-top: -72px; }
+  .hero__sticker { width: 84px; height: 84px; right: -4px; top: -26px; }
+  .hero__sticker strong { font-size: 1.3rem; }
+  .hero__sticker span { font-size: .64rem; }
+}
+@media (max-width: 560px) {
+  .hero--bold .hero__ctas .btn { width: 100%; }
+  .hero-word__card { padding: 20px 18px 70px; }
+  .hero-word__mug { max-width: 150px; margin-top: -60px; }
+  .hero-word__defs { font-size: .95rem; }
+  .hero-word__defs li:last-child { font-size: 1.02rem; }
+  .hero-word__link { padding-right: 8px; }
+}
+
+/* ---------- Franja de campanya ---------- */
+.promo { background: var(--ink); color: #EAE5DC; }
+.promo__inner { display: grid; grid-template-columns: auto 1fr auto; gap: 8px 28px; align-items: center; padding-top: 26px; padding-bottom: 26px; }
+.promo__tag { grid-row: 1 / span 2; margin: 0; padding: 6px 14px; border-radius: 999px; background: #D5D9CB; color: var(--ink); font-weight: 700; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }
+.promo__title { color: var(--white); font-size: clamp(1.4rem, 2.6vw, 1.9rem); margin: 0; }
+.promo__title span { color: #EDC3B1; white-space: nowrap; }
+.promo__text { margin: 0; color: #D6D0C5; font-size: .95rem; }
+.promo .btn { grid-column: 3; grid-row: 1 / span 2; }
+@media (max-width: 760px) {
+  .promo__inner { grid-template-columns: 1fr; }
+  .promo__tag { grid-row: auto; width: fit-content; }
+  .promo .btn { grid-column: auto; grid-row: auto; width: 100%; margin-top: 8px; }
+}
+
+/* ---------- Tassa que gira ---------- */
+.flip { margin: 0; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; max-width: 480px; justify-self: center; width: 100%; }
+.flip__stage { position: relative; aspect-ratio: 4 / 5; }
+.flip__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity .5s ease, transform .6s ease; }
+.flip__img--back { opacity: 0; transform: rotateY(25deg) scale(.96); }
+.flip.is-flipped .flip__img--front { opacity: 0; transform: rotateY(-25deg) scale(.96); }
+.flip.is-flipped .flip__img--back { opacity: 1; transform: none; }
+.flip__bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 18px; border-top: 1px solid var(--line); }
+.flip__label { font-family: var(--serif); font-size: 1.05rem; }
+
+/* ---------- Categories tipogràfiques ---------- */
+.wordtiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.wordtile { display: flex; flex-direction: column; gap: 6px; min-height: 260px; padding: 26px 24px 22px; border-radius: var(--radius-lg); color: var(--white); text-decoration: none; position: relative; overflow: hidden; transition: transform .25s, box-shadow .25s; }
+.wordtile:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.wordtile--amor { background: var(--terra-deep); }
+.wordtile--caracter { background: var(--sage-dark); }
+.wordtile--insults { background: #6E5427; }
+.wordtile--humor { background: var(--ink); }
+.wordtile__word { font-family: var(--serif); font-style: italic; font-size: clamp(2rem, 3vw, 2.6rem); line-height: 1; margin-bottom: auto; padding-bottom: 28px; opacity: .95; overflow-wrap: anywhere; }
+.wordtile__name { font-family: var(--serif); font-size: 1.35rem; font-weight: 600; }
+.wordtile__text { font-size: .92rem; color: rgba(255, 254, 252, .88); }
+.wordtile__count { margin-top: 10px; font-weight: 600; font-size: .9rem; display: inline-flex; align-items: center; gap: 6px; }
+@media (max-width: 1000px) { .wordtiles { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .wordtiles { grid-template-columns: 1fr; } .wordtile { min-height: 0; } .wordtile__word { padding-bottom: 16px; } }
+
+/* ---------- Fila lliscable de productes ---------- */
+.rail { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(230px, calc((100% - 3 * 20px) / 4)); gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 2px 18px; scrollbar-width: thin; }
+.rail > .card { scroll-snap-align: start; }
+@media (max-width: 560px) { .rail { grid-auto-columns: 62%; gap: 14px; } }
+
 /* ---------- Confiança ---------- */
 .trust { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; color: var(--ink-2); font-size: .92rem; }
 .trust li { display: flex; align-items: center; gap: 10px; }
@@ -251,7 +349,7 @@ p { margin: 0 0 1em; }
 .stars .is-empty { color: var(--line-2); }
 
 /* ---------- Packs ---------- */
-.packs-section { background: var(--paper-2); }
+.packs-section { background: var(--sage-soft); }
 .packs { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(16px, 2.4vw, 28px); }
 .pack { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; display: grid; grid-template-columns: 1.1fr 1fr; transition: box-shadow .25s, transform .25s; }
 .pack:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
