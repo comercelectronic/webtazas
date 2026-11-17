@@ -1,9 +1,393 @@
 [
   {
+    "slug": "cafe-sol",
+    "name": "Un cafè sol",
+    "category": "humor",
+    "new": true,
+    "sides": 1,
+    "phonetic": null,
+    "intro": "Avui només vull",
+    "tagline": null,
+    "def1": null,
+    "def2": null,
+    "summary": "Per als matins en què no vols ni companyia ni llet.",
+    "description": [
+      "Una tassa amb doble sentit: avui només vols un cafè sol… i que et deixin sol. Amb una tasseta amb ulleres de sol prenent el sol a la tovallola.",
+      "Ideal per a l'oficina, per a qui no és persona fins al segon cafè o per a qui reivindica el seu moment de pau."
+    ],
+    "metaDescription": "Tassa «Avui només vull un cafè sol»: joc de paraules per als matins en què no vols ni companyia ni llet.",
+    "images": {
+      "front": "/images/mug-cafe-sol-front.jpg",
+      "back": "/images/mug-cafe-sol-back.jpg",
+      "width": 750,
+      "height": 880
+    },
+    "alt": {
+      "front": "Tassa blanca amb la frase «Avui només vull un cafè sol» i una il·lustració",
+      "back": "La tassa «Avui només vull un cafè sol» vista de costat"
+    },
+    "related": [
+      "tallat",
+      "sense-cafe-no-soc-persona"
+    ]
+  },
+  {
+    "slug": "tallat",
+    "name": "Tallat",
+    "category": "humor",
+    "new": true,
+    "sides": 1,
+    "phonetic": null,
+    "intro": "Avui estic una mica",
+    "tagline": null,
+    "def1": null,
+    "def2": null,
+    "summary": "Per als dies que estàs tallat… com el cafè.",
+    "description": [
+      "Quan no saps què dir, et quedes tallat. I el cafè també. Una tassa amb una tasseta tímida i una tireta a la galta, per als dies d'estar una mica tocat.",
+      "Un regal senzill per a qui es posa vermell de seguida o per a qui sempre demana un tallat."
+    ],
+    "metaDescription": "Tassa «Avui estic una mica tallat»: joc de paraules amb el cafè tallat, per als dies d'estar una mica tocat.",
+    "images": {
+      "front": "/images/mug-tallat-front.jpg",
+      "back": "/images/mug-tallat-back.jpg",
+      "width": 750,
+      "height": 880
+    },
+    "alt": {
+      "front": "Tassa blanca amb la frase «Avui estic una mica tallat» i una il·lustració",
+      "back": "La tassa «Avui estic una mica tallat» vista de costat"
+    },
+    "related": [
+      "cafe-sol",
+      "mala-llet"
+    ]
+  },
+  {
+    "slug": "mala-llet",
+    "name": "Mala llet",
+    "category": "humor",
+    "new": true,
+    "sides": 1,
+    "phonetic": null,
+    "intro": "Compte, que avui tinc",
+    "tagline": null,
+    "def1": null,
+    "def2": null,
+    "summary": "Avís previ per als dies de mala lluna.",
+    "description": [
+      "Un brick de llet enfadat i un avís clar: avui no és el dia. Millor que tothom ho sàpiga abans del primer cafè.",
+      "Per a qui té el despertar complicat, o per regalar amb tota la intenció del món."
+    ],
+    "metaDescription": "Tassa «Compte, que avui tinc mala llet»: avís previ per als dies de mal humor, amb un brick de llet enfadat.",
+    "images": {
+      "front": "/images/mug-mala-llet-front.jpg",
+      "back": "/images/mug-mala-llet-back.jpg",
+      "width": 750,
+      "height": 880
+    },
+    "alt": {
+      "front": "Tassa blanca amb la frase «Compte, que avui tinc mala llet» i una il·lustració",
+      "back": "La tassa «Compte, que avui tinc mala llet» vista de costat"
+    },
+    "related": [
+      "tallat",
+      "mes-cara-que-esquena"
+    ]
+  },
+  {
+    "slug": "sense-cafe-no-soc-persona",
+    "name": "Sense cafè no sóc persona",
+    "category": "humor",
+    "new": true,
+    "sides": 1,
+    "phonetic": null,
+    "intro": null,
+    "tagline": "Amb cafè, tampoc gaire.",
+    "def1": null,
+    "def2": null,
+    "summary": "Sense cafè no sóc persona. Amb cafè, tampoc gaire.",
+    "description": [
+      "Dues caretes, abans i després del cafè, i una veritat universal: el cafè ajuda, però no fa miracles.",
+      "Per als que necessiten el cafè per arrencar i ho reconeixen sense embuts."
+    ],
+    "metaDescription": "Tassa «Sense cafè no sóc persona. Amb cafè, tampoc gaire.»: per als que necessiten el cafè per arrencar.",
+    "images": {
+      "front": "/images/mug-sense-cafe-no-soc-persona-front.jpg",
+      "back": "/images/mug-sense-cafe-no-soc-persona-back.jpg",
+      "width": 750,
+      "height": 880
+    },
+    "alt": {
+      "front": "Tassa blanca amb la frase «Sense cafè no sóc persona. Amb cafè, tampoc gaire.» i una il·lustració",
+      "back": "La tassa «Sense cafè no sóc persona. Amb cafè, tampoc gaire.» vista de costat"
+    },
+    "related": [
+      "cafe-sol",
+      "coses-que-perden-el-fil"
+    ]
+  },
+  {
+    "slug": "coses-que-s-escalfen-de-seguida",
+    "name": "Coses que s'escalfen de seguida",
+    "category": "humor",
+    "new": true,
+    "sides": 1,
+    "phonetic": null,
+    "intro": null,
+    "tagline": null,
+    "def1": null,
+    "def2": null,
+    "summary": "El microones, el mòbil… i aquella persona que tots coneixem.",
+    "description": [
+      "Una llista il·lustrada de coses que s'escalfen de seguida: el microones, el mòbil i algú amb molt poca paciència.",
+      "Per a qui s'enfada per no res. O per a qui ho reconeix i se'n riu."
+    ],
+    "metaDescription": "Tassa «Coses que s'escalfen de seguida»: el microones, el mòbil i aquella persona que s'enfada per no res.",
+    "images": {
+      "front": "/images/mug-coses-que-s-escalfen-de-seguida-front.jpg",
+      "back": "/images/mug-coses-que-s-escalfen-de-seguida-back.jpg",
+      "width": 750,
+      "height": 880
+    },
+    "alt": {
+      "front": "Tassa blanca amb la frase «Coses que s'escalfen de seguida» i una il·lustració",
+      "back": "La tassa «Coses que s'escalfen de seguida» vista de costat"
+    },
+    "related": [
+      "coses-que-perden-el-fil",
+      "mala-llet"
+    ]
+  },
+  {
+    "slug": "coses-que-perden-el-fil",
+    "name": "Coses que perden el fil",
+    "category": "humor",
+    "new": true,
+    "sides": 1,
+    "phonetic": null,
+    "intro": null,
+    "tagline": null,
+    "def1": null,
+    "def2": null,
+    "summary": "Les agulles, els estels… i qui comença una història i no l'acaba.",
+    "description": [
+      "Una agulla, un estel i algú que diu «I llavors… què deia?». Tres coses que perden el fil, cadascuna a la seva manera.",
+      "Per a qui s'enreda explicant anècdotes o es distreu a mitja frase."
+    ],
+    "metaDescription": "Tassa «Coses que perden el fil»: una agulla, un estel i algú que no recorda què deia.",
+    "images": {
+      "front": "/images/mug-coses-que-perden-el-fil-front.jpg",
+      "back": "/images/mug-coses-que-perden-el-fil-back.jpg",
+      "width": 750,
+      "height": 880
+    },
+    "alt": {
+      "front": "Tassa blanca amb la frase «Coses que perden el fil» i una il·lustració",
+      "back": "La tassa «Coses que perden el fil» vista de costat"
+    },
+    "related": [
+      "coses-que-s-escalfen-de-seguida",
+      "coses-que-no-serveixen-per-a-res"
+    ]
+  },
+  {
+    "slug": "coses-que-no-serveixen-per-a-res",
+    "name": "Coses que no serveixen per a res",
+    "category": "humor",
+    "new": true,
+    "sides": 1,
+    "phonetic": null,
+    "intro": null,
+    "tagline": null,
+    "def1": null,
+    "def2": null,
+    "summary": "Una bombeta fosa, un bolígraf sense tinta… i aquella reunió.",
+    "description": [
+      "Una bombeta fosa, un bolígraf trencat i una reunió que podia haver estat un correu. La llista de coses que no serveixen per a res.",
+      "Ideal per a l'oficina i per a qualsevol persona que hagi sobreviscut a una reunió eterna."
+    ],
+    "metaDescription": "Tassa «Coses que no serveixen per a res»: una bombeta fosa, un bolígraf trencat i una reunió inútil.",
+    "images": {
+      "front": "/images/mug-coses-que-no-serveixen-per-a-res-front.jpg",
+      "back": "/images/mug-coses-que-no-serveixen-per-a-res-back.jpg",
+      "width": 750,
+      "height": 880
+    },
+    "alt": {
+      "front": "Tassa blanca amb la frase «Coses que no serveixen per a res» i una il·lustració",
+      "back": "La tassa «Coses que no serveixen per a res» vista de costat"
+    },
+    "related": [
+      "coses-que-perden-el-fil",
+      "coses-que-es-veuen-millor-de-lluny"
+    ]
+  },
+  {
+    "slug": "coses-que-es-veuen-millor-de-lluny",
+    "name": "Coses que es veuen millor de lluny",
+    "category": "humor",
+    "new": true,
+    "sides": 1,
+    "phonetic": null,
+    "intro": null,
+    "tagline": null,
+    "def1": null,
+    "def2": null,
+    "summary": "La lluna, els focs artificials… i el teu ex.",
+    "description": [
+      "La lluna, els focs artificials i, ben lluny, el teu ex. Tres coses que es veuen molt millor a distància.",
+      "Per a qui ha passat pàgina amb sentit de l'humor."
+    ],
+    "metaDescription": "Tassa «Coses que es veuen millor de lluny»: la lluna, els focs artificials i el teu ex.",
+    "images": {
+      "front": "/images/mug-coses-que-es-veuen-millor-de-lluny-front.jpg",
+      "back": "/images/mug-coses-que-es-veuen-millor-de-lluny-back.jpg",
+      "width": 750,
+      "height": 880
+    },
+    "alt": {
+      "front": "Tassa blanca amb la frase «Coses que es veuen millor de lluny» i una il·lustració",
+      "back": "La tassa «Coses que es veuen millor de lluny» vista de costat"
+    },
+    "related": [
+      "coses-que-no-serveixen-per-a-res",
+      "mes-cara-que-esquena"
+    ]
+  },
+  {
+    "slug": "tros-de-pa",
+    "name": "Tros de pa",
+    "category": "amor",
+    "new": true,
+    "sides": 1,
+    "phonetic": null,
+    "intro": "Ets un",
+    "tagline": null,
+    "def1": null,
+    "def2": null,
+    "summary": "Per a la persona més bona que coneixes.",
+    "description": [
+      "«Ser un tros de pa» vol dir ser una persona molt bona, d'aquelles que ho donarien tot. Amb una llesca de pa amb aureola, és clar.",
+      "Per agrair-li a algú que sempre hi és, sense posar-se cursi."
+    ],
+    "metaDescription": "Tassa «Ets un tros de pa»: l'expressió catalana per dir que algú és una persona molt bona.",
+    "images": {
+      "front": "/images/mug-tros-de-pa-front.jpg",
+      "back": "/images/mug-tros-de-pa-back.jpg",
+      "width": 750,
+      "height": 880
+    },
+    "alt": {
+      "front": "Tassa blanca amb la frase «Ets un tros de pa» i una il·lustració",
+      "back": "La tassa «Ets un tros de pa» vista de costat"
+    },
+    "related": [
+      "aixopluc",
+      "niu"
+    ]
+  },
+  {
+    "slug": "mes-inutil-que-un-cendrer-de-moto",
+    "name": "Més inútil que un cendrer de moto",
+    "category": "insults",
+    "new": true,
+    "sides": 1,
+    "phonetic": null,
+    "intro": "Ets",
+    "tagline": null,
+    "def1": null,
+    "def2": null,
+    "summary": "Una comparació clàssica per a qui no en fa ni una.",
+    "description": [
+      "Un cendrer en una moto no té cap sentit, i aquesta comparació tampoc no deixa gaire marge al dubte. Amb la moto i el cendrer dibuixats, perquè quedi clar.",
+      "Per regalar amb afecte (i amb molt de morro) a qui sempre té una excusa."
+    ],
+    "metaDescription": "Tassa «Ets més inútil que un cendrer de moto»: comparació catalana per a qui no en fa ni una.",
+    "images": {
+      "front": "/images/mug-mes-inutil-que-un-cendrer-de-moto-front.jpg",
+      "back": "/images/mug-mes-inutil-que-un-cendrer-de-moto-back.jpg",
+      "width": 750,
+      "height": 880
+    },
+    "alt": {
+      "front": "Tassa blanca amb la frase «Ets més inútil que un cendrer de moto» i una il·lustració",
+      "back": "La tassa «Ets més inútil que un cendrer de moto» vista de costat"
+    },
+    "related": [
+      "mes-pesat-que-una-vaca-en-bracos",
+      "arsenal-insults"
+    ]
+  },
+  {
+    "slug": "mes-pesat-que-una-vaca-en-bracos",
+    "name": "Més pesat que una vaca en braços",
+    "category": "insults",
+    "new": true,
+    "sides": 1,
+    "phonetic": null,
+    "intro": "Ets",
+    "tagline": null,
+    "def1": null,
+    "def2": null,
+    "summary": "Per a qui no deixa d'insistir… i d'insistir.",
+    "description": [
+      "Carregar una vaca en braços cansa. Aguantar segons qui, també. Amb una vaca i un portador ben enfadat.",
+      "Per a l'amic que no para de demanar favors o per al germà que no calla mai."
+    ],
+    "metaDescription": "Tassa «Ets més pesat que una vaca en braços»: comparació catalana per a la gent que no para d'insistir.",
+    "images": {
+      "front": "/images/mug-mes-pesat-que-una-vaca-en-bracos-front.jpg",
+      "back": "/images/mug-mes-pesat-que-una-vaca-en-bracos-back.jpg",
+      "width": 750,
+      "height": 880
+    },
+    "alt": {
+      "front": "Tassa blanca amb la frase «Ets més pesat que una vaca en braços» i una il·lustració",
+      "back": "La tassa «Ets més pesat que una vaca en braços» vista de costat"
+    },
+    "related": [
+      "mes-inutil-que-un-cendrer-de-moto",
+      "mes-cara-que-esquena"
+    ]
+  },
+  {
+    "slug": "mes-cara-que-esquena",
+    "name": "Més cara que esquena",
+    "category": "insults",
+    "new": true,
+    "sides": 1,
+    "phonetic": null,
+    "intro": "Tens",
+    "tagline": null,
+    "def1": null,
+    "def2": null,
+    "summary": "Per a qui té molta barra i cap vergonya.",
+    "description": [
+      "«Tenir més cara que esquena» és tenir molt de morro. Amb una cara rodona que ocupa més que l'esquena, literalment.",
+      "Per al company que sempre s'escapoleix o per a l'amiga que s'apunta a tot sense pagar mai."
+    ],
+    "metaDescription": "Tassa «Tens més cara que esquena»: l'expressió catalana per a qui té molt de morro.",
+    "images": {
+      "front": "/images/mug-mes-cara-que-esquena-front.jpg",
+      "back": "/images/mug-mes-cara-que-esquena-back.jpg",
+      "width": 750,
+      "height": 880
+    },
+    "alt": {
+      "front": "Tassa blanca amb la frase «Tens més cara que esquena» i una il·lustració",
+      "back": "La tassa «Tens més cara que esquena» vista de costat"
+    },
+    "related": [
+      "mes-pesat-que-una-vaca-en-bracos",
+      "mala-llet"
+    ]
+  },
+  {
     "slug": "aixopluc",
     "name": "Aixopluc",
     "category": "amor",
-    "new": true,
+    "new": false,
     "phonetic": "[ə·ʃu·ˈpluk] m.",
     "intro": "Tu ets el meu",
     "tagline": null,
@@ -31,7 +415,7 @@
     "slug": "arrel",
     "name": "Arrel",
     "category": "amor",
-    "new": true,
+    "new": false,
     "phonetic": "[ə·ˈrel] f.",
     "intro": "Tu ets la meva",
     "tagline": "allò que et sosté i et fa créixer",
@@ -59,7 +443,7 @@
     "slug": "bocamoll",
     "name": "Bocamoll",
     "category": "caracter",
-    "new": true,
+    "new": false,
     "phonetic": "[bo·kə·ˈmoʎ] m. i f.",
     "intro": "Sóc un",
     "tagline": "un secret? fins a l'hora del cafè",
@@ -87,7 +471,7 @@
     "slug": "bonanca",
     "name": "Bonança",
     "category": "amor",
-    "new": true,
+    "new": false,
     "phonetic": "[bu·ˈnan·sə] f.",
     "intro": "Tu ets la meva",
     "tagline": "la calma del mar després de la tempesta",
@@ -115,7 +499,7 @@
     "slug": "cagadubtes",
     "name": "Cagadubtes",
     "category": "caracter",
-    "new": true,
+    "new": false,
     "phonetic": "[ˌka·ɣə·ˈðup·təs] m. i f. col·loq.",
     "intro": "Sóc un",
     "tagline": "potser sí, potser no, ja t'ho diré",
@@ -143,7 +527,7 @@
     "slug": "caliu",
     "name": "Caliu",
     "category": "amor",
-    "new": true,
+    "new": false,
     "phonetic": "[kə·ˈliw] m.",
     "intro": "Tu ets el meu",
     "tagline": "brasa que queda sota la cendra i manté l'escalfor",
@@ -171,7 +555,7 @@
     "slug": "corco",
     "name": "Corcó",
     "category": "caracter",
-    "new": true,
+    "new": false,
     "phonetic": "[kur·ˈko] m.",
     "intro": "Sóc un",
     "tagline": "només una preguntetaaa...",
@@ -199,7 +583,7 @@
     "slug": "deler",
     "name": "Deler",
     "category": "amor",
-    "new": true,
+    "new": false,
     "phonetic": "[də·ˈle] m.",
     "intro": "Tu ets el meu",
     "tagline": "desig ardent, ganes immenses",
@@ -227,7 +611,7 @@
     "slug": "escalfacadires",
     "name": "Escalfacadires",
     "category": "caracter",
-    "new": true,
+    "new": false,
     "phonetic": "[əs·ˌkal·fə·kə·ˈði·rəs] m. i f. col·loq.",
     "intro": "Sóc un",
     "tagline": "de 9 a 5, sense despentinar-se",
@@ -255,7 +639,7 @@
     "slug": "llepafils",
     "name": "Llepafils",
     "category": "caracter",
-    "new": true,
+    "new": false,
     "phonetic": "[ʎə·pə·ˈfils] m. i f.",
     "intro": "Sóc un",
     "tagline": "això no, això tampoc",
@@ -283,7 +667,7 @@
     "slug": "manefla",
     "name": "Manefla",
     "category": "caracter",
-    "new": true,
+    "new": false,
     "phonetic": "[mə·ˈnɛ·flə] m. i f. col·loq.",
     "intro": "Sóc un",
     "tagline": "sap el que passa abans que passi",
@@ -311,7 +695,7 @@
     "slug": "moixaina",
     "name": "Moixaina",
     "category": "amor",
-    "new": true,
+    "new": false,
     "phonetic": "[mu·ˈʃaj·nə] f.",
     "intro": "Tu ets la meva",
     "tagline": "carícia tendra, amanyac",
@@ -339,7 +723,7 @@
     "slug": "niu",
     "name": "Niu",
     "category": "amor",
-    "new": true,
+    "new": false,
     "phonetic": "[ˈniw] m.",
     "intro": "Tu ets el meu",
     "tagline": "lloc càlid on sempre es pot tornar",
@@ -367,7 +751,7 @@
     "slug": "pocatraca",
     "name": "Pocatraça",
     "category": "caracter",
-    "new": true,
+    "new": false,
     "phonetic": "[ˌpo·kə·ˈtra·sə] m. i f.",
     "intro": "Sóc un",
     "tagline": "si es pot vessar, ho vessaré",
@@ -395,7 +779,7 @@
     "slug": "rosada",
     "name": "Rosada",
     "category": "amor",
-    "new": true,
+    "new": false,
     "phonetic": "[ru·ˈza·ðə] f.",
     "intro": "Tu ets la meva",
     "tagline": "gotetes que la matinada deixa sobre l'herba",
@@ -423,7 +807,7 @@
     "slug": "solell",
     "name": "Solell",
     "category": "amor",
-    "new": true,
+    "new": false,
     "phonetic": "[su·ˈleʎ] m.",
     "intro": "Tu ets el meu",
     "tagline": "racó on toca el sol de ple",
@@ -451,7 +835,7 @@
     "slug": "ventijol",
     "name": "Ventijol",
     "category": "amor",
-    "new": true,
+    "new": false,
     "phonetic": "[bən·ti·ˈʒɔl] m.",
     "intro": "Tu ets el meu",
     "tagline": "vent suau i agradable",

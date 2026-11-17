@@ -186,17 +186,19 @@ p { margin: 0 0 1em; }
 @media (max-width: 900px) { .explain__grid { grid-template-columns: 1fr; } }
 
 /* ---------- Categories ---------- */
-.categories { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.categories { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+@media (max-width: 1100px) { .categories { grid-template-columns: repeat(2, 1fr); } }
 .category { display: grid; grid-template-rows: auto 1fr; background: var(--white); border-radius: var(--radius-lg); overflow: hidden; text-decoration: none; border: 1px solid var(--line); transition: transform .25s, box-shadow .25s; }
 .category:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
 .category img { aspect-ratio: 5 / 4; object-fit: cover; width: 100%; }
 .category__body { display: flex; flex-direction: column; gap: 6px; padding: 20px 22px 22px; border-top: 4px solid var(--terra); }
 .category--caracter .category__body { border-top-color: var(--sage); }
 .category--insults .category__body { border-top-color: var(--mustard); }
+.category--humor .category__body { border-top-color: var(--sky); }
 .category__name { font-family: var(--serif); font-size: 1.45rem; font-weight: 500; }
 .category__text { color: var(--ink-2); font-size: .95rem; }
 .category__count { margin-top: auto; padding-top: 8px; font-weight: 600; font-size: .9rem; display: inline-flex; gap: 6px; align-items: center; }
-@media (max-width: 860px) { .categories { grid-template-columns: 1fr; } .category { grid-template-columns: 38% 1fr; grid-template-rows: none; } .category img { aspect-ratio: auto; height: 100%; } .category__body { border-top: 0; border-left: 4px solid var(--terra); } .category--caracter .category__body { border-left-color: var(--sage); } .category--insults .category__body { border-left-color: var(--mustard); } }
+@media (max-width: 860px) { .categories { grid-template-columns: 1fr; } .category { grid-template-columns: 38% 1fr; grid-template-rows: none; } .category img { aspect-ratio: auto; height: 100%; } .category__body { border-top: 0; border-left: 4px solid var(--terra); } .category--caracter .category__body { border-left-color: var(--sage); } .category--insults .category__body { border-left-color: var(--mustard); } .category--humor .category__body { border-left-color: var(--sky); } }
 
 /* ---------- Targetes de producte ---------- */
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: clamp(14px, 2vw, 24px); }
@@ -230,6 +232,7 @@ p { margin: 0 0 1em; }
 .chip { display: inline-block; width: fit-content; margin: 0; padding: 3px 10px; border-radius: 999px; font-size: .74rem; font-weight: 600; letter-spacing: .02em; text-decoration: none; background: var(--terra-soft); color: var(--terra-dark); }
 .chip--caracter { background: var(--sage-soft); color: #3F6A3C; }
 .chip--insults { background: var(--mustard-soft); color: #7A5512; }
+.chip--humor { background: var(--sky-soft); color: #2C5378; }
 
 .stars { display: inline-flex; gap: 1px; color: var(--star); }
 .stars .icon { width: 16px; height: 16px; }

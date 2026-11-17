@@ -4,34 +4,54 @@
   "siteUrl": "https://tassademots.cat",
   "contactEmail": "hola@tassademots.cat",
   "locale": "ca_ES",
-
   "newsletterConsent": {
     "version": "2026-11",
     "text": "Vull rebre per correu electrònic la newsletter de Tassa de Mots amb novetats, nous dissenys, ofertes i descomptes. Sé que em puc donar de baixa en qualsevol moment."
   },
-
   "unitPriceCents": 795,
   "currency": "EUR",
   "maxQtyPerItem": 20,
-
   "shipping": {
     "costCents": 495,
     "minBusinessDays": 3,
     "maxBusinessDays": 7,
-    "countries": ["ES", "FR", "PT", "AD", "IT", "DE"],
+    "countries": [
+      "ES",
+      "FR",
+      "PT",
+      "AD",
+      "IT",
+      "DE"
+    ],
     "countriesLabel": "Espanya, Andorra, França, Portugal, Itàlia i Alemanya",
     "carrier": null
   },
-
   "productSpecs": [
-    { "label": "Material", "value": "Ceràmica" },
-    { "label": "Capacitat", "value": null },
-    { "label": "Mides", "value": null },
-    { "label": "Rentaplats", "value": null },
-    { "label": "Microones", "value": null },
-    { "label": "Cures recomanades", "value": null }
+    {
+      "label": "Material",
+      "value": "Ceràmica"
+    },
+    {
+      "label": "Capacitat",
+      "value": null
+    },
+    {
+      "label": "Mides",
+      "value": null
+    },
+    {
+      "label": "Rentaplats",
+      "value": null
+    },
+    {
+      "label": "Microones",
+      "value": null
+    },
+    {
+      "label": "Cures recomanades",
+      "value": null
+    }
   ],
-
   "legal": {
     "ownerName": null,
     "taxId": null,
@@ -39,28 +59,47 @@
     "registryData": null,
     "vatInfo": null
   },
-
   "packs": [
     {
       "id": "casa",
       "name": "Per a la família",
       "text": "Tres paraules per a la gent que t'ha vist créixer.",
-      "slugs": ["niu", "arrel", "aixopluc"]
+      "slugs": [
+        "niu",
+        "arrel",
+        "aixopluc"
+      ]
     },
     {
       "id": "parella",
       "name": "Per a la parella",
       "text": "Una per a cadascú, per al cafè de cada matí.",
-      "slugs": ["deler", "caliu"]
+      "slugs": [
+        "deler",
+        "caliu"
+      ]
     },
     {
       "id": "feina",
       "name": "Per a la feina",
       "text": "Per a aquell company que tots coneixem (o per a tu).",
-      "slugs": ["escalfacadires", "manefla", "bocamoll"]
+      "slugs": [
+        "escalfacadires",
+        "manefla",
+        "bocamoll"
+      ]
+    },
+    {
+      "id": "cafe",
+      "name": "Per als addictes al cafè",
+      "text": "Tres maneres de dir que, sense cafè, millor no parlar.",
+      "slugs": [
+        "cafe-sol",
+        "tallat",
+        "sense-cafe-no-soc-persona"
+      ]
     }
   ],
-
   "categories": [
     {
       "id": "amor",
@@ -80,8 +119,15 @@
       "id": "insults",
       "name": "Insults d'autor",
       "singular": "Insult d'autor",
-      "text": "Setze insults catalans en una sola tassa.",
+      "text": "Insults i comparacions catalanes de tota la vida, amb molta gràcia i poca mala intenció.",
       "cover": "arsenal-insults"
+    },
+    {
+      "id": "humor",
+      "name": "Frases amb humor",
+      "singular": "Frase amb humor",
+      "text": "Jocs de paraules i frases enginyoses per començar el dia amb un somriure.",
+      "cover": "cafe-sol"
     }
   ]
 }

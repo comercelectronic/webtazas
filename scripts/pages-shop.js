@@ -51,16 +51,16 @@ function contactSection() {
 
 function home() {
   const hero = [BY_SLUG.aixopluc, BY_SLUG.niu, BY_SLUG.cagadubtes];
-  const featured = ['aixopluc', 'cagadubtes', 'caliu', 'escalfacadires', 'niu', 'bocamoll', 'deler', 'llepafils'].map((s) => BY_SLUG[s]);
+  const featured = ['cafe-sol', 'tros-de-pa', 'mes-cara-que-esquena', 'sense-cafe-no-soc-persona', 'coses-que-es-veuen-millor-de-lluny', 'mala-llet', 'mes-inutil-que-un-cendrer-de-moto', 'coses-que-no-serveixen-per-a-res'].map((s) => BY_SLUG[s]);
   const explain = BY_SLUG.caliu;
 
   const main = `
 <section class="hero" aria-labelledby="hero-title">
   <div class="container hero__grid">
     <div class="hero__copy">
-      <p class="eyebrow">Nova col·lecció · ${newProducts.length} paraules catalanes</p>
+      <p class="eyebrow">Novetat · ${newProducts.length} dissenys nous</p>
       <h1 class="hero__title" id="hero-title">Regala una paraula que digui <em>exactament</em> el que sents</h1>
-      <p class="hero__lead">Tasses amb paraules catalanes poc habituals. Al davant, un missatge per a qui la rep; al darrere, la definició de diccionari. Totes a <strong>${PRICE}</strong>.</p>
+      <p class="hero__lead">Tasses amb paraules i expressions catalanes: per dir t'estimo, per riure's de les manies de cadascú o per començar el dia amb humor. Totes a <strong>${PRICE}</strong>.</p>
       <div class="hero__ctas">
         <a class="btn btn--primary btn--lg" href="/tasses/">Veure totes les tasses ${icon('arrow')}</a>
         <a class="btn btn--ghost btn--lg" href="#categories">Troba la paraula per a algú</a>
@@ -106,7 +106,7 @@ function home() {
 
 <section class="section section--tint" aria-labelledby="new-title">
   <div class="container">
-    ${sectionHead('Novetats', 'La nova col·lecció', `${newProducts.length} paraules noves, totes a ${PRICE}.`, { id: 'new-title' })}
+    ${sectionHead('Novetats', 'Acabades d\'arribar', `${newProducts.length} dissenys nous: frases enginyoses, expressions de tota la vida i un tros de pa. Totes a ${PRICE}.`, { id: 'new-title' })}
     ${productGrid(featured)}
     <p class="section-cta"><a class="btn btn--ghost btn--lg" href="/tasses/">Veure les ${catalog.length} tasses ${icon('arrow')}</a></p>
   </div>
@@ -171,7 +171,7 @@ ${contactSection()}`;
   return {
     path: '/',
     title: `${site.brand} · Tasses amb paraules catalanes per regalar`,
-    description: `Tasses amb paraules catalanes poc habituals i la seva definició de diccionari. Regals originals per a la parella, la família o la feina, a ${PRICE}.`,
+    description: `Tasses amb paraules i expressions catalanes amb humor. Regals originals per a la parella, la família o la feina, a ${PRICE}.`,
     jsonld,
     bodyClass: 'page-home',
     main,
@@ -214,7 +214,7 @@ function catalogPages() {
     path: '/tasses/',
     title: `Totes les tasses · ${site.brand}`,
     h1: 'Totes les tasses',
-    intro: 'Tasses amb paraules catalanes per regalar: per dir t\'estimo, per riure\'s de les manies de cadascú o per desfogar-se amb setze insults.',
+    intro: 'Tasses amb paraules catalanes per regalar: per dir t\'estimo, per riure\'s de les manies de cadascú, per desfogar-se amb insults d\'autor o per començar el dia amb humor.',
     products: catalog,
     crumbs: [{ name: 'Inici', path: '/' }, { name: 'Totes les tasses', path: '/tasses/' }],
   })];
