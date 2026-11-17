@@ -30,6 +30,7 @@ ${noindex ? '<meta name="robots" content="noindex, nofollow">' : `<link rel="can
 <link rel="preload" href="/assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/styles.css?v=${assetVersion}">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 ${jsonld.map(jsonLd).join('\n')}
 <script defer src="/assets/catalog.js?v=${assetVersion}"></script>
 <script defer src="/assets/app.js?v=${assetVersion}"></script>
@@ -52,7 +53,7 @@ function header(path) {
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
       ${icon('menu')}<span class="sr-only">Menú</span>
     </button>
-    <a class="logo" href="/" aria-label="${esc(site.brand)}, inici">Tassa <em>de</em> Mots</a>
+    <a class="logo" href="/"><img src="/assets/brand/el-glopet-logo.svg" alt="${esc(site.brand)}, inici" width="148" height="36"></a>
     <nav class="site-nav" id="site-nav" aria-label="Principal"><ul>${links}</ul></nav>
     <button class="cart-btn" type="button" data-cart-open aria-label="Obre la cistella (0 productes)">
       ${icon('bag')}<span class="cart-btn__count" data-cart-count>0</span>
@@ -66,7 +67,7 @@ function footer() {
   return `<footer class="site-footer">
   <div class="container site-footer__grid">
     <div class="site-footer__brand">
-      <a class="logo logo--light" href="/">Tassa <em>de</em> Mots</a>
+      <a class="logo logo--light" href="/"><img src="/assets/brand/el-glopet-logo-light.svg" alt="${esc(site.brand)}" width="164" height="40" loading="lazy"></a>
       <p>Tasses amb paraules i expressions catalanes per regalar. Una paraula, dues definicions.</p>
       <p class="site-footer__pay">${icon('lock')} Pagament segur amb Stripe</p>
     </div>
@@ -186,7 +187,7 @@ function newsletterForm(source, idSuffix) {
     <span>${esc(site.newsletterConsent.text)}</span>
   </label>
   <div class="hp" aria-hidden="true"><label>No omplis aquest camp <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
-  <p class="form-note">Rebràs un correu per confirmar la subscripció. Responsable: el titular de ${esc(site.brand)} (vegeu l'<a href="/avis-legal/">avís legal</a>). Finalitat: enviar-te la newsletter. Base legal: el teu consentiment. Proveïdor d'enviament: Resend. Pots exercir els teus drets i consultar-ne més detalls a la <a href="/privacitat/">política de privacitat</a>.</p>
+  <p class="form-note">Rebràs un correu per confirmar la subscripció. Responsable: el titular ${esc(site.brandOf)} (vegeu l'<a href="/avis-legal/">avís legal</a>). Finalitat: enviar-te la newsletter. Base legal: el teu consentiment. Proveïdor d'enviament: Resend. Pots exercir els teus drets i consultar-ne més detalls a la <a href="/privacitat/">política de privacitat</a>.</p>
   <p class="form-status" role="status" aria-live="polite" data-form-status></p>
 </form>`;
 }

@@ -2,7 +2,7 @@
 //
 // Variables d'entorn necessàries a Netlify:
 //   RESEND_API_KEY   clau de l'API de Resend
-//   NEWSLETTER_FROM  remitent verificat, p. ex. "Tassa de Mots <hola@tassademots.cat>"
+//   NEWSLETTER_FROM  remitent verificat, p. ex. "El Glopet <hola@el-teu-domini.cat>"
 //
 // Si falten, les funcions ho diuen clarament i no simulen cap enviament.
 
@@ -44,7 +44,7 @@ function button(label, url) {
 function confirmationEmail({ confirmUrl }) {
   const bodyHtml = `
 <p style="margin:0 0 14px;">Hola!</p>
-<p style="margin:0 0 14px;">Algú (esperem que tu) ha demanat rebre la newsletter de ${esc(site.brand)} amb aquesta adreça.</p>
+<p style="margin:0 0 14px;">Algú (esperem que tu) ha demanat rebre la newsletter ${esc(site.brandOf)} amb aquesta adreça.</p>
 <p style="margin:0 0 14px;">Per confirmar-ho, prem el botó. Si no ho confirmes, no t'enviarem res i esborrarem la sol·licitud d'aquí a uns dies.</p>
 ${button('Confirmo la subscripció', confirmUrl)}
 <p style="margin:0;font-size:13px;color:#6b7280;">Si el botó no funciona, copia aquest enllaç al navegador:<br>${esc(confirmUrl)}</p>`;
@@ -52,7 +52,7 @@ ${button('Confirmo la subscripció', confirmUrl)}
   return {
     subject: `Confirma la teva subscripció a ${site.brand}`,
     html: layout({ preheader: 'Només et falta un clic per confirmar-ho.', bodyHtml, footerHtml }),
-    text: `Per confirmar la teva subscripció a la newsletter de ${site.brand}, obre aquest enllaç:\n${confirmUrl}\n\nSi no l'has demanada tu, ignora aquest correu.`,
+    text: `Per confirmar la teva subscripció a la newsletter ${site.brandOf}, obre aquest enllaç:\n${confirmUrl}\n\nSi no l'has demanada tu, ignora aquest correu.`,
   };
 }
 
@@ -62,7 +62,7 @@ function campaignEmail({ subject, preheader, body, ctaLabel, ctaUrl, unsubscribe
   const paragraphs = String(body || '').trim().split(/\n\s*\n/).map((p) =>
     `<p style="margin:0 0 14px;">${esc(p).replace(/\n/g, '<br>')}</p>`).join('\n');
   const cta = ctaLabel && ctaUrl ? button(ctaLabel, ctaUrl) : '';
-  const footerHtml = `Reps aquest correu perquè et vas subscriure a la newsletter de ${esc(site.brand)}.<br>
+  const footerHtml = `Reps aquest correu perquè et vas subscriure a la newsletter ${esc(site.brandOf)}.<br>
 <a href="${esc(unsubscribeUrl)}" style="color:#6b7280;">Donar-me de baixa</a>`;
   return {
     subject,

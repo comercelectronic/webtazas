@@ -1,12 +1,12 @@
 {
-  "brand": "Tassa de Mots",
+  "brand": "El Glopet",
   "tagline": "Paraules catalanes que es mereixen una tassa",
   "siteUrl": "https://tassademots.cat",
   "contactEmail": "hola@tassademots.cat",
   "locale": "ca_ES",
   "newsletterConsent": {
-    "version": "2026-11",
-    "text": "Vull rebre per correu electrònic la newsletter de Tassa de Mots amb novetats, nous dissenys, ofertes i descomptes. Sé que em puc donar de baixa en qualsevol moment."
+    "version": "2026-11-17",
+    "text": "Vull rebre per correu electrònic la newsletter d'El Glopet amb novetats, nous dissenys, ofertes i descomptes. Sé que em puc donar de baixa en qualsevol moment."
   },
   "unitPriceCents": 595,
   "currency": "EUR",
@@ -182,5 +182,6 @@
     "cagadubtes",
     "caliu",
     "bocamoll"
-  ]
+  ],
+  "brandOf": "d'El Glopet"
 }

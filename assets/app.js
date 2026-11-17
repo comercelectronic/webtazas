@@ -1,4 +1,4 @@
-/* Tassa de Mots — comportament de la botiga.
+/* El Glopet — comportament de la botiga.
    Les dades del catàleg (preu, noms, imatges) arriben de /assets/catalog.js,
    generat a partir de data/. El preu real sempre el calcula el servidor. */
 (function () {

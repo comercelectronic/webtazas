@@ -68,7 +68,7 @@ function contactSection() {
       <div class="field"><label for="c-email">Correu electrònic</label><input class="input" id="c-email" name="email" type="email" autocomplete="email" required maxlength="254"></div>
       <div class="field"><label for="c-msg">Missatge</label><textarea class="input" id="c-msg" name="missatge" rows="5" required minlength="10" maxlength="3000"></textarea></div>
       <label class="check" for="c-privacy"><input type="checkbox" id="c-privacy" name="privacitat" value="si" required><span>He llegit la informació sobre protecció de dades.</span></label>
-      <p class="form-note">Responsable: el titular de ${esc(site.brand)}. Finalitat: respondre la teva consulta. Base legal: el teu consentiment. Les dades es desen a Netlify (allotjament). Drets i més informació a la <a href="/privacitat/">política de privacitat</a>.</p>
+      <p class="form-note">Responsable: el titular ${esc(site.brandOf)}. Finalitat: respondre la teva consulta. Base legal: el teu consentiment. Les dades es desen a Netlify (allotjament). Drets i més informació a la <a href="/privacitat/">política de privacitat</a>.</p>
       <button class="btn btn--primary" type="submit">Envia el missatge</button>
       <p class="form-status" role="status" aria-live="polite" data-form-status></p>
     </form>
@@ -138,7 +138,7 @@ function home() {
       </figcaption>
     </figure>
     <div>
-      ${sectionHead('Què fa diferent una Tassa de Mots', 'Una paraula, dues definicions.', '', { id: 'explain-title' })}
+      ${sectionHead('Què fa diferent una tassa d\'El Glopet', 'Una paraula, dues definicions.', '', { id: 'explain-title' })}
       <ol class="steps">
         <li><span class="steps__n">1</span><div><h3>Paraules catalanes que es mereixen una segona vida</h3><p>Caliu, aixopluc, bocamoll, llepafils… Paraules i expressions de sempre que diuen molt amb molt poc.</p></div></li>
         <li><span class="steps__n">2</span><div><h3>Una definició de diccionari i una amb personalitat</h3><p>La del diccionari, per si de cas. I una de nostra, pensada per a la persona que tindrà la tassa a les mans.</p></div></li>
@@ -212,7 +212,7 @@ ${catalog.map((p) => `<template data-card-template="${p.slug}">${productCard(p)}
     <div>
       <p class="eyebrow eyebrow--light">Newsletter</p>
       <h2 class="section-title" id="nl-title">Paraules noves, abans que ningú.</h2>
-      <p>Subscriu-te i descobreix les noves paraules, dissenys i novetats de Tassa de Mots.</p>
+      <p>Subscriu-te i descobreix les noves paraules, dissenys i novetats d'El Glopet.</p>
     </div>
     ${newsletterForm('inici', 'home')}
   </div>
@@ -223,7 +223,7 @@ ${contactSection()}`;
   const jsonld = [
     {
       '@context': 'https://schema.org', '@type': 'Organization', name: site.brand, url: site.siteUrl + '/',
-      logo: site.siteUrl + '/favicon.svg',
+      logo: site.siteUrl + '/assets/brand/el-glopet-mark-512.png',
     },
     { '@context': 'https://schema.org', '@type': 'WebSite', name: site.brand, url: site.siteUrl + '/', inLanguage: 'ca' },
     {

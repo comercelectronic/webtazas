@@ -21,8 +21,8 @@ function simple({ path, title, description, h1, lead, body, noindex = false, cru
 const newsletter = () => simple({
   path: '/newsletter/',
   title: `Newsletter · ${site.brand}`,
-  description: `Subscriu-te a la newsletter de ${site.brand}: nous dissenys de tasses, ofertes i descomptes. Et pots donar de baixa quan vulguis.`,
-  h1: 'La newsletter de Tassa de Mots',
+  description: `Subscriu-te a la newsletter ${site.brandOf}: nous dissenys de tasses, ofertes i descomptes. Et pots donar de baixa quan vulguis.`,
+  h1: 'La newsletter d\'El Glopet',
   lead: "T'escriurem quan tinguem paraules noves, ofertes o descomptes. Sense spam i amb la baixa sempre a un clic.",
   crumbs: [{ name: 'Inici', path: '/' }, { name: 'Newsletter', path: '/newsletter/' }],
   body: `<div class="card-panel">

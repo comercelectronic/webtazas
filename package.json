@@ -2,7 +2,7 @@
   "name": "tassa-de-mots",
   "private": true,
   "version": "1.0.0",
-  "description": "Tassa de Mots — botiga en línia (pàgines generades des de data/ + Netlify Functions).",
+  "description": "El Glopet — botiga en línia (pàgines generades des de data/ + Netlify Functions).",
   "dependencies": {
     "@netlify/blobs": "^11.1.6",
     "stripe": "^16.0.0"

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="El Glopet">
+<title>El Glopet</title>
+<rect width="512" height="512" rx="112" fill="#8A4A33"/>
+<rect x="324.8" y="213.1" width="91.2" height="85.7" rx="37.3" fill="none" stroke="#F4EFE6" stroke-width="24.9"/>
+<circle cx="225.3" cy="256.0" r="138.2" fill="#F4EFE6"/>
+<circle cx="225.3" cy="256.0" r="110.6" fill="#292823"/>
+<path d="M164.5 236.1 A68.6 68.6 0 0 1 219.8 187.4" fill="none" stroke="#FFFEFC" stroke-opacity=".55" stroke-width="13.8" stroke-linecap="round"/>
+</svg>
