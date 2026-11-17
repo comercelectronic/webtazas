@@ -171,7 +171,7 @@ test('newsletter: no simula res si el correu no està configurat', async () => {
 test('newsletter: doble confirmació, registre del consentiment i baixa', async () => {
   stores.clear(); sentEmails.length = 0;
   process.env.RESEND_API_KEY = 're_x';
-  process.env.NEWSLETTER_FROM = 'Tassa de Mots <hola@tassademots.cat>';
+  process.env.NEWSLETTER_FROM = 'El Glopet <hola@exemple.cat>';
   const nl = fn('newsletter');
 
   assert.strictEqual((await nl(ev('POST', subscribe('A@Exemple.cat', { consent: false })))).statusCode, 400, 'cal consentiment explícit');

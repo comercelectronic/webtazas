@@ -16,7 +16,7 @@ const updated = new Date().toLocaleDateString('ca-ES', { year: 'numeric', month:
 const pages = {
   'avis-legal': {
     title: 'Avís legal',
-    description: `Dades identificatives del titular de ${site.brand} i condicions d'ús del lloc web.`,
+    description: `Dades identificatives del titular ${site.brandOf} i condicions d'ús del lloc web.`,
     body: () => `
 <!-- REVISIÓ JURÍDICA: completar les dades identificatives (art. 10 LSSI-CE) i confirmar si hi ha inscripció registral. -->
 <h2>1. Dades identificatives</h2>
@@ -30,7 +30,7 @@ const pages = {
 </ul>
 
 <h2>2. Objecte</h2>
-<p>Aquest lloc web, ${esc(site.siteUrl)}, té per objecte la venda en línia de tasses amb dissenys de ${esc(site.brand)}. Navegar-hi atribueix la condició de persona usuària i implica acceptar aquest avís legal.</p>
+<p>Aquest lloc web, ${esc(site.siteUrl)}, té per objecte la venda en línia de tasses amb dissenys ${esc(site.brandOf)}. Navegar-hi atribueix la condició de persona usuària i implica acceptar aquest avís legal.</p>
 
 <h2>3. Condicions d'ús</h2>
 <p>Et comprometes a fer un ús adequat del lloc web i a no fer-lo servir per a activitats il·lícites, contràries a la bona fe o que puguin perjudicar terceres persones o el funcionament del lloc.</p>
@@ -145,7 +145,7 @@ Pots donar-te de baixa des de l'enllaç que hi ha a cada correu. Cal tenir almen
 
   'condicions-venda': {
     title: 'Condicions de venda',
-    description: `Condicions generals de contractació de ${site.brand}: preus, pagament, enviament, desistiment i garantia.`,
+    description: `Condicions generals de contractació ${site.brandOf}: preus, pagament, enviament, desistiment i garantia.`,
     body: () => `
 <!-- REVISIÓ JURÍDICA: validar el conjunt amb un professional (TRLGDCU, RDL 1/2007, i Codi de consum de Catalunya, Llei 22/2010). Confirmar l'alta fiscal del titular abans de vendre. -->
 <h2>1. Venedor</h2>
@@ -195,7 +195,7 @@ Per la present us comunico que desisteixo del contracte de venda dels béns seg�
 
   'enviaments-i-devolucions': {
     title: 'Enviaments i devolucions',
-    description: `Cost i terminis d'enviament, devolucions, dret de desistiment i garantia de les tasses de ${site.brand}.`,
+    description: `Cost i terminis d'enviament, devolucions, dret de desistiment i garantia de les tasses ${site.brandOf}.`,
     body: () => `
 <!-- REVISIÓ: confirmar cost, terminis, països i transportista amb les tarifes reals abans de publicar. -->
 <h2>Enviament</h2>

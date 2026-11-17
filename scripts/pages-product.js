@@ -104,7 +104,7 @@ function product(p) {
       <details open>
         <summary>Característiques</summary>
         ${specs()}
-        <p>${p.sides === 1 ? 'Missatge i il·lustració originals de Tassa de Mots.' : 'Disseny imprès al davant i al darrere de la tassa: el missatge i la definició.'}</p>
+        <p>${p.sides === 1 ? 'Missatge i il·lustració originals d\'El Glopet.' : 'Disseny imprès al davant i al darrere de la tassa: el missatge i la definició.'}</p>
       </details>
       <details>
         <summary>Enviament</summary>

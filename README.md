@@ -1,4 +1,4 @@
-# Tassa de Mots — botiga en línia
+# El Glopet — botiga en línia
 
 Tasses amb paraules catalanes poc habituals. Web estàtica generada a partir de
 dades + Netlify Functions per al pagament (Stripe), l'estoc, les valoracions i
@@ -40,7 +40,7 @@ Variables d'entorn (Site settings → Environment variables):
 | `STRIPE_WEBHOOK_SECRET` | Webhook de Stripe (`whsec_...`). Endpoint: `/.netlify/functions/stripe-webhook`, esdeveniments `checkout.session.completed` i `checkout.session.async_payment_succeeded`. |
 | `ADMIN_PASSWORD` | Contrasenya de `/admin/` (valoracions, newsletter i estoc). |
 | `RESEND_API_KEY` | Enviament de correus de la newsletter ([resend.com](https://resend.com)). |
-| `NEWSLETTER_FROM` | Remitent verificat a Resend, p. ex. `Tassa de Mots <hola@tassademots.cat>`. |
+| `NEWSLETTER_FROM` | Remitent verificat a Resend, p. ex. `El Glopet <hola@el-teu-domini.cat>`. |
 | `SITE_URL` | Adreça pública, p. ex. `https://tassademots.cat` (per als enllaços dels correus). |
 | `HASH_SALT` | Text aleatori llarg per xifrar els identificadors anti-abús. |
 
