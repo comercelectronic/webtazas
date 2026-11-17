@@ -67,7 +67,7 @@ function footer() {
   <div class="container site-footer__grid">
     <div class="site-footer__brand">
       <a class="logo logo--light" href="/">Tassa <em>de</em> Mots</a>
-      <p>Tasses amb paraules catalanes poc habituals. Al davant, el missatge; al darrere, la definició.</p>
+      <p>Tasses amb paraules i expressions catalanes per regalar.</p>
       <p class="site-footer__pay">${icon('lock')} Pagament segur amb Stripe</p>
     </div>
     <nav aria-label="Botiga">

@@ -56,6 +56,7 @@ function product(p) {
   ];
   const combo = BY_SLUG[p.related[0]];
   const related = relatedFor(p);
+  const views = p.sides === 1 ? ['De cara', 'De costat'] : ['Davant', 'Darrere'];
   const title = p.intro ? `${p.intro} ${p.name.toLowerCase()}` : p.name;
 
   const main = `
@@ -66,8 +67,8 @@ function product(p) {
       ${productImg(p, 'front', { eager: true, cls: 'gallery__img' })}
     </div>
     <div class="gallery__thumbs" role="group" aria-label="Fotos de la tassa">
-      <button type="button" class="gallery__thumb is-active" aria-pressed="true" data-src="${p.images.front}" data-alt="${esc(p.alt.front)}">${productImg(p, 'front', { alt: '' })}<span>Davant</span></button>
-      <button type="button" class="gallery__thumb" aria-pressed="false" data-src="${p.images.back}" data-alt="${esc(p.alt.back)}">${productImg(p, 'back', { alt: '' })}<span>Darrere</span></button>
+      <button type="button" class="gallery__thumb is-active" aria-pressed="true" data-src="${p.images.front}" data-alt="${esc(p.alt.front)}">${productImg(p, 'front', { alt: '' })}<span>${views[0]}</span></button>
+      <button type="button" class="gallery__thumb" aria-pressed="false" data-src="${p.images.back}" data-alt="${esc(p.alt.back)}">${productImg(p, 'back', { alt: '' })}<span>${views[1]}</span></button>
     </div>
   </div>
 
@@ -102,7 +103,7 @@ function product(p) {
       <details open>
         <summary>Característiques</summary>
         ${specs()}
-        <p>Disseny imprès al davant i al darrere de la tassa.</p>
+        ${p.sides === 1 ? '' : '<p>Disseny imprès al davant i al darrere de la tassa.</p>'}
       </details>
       <details>
         <summary>Enviament</summary>

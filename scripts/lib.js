@@ -4,7 +4,7 @@ const catalog = require('../data/catalog.json');
 
 const BY_SLUG = Object.fromEntries(catalog.map((p) => [p.slug, p]));
 
-const CATEGORY_PATHS = { amor: 'paraules-d-amor', caracter: 'paraules-de-caracter', insults: 'insults-d-autor' };
+const CATEGORY_PATHS = { amor: 'paraules-d-amor', caracter: 'paraules-de-caracter', insults: 'insults-d-autor', humor: 'frases-amb-humor' };
 const CATEGORIES = site.categories.map((c) => ({
   ...c,
   path: `/tasses/${CATEGORY_PATHS[c.id]}/`,
