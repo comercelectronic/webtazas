@@ -251,15 +251,44 @@
   storage.del('senseSucreCart');
   render();
 
-  // ---------- Galeria de la fitxa ----------
+  // ---------- Galeria de la fitxa (carrusel amb miniatures) ----------
+  var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var gallery = $('[data-gallery]');
   if (gallery) {
-    var mainImg = $('.gallery__img', gallery);
-    $$('.gallery__thumb', gallery).forEach(function (btn) {
+    var track = $('[data-gallery-track]', gallery);
+    var thumbs = $$('.gallery__thumb', gallery);
+    var setActive = function (i) {
+      thumbs.forEach(function (b, j) { b.classList.toggle('is-active', i === j); b.setAttribute('aria-pressed', String(i === j)); });
+    };
+    thumbs.forEach(function (btn, i) {
       btn.addEventListener('click', function () {
-        mainImg.src = btn.getAttribute('data-src');
-        mainImg.alt = btn.getAttribute('data-alt');
-        $$('.gallery__thumb', gallery).forEach(function (b) { b.classList.toggle('is-active', b === btn); b.setAttribute('aria-pressed', String(b === btn)); });
+        track.scrollTo({ left: track.clientWidth * i, behavior: reducedMotion ? 'auto' : 'smooth' });
+        setActive(i);
+      });
+    });
+    var scrollTimer;
+    track.addEventListener('scroll', function () {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(function () { setActive(Math.round(track.scrollLeft / track.clientWidth)); }, 80);
+    }, { passive: true });
+  }
+
+  // ---------- Recomanador de regals ----------
+  var finder = $('#recomanador');
+  if (finder) {
+    var finderResults = $('[data-finder-results]', finder);
+    var finderStatus = $('[data-finder-status]', finder);
+    $$('[data-finder-option]', finder).forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        $$('[data-finder-option]', finder).forEach(function (b) { b.setAttribute('aria-pressed', String(b === btn)); });
+        var slugs = btn.getAttribute('data-slugs').split(',').filter(Boolean);
+        var frag = document.createDocumentFragment();
+        slugs.forEach(function (s) {
+          var tpl = $('template[data-card-template="' + s + '"]');
+          if (tpl) frag.appendChild(tpl.content.cloneNode(true));
+        });
+        finderResults.replaceChildren(frag);
+        finderStatus.textContent = slugs.length + ' tasses ' + btn.textContent.toLowerCase();
       });
     });
   }

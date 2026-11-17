@@ -25,7 +25,7 @@ ${noindex ? '<meta name="robots" content="noindex, nofollow">' : `<link rel="can
 <meta property="og:url" content="${url}">
 <meta property="og:image" content="${image}">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#FBF8F3">
+<meta name="theme-color" content="#F4EFE6">
 <link rel="preload" href="/assets/fonts/lora.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/styles.css?v=${assetVersion}">
@@ -67,7 +67,7 @@ function footer() {
   <div class="container site-footer__grid">
     <div class="site-footer__brand">
       <a class="logo logo--light" href="/">Tassa <em>de</em> Mots</a>
-      <p>Tasses amb paraules i expressions catalanes per regalar.</p>
+      <p>Tasses amb paraules i expressions catalanes per regalar. Una paraula, dues definicions.</p>
       <p class="site-footer__pay">${icon('lock')} Pagament segur amb Stripe</p>
     </div>
     <nav aria-label="Botiga">
