@@ -15,8 +15,8 @@
     "images": {
       "front": "/images/tasses/aixopluc/vermell-front.jpg",
       "back": "/images/tasses/aixopluc/vermell-back.jpg",
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tu ets el meu aixopluc»",
@@ -59,8 +59,8 @@
     "images": {
       "front": "/images/tasses/arrel/verd-front.jpg",
       "back": "/images/tasses/arrel/verd-back.jpg",
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tu ets la meva arrel»",
@@ -101,8 +101,8 @@
     "images": {
       "front": "/images/tasses/bonanca/blau-front.jpg",
       "back": "/images/tasses/bonanca/blau-back.jpg",
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tu ets la meva bonança»",
@@ -145,8 +145,8 @@
     "images": {
       "front": "/images/tasses/caliu/taronja-front.jpg",
       "back": "/images/tasses/caliu/taronja-back.jpg",
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tu ets el meu caliu»",
@@ -208,8 +208,8 @@
     "images": {
       "front": "/images/tasses/cuca-de-llum/groc-front.jpg",
       "back": "/images/tasses/cuca-de-llum/groc-back.jpg",
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tu ets la meva cuca de llum»",
@@ -232,8 +232,8 @@
     "images": {
       "front": "/images/tasses/deler/vermell-front.jpg",
       "back": "/images/tasses/deler/vermell-back.jpg",
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tu ets el meu deler»",
@@ -293,8 +293,8 @@
     "images": {
       "front": "/images/tasses/encis/negre-front.jpg",
       "back": "/images/tasses/encis/negre-back.jpg",
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tu ets el meu encís»",
@@ -336,8 +336,8 @@
     "images": {
       "front": "/images/tasses/esma/verd-front.jpg",
       "back": "/images/tasses/esma/verd-back.jpg",
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tu ets la meva esma»",
@@ -379,8 +379,8 @@
     "images": {
       "front": "/images/tasses/llostre/groc-front.jpg",
       "back": "/images/tasses/llostre/groc-back.jpg",
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tu ets el meu llostre»",
@@ -403,8 +403,8 @@
     "images": {
       "front": "/images/tasses/moixaina/taronja-front.jpg",
       "back": "/images/tasses/moixaina/taronja-back.jpg",
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tu ets la meva moixaina»",
@@ -445,8 +445,8 @@
     "images": {
       "front": "/images/tasses/niu/blau-front.jpg",
       "back": "/images/tasses/niu/blau-back.jpg",
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tu ets el meu niu»",
@@ -508,8 +508,8 @@
     "images": {
       "front": "/images/tasses/redos/blau-front.jpg",
       "back": "/images/tasses/redos/blau-back.jpg",
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tu ets el meu redós»",
@@ -532,8 +532,8 @@
     "images": {
       "front": "/images/tasses/rosada/verd-front.jpg",
       "back": "/images/tasses/rosada/verd-back.jpg",
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tu ets la meva rosada»",
@@ -574,8 +574,8 @@
     "images": {
       "front": "/images/tasses/solell/groc-front.jpg",
       "back": "/images/tasses/solell/groc-back.jpg",
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tu ets el meu solell»",
@@ -618,8 +618,8 @@
     "images": {
       "front": "/images/tasses/ventijol/taronja-front.jpg",
       "back": "/images/tasses/ventijol/taronja-back.jpg",
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tu ets el meu ventijol»",
@@ -679,8 +679,8 @@
     "images": {
       "front": "/images/tasses/baliga-balaga/taronja-front.jpg",
       "back": "/images/tasses/baliga-balaga/taronja-back.jpg",
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Sóc un baliga-balaga»",
@@ -703,8 +703,8 @@
     "images": {
       "front": "/images/tasses/bocamoll/groc-front.jpg",
       "back": "/images/tasses/bocamoll/groc-back.jpg",
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Sóc un bocamoll»",
@@ -764,8 +764,8 @@
     "images": {
       "front": "/images/tasses/bufanuvols/groc-front.jpg",
       "back": "/images/tasses/bufanuvols/groc-back.jpg",
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Sóc un bufanúvols»",
@@ -788,8 +788,8 @@
     "images": {
       "front": "/images/tasses/cagadubtes/verd-front.jpg",
       "back": "/images/tasses/cagadubtes/verd-back.jpg",
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Sóc un cagadubtes»",
@@ -849,8 +849,8 @@
     "images": {
       "front": "/images/tasses/cap-de-trons/negre-front.jpg",
       "back": "/images/tasses/cap-de-trons/negre-back.jpg",
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Sóc un cap de trons»",
@@ -873,8 +873,8 @@
     "images": {
       "front": "/images/tasses/corco/verd-front.jpg",
       "back": "/images/tasses/corco/verd-back.jpg",
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Sóc un corcó»",
@@ -915,8 +915,8 @@
     "images": {
       "front": "/images/tasses/escalfacadires/groc-front.jpg",
       "back": "/images/tasses/escalfacadires/groc-back.jpg",
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Sóc un escalfacadires»",
@@ -976,8 +976,8 @@
     "images": {
       "front": "/images/tasses/garrepa/verd-front.jpg",
       "back": "/images/tasses/garrepa/verd-back.jpg",
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Sóc un garrepa»",
@@ -1000,8 +1000,8 @@
     "images": {
       "front": "/images/tasses/llepafils/taronja-front.jpg",
       "back": "/images/tasses/llepafils/taronja-back.jpg",
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Sóc un llepafils»",
@@ -1042,8 +1042,8 @@
     "images": {
       "front": "/images/tasses/manefla/blau-front.jpg",
       "back": "/images/tasses/manefla/blau-back.jpg",
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Sóc un manefla»",
@@ -1103,8 +1103,8 @@
     "images": {
       "front": "/images/tasses/pixatinters/blau-front.jpg",
       "back": "/images/tasses/pixatinters/blau-back.jpg",
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Sóc un pixatinters»",
@@ -1127,8 +1127,8 @@
     "images": {
       "front": "/images/tasses/pocatraca/blau-front.jpg",
       "back": "/images/tasses/pocatraca/blau-back.jpg",
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Sóc un pocatraça»",
@@ -1173,8 +1173,8 @@
     "images": {
       "front": "/images/tasses/cafe-sol/negre-front.jpg",
       "back": null,
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Avui només vull un cafè sol»",
@@ -1221,8 +1221,8 @@
     "images": {
       "front": "/images/tasses/coses-que-s-escalfen-de-seguida/vermell-front.jpg",
       "back": null,
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Coses que s'escalfen de seguida»",
@@ -1267,8 +1267,8 @@
     "images": {
       "front": "/images/tasses/mala-llet/vermell-front.jpg",
       "back": null,
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Compte, que avui tinc mala llet»",
@@ -1315,8 +1315,8 @@
     "images": {
       "front": "/images/tasses/coses-que-es-veuen-millor-de-lluny/blau-front.jpg",
       "back": null,
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Coses que es veuen millor de lluny»",
@@ -1361,8 +1361,8 @@
     "images": {
       "front": "/images/tasses/coses-que-no-serveixen-per-a-res/blau-front.jpg",
       "back": null,
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Coses que no serveixen per a res»",
@@ -1407,8 +1407,8 @@
     "images": {
       "front": "/images/tasses/sense-cafe-no-soc-persona/negre-front.jpg",
       "back": null,
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Sense cafè no sóc persona»",
@@ -1455,8 +1455,8 @@
     "images": {
       "front": "/images/tasses/coses-que-perden-el-fil/vermell-front.jpg",
       "back": null,
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Coses que perden el fil»",
@@ -1501,8 +1501,8 @@
     "images": {
       "front": "/images/tasses/tallat/taronja-front.jpg",
       "back": null,
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Avui estic una mica tallat»",
@@ -1549,8 +1549,8 @@
     "images": {
       "front": "/images/tasses/tros-de-pa/groc-front.jpg",
       "back": null,
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Ets un tros de pa»",
@@ -1597,8 +1597,8 @@
     "images": {
       "front": "/images/tasses/mes-inutil-que-un-cendrer-de-moto/negre-front.jpg",
       "back": null,
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Ets més inútil que un cendrer de moto»",
@@ -1661,8 +1661,8 @@
     "images": {
       "front": "/images/tasses/gamarus/verd-front.jpg",
       "back": null,
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Sembles un mussol savi, però ets un gamarús»",
@@ -1689,8 +1689,8 @@
     "images": {
       "front": "/images/tasses/mes-cara-que-esquena/taronja-front.jpg",
       "back": null,
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tens més cara que esquena»",
@@ -1735,8 +1735,8 @@
     "images": {
       "front": "/images/tasses/mes-pesat-que-una-vaca-en-bracos/blau-front.jpg",
       "back": null,
-      "width": 760,
-      "height": 760
+      "width": 600,
+      "height": 600
     },
     "alt": {
       "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Ets més pesat que una vaca en braços»",

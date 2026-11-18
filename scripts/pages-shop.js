@@ -18,7 +18,7 @@ function packCard(pack) {
   const price = pricing.packPriceCents(pack);
   const saving = pricing.packSeparateCents(pack) - price;
   return `<article class="pack pack--${pack.id}">
-  <div class="pack__media" aria-hidden="true">${items.map((p) => `<span class="pack__mug">${productImg(p, 'front', { alt: '' })}</span>`).join('')}</div>
+  <div class="pack__media" aria-hidden="true">${items.map((p) => `<span class="pack__mug">${productImg(p, 'front', { sizes: 'small', alt: '' })}</span>`).join('')}</div>
   <div class="pack__body">
     <p class="pack__count">${items.length} tasses${saving > 0 ? ` · <span class="pack__save">Estalvies ${euro(saving)}</span>` : ''}</p>
     <h3 class="pack__title">${esc(pack.name)}</h3>
@@ -84,7 +84,7 @@ function heroWord(p, i) {
     <p class="hero-word__head"><span class="hero-word__word">${esc(p.name.toLowerCase())}</span> <span class="hero-word__ipa">${esc(p.phonetic)}</span></p>
     <ol class="hero-word__defs"><li>${esc(p.def1)}</li><li>${esc(p.def2)}</li></ol>
   </div>
-  <a class="hero-word__mug" href="${productUrl(p)}" tabindex="-1" aria-hidden="true">${productImg(p, 'front', { eager: i === 0, alt: '' })}</a>
+  <a class="hero-word__mug" href="${productUrl(p)}" tabindex="-1" aria-hidden="true">${productImg(p, 'front', { sizes: 'medium', eager: i === 0, alt: '' })}</a>
   <p class="hero-word__link"><a href="${productUrl(p)}">Veure la tassa «${esc(p.intro)} ${esc(p.name.toLowerCase())}» ${icon('arrow')}</a></p>
 </div>`;
 }
@@ -131,8 +131,8 @@ function home() {
   <div class="container explain__grid">
     <figure class="flip" data-flip>
       <div class="flip__stage">
-        ${productImg(flip, 'front', { cls: 'flip__img flip__img--front', alt: `Davant de la tassa: «${flip.intro} ${flip.name.toLowerCase()}»` })}
-        ${productImg(flip, 'back', { cls: 'flip__img flip__img--back', alt: `Darrere de la tassa: definició de «${flip.name.toLowerCase()}»` })}
+        ${productImg(flip, 'front', { sizes: 'medium', cls: 'flip__img flip__img--front', alt: `Davant de la tassa: «${flip.intro} ${flip.name.toLowerCase()}»` })}
+        ${productImg(flip, 'back', { sizes: 'medium', cls: 'flip__img flip__img--back', alt: `Darrere de la tassa: definició de «${flip.name.toLowerCase()}»` })}
       </div>
       <figcaption class="flip__bar">
         <span class="flip__label" data-flip-label>Davant: el missatge</span>

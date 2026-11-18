@@ -54,9 +54,23 @@ function value(v, label) {
 
 const productUrl = (p) => `/tasses/${p.slug}/`;
 
-function productImg(p, side = 'front', { eager = false, cls = '', alt } = {}) {
+// Cada foto de tassa té una versió de 600 px (JPEG) i una de 1200 px (WebP)
+// per a pantalles d'alta densitat i vistes grans. El navegador tria segons `sizes`.
+const hiRes = (src) => (/^\/images\/tasses\/.+\.jpg$/.test(src) ? src.replace(/\.jpg$/, '@2x.webp') : null);
+const srcsetFor = (src) => (hiRes(src) ? `${src} 600w, ${hiRes(src)} 1200w` : '');
+const SIZES = {
+  card: '(max-width: 560px) 50vw, (max-width: 1100px) 33vw, 300px',
+  gallery: '(max-width: 900px) 100vw, 620px',
+  thumb: '100px',
+  small: '160px',
+  medium: '(max-width: 900px) 70vw, 420px',
+};
+
+function productImg(p, side = 'front', { eager = false, cls = '', alt, sizes = 'card' } = {}) {
   const altText = alt === undefined ? p.alt[side] : alt;
-  return `<img class="${cls}" src="${p.images[side]}" alt="${esc(altText)}" width="${p.images.width}" height="${p.images.height}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">`;
+  const src = p.images[side];
+  const set = srcsetFor(src);
+  return `<img class="${cls}" src="${src}"${set ? ` srcset="${set}" sizes="${SIZES[sizes] || sizes}"` : ''} alt="${esc(altText)}" width="${p.images.width}" height="${p.images.height}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">`;
 }
 
 const jsonLd = (obj) => `<script type="application/ld+json">${JSON.stringify(obj).replace(/</g, '\\u003c')}</script>`;
@@ -64,5 +78,5 @@ const jsonLd = (obj) => `<script type="application/ld+json">${JSON.stringify(obj
 module.exports = {
   site, catalog, BY_SLUG, CATEGORIES, CATEGORY_BY_ID, esc, euro, PRICE, SHIPPING, SHIPPING_LINE, FREE_SHIPPING, DELIVERY, icon, value, pendingFields,
   pricing, priceHtml, offerBadge,
-  productUrl, productImg, jsonLd,
+  productUrl, productImg, srcsetFor, jsonLd,
 };

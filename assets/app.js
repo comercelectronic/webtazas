@@ -394,10 +394,15 @@
       colorName.textContent = input.getAttribute('data-name');
       var slides = $$('.gallery__img');
       var thumbs = $$('.gallery__thumb img');
-      if (slides[0]) slides[0].src = input.getAttribute('data-front');
-      if (slides[1] && input.getAttribute('data-back')) slides[1].src = input.getAttribute('data-back');
-      if (thumbs[0]) thumbs[0].src = input.getAttribute('data-front');
-      if (thumbs[1] && input.getAttribute('data-back')) thumbs[1].src = input.getAttribute('data-back');
+      var setImg = function (img, src) {
+        if (!img || !src) return;
+        img.src = src;
+        if (img.hasAttribute('srcset')) img.srcset = src + ' 600w, ' + src.replace(/\.jpg$/, '@2x.webp') + ' 1200w';
+      };
+      setImg(slides[0], input.getAttribute('data-front'));
+      setImg(slides[1], input.getAttribute('data-back'));
+      setImg(thumbs[0], input.getAttribute('data-front'));
+      setImg(thumbs[1], input.getAttribute('data-back'));
     };
     $$('[data-color-input]', picker).forEach(function (input) {
       input.addEventListener('change', function () {

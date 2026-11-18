@@ -80,12 +80,12 @@ function product(p) {
 <section class="product container">
   <div class="gallery" data-gallery>
     <div class="gallery__track" data-gallery-track tabindex="0" role="region" aria-label="Fotos de la tassa (llisca per veure-les totes)">
-      <figure class="gallery__slide">${productImg(p, 'front', { eager: true, cls: 'gallery__img' })}<figcaption class="gallery__label">${views[0]}</figcaption></figure>
-      ${hasBack ? `<figure class="gallery__slide">${productImg(p, 'back', { cls: 'gallery__img' })}<figcaption class="gallery__label">${views[1]}</figcaption></figure>` : ''}
+      <figure class="gallery__slide">${productImg(p, 'front', { eager: true, cls: 'gallery__img', sizes: 'gallery' })}<figcaption class="gallery__label">${views[0]}</figcaption></figure>
+      ${hasBack ? `<figure class="gallery__slide">${productImg(p, 'back', { cls: 'gallery__img', sizes: 'gallery' })}<figcaption class="gallery__label">${views[1]}</figcaption></figure>` : ''}
     </div>
     ${hasBack ? `<div class="gallery__thumbs" role="group" aria-label="Tria la foto">
-      <button type="button" class="gallery__thumb is-active" aria-pressed="true" data-slide="0">${productImg(p, 'front', { alt: '' })}<span>${views[0]}</span></button>
-      <button type="button" class="gallery__thumb" aria-pressed="false" data-slide="1">${productImg(p, 'back', { alt: '' })}<span>${views[1]}</span></button>
+      <button type="button" class="gallery__thumb is-active" aria-pressed="true" data-slide="0">${productImg(p, 'front', { alt: '', sizes: 'thumb' })}<span>${views[0]}</span></button>
+      <button type="button" class="gallery__thumb" aria-pressed="false" data-slide="1">${productImg(p, 'back', { alt: '', sizes: 'thumb' })}<span>${views[1]}</span></button>
     </div>` : ''}
   </div>
 
