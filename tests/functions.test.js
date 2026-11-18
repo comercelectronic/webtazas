@@ -91,7 +91,7 @@ test('checkout: ofertes i packs es cobren al preu del servidor', async () => {
   assert.strictEqual(stripeSessions[0].metadata.items, 'm:esma:verd:1,p:casa:2');
   // un color que no existeix es canvia pel de portada
   stripeSessions = [];
-  await fn('create-checkout-session')(ev('POST', { items: [{ type: 'mug', id: 'caliu', color: 'rosa', qty: 1 }] }));
+  await fn('create-checkout-session')(ev('POST', { items: [{ type: 'mug', id: 'caliu', color: 'lila', qty: 1 }] }));
   assert.strictEqual(stripeSessions[0].metadata.items, 'm:caliu:taronja:1');
 });
 

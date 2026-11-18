@@ -159,7 +159,7 @@
   var lastFocus = null;
 
   function mugIcon(hex) {
-    return '<svg class="line__img line__img--svg" viewBox="0 0 72 90" aria-hidden="true"><rect width="72" height="90" rx="10" fill="#FFFEFC"/>' +
+    return '<svg class="line__img line__img--svg" viewBox="0 0 72 72" aria-hidden="true"><rect width="72" height="72" rx="10" fill="#FFFEFC"/>' +
       '<path d="M50 38h5a8 8 0 0 1 0 16h-5" fill="none" stroke="' + hex + '" stroke-width="5"/>' +
       '<rect x="16" y="30" width="36" height="38" rx="6" fill="#fff" stroke="#D6D0C5" stroke-width="2"/>' +
       '<ellipse cx="34" cy="31" rx="17" ry="4" fill="' + hex + '"/>' +
@@ -169,7 +169,7 @@
     if (i.type === 'pack') {
       var pk = CAT.packs[i.id];
       return {
-        img: '<img class="line__img" src="' + CAT.products[pk.slugs[0]].image + '" alt="" width="72" height="90">',
+        img: '<img class="line__img" src="' + CAT.products[pk.slugs[0]].image + '" alt="" width="72" height="72">',
         name: esc(pk.name), url: '/#packs',
         detail: pk.slugs.map(function (s) { return esc(CAT.products[s].name); }).join(' · '),
       };
@@ -185,7 +185,7 @@
     var p = CAT.products[i.id];
     var col = COLOR_BY_ID[i.color];
     return {
-      img: '<img class="line__img" src="' + (i.color ? '/images/tasses/' + i.id + '/' + i.color + '-front.jpg' : p.image) + '" alt="" width="72" height="90">',
+      img: '<img class="line__img" src="' + (i.color ? '/images/tasses/' + i.id + '/' + i.color + '-front.jpg' : p.image) + '" alt="" width="72" height="72">',
       name: esc(p.name), url: p.url + (i.color ? '?color=' + i.color : ''),
       detail: col ? 'Interior i nansa: ' + esc(col.name.toLowerCase()) : '',
     };
@@ -241,7 +241,7 @@
     upsell.hidden = !suggestions.length;
     upsell.innerHTML = suggestions.length ? '<h3>Combina-la amb</h3>' + suggestions.map(function (s) {
       var p = CAT.products[s];
-      return '<div class="upsell-item"><img src="' + p.image + '" alt="" width="48" height="60">' +
+      return '<div class="upsell-item"><img src="' + p.image + '" alt="" width="48" height="48">' +
         '<div><a href="' + p.url + '">' + esc(p.name) + '</a><span>' + euro(p.priceCents) + '</span></div>' +
         '<button type="button" class="btn btn--small" data-add="' + s + '">Afegeix<span class="sr-only"> ' + esc(p.name) + '</span></button></div>';
     }).join('') : '';
@@ -395,9 +395,9 @@
       var slides = $$('.gallery__img');
       var thumbs = $$('.gallery__thumb img');
       if (slides[0]) slides[0].src = input.getAttribute('data-front');
-      if (slides[1]) slides[1].src = input.getAttribute('data-back');
+      if (slides[1] && input.getAttribute('data-back')) slides[1].src = input.getAttribute('data-back');
       if (thumbs[0]) thumbs[0].src = input.getAttribute('data-front');
-      if (thumbs[1]) thumbs[1].src = input.getAttribute('data-back');
+      if (thumbs[1] && input.getAttribute('data-back')) thumbs[1].src = input.getAttribute('data-back');
     };
     $$('[data-color-input]', picker).forEach(function (input) {
       input.addEventListener('change', function () {

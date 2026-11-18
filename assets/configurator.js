@@ -123,28 +123,28 @@
     if (drawing) { mug.drawing.setAttribute('href', '/assets/drawings.svg#d-' + drawing); mug.drawing.style.display = ''; }
     else mug.drawing.style.display = 'none';
 
-    var top = drawing ? 0 : -60;
-    mug.intro.setAttribute('y', 372 + top);
-    mug.word.setAttribute('y', 428 + top);
-    mug.sub.setAttribute('y', 466 + top);
+    var top = drawing ? 0 : -80;
+    mug.intro.setAttribute('y', 430 + top);
+    mug.word.setAttribute('y', 500 + top);
+    mug.sub.setAttribute('y', 544 + top);
     mug.intro.textContent = intro;
     mug.word.textContent = word;
     mug.sub.textContent = sub;
-    fitText(mug.word, 52, 18, 290);
-    fitText(mug.intro, 25, 13, 290);
-    fitText(mug.sub, 19, 11, 290);
+    fitText(mug.word, 70, 22, 400);
+    fitText(mug.intro, 32, 16, 400);
+    fitText(mug.sub, 25, 14, 400);
 
     var plainWord = f.word.value.trim();
     mug.bword.textContent = s.id === 'coses' ? 'coses que ' + plainWord : plainWord.toLowerCase();
-    fitText(mug.bword, 34, 16, 280);
+    fitText(mug.bword, 46, 20, 380);
     var defs = [f.def1.value.trim(), f.def2.value.trim()];
     var lines = [];
     defs.forEach(function (d, i) {
       if (!d) return;
       wrap((i + 1) + '. ' + d, 38).forEach(function (l) { lines.push(l); });
     });
-    mug.bdefs.innerHTML = lines.length ? lines.map(function (l, i) { return '<tspan x="246" dy="' + (i ? 21 : 0) + '">' + esc(l) + '</tspan>'; }).join('')
-      : '<tspan x="246" class="mug-svg__muted">Sense definició al darrere</tspan>';
+    mug.bdefs.innerHTML = lines.length ? lines.map(function (l, i) { return '<tspan x="296" dy="' + (i ? 27 : 0) + '">' + esc(l) + '</tspan>'; }).join('')
+      : '<tspan x="296" class="mug-svg__muted">Sense definició al darrere</tspan>';
 
     mug.title.textContent = 'Vista prèvia: «' + [intro, word].filter(Boolean).join(' ') + '»' + (sub ? ', ' + sub : '') + ', interior ' + color.name.toLowerCase();
     renderWords();

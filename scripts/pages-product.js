@@ -31,7 +31,7 @@ function colorPicker(p) {
   <legend>Color de l'interior i la nansa: <strong data-color-name>${esc(COLORS[p.defaultColor].name)}</strong></legend>
   <div class="colors__row">
     ${p.colors.map((c) => `<label class="swatch" title="${esc(COLORS[c].name)}">
-      <input type="radio" name="color" value="${c}" data-color-input data-name="${esc(COLORS[c].name)}" data-front="/images/tasses/${p.slug}/${c}-front.jpg" data-back="/images/tasses/${p.slug}/${c}-back.jpg"${c === p.defaultColor ? ' checked' : ''}>
+      <input type="radio" name="color" value="${c}" data-color-input data-name="${esc(COLORS[c].name)}" data-front="/images/tasses/${p.slug}/${c}-front.jpg" ${p.images.back ? ` data-back="/images/tasses/${p.slug}/${c}-back.jpg"` : ''}${c === p.defaultColor ? ' checked' : ''}>
       <span class="swatch__dot dot--${c}"></span><span class="sr-only">${esc(COLORS[c].name)}${c === p.defaultColor ? ' (el que millor hi combina)' : ''}</span>
     </label>`).join('')}
   </div>
@@ -71,7 +71,8 @@ function product(p) {
   ];
   const combo = BY_SLUG[p.related[0]];
   const related = relatedFor(p);
-  const views = p.sides === 1 ? ['De cara', 'De costat'] : ['Davant', 'Darrere'];
+  const views = ['Davant', 'Darrere'];
+  const hasBack = !!p.images.back;
   const title = p.intro ? `${p.intro} ${p.name.toLowerCase()}` : p.name;
 
   const main = `
@@ -80,12 +81,12 @@ function product(p) {
   <div class="gallery" data-gallery>
     <div class="gallery__track" data-gallery-track tabindex="0" role="region" aria-label="Fotos de la tassa (llisca per veure-les totes)">
       <figure class="gallery__slide">${productImg(p, 'front', { eager: true, cls: 'gallery__img' })}<figcaption class="gallery__label">${views[0]}</figcaption></figure>
-      <figure class="gallery__slide">${productImg(p, 'back', { cls: 'gallery__img' })}<figcaption class="gallery__label">${views[1]}</figcaption></figure>
+      ${hasBack ? `<figure class="gallery__slide">${productImg(p, 'back', { cls: 'gallery__img' })}<figcaption class="gallery__label">${views[1]}</figcaption></figure>` : ''}
     </div>
-    <div class="gallery__thumbs" role="group" aria-label="Tria la foto">
+    ${hasBack ? `<div class="gallery__thumbs" role="group" aria-label="Tria la foto">
       <button type="button" class="gallery__thumb is-active" aria-pressed="true" data-slide="0">${productImg(p, 'front', { alt: '' })}<span>${views[0]}</span></button>
       <button type="button" class="gallery__thumb" aria-pressed="false" data-slide="1">${productImg(p, 'back', { alt: '' })}<span>${views[1]}</span></button>
-    </div>
+    </div>` : ''}
   </div>
 
   <div class="buybox" data-product-page="${p.slug}">
@@ -163,7 +164,7 @@ function product(p) {
     name: `Tassa «${title}»`,
     description: p.metaDescription,
     sku: p.slug,
-    image: [site.siteUrl + p.images.front, site.siteUrl + p.images.back],
+    image: [p.images.front, p.images.back].filter(Boolean).map((i) => site.siteUrl + i),
     brand: { '@type': 'Brand', name: site.brand },
     category: cat.name,
     offers: {
