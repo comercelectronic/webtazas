@@ -78,6 +78,7 @@ function footer() {
       <ul>
         <li><a href="/tasses/">Totes les tasses</a></li>
         ${CATEGORIES.map((c) => `<li><a href="${c.path}">${esc(c.name)}</a></li>`).join('')}
+        <li><a href="/tasses/ofertes/">Ofertes</a></li>
         <li><a href="/#packs">Packs per regalar</a></li>
         <li><a href="/crea-la-teva-tassa/">Crea la teva tassa</a></li>
       </ul>

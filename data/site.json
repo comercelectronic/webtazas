@@ -90,7 +90,7 @@
         "manefla",
         "bocamoll"
       ],
-      "priceCents": 3990
+      "priceCents": 3490
     },
     {
       "id": "cafe",
@@ -193,12 +193,16 @@
     "_nota": "Preu d'oferta per tassa (en cèntims). Si showReferencePrice és true, es mostra el preu habitual ratllat: només s'ha d'activar quan el preu habitual s'hagi aplicat almenys els 30 dies anteriors (art. 20 de la Llei d'ordenació del comerç minorista).",
     "showReferencePrice": false,
     "items": {
-      "esma": 1195,
-      "llostre": 1195,
-      "redos": 1195,
-      "baliga-balaga": 1195,
-      "pixatinters": 1195,
-      "coses-que-perden-el-fil": 1195
+      "solell": 1195,
+      "escalfacadires": 1295,
+      "cuca-de-llum": 1095,
+      "bonanca": 1095,
+      "arrel": 1295,
+      "ventijol": 1095,
+      "manefla": 1095,
+      "corco": 1295,
+      "coses-que-no-serveixen-per-a-res": 1095,
+      "garrepa": 1195
     }
   },
   "colors": [

@@ -711,3 +711,4 @@ th { font-weight: 600; background: var(--paper-2); }
 .maker__buy .buybox__actions { flex-wrap: wrap; }
 .maker__buy > * { min-width: 0; }
 .maker__buy { grid-template-columns: minmax(0, 1fr); }
+.offers-band { background: var(--terra-soft); }
