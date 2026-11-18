@@ -33,7 +33,7 @@ function configurator() {
     <div class="maker__preview">
       <div class="maker__stage" aria-live="polite">
         <div class="mug-photo" data-mug>
-          <img class="mug-photo__img" data-mug-photo src="/images/tassa-en-blanc/blau.jpg" alt="" width="760" height="760">
+          <img class="mug-photo__img" data-mug-photo src="/images/tassa-en-blanc/blau.jpg" alt="" width="1200" height="1200">
           <svg class="mug-photo__print" viewBox="0 0 760 760" role="img" aria-labelledby="mug-title">
             <title id="mug-title" data-mug-title>Vista prèvia de la tassa</title>
             <defs>
