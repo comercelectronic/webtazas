@@ -33,19 +33,19 @@ function configurator() {
     <div class="maker__preview">
       <div class="maker__stage" aria-live="polite">
         <div class="mug-photo" data-mug>
-          <img class="mug-photo__img" data-mug-photo src="/images/tassa-en-blanc/blau.jpg" alt="" width="600" height="704">
-          <svg class="mug-photo__print" viewBox="0 0 600 704" role="img" aria-labelledby="mug-title">
+          <img class="mug-photo__img" data-mug-photo src="/images/tassa-en-blanc/blau.jpg" alt="" width="760" height="760">
+          <svg class="mug-photo__print" viewBox="0 0 760 760" role="img" aria-labelledby="mug-title">
             <title id="mug-title" data-mug-title>Vista prèvia de la tassa</title>
             <g data-mug-front>
-              <use data-mug-drawing href="/assets/drawings.svg#d-paraigua" x="164" y="226" width="96" height="96"/>
-              <text data-mug-intro x="212" y="372" text-anchor="middle" class="mug-svg__intro">Tu ets el meu</text>
-              <text data-mug-word x="212" y="428" text-anchor="middle" class="mug-svg__word">aixopluc</text>
-              <text data-mug-sub x="212" y="466" text-anchor="middle" class="mug-svg__sub"></text>
+              <use data-mug-drawing href="/assets/drawings.svg#d-paraigua" x="220" y="236" width="120" height="120"/>
+              <text data-mug-intro x="280" y="430" text-anchor="middle" class="mug-svg__intro">Tu ets el meu</text>
+              <text data-mug-word x="280" y="500" text-anchor="middle" class="mug-svg__word">aixopluc</text>
+              <text data-mug-sub x="280" y="544" text-anchor="middle" class="mug-svg__sub"></text>
             </g>
             <g data-mug-back style="display:none">
-              <text data-mug-back-word x="246" y="318" class="mug-svg__bword">aixopluc</text>
-              <line x1="246" y1="334" x2="530" y2="334" stroke="#B66F54" stroke-width="1.5"/>
-              <text data-mug-back-defs x="246" y="364" class="mug-svg__defs"></text>
+              <text data-mug-back-word x="296" y="320" class="mug-svg__bword">aixopluc</text>
+              <line x1="296" y1="340" x2="680" y2="340" stroke="#B66F54" stroke-width="1.5"/>
+              <text data-mug-back-defs x="296" y="380" class="mug-svg__defs"></text>
             </g>
           </svg>
         </div>

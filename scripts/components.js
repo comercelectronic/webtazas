@@ -157,7 +157,7 @@ function productCard(p, { eager = false, headingLevel = 3 } = {}) {
   return `<article class="card" data-product="${p.slug}" data-category="${p.category}">
   <a class="card__media" href="${productUrl(p)}" tabindex="-1" aria-hidden="true">
     ${productImg(p, 'front', { eager, cls: 'card__img' })}
-    ${productImg(p, 'back', { cls: 'card__img card__img--back', alt: '' })}
+    ${p.images.back ? productImg(p, 'back', { cls: 'card__img card__img--back', alt: '' }) : ''}
     ${pricing.hasOffer(p.slug) ? '<span class="card__badge">Oferta</span>' : ''}
     <span class="card__stock" data-stock-badge hidden></span>
   </a>

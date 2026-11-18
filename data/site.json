@@ -205,32 +205,52 @@
     {
       "id": "vermell",
       "name": "Vermell",
-      "hex": "#C62828"
+      "hex": "#C41E3A"
     },
     {
       "id": "taronja",
       "name": "Taronja",
-      "hex": "#EF7D22"
+      "hex": "#E06A28"
     },
     {
       "id": "groc",
       "name": "Groc",
-      "hex": "#F2C318"
+      "hex": "#F2D530"
+    },
+    {
+      "id": "verd-llima",
+      "name": "Verd llima",
+      "hex": "#A4C449"
     },
     {
       "id": "verd",
       "name": "Verd",
-      "hex": "#1E7B3A"
+      "hex": "#4F9A55"
+    },
+    {
+      "id": "blau-cel",
+      "name": "Blau cel",
+      "hex": "#3FA7E0"
     },
     {
       "id": "blau",
       "name": "Blau",
-      "hex": "#1D2F8F"
+      "hex": "#2B3A7A"
+    },
+    {
+      "id": "blau-mari",
+      "name": "Blau marí",
+      "hex": "#1C2A3E"
+    },
+    {
+      "id": "rosa",
+      "name": "Rosa",
+      "hex": "#E58FB2"
     },
     {
       "id": "negre",
       "name": "Negre",
-      "hex": "#1A1A1A"
+      "hex": "#1F1F20"
     }
   ]
 }
