@@ -1,12 +1,13 @@
-const { site, catalog, CATEGORIES, CATEGORY_BY_ID, esc, PRICE, SHIPPING, DELIVERY, icon, productUrl, productImg, jsonLd } = require('./lib');
+const { site, catalog, CATEGORIES, CATEGORY_BY_ID, esc, PRICE, SHIPPING_LINE, DELIVERY, icon, productUrl, productImg, jsonLd, priceHtml, pricing } = require('./lib');
 
 const NAV = [
   { href: '/tasses/', label: 'Totes les tasses' },
   ...CATEGORIES.map((c) => ({ href: c.path, label: c.name })),
-  { href: '/#packs', label: 'Per regalar' },
+  { href: '/#packs', label: 'Packs' },
+  { href: '/crea-la-teva-tassa/', label: 'Crea la teva', highlight: true },
 ];
 
-function head({ title, description, path, ogImage, jsonld = [], noindex = false, assetVersion, adminScript = false }) {
+function head({ title, description, path, ogImage, jsonld = [], noindex = false, assetVersion, adminScript = false, pageScript = null }) {
   const url = site.siteUrl + path;
   const image = site.siteUrl + (ogImage || '/images/mug-aixopluc-front.jpg');
   return `<!doctype html>
@@ -35,14 +36,15 @@ ${jsonld.map(jsonLd).join('\n')}
 <script defer src="/assets/catalog.js?v=${assetVersion}"></script>
 <script defer src="/assets/app.js?v=${assetVersion}"></script>
 ${adminScript ? `<script defer src="/assets/admin.js?v=${assetVersion}"></script>` : ''}
+${pageScript ? `<script defer src="/assets/${pageScript}?v=${assetVersion}"></script>` : ''}
 </head>`;
 }
 
 function header(path) {
-  const links = NAV.map((n) => `<li><a href="${n.href}"${path === n.href ? ' aria-current="page"' : ''}>${esc(n.label)}</a></li>`).join('');
+  const links = NAV.map((n) => `<li><a href="${n.href}"${n.highlight ? ' class="nav-cta"' : ''}${path === n.href ? ' aria-current="page"' : ''}>${esc(n.label)}</a></li>`).join('');
   return `<a class="skip-link" href="#main">Salta al contingut</a>
 <div class="announce"><div class="container announce__inner">
-  <span>Totes les tasses a <strong>${PRICE}</strong></span>
+  <span>Tasses a <strong>${PRICE}</strong> amb <strong>enviament gratuït</strong></span>
   <span class="announce__sep" aria-hidden="true">·</span>
   <span>Pagament segur amb Stripe</span>
   <span class="announce__sep" aria-hidden="true">·</span>
@@ -76,7 +78,8 @@ function footer() {
       <ul>
         <li><a href="/tasses/">Totes les tasses</a></li>
         ${CATEGORIES.map((c) => `<li><a href="${c.path}">${esc(c.name)}</a></li>`).join('')}
-        <li><a href="/#packs">Per regalar</a></li>
+        <li><a href="/#packs">Packs per regalar</a></li>
+        <li><a href="/crea-la-teva-tassa/">Crea la teva tassa</a></li>
       </ul>
     </nav>
     <nav aria-label="Ajuda">
@@ -143,7 +146,7 @@ ${cartDrawer()}
 function trustList(cls = '') {
   return `<ul class="trust ${cls}">
   <li>${icon('lock')}<span>Pagament segur amb Stripe</span></li>
-  <li>${icon('truck')}<span>Enviament en ${DELIVERY} · ${SHIPPING}</span></li>
+  <li>${icon('truck')}<span>${SHIPPING_LINE} · ${DELIVERY}</span></li>
   <li>${icon('return')}<span>14 dies per desistir de la compra</span></li>
 </ul>`;
 }
@@ -155,15 +158,17 @@ function productCard(p, { eager = false, headingLevel = 3 } = {}) {
   <a class="card__media" href="${productUrl(p)}" tabindex="-1" aria-hidden="true">
     ${productImg(p, 'front', { eager, cls: 'card__img' })}
     ${productImg(p, 'back', { cls: 'card__img card__img--back', alt: '' })}
+    ${pricing.hasOffer(p.slug) ? '<span class="card__badge">Oferta</span>' : ''}
     <span class="card__stock" data-stock-badge hidden></span>
   </a>
   <div class="card__body">
     <p class="chip chip--${p.category}">${esc(cat.singular)}</p>
     <${h} class="card__title"><a href="${productUrl(p)}">${esc(p.name)}</a></${h}>
     <p class="card__text">${esc(p.summary)}</p>
+    ${(p.colors || []).length ? `<p class="card__colors"><span class="sr-only">Disponible en ${p.colors.length} colors</span>${p.colors.map((c) => `<span class="dot dot--${c}" aria-hidden="true"></span>`).join('')}</p>` : ''}
     <p class="card__rating" data-rating hidden></p>
     <div class="card__foot">
-      <span class="price">${PRICE}</span>
+      ${priceHtml(p.slug)}
       <button type="button" class="btn btn--small" data-add="${p.slug}">Afegeix<span class="sr-only"> «${esc(p.name)}» a la cistella</span></button>
     </div>
   </div>

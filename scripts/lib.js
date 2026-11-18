@@ -1,6 +1,7 @@
 // Utilitats compartides pels generadors de pàgines.
 const site = require('../data/site.json');
 const catalog = require('../data/catalog.json');
+const pricing = require('../netlify/functions/lib/pricing');
 
 const BY_SLUG = Object.fromEntries(catalog.map((p) => [p.slug, p]));
 
@@ -16,7 +17,20 @@ const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '
 
 const euro = (cents) => (cents / 100).toFixed(2).replace('.', ',') + ' €';
 const PRICE = euro(site.unitPriceCents);
-const SHIPPING = euro(site.shipping.costCents);
+const FREE_SHIPPING = site.shipping.costCents === 0;
+const SHIPPING = FREE_SHIPPING ? 'gratuït' : euro(site.shipping.costCents);
+// Text curt per a llistes: «Enviament gratuït» o «Enviament: 4,95 €».
+const SHIPPING_LINE = FREE_SHIPPING ? 'Enviament gratuït' : `Enviament: ${euro(site.shipping.costCents)}`;
+
+/** Bloc de preu d'una tassa: preu d'oferta, si en té. */
+function priceHtml(slug, { large = false } = {}) {
+  const cents = pricing.productPriceCents(slug);
+  const cls = `price${large ? ' price--lg' : ''}`;
+  if (cents >= site.unitPriceCents) return `<span class="${cls}">${euro(cents)}</span>`;
+  const ref = site.offers && site.offers.showReferencePrice
+    ? ` <s class="price__ref"><span class="sr-only">Preu habitual: </span>${euro(site.unitPriceCents)}</s>` : '';
+  return `<span class="${cls} price--offer"><span class="sr-only">Preu d'oferta: </span>${euro(cents)}</span>${ref}`;
+}
 const DELIVERY = `${site.shipping.minBusinessDays}–${site.shipping.maxBusinessDays} dies feiners`;
 
 const icon = (name, cls = '') => `<svg class="icon ${cls}" aria-hidden="true" focusable="false"><use href="/assets/icons.svg#${name}"></use></svg>`;
@@ -40,6 +54,7 @@ function productImg(p, side = 'front', { eager = false, cls = '', alt } = {}) {
 const jsonLd = (obj) => `<script type="application/ld+json">${JSON.stringify(obj).replace(/</g, '\\u003c')}</script>`;
 
 module.exports = {
-  site, catalog, BY_SLUG, CATEGORIES, CATEGORY_BY_ID, esc, euro, PRICE, SHIPPING, DELIVERY, icon, value, pendingFields,
+  site, catalog, BY_SLUG, CATEGORIES, CATEGORY_BY_ID, esc, euro, PRICE, SHIPPING, SHIPPING_LINE, FREE_SHIPPING, DELIVERY, icon, value, pendingFields,
+  pricing, priceHtml,
   productUrl, productImg, jsonLd,
 };

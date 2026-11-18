@@ -1,4 +1,4 @@
-const { site, catalog, BY_SLUG, CATEGORY_BY_ID, esc, euro, PRICE, SHIPPING, DELIVERY, icon, productUrl, productImg } = require('./lib');
+const { site, catalog, BY_SLUG, CATEGORY_BY_ID, esc, euro, PRICE, SHIPPING, SHIPPING_LINE, FREE_SHIPPING, DELIVERY, icon, productUrl, productImg, priceHtml, pricing } = require('./lib');
 const { productGrid, sectionHead, trustList, breadcrumb, breadcrumbLd } = require('./components');
 
 function relatedFor(p) {
@@ -22,6 +22,21 @@ function definition(p) {
   <p class="dictionary__head"><span class="dictionary__word">${esc(p.name.toLowerCase())}</span> <span class="dictionary__ipa">${esc(p.phonetic)}</span></p>
   <ol class="dictionary__defs"><li>${esc(p.def1)}</li><li>${esc(p.def2)}</li></ol>
 </div>`;
+}
+
+function colorPicker(p) {
+  if (!(p.colors || []).length) return '';
+  const COLORS = Object.fromEntries(site.colors.map((c) => [c.id, c]));
+  return `<fieldset class="colors" data-color-picker>
+  <legend>Color de l'interior i la nansa: <strong data-color-name>${esc(COLORS[p.defaultColor].name)}</strong></legend>
+  <div class="colors__row">
+    ${p.colors.map((c) => `<label class="swatch" title="${esc(COLORS[c].name)}">
+      <input type="radio" name="color" value="${c}" data-color-input data-name="${esc(COLORS[c].name)}" data-front="/images/tasses/${p.slug}/${c}-front.jpg" data-back="/images/tasses/${p.slug}/${c}-back.jpg"${c === p.defaultColor ? ' checked' : ''}>
+      <span class="swatch__dot dot--${c}"></span><span class="sr-only">${esc(COLORS[c].name)}${c === p.defaultColor ? ' (el que millor hi combina)' : ''}</span>
+    </label>`).join('')}
+  </div>
+  <p class="colors__hint">El color de la portada és el que millor combina amb el dibuix.</p>
+</fieldset>`;
 }
 
 function specs() {
@@ -79,7 +94,8 @@ function product(p) {
     <h1 class="buybox__title">${esc(p.name)}</h1>
     ${p.tagline ? `<p class="buybox__tagline">${esc(p.tagline)}</p>` : ''}
     <a class="rating-summary" href="#valoracions" data-rating-summary>Encara no té valoracions</a>
-    <p class="buybox__price"><span class="price price--lg">${PRICE}</span><span class="buybox__ship">+ ${SHIPPING} d'enviament per comanda</span></p>
+    <p class="buybox__price">${pricing.hasOffer(p.slug) ? '<span class="badge-offer">Oferta</span>' : ''}${priceHtml(p.slug, { large: true })}<span class="buybox__ship">${FREE_SHIPPING ? 'Enviament gratuït inclòs' : `+ ${SHIPPING} d'enviament per comanda`}</span></p>
+    ${colorPicker(p)}
     ${definition(p)}
     <p class="stock-note" data-stock-note hidden></p>
     <div class="buybox__actions" data-main-actions>
@@ -96,9 +112,9 @@ function product(p) {
       <a class="combo__img" href="${productUrl(combo)}" tabindex="-1" aria-hidden="true">${productImg(combo, 'front', { alt: '' })}</a>
       <div class="combo__body">
         <p class="combo__title">Combina-la amb <a href="${productUrl(combo)}">${esc(combo.name)}</a></p>
-        <p class="combo__text">Les dues per ${euro(site.unitPriceCents * 2)}</p>
+        <p class="combo__text">Les dues per ${euro(pricing.productPriceCents(p.slug) + pricing.productPriceCents(combo.slug))}</p>
       </div>
-      <button type="button" class="btn btn--small btn--ghost" data-add-pack="${p.slug},${combo.slug}">Afegeix les dues</button>
+      <button type="button" class="btn btn--small btn--ghost" data-add-both="${p.slug},${combo.slug}">Afegeix les dues</button>
     </div>` : ''}
     <div class="details">
       <details open>
@@ -108,7 +124,7 @@ function product(p) {
       </details>
       <details>
         <summary>Enviament</summary>
-        <p>${SHIPPING} per comanda, sigui quin sigui el nombre de tasses. Termini estimat: ${DELIVERY}. Enviem a ${esc(site.shipping.countriesLabel)}.</p>
+        <p>${FREE_SHIPPING ? 'Gratuït, sigui quin sigui el nombre de tasses.' : `${SHIPPING} per comanda, sigui quin sigui el nombre de tasses.`} Termini estimat: ${DELIVERY}. Enviem a ${esc(site.shipping.countriesLabel)}.</p>
       </details>
       <details>
         <summary>Devolucions i garantia</summary>
@@ -137,7 +153,7 @@ function product(p) {
 </section>
 
 <div class="sticky-buy" data-sticky-buy hidden>
-  <div class="sticky-buy__info"><span class="sticky-buy__name">${esc(p.name)}</span><span class="price">${PRICE}</span></div>
+  <div class="sticky-buy__info"><span class="sticky-buy__name">${esc(p.name)}</span>${priceHtml(p.slug)}</div>
   <button type="button" class="btn btn--primary" data-add="${p.slug}" data-with-qty>Afegeix a la cistella</button>
 </div>`;
 
@@ -154,7 +170,7 @@ function product(p) {
       '@type': 'Offer',
       url: site.siteUrl + productUrl(p),
       priceCurrency: site.currency,
-      price: (site.unitPriceCents / 100).toFixed(2),
+      price: (pricing.productPriceCents(p.slug) / 100).toFixed(2),
       availability: 'https://schema.org/InStock',
       itemCondition: 'https://schema.org/NewCondition',
       shippingDetails: {
@@ -180,7 +196,7 @@ function product(p) {
   return {
     path: productUrl(p),
     title: `Tassa «${title}» · ${site.brand}`,
-    description: `${p.metaDescription} ${PRICE}.`,
+    description: `${p.metaDescription} ${euro(pricing.productPriceCents(p.slug))}, enviament gratuït.`,
     ogImage: p.images.front,
     jsonld: [productLd, breadcrumbLd(crumbs)],
     bodyClass: 'page-product',

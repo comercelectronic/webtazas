@@ -9,7 +9,10 @@ la newsletter.
 | Carpeta / fitxer | Què hi ha |
 | --- | --- |
 | `data/catalog.json` | Les tasses: nom, categoria, definicions, imatges i relacionades. |
-| `data/site.json` | **Preu únic (`unitPriceCents`)**, enviament, packs, categories, dades legals del titular i fitxa tècnica. |
+| `data/site.json` | **Preus** (`unitPriceCents`, `offers`, preu de cada pack, `customPriceCents`), enviament, colors, categories, dades legals i fitxa tècnica. |
+| `data/configurator.json` | Configurador «Crea la teva tassa»: estructures, paraules amb definició i dibuixos. |
+| `images/tasses/<tassa>/<color>-front\|back.jpg` | Fotos de cada tassa en els 6 colors. `images/tassa-en-blanc/` són les bases del configurador. |
+| `assets/drawings.svg` | Dibuixos del configurador. |
 | `scripts/` | Generador de pàgines (`npm run build`). |
 | `assets/` | Estils, JavaScript, icones i tipografies (allotjades al propi web, sense Google Fonts). |
 | `netlify/functions/` | Pagament, webhook de Stripe, estoc, valoracions, newsletter i administració. |
@@ -18,7 +21,16 @@ la newsletter.
 | `joc/` | Projecte independent (joc «Agència Digital»). |
 
 El preu que es mostra a la web, el de la cistella i el que es cobra a Stripe
-surten del mateix valor (`data/site.json → unitPriceCents`, en cèntims).
+surten del mateix càlcul (`netlify/functions/lib/pricing.js`, a partir de
+`data/site.json`). El servidor torna a validar cada línia (color, pack o
+tassa personalitzada) abans de cobrar.
+
+**Ofertes:** `offers.items` fixa el preu d'oferta de cada tassa. El preu
+habitual ratllat (`offers.showReferencePrice`) només s'ha d'activar quan el
+preu habitual s'hagi aplicat almenys els 30 dies anteriors.
+
+**Tasses personalitzades:** el disseny arriba a Stripe dins el nom i la
+descripció de la línia i a les metadades `personalitzada_N` de la sessió.
 
 ## Ordres
 

@@ -10,15 +10,26 @@
 //   URL: https://<domini>/.netlify/functions/stripe-webhook
 //   Esdeveniments: checkout.session.completed, checkout.session.async_payment_succeeded
 // El "signing secret" (whsec_...) va a Netlify com a STRIPE_WEBHOOK_SECRET.
-const { PRODUCTS } = require('./lib/catalog');
+const { PRODUCTS, PACKS } = require('./lib/pricing');
 const { store } = require('./lib/http');
 const { stockStore } = require('./lib/stock');
 
+// Formats de metadata.items (separats per comes):
+//   m:<slug>:<color>:<qty>   tassa del catàleg
+//   p:<pack>:<qty>           pack (compta cada tassa del pack)
+//   c:<n>:<qty>              tassa personalitzada (no afecta l'estoc)
+//   <slug>:<qty>             format antic
 function parseItems(meta) {
-  return String(meta || '').split(',').filter(Boolean).map((pair) => {
-    const [slug, q] = pair.split(':');
-    return { slug, qty: parseInt(q, 10) || 0 };
-  }).filter((i) => PRODUCTS[i.slug] && i.qty > 0);
+  const units = new Map();
+  const addUnits = (slug, qty) => { if (PRODUCTS[slug] && qty > 0) units.set(slug, (units.get(slug) || 0) + qty); };
+  for (const entry of String(meta || '').split(',').filter(Boolean)) {
+    const parts = entry.split(':');
+    const qty = parseInt(parts[parts.length - 1], 10) || 0;
+    if (parts[0] === 'm' && parts.length === 4) addUnits(parts[1], qty);
+    else if (parts[0] === 'p' && parts.length === 3 && PACKS[parts[1]]) PACKS[parts[1]].slugs.forEach((s) => addUnits(s, qty));
+    else if (parts.length === 2) addUnits(parts[0], qty);
+  }
+  return [...units].map(([slug, qty]) => ({ slug, qty }));
 }
 
 exports.handler = async function (event) {

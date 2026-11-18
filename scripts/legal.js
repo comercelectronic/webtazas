@@ -4,7 +4,7 @@
 // IMPORTANT: aquests textos són una base de treball, no assessorament jurídic.
 // Els comentaris "REVISIÓ JURÍDICA" assenyalen punts que cal validar amb un
 // professional abans d'obrir la botiga al públic.
-const { site, esc, value, PRICE, SHIPPING, DELIVERY } = require('./lib');
+const { site, esc, euro, value, PRICE, SHIPPING, FREE_SHIPPING, DELIVERY } = require('./lib');
 
 const L = site.legal;
 const owner = () => value(L.ownerName, 'nom i cognoms o raó social del titular');
@@ -155,9 +155,9 @@ Pots donar-te de baixa des de l'enllaç que hi ha a cada correu. Cal tenir almen
 <p>Aquestes condicions regulen les compres fetes a ${esc(site.siteUrl)}. Per comprar cal ser major d'edat. En finalitzar una comanda acceptes aquestes condicions.</p>
 
 <h2>3. Preus i impostos</h2>
-<p>Cada tassa costa <strong>${PRICE}</strong>. Els preus s'indiquen en euros.</p>
+<p>El preu habitual de cada tassa és <strong>${PRICE}</strong>, inclosa la tassa personalitzada. Algunes tasses i els packs poden tenir un preu d'oferta, que s'indica a la fitxa i a la cistella. Els preus s'indiquen en euros.</p>
 <p>Impostos: ${value(L.vatInfo, 'indicar si el preu inclou l\'IVA i el règim fiscal aplicable')}</p>
-<p>Les despeses d'enviament (${SHIPPING} per comanda) es mostren a la cistella i a la pàgina de pagament abans de pagar.</p>
+<p>${FREE_SHIPPING ? "L'enviament és gratuït: el preu de les tasses ja l'inclou." : `Les despeses d'enviament (${SHIPPING} per comanda) es mostren a la cistella i a la pàgina de pagament abans de pagar.`}</p>
 
 <h2>4. Com comprar</h2>
 <ol>
@@ -172,7 +172,7 @@ Pots donar-te de baixa des de l'enllaç que hi ha a cada correu. Cal tenir almen
 <p>El pagament es fa amb targeta a través de Stripe. No tenim accés a les dades completes de la teva targeta.</p>
 
 <h2>6. Enviament</h2>
-<p>Enviem a ${esc(site.shipping.countriesLabel)}. Termini estimat: ${DELIVERY} des del pagament. Cost: ${SHIPPING} per comanda. Més informació a <a href="/enviaments-i-devolucions/">Enviaments i devolucions</a>.</p>
+<p>Enviem a ${esc(site.shipping.countriesLabel)}. Termini estimat: ${DELIVERY} des del pagament. Cost: ${FREE_SHIPPING ? 'gratuït' : `${SHIPPING} per comanda`}. Més informació a <a href="/enviaments-i-devolucions/">Enviaments i devolucions</a>.</p>
 
 <h2>7. Dret de desistiment</h2>
 <p>Tens <strong>14 dies naturals</strong> des que reps la comanda per desistir de la compra sense haver de donar cap explicació (art. 102 i següents del TRLGDCU).</p>
@@ -200,7 +200,7 @@ Per la present us comunico que desisteixo del contracte de venda dels béns seg�
 <!-- REVISIÓ: confirmar cost, terminis, països i transportista amb les tarifes reals abans de publicar. -->
 <h2>Enviament</h2>
 <ul>
-  <li><strong>Cost:</strong> ${SHIPPING} per comanda, sigui quin sigui el nombre de tasses.</li>
+  <li><strong>Cost:</strong> ${FREE_SHIPPING ? 'gratuït, sigui quin sigui el nombre de tasses' : `${SHIPPING} per comanda, sigui quin sigui el nombre de tasses`}.</li>
   <li><strong>Termini estimat:</strong> ${DELIVERY} des del pagament.</li>
   <li><strong>On enviem:</strong> ${esc(site.shipping.countriesLabel)}.</li>
   <li><strong>Transportista:</strong> ${value(site.shipping.carrier, 'empresa de transport')}</li>
@@ -223,7 +223,7 @@ Per la present us comunico que desisteixo del contracte de venda dels béns seg�
 <p>3 anys de garantia legal de conformitat des del lliurament.</p>
 
 <h2>Preus</h2>
-<p>Totes les tasses costen ${PRICE}. Impostos: ${value(L.vatInfo, 'indicar si el preu inclou l\'IVA i el règim fiscal aplicable')}</p>`,
+<p>Preu habitual per tassa: ${PRICE}, enviament inclòs. Impostos: ${value(L.vatInfo, 'indicar si el preu inclou l\'IVA i el règim fiscal aplicable')}</p>`,
   },
 };
 

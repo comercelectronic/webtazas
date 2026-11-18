@@ -1,11 +1,11 @@
-const { site, catalog, BY_SLUG, CATEGORIES, CATEGORY_BY_ID, esc, euro, PRICE, SHIPPING, DELIVERY, icon, productUrl, productImg } = require('./lib');
+const { site, catalog, BY_SLUG, CATEGORIES, CATEGORY_BY_ID, esc, euro, PRICE, SHIPPING, SHIPPING_LINE, FREE_SHIPPING, DELIVERY, icon, productUrl, productImg, pricing } = require('./lib');
 const { productCard, productGrid, newsletterForm, sectionHead, trustList, breadcrumb, breadcrumbLd } = require('./components');
 
 const newProducts = catalog.filter((p) => p.new);
 
 const FAQ = [
-  ['Quant costa cada tassa?', `Totes les tasses costen ${PRICE}, sigui quina sigui la paraula. Els packs no tenen recàrrecs: pagues ${PRICE} per cada tassa que inclouen.`],
-  ['Quant costa l\'enviament?', `${SHIPPING} per comanda, tant si compres una tassa com si en compres deu. El veuràs a la cistella abans de pagar.`],
+  ['Quant costa cada tassa?', `${PRICE}, amb l'enviament inclòs. Algunes tasses tenen preu d'oferta, i els packs surten més barats que comprar les tasses per separat. La tassa personalitzada també costa ${PRICE}.`],
+  ['Quant costa l\'enviament?', FREE_SHIPPING ? 'Res: l\'enviament és gratuït, tant si compres una tassa com si en compres deu.' : `${SHIPPING} per comanda, tant si compres una tassa com si en compres deu.`],
   ['Quant triga a arribar?', `El termini estimat és de ${DELIVERY} des del pagament. Enviem a ${site.shipping.countriesLabel}.`],
   ['Puc tornar una tassa?', 'Sí. Tens 14 dies naturals des que la reps per desistir de la compra, sense haver de donar explicacions. A la pàgina d\'enviaments i devolucions t\'expliquem com fer-ho.'],
   ['Com es paga?', 'Amb targeta, a la pàgina de pagament segur de Stripe. Nosaltres no veiem ni guardem les dades de la teva targeta.'],
@@ -14,17 +14,18 @@ const FAQ = [
 
 function packCard(pack) {
   const items = pack.slugs.map((s) => BY_SLUG[s]);
-  const total = euro(site.unitPriceCents * items.length);
+  const price = pricing.packPriceCents(pack);
+  const saving = pricing.packSeparateCents(pack) - price;
   return `<article class="pack pack--${pack.id}">
   <div class="pack__media" aria-hidden="true">${items.map((p) => `<span class="pack__mug">${productImg(p, 'front', { alt: '' })}</span>`).join('')}</div>
   <div class="pack__body">
-    <p class="pack__count">${items.length} tasses</p>
+    <p class="pack__count">${items.length} tasses${saving > 0 ? ` · <span class="pack__save">Estalvies ${euro(saving)}</span>` : ''}</p>
     <h3 class="pack__title">${esc(pack.name)}</h3>
     <p class="pack__text">${esc(pack.text)}</p>
     <p class="pack__items">${items.map((p) => `<a href="${productUrl(p)}">${esc(p.name)}</a>`).join('<span aria-hidden="true"> · </span>')}</p>
     <div class="pack__foot">
-      <span class="price price--lg">${total}</span>
-      <button type="button" class="btn btn--primary" data-add-pack="${pack.slugs.join(',')}">Afegeix el pack a la cistella<span class="sr-only"> (${esc(pack.name)}, ${total})</span></button>
+      <p class="pack__price"><span class="price price--lg">${euro(price)}</span>${saving > 0 ? `<span class="pack__vs">per separat, ${euro(pricing.packSeparateCents(pack))}</span>` : ''}</p>
+      <button type="button" class="btn btn--primary" data-add-pack="${pack.id}">Afegeix el pack a la cistella<span class="sr-only"> (${esc(pack.name)}, ${euro(price)})</span></button>
     </div>
   </div>
 </article>`;
@@ -104,12 +105,12 @@ function home() {
       </div>
       <ul class="hero__trust">
         <li>${icon('lock')} Pagament segur amb Stripe</li>
-        <li>${icon('truck')} Enviament ${SHIPPING}</li>
+        <li>${icon('truck')} ${SHIPPING_LINE}</li>
         <li>${icon('return')} 14 dies per desistir</li>
       </ul>
     </div>
     <div class="hero__stage" data-hero-words>
-      <p class="hero__sticker" aria-label="Totes les tasses a ${PRICE}"><span>Totes a</span><strong>${PRICE}</strong></p>
+      <p class="hero__sticker" aria-label="${PRICE} amb enviament gratuït"><strong>${PRICE}</strong><span>enviament gratuït</span></p>
       ${words.map(heroWord).join('')}
       <button type="button" class="hero__pause" data-hero-pause aria-pressed="false" hidden>${icon('pause')}<span class="sr-only">Atura el canvi de paraules</span></button>
     </div>
@@ -119,9 +120,9 @@ function home() {
 <section class="promo" aria-labelledby="promo-title">
   <div class="container promo__inner">
     <p class="promo__tag">Aquest Nadal</p>
-    <h2 class="promo__title" id="promo-title">L'amic invisible més fàcil de l'any: <span>${PRICE}</span></h2>
-    <p class="promo__text">Una paraula diferent per a cada persona del grup. I l'enviament, un sol cop per comanda.</p>
-    <a class="btn btn--light" href="/tasses/">Tria-les ara ${icon('arrow')}</a>
+    <h2 class="promo__title" id="promo-title">Regals amb paraula, <span>enviament gratuït</span></h2>
+    <p class="promo__text">Tasses a ${PRICE} amb l'enviament inclòs, packs amb descompte i la tassa que tu mateix dissenyes.</p>
+    <a class="btn btn--light" href="#packs">Veure els packs ${icon('arrow')}</a>
   </div>
 </section>
 
@@ -166,7 +167,7 @@ function home() {
   <div class="container">
     ${sectionHead('Packs per regalar', 'Un regal, diverses paraules.', 'Hi ha persones que es mereixen més d\'una tassa.', { id: 'packs-title' })}
     <div class="packs">${site.packs.map(packCard).join('')}</div>
-    <p class="packs__note">El preu de cada pack és la suma de les tasses a ${PRICE}. L'enviament (${SHIPPING}) es paga una sola vegada per comanda.</p>
+    <p class="packs__note">Els packs inclouen les tasses amb el color de portada i l'enviament gratuït.</p>
   </div>
 </section>
 
@@ -235,7 +236,7 @@ ${contactSection()}`;
   return {
     path: '/',
     title: `Tasses amb paraules catalanes per regalar · ${site.brand}`,
-    description: `Tasses originals amb paraules i expressions catalanes: regals en català per a parelles, amics, família o la feina. Totes a ${PRICE}.`,
+    description: `Tasses originals amb paraules i expressions catalanes: regals en català per a parelles, amics, família o la feina. ${PRICE} amb enviament gratuït.`,
     jsonld,
     bodyClass: 'page-home',
     main,
@@ -255,13 +256,13 @@ function listing({ path, title, h1, intro, products, crumbs, seoText }) {
 </section>
 <section class="section section--flush">
   <div class="container">
-    <p class="result-count">${products.length} ${products.length === 1 ? 'tassa' : 'tasses'} · ${PRICE} cadascuna</p>
+    <p class="result-count">${products.length} ${products.length === 1 ? 'tassa' : 'tasses'} · ${PRICE} amb enviament gratuït</p>
     ${productGrid(products, { eagerFirst: true, headingLevel: 2 })}
     ${seoText ? `<div class="seo-text">${seoText}</div>` : ''}
   </div>
 </section>`;
   return {
-    path, title, description: `${intro} Totes les tasses a ${PRICE}.`,
+    path, title, description: `${intro} Tasses a ${PRICE} amb enviament gratuït.`,
     jsonld: [
       breadcrumbLd(crumbs),
       {

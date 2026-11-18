@@ -13,6 +13,7 @@ const { page } = require('./components');
 const shop = require('./pages-shop');
 const { product } = require('./pages-product');
 const other = require('./pages-other');
+const { configurator } = require('./pages-configurator');
 
 const ROOT = path.join(__dirname, '..');
 const out = (rel, content) => {
@@ -22,19 +23,26 @@ const out = (rel, content) => {
 };
 
 // 1. Catàleg per al navegador (cistella, venda creuada, packs).
+const pricing = require('../netlify/functions/lib/pricing');
 const browserCatalog = {
   priceCents: site.unitPriceCents,
+  customPriceCents: pricing.customPriceCents(),
   shippingCents: site.shipping.costCents,
   maxQty: site.maxQtyPerItem,
+  colors: site.colors,
   products: Object.fromEntries(catalog.map((p) => [p.slug, {
     name: p.name, url: `/tasses/${p.slug}/`, image: p.images.front, related: p.related, category: p.category,
+    priceCents: pricing.productPriceCents(p.slug), colors: p.colors || [], defaultColor: p.defaultColor || null,
+  }])),
+  packs: Object.fromEntries(site.packs.map((k) => [k.id, {
+    name: k.name, slugs: k.slugs, priceCents: pricing.packPriceCents(k), separateCents: pricing.packSeparateCents(k),
   }])),
 };
 out('assets/catalog.js', `// Generat per scripts/build.js a partir de data/. No l'editis a mà.\nwindow.TDM_CATALOG = ${JSON.stringify(browserCatalog)};\n`);
 
 // 2. Versió dels recursos per invalidar la memòria cau del navegador.
 const assetVersion = crypto.createHash('sha1')
-  .update(['assets/styles.css', 'assets/app.js', 'assets/admin.js', 'assets/catalog.js']
+  .update(['assets/styles.css', 'assets/app.js', 'assets/admin.js', 'assets/catalog.js', 'assets/configurator.js', 'assets/drawings.svg']
     .map((f) => fs.readFileSync(path.join(ROOT, f), 'utf8')).join(''))
   .digest('hex').slice(0, 10);
 
@@ -43,6 +51,7 @@ const pages = [
   shop.home(),
   ...shop.catalogPages(),
   ...catalog.map(product),
+  configurator(),
   other.newsletter(),
   other.nlAction('confirm'),
   other.nlAction('unsubscribe'),
