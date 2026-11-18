@@ -63,7 +63,7 @@ const SIZES = {
   gallery: '(max-width: 900px) 100vw, 620px',
   thumb: '100px',
   small: '160px',
-  medium: '(max-width: 900px) 70vw, 420px',
+  medium: '(max-width: 900px) 90vw, 520px',
 };
 
 function productImg(p, side = 'front', { eager = false, cls = '', alt, sizes = 'card' } = {}) {
