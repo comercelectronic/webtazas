@@ -176,7 +176,7 @@ ${recommender()}
 
 ${offerProducts.length ? `<section class="section offers-band" aria-labelledby="offers-title">
   <div class="container">
-    ${sectionHead('Ofertes', 'Tasses en oferta', `${offerProducts.length} paraules a preu rebaixat, amb l'enviament gratuït.`, { id: 'offers-title' })}
+    ${sectionHead('Ofertes', 'Tasses en oferta', `${offerProducts.length} paraules rebaixades fins a un ${Math.max(...offerProducts.map((p) => Math.round((1 - pricing.productPriceCents(p.slug) / site.unitPriceCents) * 100)))} %, amb l'enviament gratuït.`, { id: 'offers-title' })}
     <div class="rail" tabindex="0" role="region" aria-label="Tasses en oferta (llisca per veure'n més)">${offerProducts.map((p) => productCard(p)).join('')}</div>
     <p class="section-cta"><a class="btn btn--ghost btn--lg" href="/tasses/ofertes/">Veure totes les ofertes ${icon('arrow')}</a></p>
   </div>

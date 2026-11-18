@@ -1,4 +1,4 @@
-const { site, catalog, BY_SLUG, CATEGORY_BY_ID, esc, euro, PRICE, SHIPPING, SHIPPING_LINE, FREE_SHIPPING, DELIVERY, icon, productUrl, productImg, priceHtml, pricing } = require('./lib');
+const { site, catalog, BY_SLUG, CATEGORY_BY_ID, esc, euro, PRICE, SHIPPING, SHIPPING_LINE, FREE_SHIPPING, DELIVERY, icon, productUrl, productImg, priceHtml, pricing, offerBadge } = require('./lib');
 const { productGrid, sectionHead, trustList, breadcrumb, breadcrumbLd } = require('./components');
 
 function relatedFor(p) {
@@ -95,7 +95,7 @@ function product(p) {
     <h1 class="buybox__title">${esc(p.name)}</h1>
     ${p.tagline ? `<p class="buybox__tagline">${esc(p.tagline)}</p>` : ''}
     <a class="rating-summary" href="#valoracions" data-rating-summary>Encara no té valoracions</a>
-    <p class="buybox__price">${pricing.hasOffer(p.slug) ? '<span class="badge-offer">Oferta</span>' : ''}${priceHtml(p.slug, { large: true })}<span class="buybox__ship">${FREE_SHIPPING ? 'Enviament gratuït inclòs' : `+ ${SHIPPING} d'enviament per comanda`}</span></p>
+    <p class="buybox__price">${pricing.hasOffer(p.slug) ? `<span class="badge-offer">${offerBadge(p.slug)}</span>` : ''}${priceHtml(p.slug, { large: true })}<span class="buybox__ship">${FREE_SHIPPING ? 'Enviament gratuït inclòs' : `+ ${SHIPPING} d'enviament per comanda`}</span></p>
     ${colorPicker(p)}
     ${definition(p)}
     <p class="stock-note" data-stock-note hidden></p>

@@ -190,8 +190,8 @@
   "brandOf": "d'El Glopet",
   "customPriceCents": 1495,
   "offers": {
-    "_nota": "Preu d'oferta per tassa (en cèntims). Si showReferencePrice és true, es mostra el preu habitual ratllat: només s'ha d'activar quan el preu habitual s'hagi aplicat almenys els 30 dies anteriors (art. 20 de la Llei d'ordenació del comerç minorista).",
-    "showReferencePrice": false,
+    "_nota": "Preu d'oferta per tassa (en cèntims). Amb showReferencePrice es mostra el preu habitual ratllat i el percentatge de descompte. Un cop la botiga sigui pública, el preu ratllat ha de ser el més baix aplicat els 30 dies anteriors (art. 20 de la Llei d'ordenació del comerç minorista).",
+    "showReferencePrice": true,
     "items": {
       "solell": 1195,
       "escalfacadires": 1295,

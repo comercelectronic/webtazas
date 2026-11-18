@@ -1,4 +1,4 @@
-const { site, catalog, CATEGORIES, CATEGORY_BY_ID, esc, PRICE, SHIPPING_LINE, DELIVERY, icon, productUrl, productImg, jsonLd, priceHtml, pricing } = require('./lib');
+const { site, catalog, CATEGORIES, CATEGORY_BY_ID, esc, PRICE, SHIPPING_LINE, DELIVERY, icon, productUrl, productImg, jsonLd, priceHtml, pricing, offerBadge } = require('./lib');
 
 const NAV = [
   { href: '/tasses/', label: 'Totes les tasses' },
@@ -159,7 +159,7 @@ function productCard(p, { eager = false, headingLevel = 3 } = {}) {
   <a class="card__media" href="${productUrl(p)}" tabindex="-1" aria-hidden="true">
     ${productImg(p, 'front', { eager, cls: 'card__img' })}
     ${p.images.back ? productImg(p, 'back', { cls: 'card__img card__img--back', alt: '' }) : ''}
-    ${pricing.hasOffer(p.slug) ? '<span class="card__badge">Oferta</span>' : ''}
+    ${pricing.hasOffer(p.slug) ? `<span class="card__badge">${offerBadge(p.slug)}</span>` : ''}
     <span class="card__stock" data-stock-badge hidden></span>
   </a>
   <div class="card__body">

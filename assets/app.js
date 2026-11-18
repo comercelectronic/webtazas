@@ -214,7 +214,7 @@
       return '<div class="line" data-line="' + idx + '" data-line-key="' + esc(keyOf(i)) + '">' + info.img +
         '<div><a class="line__name" href="' + info.url + '">' + info.name + '</a>' +
         (info.detail ? '<p class="line__detail">' + info.detail + '</p>' : '') +
-        '<p class="line__unit">' + euro(unit) + ' / unitat</p>' +
+        '<p class="line__unit">' + (i.type === 'mug' && CAT.showReferencePrice && unit < CAT.priceCents ? '<s>' + euro(CAT.priceCents) + '</s> ' : '') + euro(unit) + ' / unitat</p>' +
         '<div class="qty"><button type="button" class="qty__btn" data-line-step="-1" aria-label="Una unitat menys de ' + plain + '">' + icon('minus') + '</button>' +
         '<span class="qty__input" aria-live="polite">' + i.qty + '</span>' +
         '<button type="button" class="qty__btn" data-line-step="1" aria-label="Una unitat més de ' + plain + '">' + icon('plus') + '</button></div></div>' +
@@ -242,7 +242,7 @@
     upsell.innerHTML = suggestions.length ? '<h3>Combina-la amb</h3>' + suggestions.map(function (s) {
       var p = CAT.products[s];
       return '<div class="upsell-item"><img src="' + p.image + '" alt="" width="48" height="48">' +
-        '<div><a href="' + p.url + '">' + esc(p.name) + '</a><span>' + euro(p.priceCents) + '</span></div>' +
+        '<div><a href="' + p.url + '">' + esc(p.name) + '</a><span>' + (CAT.showReferencePrice && p.priceCents < CAT.priceCents ? '<s>' + euro(CAT.priceCents) + '</s> ' : '') + euro(p.priceCents) + '</span></div>' +
         '<button type="button" class="btn btn--small" data-add="' + s + '">Afegeix<span class="sr-only"> ' + esc(p.name) + '</span></button></div>';
     }).join('') : '';
   }
