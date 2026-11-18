@@ -2,11 +2,14 @@
 //
 // S'executa al servidor: aquí viu la clau secreta de Stripe (STRIPE_SECRET_KEY,
 // configurada a Netlify, mai al codi) i aquí es decideix el preu que es cobra.
-// El preu i l'enviament surten de data/site.json, el mateix fitxer amb què es
-// generen les pàgines, així que el que es mostra i el que es cobra coincideixen.
-const { PRODUCTS, site } = require('./lib/catalog');
+// Els preus surten de lib/pricing.js (data/site.json), el mateix que fa servir
+// el generador de pàgines: el que es mostra i el que es cobra coincideixen.
+const { site, PRODUCTS } = require('./lib/pricing');
+const { priceCart } = require('./lib/cart');
 const { stockStore, readStock } = require('./lib/stock');
 const { json, parseJson, siteOrigin } = require('./lib/http');
+
+const truncate = (s, n) => (s.length > n ? s.slice(0, n - 1) + '…' : s);
 
 exports.handler = async function (event) {
   if (event.httpMethod !== 'POST') return json(405, { error: 'Method Not Allowed' });
@@ -16,11 +19,12 @@ exports.handler = async function (event) {
     return json(500, { error: 'El pagament no està configurat al servidor.' });
   }
 
-  const { body, error } = parseJson(event, 8192);
+  const { body, error } = parseJson(event, 32768);
   if (error) return error;
-  const items = body.items;
-  if (!Array.isArray(items) || items.length === 0) return json(400, { error: 'La cistella és buida.' });
-  if (items.length > Object.keys(PRODUCTS).length) return json(400, { error: 'Petició no vàlida.' });
+
+  const priced = priceCart(body.items);
+  if (priced.error) return json(priced.status || 400, { error: priced.error });
+  const { lines, units } = priced;
 
   let stock;
   try {
@@ -29,38 +33,37 @@ exports.handler = async function (event) {
     console.error("Error llegint l'estoc:", err);
     return json(500, { error: "No s'ha pogut comprovar l'estoc. Torna-ho a provar." });
   }
-
-  // Agrupem per si arriba el mateix producte repetit.
-  const qtyBySlug = new Map();
-  for (const item of items) {
-    const product = PRODUCTS[item && item.id];
-    if (!product) return json(400, { error: `Producte desconegut: ${item && item.id}` });
-    const qty = Math.min(site.maxQtyPerItem, Math.max(1, parseInt(item.qty, 10) || 1));
-    qtyBySlug.set(product.slug, Math.min(site.maxQtyPerItem, (qtyBySlug.get(product.slug) || 0) + qty));
+  for (const [slug, qty] of Object.entries(units)) {
+    const available = stock[slug];
+    if (available !== null && available !== undefined && qty > available) {
+      const name = PRODUCTS[slug].name;
+      return json(409, { error: available > 0 ? `Només queden ${available} unitats de «${name}».` : `«${name}» s'ha exhaurit.` });
+    }
   }
 
   const origin = siteOrigin(event, site);
-  const line_items = [];
+  const metadata = {};
   const itemsMeta = [];
-  for (const [slug, qty] of qtyBySlug) {
-    const product = PRODUCTS[slug];
-    const available = stock[slug];
-    if (available !== null && available !== undefined && qty > available) {
-      return json(409, {
-        error: available > 0 ? `Només queden ${available} unitats de «${product.name}».` : `«${product.name}» s'ha exhaurit.`,
-      });
+  let customN = 0;
+  const line_items = lines.map((l) => {
+    if (l.type === 'mug') itemsMeta.push(`m:${l.slug}:${l.color || ''}:${l.qty}`);
+    if (l.type === 'pack') itemsMeta.push(`p:${l.id}:${l.qty}`);
+    if (l.type === 'custom') {
+      customN += 1;
+      itemsMeta.push(`c:${customN}:${l.qty}`);
+      metadata[`personalitzada_${customN}`] = truncate(JSON.stringify(l.design), 500);
     }
-    itemsMeta.push(`${slug}:${qty}`);
-    line_items.push({
-      quantity: qty,
-      price_data: {
-        currency: site.currency.toLowerCase(),
-        unit_amount: site.unitPriceCents,
-        product_data: { name: `Tassa «${product.name}»`, images: [`${origin}${product.images.front}`] },
-      },
-    });
-  }
+    const product_data = { name: truncate(l.name, 250) };
+    if (l.description) product_data.description = truncate(l.description, 1000);
+    if (l.image) product_data.images = [`${origin}${l.image}`];
+    return {
+      quantity: l.qty,
+      price_data: { currency: site.currency.toLowerCase(), unit_amount: l.unitCents, product_data },
+    };
+  });
+  metadata.items = truncate(itemsMeta.join(','), 500);
 
+  const free = site.shipping.costCents === 0;
   try {
     const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
     const session = await stripe.checkout.sessions.create({
@@ -71,7 +74,7 @@ exports.handler = async function (event) {
         shipping_rate_data: {
           type: 'fixed_amount',
           fixed_amount: { amount: site.shipping.costCents, currency: site.currency.toLowerCase() },
-          display_name: 'Enviament estàndard',
+          display_name: free ? 'Enviament gratuït' : 'Enviament estàndard',
           delivery_estimate: {
             minimum: { unit: 'business_day', value: site.shipping.minBusinessDays },
             maximum: { unit: 'business_day', value: site.shipping.maxBusinessDays },
@@ -79,7 +82,7 @@ exports.handler = async function (event) {
         },
       }],
       phone_number_collection: { enabled: true },
-      metadata: { items: itemsMeta.join(',') },
+      metadata,
       success_url: `${origin}/gracies/?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/tasses/`,
       locale: 'auto',

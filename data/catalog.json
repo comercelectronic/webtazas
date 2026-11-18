@@ -1,411 +1,5 @@
 [
   {
-    "slug": "cafe-sol",
-    "name": "Un cafè sol",
-    "category": "humor",
-    "new": true,
-    "sides": 1,
-    "phonetic": null,
-    "intro": "Avui només vull",
-    "tagline": null,
-    "def1": null,
-    "def2": null,
-    "summary": "Per als matins en què no vols ni companyia ni llet.",
-    "description": [
-      "Una tassa amb doble sentit: avui només vols un cafè sol… i que et deixin sol. Amb una tasseta amb ulleres de sol prenent el sol a la tovallola.",
-      "Ideal per a l'oficina, per a qui no és persona fins al segon cafè o per a qui reivindica el seu moment de pau."
-    ],
-    "metaDescription": "Tassa «Avui només vull un cafè sol»: joc de paraules per als matins en què no vols ni companyia ni llet.",
-    "images": {
-      "front": "/images/mug-cafe-sol-front.jpg",
-      "back": "/images/mug-cafe-sol-back.jpg",
-      "width": 750,
-      "height": 880
-    },
-    "alt": {
-      "front": "Tassa blanca amb la frase «Avui només vull un cafè sol» i una il·lustració",
-      "back": "La tassa «Avui només vull un cafè sol» vista de costat"
-    },
-    "related": [
-      "tallat",
-      "sense-cafe-no-soc-persona"
-    ],
-    "tags": [
-      "cafe"
-    ]
-  },
-  {
-    "slug": "tallat",
-    "name": "Tallat",
-    "category": "humor",
-    "new": true,
-    "sides": 1,
-    "phonetic": null,
-    "intro": "Avui estic una mica",
-    "tagline": null,
-    "def1": null,
-    "def2": null,
-    "summary": "Per als dies que estàs tallat… com el cafè.",
-    "description": [
-      "Quan no saps què dir, et quedes tallat. I el cafè també. Una tassa amb una tasseta tímida i una tireta a la galta, per als dies d'estar una mica tocat.",
-      "Un regal senzill per a qui es posa vermell de seguida o per a qui sempre demana un tallat."
-    ],
-    "metaDescription": "Tassa «Avui estic una mica tallat»: joc de paraules amb el cafè tallat, per als dies d'estar una mica tocat.",
-    "images": {
-      "front": "/images/mug-tallat-front.jpg",
-      "back": "/images/mug-tallat-back.jpg",
-      "width": 750,
-      "height": 880
-    },
-    "alt": {
-      "front": "Tassa blanca amb la frase «Avui estic una mica tallat» i una il·lustració",
-      "back": "La tassa «Avui estic una mica tallat» vista de costat"
-    },
-    "related": [
-      "cafe-sol",
-      "mala-llet"
-    ],
-    "tags": [
-      "cafe"
-    ]
-  },
-  {
-    "slug": "mala-llet",
-    "name": "Mala llet",
-    "category": "humor",
-    "new": true,
-    "sides": 1,
-    "phonetic": null,
-    "intro": "Compte, que avui tinc",
-    "tagline": null,
-    "def1": null,
-    "def2": null,
-    "summary": "Avís previ per als dies de mala lluna.",
-    "description": [
-      "Un brick de llet enfadat i un avís clar: avui no és el dia. Millor que tothom ho sàpiga abans del primer cafè.",
-      "Per a qui té el despertar complicat, o per regalar amb tota la intenció del món."
-    ],
-    "metaDescription": "Tassa «Compte, que avui tinc mala llet»: avís previ per als dies de mal humor, amb un brick de llet enfadat.",
-    "images": {
-      "front": "/images/mug-mala-llet-front.jpg",
-      "back": "/images/mug-mala-llet-back.jpg",
-      "width": 750,
-      "height": 880
-    },
-    "alt": {
-      "front": "Tassa blanca amb la frase «Compte, que avui tinc mala llet» i una il·lustració",
-      "back": "La tassa «Compte, que avui tinc mala llet» vista de costat"
-    },
-    "related": [
-      "tallat",
-      "mes-cara-que-esquena"
-    ],
-    "tags": [
-      "cafe"
-    ]
-  },
-  {
-    "slug": "sense-cafe-no-soc-persona",
-    "name": "Sense cafè no sóc persona",
-    "category": "humor",
-    "new": true,
-    "sides": 1,
-    "phonetic": null,
-    "intro": null,
-    "tagline": "Amb cafè, tampoc gaire.",
-    "def1": null,
-    "def2": null,
-    "summary": "Sense cafè no sóc persona. Amb cafè, tampoc gaire.",
-    "description": [
-      "Dues caretes, abans i després del cafè, i una veritat universal: el cafè ajuda, però no fa miracles.",
-      "Per als que necessiten el cafè per arrencar i ho reconeixen sense embuts."
-    ],
-    "metaDescription": "Tassa «Sense cafè no sóc persona. Amb cafè, tampoc gaire.»: per als que necessiten el cafè per arrencar.",
-    "images": {
-      "front": "/images/mug-sense-cafe-no-soc-persona-front.jpg",
-      "back": "/images/mug-sense-cafe-no-soc-persona-back.jpg",
-      "width": 750,
-      "height": 880
-    },
-    "alt": {
-      "front": "Tassa blanca amb la frase «Sense cafè no sóc persona. Amb cafè, tampoc gaire.» i una il·lustració",
-      "back": "La tassa «Sense cafè no sóc persona. Amb cafè, tampoc gaire.» vista de costat"
-    },
-    "related": [
-      "cafe-sol",
-      "coses-que-perden-el-fil"
-    ],
-    "tags": [
-      "cafe"
-    ]
-  },
-  {
-    "slug": "coses-que-s-escalfen-de-seguida",
-    "name": "Coses que s'escalfen de seguida",
-    "category": "humor",
-    "new": true,
-    "sides": 1,
-    "phonetic": null,
-    "intro": null,
-    "tagline": null,
-    "def1": null,
-    "def2": null,
-    "summary": "El microones, el mòbil… i aquella persona que tots coneixem.",
-    "description": [
-      "Una llista il·lustrada de coses que s'escalfen de seguida: el microones, el mòbil i algú amb molt poca paciència.",
-      "Per a qui s'enfada per no res. O per a qui ho reconeix i se'n riu."
-    ],
-    "metaDescription": "Tassa «Coses que s'escalfen de seguida»: el microones, el mòbil i aquella persona que s'enfada per no res.",
-    "images": {
-      "front": "/images/mug-coses-que-s-escalfen-de-seguida-front.jpg",
-      "back": "/images/mug-coses-que-s-escalfen-de-seguida-back.jpg",
-      "width": 750,
-      "height": 880
-    },
-    "alt": {
-      "front": "Tassa blanca amb la frase «Coses que s'escalfen de seguida» i una il·lustració",
-      "back": "La tassa «Coses que s'escalfen de seguida» vista de costat"
-    },
-    "related": [
-      "coses-que-perden-el-fil",
-      "mala-llet"
-    ],
-    "tags": []
-  },
-  {
-    "slug": "coses-que-perden-el-fil",
-    "name": "Coses que perden el fil",
-    "category": "humor",
-    "new": true,
-    "sides": 1,
-    "phonetic": null,
-    "intro": null,
-    "tagline": null,
-    "def1": null,
-    "def2": null,
-    "summary": "Les agulles, els estels… i qui comença una història i no l'acaba.",
-    "description": [
-      "Una agulla, un estel i algú que diu «I llavors… què deia?». Tres coses que perden el fil, cadascuna a la seva manera.",
-      "Per a qui s'enreda explicant anècdotes o es distreu a mitja frase."
-    ],
-    "metaDescription": "Tassa «Coses que perden el fil»: una agulla, un estel i algú que no recorda què deia.",
-    "images": {
-      "front": "/images/mug-coses-que-perden-el-fil-front.jpg",
-      "back": "/images/mug-coses-que-perden-el-fil-back.jpg",
-      "width": 750,
-      "height": 880
-    },
-    "alt": {
-      "front": "Tassa blanca amb la frase «Coses que perden el fil» i una il·lustració",
-      "back": "La tassa «Coses que perden el fil» vista de costat"
-    },
-    "related": [
-      "coses-que-s-escalfen-de-seguida",
-      "coses-que-no-serveixen-per-a-res"
-    ],
-    "tags": []
-  },
-  {
-    "slug": "coses-que-no-serveixen-per-a-res",
-    "name": "Coses que no serveixen per a res",
-    "category": "humor",
-    "new": true,
-    "sides": 1,
-    "phonetic": null,
-    "intro": null,
-    "tagline": null,
-    "def1": null,
-    "def2": null,
-    "summary": "Una bombeta fosa, un bolígraf sense tinta… i aquella reunió.",
-    "description": [
-      "Una bombeta fosa, un bolígraf trencat i una reunió que podia haver estat un correu. La llista de coses que no serveixen per a res.",
-      "Ideal per a l'oficina i per a qualsevol persona que hagi sobreviscut a una reunió eterna."
-    ],
-    "metaDescription": "Tassa «Coses que no serveixen per a res»: una bombeta fosa, un bolígraf trencat i una reunió inútil.",
-    "images": {
-      "front": "/images/mug-coses-que-no-serveixen-per-a-res-front.jpg",
-      "back": "/images/mug-coses-que-no-serveixen-per-a-res-back.jpg",
-      "width": 750,
-      "height": 880
-    },
-    "alt": {
-      "front": "Tassa blanca amb la frase «Coses que no serveixen per a res» i una il·lustració",
-      "back": "La tassa «Coses que no serveixen per a res» vista de costat"
-    },
-    "related": [
-      "coses-que-perden-el-fil",
-      "coses-que-es-veuen-millor-de-lluny"
-    ],
-    "tags": []
-  },
-  {
-    "slug": "coses-que-es-veuen-millor-de-lluny",
-    "name": "Coses que es veuen millor de lluny",
-    "category": "humor",
-    "new": true,
-    "sides": 1,
-    "phonetic": null,
-    "intro": null,
-    "tagline": null,
-    "def1": null,
-    "def2": null,
-    "summary": "La lluna, els focs artificials… i el teu ex.",
-    "description": [
-      "La lluna, els focs artificials i, ben lluny, el teu ex. Tres coses que es veuen molt millor a distància.",
-      "Per a qui ha passat pàgina amb sentit de l'humor."
-    ],
-    "metaDescription": "Tassa «Coses que es veuen millor de lluny»: la lluna, els focs artificials i el teu ex.",
-    "images": {
-      "front": "/images/mug-coses-que-es-veuen-millor-de-lluny-front.jpg",
-      "back": "/images/mug-coses-que-es-veuen-millor-de-lluny-back.jpg",
-      "width": 750,
-      "height": 880
-    },
-    "alt": {
-      "front": "Tassa blanca amb la frase «Coses que es veuen millor de lluny» i una il·lustració",
-      "back": "La tassa «Coses que es veuen millor de lluny» vista de costat"
-    },
-    "related": [
-      "coses-que-no-serveixen-per-a-res",
-      "mes-cara-que-esquena"
-    ],
-    "tags": []
-  },
-  {
-    "slug": "tros-de-pa",
-    "name": "Tros de pa",
-    "category": "amor",
-    "new": true,
-    "sides": 1,
-    "phonetic": null,
-    "intro": "Ets un",
-    "tagline": null,
-    "def1": null,
-    "def2": null,
-    "summary": "Per a la persona més bona que coneixes.",
-    "description": [
-      "«Ser un tros de pa» vol dir ser una persona molt bona, d'aquelles que ho donarien tot. Amb una llesca de pa amb aureola, és clar.",
-      "Per agrair-li a algú que sempre hi és, sense posar-se cursi."
-    ],
-    "metaDescription": "Tassa «Ets un tros de pa»: l'expressió catalana per dir que algú és una persona molt bona.",
-    "images": {
-      "front": "/images/mug-tros-de-pa-front.jpg",
-      "back": "/images/mug-tros-de-pa-back.jpg",
-      "width": 750,
-      "height": 880
-    },
-    "alt": {
-      "front": "Tassa blanca amb la frase «Ets un tros de pa» i una il·lustració",
-      "back": "La tassa «Ets un tros de pa» vista de costat"
-    },
-    "related": [
-      "aixopluc",
-      "niu"
-    ],
-    "tags": [
-      "especial"
-    ]
-  },
-  {
-    "slug": "mes-inutil-que-un-cendrer-de-moto",
-    "name": "Més inútil que un cendrer de moto",
-    "category": "insults",
-    "new": true,
-    "sides": 1,
-    "phonetic": null,
-    "intro": "Ets",
-    "tagline": null,
-    "def1": null,
-    "def2": null,
-    "summary": "Una comparació clàssica per a qui no en fa ni una.",
-    "description": [
-      "Un cendrer en una moto no té cap sentit, i aquesta comparació tampoc no deixa gaire marge al dubte. Amb la moto i el cendrer dibuixats, perquè quedi clar.",
-      "Per regalar amb afecte (i amb molt de morro) a qui sempre té una excusa."
-    ],
-    "metaDescription": "Tassa «Ets més inútil que un cendrer de moto»: comparació catalana per a qui no en fa ni una.",
-    "images": {
-      "front": "/images/mug-mes-inutil-que-un-cendrer-de-moto-front.jpg",
-      "back": "/images/mug-mes-inutil-que-un-cendrer-de-moto-back.jpg",
-      "width": 750,
-      "height": 880
-    },
-    "alt": {
-      "front": "Tassa blanca amb la frase «Ets més inútil que un cendrer de moto» i una il·lustració",
-      "back": "La tassa «Ets més inútil que un cendrer de moto» vista de costat"
-    },
-    "related": [
-      "mes-pesat-que-una-vaca-en-bracos",
-      "arsenal-insults"
-    ],
-    "tags": []
-  },
-  {
-    "slug": "mes-pesat-que-una-vaca-en-bracos",
-    "name": "Més pesat que una vaca en braços",
-    "category": "insults",
-    "new": true,
-    "sides": 1,
-    "phonetic": null,
-    "intro": "Ets",
-    "tagline": null,
-    "def1": null,
-    "def2": null,
-    "summary": "Per a qui no deixa d'insistir… i d'insistir.",
-    "description": [
-      "Carregar una vaca en braços cansa. Aguantar segons qui, també. Amb una vaca i un portador ben enfadat.",
-      "Per a l'amic que no para de demanar favors o per al germà que no calla mai."
-    ],
-    "metaDescription": "Tassa «Ets més pesat que una vaca en braços»: comparació catalana per a la gent que no para d'insistir.",
-    "images": {
-      "front": "/images/mug-mes-pesat-que-una-vaca-en-bracos-front.jpg",
-      "back": "/images/mug-mes-pesat-que-una-vaca-en-bracos-back.jpg",
-      "width": 750,
-      "height": 880
-    },
-    "alt": {
-      "front": "Tassa blanca amb la frase «Ets més pesat que una vaca en braços» i una il·lustració",
-      "back": "La tassa «Ets més pesat que una vaca en braços» vista de costat"
-    },
-    "related": [
-      "mes-inutil-que-un-cendrer-de-moto",
-      "mes-cara-que-esquena"
-    ],
-    "tags": []
-  },
-  {
-    "slug": "mes-cara-que-esquena",
-    "name": "Més cara que esquena",
-    "category": "insults",
-    "new": true,
-    "sides": 1,
-    "phonetic": null,
-    "intro": "Tens",
-    "tagline": null,
-    "def1": null,
-    "def2": null,
-    "summary": "Per a qui té molta barra i cap vergonya.",
-    "description": [
-      "«Tenir més cara que esquena» és tenir molt de morro. Amb una cara rodona que ocupa més que l'esquena, literalment.",
-      "Per al company que sempre s'escapoleix o per a l'amiga que s'apunta a tot sense pagar mai."
-    ],
-    "metaDescription": "Tassa «Tens més cara que esquena»: l'expressió catalana per a qui té molt de morro.",
-    "images": {
-      "front": "/images/mug-mes-cara-que-esquena-front.jpg",
-      "back": "/images/mug-mes-cara-que-esquena-back.jpg",
-      "width": 750,
-      "height": 880
-    },
-    "alt": {
-      "front": "Tassa blanca amb la frase «Tens més cara que esquena» i una il·lustració",
-      "back": "La tassa «Tens més cara que esquena» vista de costat"
-    },
-    "related": [
-      "mes-pesat-que-una-vaca-en-bracos",
-      "mala-llet"
-    ],
-    "tags": []
-  },
-  {
     "slug": "aixopluc",
     "name": "Aixopluc",
     "category": "amor",
@@ -419,14 +13,14 @@
     "description": null,
     "metaDescription": "Tassa «Tu ets el meu aixopluc»: persona amb qui et sents a recer, passi el que passi. Paraula catalana amb definició de diccionari.",
     "images": {
-      "front": "/images/mug-aixopluc-front.jpg",
-      "back": "/images/mug-aixopluc-back.jpg",
-      "width": 750,
-      "height": 880
+      "front": "/images/tasses/aixopluc/vermell-front.jpg",
+      "back": "/images/tasses/aixopluc/vermell-back.jpg",
+      "width": 600,
+      "height": 704
     },
     "alt": {
-      "front": "Tassa blanca amb la frase «Tu ets el meu aixopluc» i una il·lustració",
-      "back": "Revers de la tassa amb la definició de diccionari de «aixopluc»"
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tu ets el meu aixopluc»",
+      "back": "Darrere de la tassa, amb la definició de «aixopluc»"
     },
     "related": [
       "arrel",
@@ -434,7 +28,16 @@
     ],
     "tags": [
       "especial"
-    ]
+    ],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "vermell"
   },
   {
     "slug": "arrel",
@@ -450,49 +53,29 @@
     "description": null,
     "metaDescription": "Tassa «Tu ets la meva arrel»: persona d'on véns, que et sosté sense fer soroll i et fa créixer. Paraula catalana amb definició de diccionari.",
     "images": {
-      "front": "/images/mug-arrel-front.jpg",
-      "back": "/images/mug-arrel-back.jpg",
-      "width": 750,
-      "height": 880
+      "front": "/images/tasses/arrel/verd-front.jpg",
+      "back": "/images/tasses/arrel/verd-back.jpg",
+      "width": 600,
+      "height": 704
     },
     "alt": {
-      "front": "Tassa blanca amb la frase «Tu ets la meva arrel» i una il·lustració",
-      "back": "Revers de la tassa amb la definició de diccionari de «arrel»"
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tu ets la meva arrel»",
+      "back": "Darrere de la tassa, amb la definició de «arrel»"
     },
     "related": [
       "niu",
       "caliu"
     ],
-    "tags": []
-  },
-  {
-    "slug": "bocamoll",
-    "name": "Bocamoll",
-    "category": "caracter",
-    "new": false,
-    "phonetic": "[bo·kə·ˈmoʎ] m. i f.",
-    "intro": "Sóc un",
-    "tagline": "un secret? fins a l'hora del cafè",
-    "def1": "Persona que no sap guardar un secret.",
-    "def2": "Qui revela la sorpresa abans que arribi l'homenatjat.",
-    "summary": "Qui revela la sorpresa abans que arribi l'homenatjat.",
-    "description": null,
-    "metaDescription": "Tassa «Sóc un bocamoll»: qui revela la sorpresa abans que arribi l'homenatjat. Paraula catalana amb definició de diccionari.",
-    "images": {
-      "front": "/images/mug-bocamoll-front.jpg",
-      "back": "/images/mug-bocamoll-back.jpg",
-      "width": 750,
-      "height": 880
-    },
-    "alt": {
-      "front": "Tassa blanca amb la frase «Sóc un bocamoll» i una il·lustració",
-      "back": "Revers de la tassa amb la definició de diccionari de «bocamoll»"
-    },
-    "related": [
-      "manefla",
-      "corco"
+    "tags": [],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
     ],
-    "tags": []
+    "defaultColor": "verd"
   },
   {
     "slug": "bonanca",
@@ -508,14 +91,14 @@
     "description": null,
     "metaDescription": "Tassa «Tu ets la meva bonança»: persona que et porta pau quan tot trontolla. Paraula catalana amb definició de diccionari.",
     "images": {
-      "front": "/images/mug-bonanca-front.jpg",
-      "back": "/images/mug-bonanca-back.jpg",
-      "width": 750,
-      "height": 880
+      "front": "/images/tasses/bonanca/blau-front.jpg",
+      "back": "/images/tasses/bonanca/blau-back.jpg",
+      "width": 600,
+      "height": 704
     },
     "alt": {
-      "front": "Tassa blanca amb la frase «Tu ets la meva bonança» i una il·lustració",
-      "back": "Revers de la tassa amb la definició de diccionari de «bonança»"
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tu ets la meva bonança»",
+      "back": "Darrere de la tassa, amb la definició de «bonança»"
     },
     "related": [
       "caliu",
@@ -523,36 +106,16 @@
     ],
     "tags": [
       "especial"
-    ]
-  },
-  {
-    "slug": "cagadubtes",
-    "name": "Cagadubtes",
-    "category": "caracter",
-    "new": false,
-    "phonetic": "[ˌka·ɣə·ˈðup·təs] m. i f. col·loq.",
-    "intro": "Sóc un",
-    "tagline": "potser sí, potser no, ja t'ho diré",
-    "def1": "Persona que no s'acaba de decidir mai.",
-    "def2": "Qui triga vint minuts a triar l'entrepà i al final demana el mateix de sempre.",
-    "summary": "Qui triga vint minuts a triar l'entrepà i al final demana el mateix de sempre.",
-    "description": null,
-    "metaDescription": "Tassa «Sóc un cagadubtes»: qui triga vint minuts a triar l'entrepà i al final demana el mateix de sempre. Paraula catalana amb definició de diccionari.",
-    "images": {
-      "front": "/images/mug-cagadubtes-front.jpg",
-      "back": "/images/mug-cagadubtes-back.jpg",
-      "width": 750,
-      "height": 880
-    },
-    "alt": {
-      "front": "Tassa blanca amb la frase «Sóc un cagadubtes» i una il·lustració",
-      "back": "Revers de la tassa amb la definició de diccionari de «cagadubtes»"
-    },
-    "related": [
-      "pocatraca",
-      "llepafils"
     ],
-    "tags": []
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "blau"
   },
   {
     "slug": "caliu",
@@ -568,14 +131,14 @@
     "description": null,
     "metaDescription": "Tassa «Tu ets el meu caliu»: escalfor afectuosa d'algú que, passi el que passi, no s'apaga. Paraula catalana amb definició de diccionari.",
     "images": {
-      "front": "/images/mug-caliu-front.jpg",
-      "back": "/images/mug-caliu-back.jpg",
-      "width": 750,
-      "height": 880
+      "front": "/images/tasses/caliu/taronja-front.jpg",
+      "back": "/images/tasses/caliu/taronja-back.jpg",
+      "width": 600,
+      "height": 704
     },
     "alt": {
-      "front": "Tassa blanca amb la frase «Tu ets el meu caliu» i una il·lustració",
-      "back": "Revers de la tassa amb la definició de diccionari de «caliu»"
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tu ets el meu caliu»",
+      "back": "Darrere de la tassa, amb la definició de «caliu»"
     },
     "related": [
       "bonanca",
@@ -583,36 +146,55 @@
     ],
     "tags": [
       "especial"
-    ]
+    ],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "taronja"
   },
   {
-    "slug": "corco",
-    "name": "Corcó",
-    "category": "caracter",
-    "new": false,
-    "phonetic": "[kur·ˈko] m.",
-    "intro": "Sóc un",
-    "tagline": "només una preguntetaaa...",
-    "def1": "Larva d'insecte que rosega la fusta per dins.",
-    "def2": "Persona que insisteix i insisteix fins que aconsegueix el que vol.",
-    "summary": "Persona que insisteix i insisteix fins que aconsegueix el que vol.",
+    "slug": "cuca-de-llum",
+    "name": "Cuca de llum",
+    "category": "amor",
+    "phonetic": "['ku·kə ðə 'ʎum] f.",
+    "intro": "Tu ets la meva",
+    "tagline": "insecte que brilla a la foscor",
+    "def1": "Insecte que fa llum a la foscor de les nits d'estiu.",
+    "def2": "Persona que t'il·lumina les nits més fosques.",
+    "summary": "Persona que t'il·lumina les nits més fosques.",
     "description": null,
-    "metaDescription": "Tassa «Sóc un corcó»: persona que insisteix i insisteix fins que aconsegueix el que vol. Paraula catalana amb definició de diccionari.",
+    "metaDescription": "Tassa «Tu ets la meva cuca de llum»: persona que t'il·lumina les nits més fosques. Paraula catalana amb definició de diccionari.",
+    "related": [
+      "llostre",
+      "encis"
+    ],
+    "sides": 2,
+    "new": true,
+    "tags": [],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "groc",
     "images": {
-      "front": "/images/mug-corco-front.jpg",
-      "back": "/images/mug-corco-back.jpg",
-      "width": 750,
-      "height": 880
+      "front": "/images/tasses/cuca-de-llum/groc-front.jpg",
+      "back": "/images/tasses/cuca-de-llum/groc-back.jpg",
+      "width": 600,
+      "height": 704
     },
     "alt": {
-      "front": "Tassa blanca amb la frase «Sóc un corcó» i una il·lustració",
-      "back": "Revers de la tassa amb la definició de diccionari de «corcó»"
-    },
-    "related": [
-      "manefla",
-      "bocamoll"
-    ],
-    "tags": []
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tu ets la meva cuca de llum»",
+      "back": "Darrere de la tassa, amb la definició de «cuca de llum»"
+    }
   },
   {
     "slug": "deler",
@@ -628,107 +210,146 @@
     "description": null,
     "metaDescription": "Tassa «Tu ets el meu deler»: ganes immenses de tornar-te a veure, encara que fa una estona que ens hem dit adeu. Paraula catalana amb definició de diccionari.",
     "images": {
-      "front": "/images/mug-deler-front.jpg",
-      "back": "/images/mug-deler-back.jpg",
-      "width": 750,
-      "height": 880
+      "front": "/images/tasses/deler/vermell-front.jpg",
+      "back": "/images/tasses/deler/vermell-back.jpg",
+      "width": 600,
+      "height": 704
     },
     "alt": {
-      "front": "Tassa blanca amb la frase «Tu ets el meu deler» i una il·lustració",
-      "back": "Revers de la tassa amb la definició de diccionari de «deler»"
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tu ets el meu deler»",
+      "back": "Darrere de la tassa, amb la definició de «deler»"
     },
     "related": [
       "caliu",
       "moixaina"
     ],
-    "tags": []
+    "tags": [],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "vermell"
   },
   {
-    "slug": "escalfacadires",
-    "name": "Escalfacadires",
-    "category": "caracter",
-    "new": false,
-    "phonetic": "[əs·ˌkal·fə·kə·ˈði·rəs] m. i f. col·loq.",
-    "intro": "Sóc un",
-    "tagline": "de 9 a 5, sense despentinar-se",
-    "def1": "Persona que passa hores asseguda sense fer gaire res.",
-    "def2": "Col·lega amb un talent especial per semblar molt ocupat davant la pantalla.",
-    "summary": "Col·lega amb un talent especial per semblar molt ocupat davant la pantalla.",
+    "slug": "encis",
+    "name": "Encís",
+    "category": "amor",
+    "phonetic": "[ən·'sis] m.",
+    "intro": "Tu ets el meu",
+    "tagline": "atractiu que captiva i enamora",
+    "def1": "Atractiu que captiva, com si fos un encanteri.",
+    "def2": "Persona que fa màgia de les coses petites.",
+    "summary": "Persona que fa màgia de les coses petites.",
     "description": null,
-    "metaDescription": "Tassa «Sóc un escalfacadires»: col·lega amb un talent especial per semblar molt ocupat davant la pantalla. Paraula catalana amb definició de diccionari.",
+    "metaDescription": "Tassa «Tu ets el meu encís»: persona que fa màgia de les coses petites. Paraula catalana amb definició de diccionari.",
+    "related": [
+      "deler",
+      "cuca-de-llum"
+    ],
+    "sides": 2,
+    "new": true,
+    "tags": [],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "negre",
     "images": {
-      "front": "/images/mug-escalfacadires-front.jpg",
-      "back": "/images/mug-escalfacadires-back.jpg",
-      "width": 750,
-      "height": 880
+      "front": "/images/tasses/encis/negre-front.jpg",
+      "back": "/images/tasses/encis/negre-back.jpg",
+      "width": 600,
+      "height": 704
     },
     "alt": {
-      "front": "Tassa blanca amb la frase «Sóc un escalfacadires» i una il·lustració",
-      "back": "Revers de la tassa amb la definició de diccionari de «escalfacadires»"
-    },
-    "related": [
-      "pocatraca",
-      "llepafils"
-    ],
-    "tags": []
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tu ets el meu encís»",
+      "back": "Darrere de la tassa, amb la definició de «encís»"
+    }
   },
   {
-    "slug": "llepafils",
-    "name": "Llepafils",
-    "category": "caracter",
-    "new": false,
-    "phonetic": "[ʎə·pə·ˈfils] m. i f.",
-    "intro": "Sóc un",
-    "tagline": "això no, això tampoc",
-    "def1": "Persona molt primmirada amb el menjar.",
-    "def2": "Qui sempre troba un però, del cafè a l'aire condicionat.",
-    "summary": "Qui sempre troba un però, del cafè a l'aire condicionat.",
+    "slug": "esma",
+    "name": "Esma",
+    "category": "amor",
+    "phonetic": "['ɛz·mə] f.",
+    "intro": "Tu ets la meva",
+    "tagline": "allò que et guia i et dona forces",
+    "def1": "Instint que et permet guiar-te i fer les coses gairebé sense pensar-hi.",
+    "def2": "Allò que et dona forces per seguir endavant.",
+    "summary": "Allò que et dona forces per seguir endavant.",
     "description": null,
-    "metaDescription": "Tassa «Sóc un llepafils»: qui sempre troba un però, del cafè a l'aire condicionat. Paraula catalana amb definició de diccionari.",
+    "metaDescription": "Tassa «Tu ets la meva esma»: allò que et dona forces per seguir endavant. Paraula catalana amb definició de diccionari.",
+    "related": [
+      "arrel",
+      "redos"
+    ],
+    "sides": 2,
+    "new": true,
+    "tags": [],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "verd",
     "images": {
-      "front": "/images/mug-llepafils-front.jpg",
-      "back": "/images/mug-llepafils-back.jpg",
-      "width": 750,
-      "height": 880
+      "front": "/images/tasses/esma/verd-front.jpg",
+      "back": "/images/tasses/esma/verd-back.jpg",
+      "width": 600,
+      "height": 704
     },
     "alt": {
-      "front": "Tassa blanca amb la frase «Sóc un llepafils» i una il·lustració",
-      "back": "Revers de la tassa amb la definició de diccionari de «llepafils»"
-    },
-    "related": [
-      "cagadubtes",
-      "escalfacadires"
-    ],
-    "tags": []
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tu ets la meva esma»",
+      "back": "Darrere de la tassa, amb la definició de «esma»"
+    }
   },
   {
-    "slug": "manefla",
-    "name": "Manefla",
-    "category": "caracter",
-    "new": false,
-    "phonetic": "[mə·ˈnɛ·flə] m. i f. col·loq.",
-    "intro": "Sóc un",
-    "tagline": "sap el que passa abans que passi",
-    "def1": "Persona que es fica en els afers dels altres.",
-    "def2": "Col·lega que s'assabenta de tots els xafardeigs de l'oficina abans que ningú.",
-    "summary": "Col·lega que s'assabenta de tots els xafardeigs de l'oficina abans que ningú.",
+    "slug": "llostre",
+    "name": "Llostre",
+    "category": "amor",
+    "phonetic": "['ʎɔs·trə] m.",
+    "intro": "Tu ets el meu",
+    "tagline": "primera claror del dia",
+    "def1": "Claror tènue de l'alba o del capvespre.",
+    "def2": "Primera llum que fa que valgui la pena llevar-se.",
+    "summary": "Primera llum que fa que valgui la pena llevar-se.",
     "description": null,
-    "metaDescription": "Tassa «Sóc un manefla»: col·lega que s'assabenta de tots els xafardeigs de l'oficina abans que ningú. Paraula catalana amb definició de diccionari.",
+    "metaDescription": "Tassa «Tu ets el meu llostre»: primera llum que fa que valgui la pena llevar-se. Paraula catalana amb definició de diccionari.",
+    "related": [
+      "solell",
+      "cuca-de-llum"
+    ],
+    "sides": 2,
+    "new": true,
+    "tags": [],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "groc",
     "images": {
-      "front": "/images/mug-manefla-front.jpg",
-      "back": "/images/mug-manefla-back.jpg",
-      "width": 750,
-      "height": 880
+      "front": "/images/tasses/llostre/groc-front.jpg",
+      "back": "/images/tasses/llostre/groc-back.jpg",
+      "width": 600,
+      "height": 704
     },
     "alt": {
-      "front": "Tassa blanca amb la frase «Sóc un manefla» i una il·lustració",
-      "back": "Revers de la tassa amb la definició de diccionari de «manefla»"
-    },
-    "related": [
-      "corco",
-      "bocamoll"
-    ],
-    "tags": []
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tu ets el meu llostre»",
+      "back": "Darrere de la tassa, amb la definició de «llostre»"
+    }
   },
   {
     "slug": "moixaina",
@@ -744,20 +365,29 @@
     "description": null,
     "metaDescription": "Tassa «Tu ets la meva moixaina»: persona que fa més suau qualsevol dia. Paraula catalana amb definició de diccionari.",
     "images": {
-      "front": "/images/mug-moixaina-front.jpg",
-      "back": "/images/mug-moixaina-back.jpg",
-      "width": 750,
-      "height": 880
+      "front": "/images/tasses/moixaina/taronja-front.jpg",
+      "back": "/images/tasses/moixaina/taronja-back.jpg",
+      "width": 600,
+      "height": 704
     },
     "alt": {
-      "front": "Tassa blanca amb la frase «Tu ets la meva moixaina» i una il·lustració",
-      "back": "Revers de la tassa amb la definició de diccionari de «moixaina»"
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tu ets la meva moixaina»",
+      "back": "Darrere de la tassa, amb la definició de «moixaina»"
     },
     "related": [
       "deler",
       "rosada"
     ],
-    "tags": []
+    "tags": [],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "taronja"
   },
   {
     "slug": "niu",
@@ -773,14 +403,14 @@
     "description": null,
     "metaDescription": "Tassa «Tu ets el meu niu»: casa càlida on tota la família torna i on sempre hi ha lloc per a tu. Paraula catalana amb definició de diccionari.",
     "images": {
-      "front": "/images/mug-niu-front.jpg",
-      "back": "/images/mug-niu-back.jpg",
-      "width": 750,
-      "height": 880
+      "front": "/images/tasses/niu/blau-front.jpg",
+      "back": "/images/tasses/niu/blau-back.jpg",
+      "width": 600,
+      "height": 704
     },
     "alt": {
-      "front": "Tassa blanca amb la frase «Tu ets el meu niu» i una il·lustració",
-      "back": "Revers de la tassa amb la definició de diccionari de «niu»"
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tu ets el meu niu»",
+      "back": "Darrere de la tassa, amb la definició de «niu»"
     },
     "related": [
       "arrel",
@@ -788,36 +418,55 @@
     ],
     "tags": [
       "especial"
-    ]
+    ],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "blau"
   },
   {
-    "slug": "pocatraca",
-    "name": "Pocatraça",
-    "category": "caracter",
-    "new": false,
-    "phonetic": "[ˌpo·kə·ˈtra·sə] m. i f.",
-    "intro": "Sóc un",
-    "tagline": "si es pot vessar, ho vessaré",
-    "def1": "Persona que té poca habilitat amb les mans.",
-    "def2": "Qui encalla la impressora només de mirar-la.",
-    "summary": "Qui encalla la impressora només de mirar-la.",
+    "slug": "redos",
+    "name": "Redós",
+    "category": "amor",
+    "phonetic": "[rə·'ðos] m.",
+    "intro": "Tu ets el meu",
+    "tagline": "racó arrecerat del vent i del fred",
+    "def1": "Lloc arrecerat del vent i del fred.",
+    "def2": "Persona a qui t'arrimes quan la vida bufa fort.",
+    "summary": "Persona a qui t'arrimes quan la vida bufa fort.",
     "description": null,
-    "metaDescription": "Tassa «Sóc un pocatraça»: qui encalla la impressora només de mirar-la. Paraula catalana amb definició de diccionari.",
+    "metaDescription": "Tassa «Tu ets el meu redós»: persona a qui t'arrimes quan la vida bufa fort. Paraula catalana amb definició de diccionari.",
+    "related": [
+      "aixopluc",
+      "esma"
+    ],
+    "sides": 2,
+    "new": true,
+    "tags": [],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "blau",
     "images": {
-      "front": "/images/mug-pocatraca-front.jpg",
-      "back": "/images/mug-pocatraca-back.jpg",
-      "width": 750,
-      "height": 880
+      "front": "/images/tasses/redos/blau-front.jpg",
+      "back": "/images/tasses/redos/blau-back.jpg",
+      "width": 600,
+      "height": 704
     },
     "alt": {
-      "front": "Tassa blanca amb la frase «Sóc un pocatraça» i una il·lustració",
-      "back": "Revers de la tassa amb la definició de diccionari de «pocatraça»"
-    },
-    "related": [
-      "escalfacadires",
-      "cagadubtes"
-    ],
-    "tags": []
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tu ets el meu redós»",
+      "back": "Darrere de la tassa, amb la definició de «redós»"
+    }
   },
   {
     "slug": "rosada",
@@ -833,20 +482,29 @@
     "description": null,
     "metaDescription": "Tassa «Tu ets la meva rosada»: persona que fa que cada matí sembli nou. Paraula catalana amb definició de diccionari.",
     "images": {
-      "front": "/images/mug-rosada-front.jpg",
-      "back": "/images/mug-rosada-back.jpg",
-      "width": 750,
-      "height": 880
+      "front": "/images/tasses/rosada/verd-front.jpg",
+      "back": "/images/tasses/rosada/verd-back.jpg",
+      "width": 600,
+      "height": 704
     },
     "alt": {
-      "front": "Tassa blanca amb la frase «Tu ets la meva rosada» i una il·lustració",
-      "back": "Revers de la tassa amb la definició de diccionari de «rosada»"
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tu ets la meva rosada»",
+      "back": "Darrere de la tassa, amb la definició de «rosada»"
     },
     "related": [
       "moixaina",
       "ventijol"
     ],
-    "tags": []
+    "tags": [],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "verd"
   },
   {
     "slug": "solell",
@@ -862,14 +520,14 @@
     "description": null,
     "metaDescription": "Tassa «Tu ets el meu solell»: persona al costat de la qual sempre s'hi està bé, faci el temps que faci. Paraula catalana amb definició de diccionari.",
     "images": {
-      "front": "/images/mug-solell-front.jpg",
-      "back": "/images/mug-solell-back.jpg",
-      "width": 750,
-      "height": 880
+      "front": "/images/tasses/solell/groc-front.jpg",
+      "back": "/images/tasses/solell/groc-back.jpg",
+      "width": 600,
+      "height": 704
     },
     "alt": {
-      "front": "Tassa blanca amb la frase «Tu ets el meu solell» i una il·lustració",
-      "back": "Revers de la tassa amb la definició de diccionari de «solell»"
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tu ets el meu solell»",
+      "back": "Darrere de la tassa, amb la definició de «solell»"
     },
     "related": [
       "bonanca",
@@ -877,7 +535,16 @@
     ],
     "tags": [
       "especial"
-    ]
+    ],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "groc"
   },
   {
     "slug": "ventijol",
@@ -893,20 +560,1046 @@
     "description": null,
     "metaDescription": "Tassa «Tu ets el meu ventijol»: persona que fa més lleugers els dies feixucs. Paraula catalana amb definició de diccionari.",
     "images": {
-      "front": "/images/mug-ventijol-front.jpg",
-      "back": "/images/mug-ventijol-back.jpg",
-      "width": 750,
-      "height": 880
+      "front": "/images/tasses/ventijol/taronja-front.jpg",
+      "back": "/images/tasses/ventijol/taronja-back.jpg",
+      "width": 600,
+      "height": 704
     },
     "alt": {
-      "front": "Tassa blanca amb la frase «Tu ets el meu ventijol» i una il·lustració",
-      "back": "Revers de la tassa amb la definició de diccionari de «ventijol»"
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tu ets el meu ventijol»",
+      "back": "Darrere de la tassa, amb la definició de «ventijol»"
     },
     "related": [
       "rosada",
       "solell"
     ],
-    "tags": []
+    "tags": [],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "taronja"
+  },
+  {
+    "slug": "baliga-balaga",
+    "name": "Baliga-balaga",
+    "category": "caracter",
+    "phonetic": "[bə·li·ɣə·βə·'la·ɣə] m. i f. col·loq.",
+    "intro": "Sóc un",
+    "tagline": "arribo en cinc minuts… o en mitja hora",
+    "def1": "Persona poc seriosa, que no té formalitat.",
+    "def2": "Qui diu «arribo en cinc minuts» i arriba en mitja hora.",
+    "summary": "Persona poc seriosa, que no té formalitat.",
+    "description": null,
+    "metaDescription": "Tassa «Sóc un baliga-balaga»: persona poc seriosa, que no té formalitat. Amb la definició de diccionari al darrere.",
+    "related": [
+      "cap-de-trons",
+      "cagadubtes"
+    ],
+    "sides": 2,
+    "new": true,
+    "tags": [],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "taronja",
+    "images": {
+      "front": "/images/tasses/baliga-balaga/taronja-front.jpg",
+      "back": "/images/tasses/baliga-balaga/taronja-back.jpg",
+      "width": 600,
+      "height": 704
+    },
+    "alt": {
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Sóc un baliga-balaga»",
+      "back": "Darrere de la tassa, amb la definició de «baliga-balaga»"
+    }
+  },
+  {
+    "slug": "bocamoll",
+    "name": "Bocamoll",
+    "category": "caracter",
+    "new": false,
+    "phonetic": "[bo·kə·ˈmoʎ] m. i f.",
+    "intro": "Sóc un",
+    "tagline": "un secret? fins a l'hora del cafè",
+    "def1": "Persona que no sap guardar un secret.",
+    "def2": "Qui revela la sorpresa abans que arribi l'homenatjat.",
+    "summary": "Qui revela la sorpresa abans que arribi l'homenatjat.",
+    "description": null,
+    "metaDescription": "Tassa «Sóc un bocamoll»: qui revela la sorpresa abans que arribi l'homenatjat. Paraula catalana amb definició de diccionari.",
+    "images": {
+      "front": "/images/tasses/bocamoll/groc-front.jpg",
+      "back": "/images/tasses/bocamoll/groc-back.jpg",
+      "width": 600,
+      "height": 704
+    },
+    "alt": {
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Sóc un bocamoll»",
+      "back": "Darrere de la tassa, amb la definició de «bocamoll»"
+    },
+    "related": [
+      "manefla",
+      "corco"
+    ],
+    "tags": [],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "groc"
+  },
+  {
+    "slug": "bufanuvols",
+    "name": "Bufanúvols",
+    "category": "caracter",
+    "phonetic": "[ˌbu·fə·'nu·βuls] m. i f. col·loq.",
+    "intro": "Sóc un",
+    "tagline": "modèstia a part, sóc genial",
+    "def1": "Persona presumida, que es creu més del que és.",
+    "def2": "Qui comença totes les frases amb «doncs jo…».",
+    "summary": "Persona presumida, que es creu més del que és.",
+    "description": null,
+    "metaDescription": "Tassa «Sóc un bufanúvols»: persona presumida, que es creu més del que és. Amb la definició de diccionari al darrere.",
+    "related": [
+      "bocamoll",
+      "garrepa"
+    ],
+    "sides": 2,
+    "new": true,
+    "tags": [],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "groc",
+    "images": {
+      "front": "/images/tasses/bufanuvols/groc-front.jpg",
+      "back": "/images/tasses/bufanuvols/groc-back.jpg",
+      "width": 600,
+      "height": 704
+    },
+    "alt": {
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Sóc un bufanúvols»",
+      "back": "Darrere de la tassa, amb la definició de «bufanúvols»"
+    }
+  },
+  {
+    "slug": "cagadubtes",
+    "name": "Cagadubtes",
+    "category": "caracter",
+    "new": false,
+    "phonetic": "[ˌka·ɣə·ˈðup·təs] m. i f. col·loq.",
+    "intro": "Sóc un",
+    "tagline": "potser sí, potser no, ja t'ho diré",
+    "def1": "Persona que no s'acaba de decidir mai.",
+    "def2": "Qui triga vint minuts a triar l'entrepà i al final demana el mateix de sempre.",
+    "summary": "Qui triga vint minuts a triar l'entrepà i al final demana el mateix de sempre.",
+    "description": null,
+    "metaDescription": "Tassa «Sóc un cagadubtes»: qui triga vint minuts a triar l'entrepà i al final demana el mateix de sempre. Paraula catalana amb definició de diccionari.",
+    "images": {
+      "front": "/images/tasses/cagadubtes/verd-front.jpg",
+      "back": "/images/tasses/cagadubtes/verd-back.jpg",
+      "width": 600,
+      "height": 704
+    },
+    "alt": {
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Sóc un cagadubtes»",
+      "back": "Darrere de la tassa, amb la definició de «cagadubtes»"
+    },
+    "related": [
+      "pocatraca",
+      "llepafils"
+    ],
+    "tags": [],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "verd"
+  },
+  {
+    "slug": "cap-de-trons",
+    "name": "Cap de trons",
+    "category": "caracter",
+    "phonetic": "[ˌkab də 'trons] m. i f. col·loq.",
+    "intro": "Sóc un",
+    "tagline": "primer ho faig, després ho penso",
+    "def1": "Persona esbojarrada, que fa les coses sense pensar.",
+    "def2": "Qui té les idees més brillants a les tres de la matinada.",
+    "summary": "Persona esbojarrada, que fa les coses sense pensar.",
+    "description": null,
+    "metaDescription": "Tassa «Sóc un cap de trons»: persona esbojarrada, que fa les coses sense pensar. Amb la definició de diccionari al darrere.",
+    "related": [
+      "baliga-balaga",
+      "pocatraca"
+    ],
+    "sides": 2,
+    "new": true,
+    "tags": [],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "negre",
+    "images": {
+      "front": "/images/tasses/cap-de-trons/negre-front.jpg",
+      "back": "/images/tasses/cap-de-trons/negre-back.jpg",
+      "width": 600,
+      "height": 704
+    },
+    "alt": {
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Sóc un cap de trons»",
+      "back": "Darrere de la tassa, amb la definició de «cap de trons»"
+    }
+  },
+  {
+    "slug": "corco",
+    "name": "Corcó",
+    "category": "caracter",
+    "new": false,
+    "phonetic": "[kur·ˈko] m.",
+    "intro": "Sóc un",
+    "tagline": "només una preguntetaaa...",
+    "def1": "Larva d'insecte que rosega la fusta per dins.",
+    "def2": "Persona que insisteix i insisteix fins que aconsegueix el que vol.",
+    "summary": "Persona que insisteix i insisteix fins que aconsegueix el que vol.",
+    "description": null,
+    "metaDescription": "Tassa «Sóc un corcó»: persona que insisteix i insisteix fins que aconsegueix el que vol. Paraula catalana amb definició de diccionari.",
+    "images": {
+      "front": "/images/tasses/corco/verd-front.jpg",
+      "back": "/images/tasses/corco/verd-back.jpg",
+      "width": 600,
+      "height": 704
+    },
+    "alt": {
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Sóc un corcó»",
+      "back": "Darrere de la tassa, amb la definició de «corcó»"
+    },
+    "related": [
+      "manefla",
+      "bocamoll"
+    ],
+    "tags": [],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "verd"
+  },
+  {
+    "slug": "escalfacadires",
+    "name": "Escalfacadires",
+    "category": "caracter",
+    "new": false,
+    "phonetic": "[əs·ˌkal·fə·kə·ˈði·rəs] m. i f. col·loq.",
+    "intro": "Sóc un",
+    "tagline": "de 9 a 5, sense despentinar-se",
+    "def1": "Persona que passa hores asseguda sense fer gaire res.",
+    "def2": "Col·lega amb un talent especial per semblar molt ocupat davant la pantalla.",
+    "summary": "Col·lega amb un talent especial per semblar molt ocupat davant la pantalla.",
+    "description": null,
+    "metaDescription": "Tassa «Sóc un escalfacadires»: col·lega amb un talent especial per semblar molt ocupat davant la pantalla. Paraula catalana amb definició de diccionari.",
+    "images": {
+      "front": "/images/tasses/escalfacadires/groc-front.jpg",
+      "back": "/images/tasses/escalfacadires/groc-back.jpg",
+      "width": 600,
+      "height": 704
+    },
+    "alt": {
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Sóc un escalfacadires»",
+      "back": "Darrere de la tassa, amb la definició de «escalfacadires»"
+    },
+    "related": [
+      "pocatraca",
+      "llepafils"
+    ],
+    "tags": [],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "groc"
+  },
+  {
+    "slug": "garrepa",
+    "name": "Garrepa",
+    "category": "caracter",
+    "phonetic": "[gə·'re·pə] m. i f. col·loq.",
+    "intro": "Sóc un",
+    "tagline": "avui convides tu, oi?",
+    "def1": "Persona que no vol gastar ni un cèntim.",
+    "def2": "Qui sempre es deixa la cartera a casa quan toca pagar els cafès.",
+    "summary": "Persona que no vol gastar ni un cèntim.",
+    "description": null,
+    "metaDescription": "Tassa «Sóc un garrepa»: persona que no vol gastar ni un cèntim. Amb la definició de diccionari al darrere.",
+    "related": [
+      "bufanuvols",
+      "llepafils"
+    ],
+    "sides": 2,
+    "new": true,
+    "tags": [],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "verd",
+    "images": {
+      "front": "/images/tasses/garrepa/verd-front.jpg",
+      "back": "/images/tasses/garrepa/verd-back.jpg",
+      "width": 600,
+      "height": 704
+    },
+    "alt": {
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Sóc un garrepa»",
+      "back": "Darrere de la tassa, amb la definició de «garrepa»"
+    }
+  },
+  {
+    "slug": "llepafils",
+    "name": "Llepafils",
+    "category": "caracter",
+    "new": false,
+    "phonetic": "[ʎə·pə·ˈfils] m. i f.",
+    "intro": "Sóc un",
+    "tagline": "això no, això tampoc",
+    "def1": "Persona molt primmirada amb el menjar.",
+    "def2": "Qui sempre troba un però, del cafè a l'aire condicionat.",
+    "summary": "Qui sempre troba un però, del cafè a l'aire condicionat.",
+    "description": null,
+    "metaDescription": "Tassa «Sóc un llepafils»: qui sempre troba un però, del cafè a l'aire condicionat. Paraula catalana amb definició de diccionari.",
+    "images": {
+      "front": "/images/tasses/llepafils/taronja-front.jpg",
+      "back": "/images/tasses/llepafils/taronja-back.jpg",
+      "width": 600,
+      "height": 704
+    },
+    "alt": {
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Sóc un llepafils»",
+      "back": "Darrere de la tassa, amb la definició de «llepafils»"
+    },
+    "related": [
+      "cagadubtes",
+      "escalfacadires"
+    ],
+    "tags": [],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "taronja"
+  },
+  {
+    "slug": "manefla",
+    "name": "Manefla",
+    "category": "caracter",
+    "new": false,
+    "phonetic": "[mə·ˈnɛ·flə] m. i f. col·loq.",
+    "intro": "Sóc un",
+    "tagline": "sap el que passa abans que passi",
+    "def1": "Persona que es fica en els afers dels altres.",
+    "def2": "Col·lega que s'assabenta de tots els xafardeigs de l'oficina abans que ningú.",
+    "summary": "Col·lega que s'assabenta de tots els xafardeigs de l'oficina abans que ningú.",
+    "description": null,
+    "metaDescription": "Tassa «Sóc un manefla»: col·lega que s'assabenta de tots els xafardeigs de l'oficina abans que ningú. Paraula catalana amb definició de diccionari.",
+    "images": {
+      "front": "/images/tasses/manefla/blau-front.jpg",
+      "back": "/images/tasses/manefla/blau-back.jpg",
+      "width": 600,
+      "height": 704
+    },
+    "alt": {
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Sóc un manefla»",
+      "back": "Darrere de la tassa, amb la definició de «manefla»"
+    },
+    "related": [
+      "corco",
+      "bocamoll"
+    ],
+    "tags": [],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "blau"
+  },
+  {
+    "slug": "pixatinters",
+    "name": "Pixatinters",
+    "category": "caracter",
+    "phonetic": "[ˌpi·ʃə·'tin·təs] m. i f. col·loq.",
+    "intro": "Sóc un",
+    "tagline": "segell, signatura i a esmorzar",
+    "def1": "Oficinista, empleat de despatx de poca categoria.",
+    "def2": "Col·lega que té més bolígrafs que ganes de treballar.",
+    "summary": "Oficinista, empleat de despatx de poca categoria.",
+    "description": null,
+    "metaDescription": "Tassa «Sóc un pixatinters»: oficinista, empleat de despatx de poca categoria. Amb la definició de diccionari al darrere.",
+    "related": [
+      "escalfacadires",
+      "manefla"
+    ],
+    "sides": 2,
+    "new": true,
+    "tags": [],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "blau",
+    "images": {
+      "front": "/images/tasses/pixatinters/blau-front.jpg",
+      "back": "/images/tasses/pixatinters/blau-back.jpg",
+      "width": 600,
+      "height": 704
+    },
+    "alt": {
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Sóc un pixatinters»",
+      "back": "Darrere de la tassa, amb la definició de «pixatinters»"
+    }
+  },
+  {
+    "slug": "pocatraca",
+    "name": "Pocatraça",
+    "category": "caracter",
+    "new": false,
+    "phonetic": "[ˌpo·kə·ˈtra·sə] m. i f.",
+    "intro": "Sóc un",
+    "tagline": "si es pot vessar, ho vessaré",
+    "def1": "Persona que té poca habilitat amb les mans.",
+    "def2": "Qui encalla la impressora només de mirar-la.",
+    "summary": "Qui encalla la impressora només de mirar-la.",
+    "description": null,
+    "metaDescription": "Tassa «Sóc un pocatraça»: qui encalla la impressora només de mirar-la. Paraula catalana amb definició de diccionari.",
+    "images": {
+      "front": "/images/tasses/pocatraca/blau-front.jpg",
+      "back": "/images/tasses/pocatraca/blau-back.jpg",
+      "width": 600,
+      "height": 704
+    },
+    "alt": {
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Sóc un pocatraça»",
+      "back": "Darrere de la tassa, amb la definició de «pocatraça»"
+    },
+    "related": [
+      "escalfacadires",
+      "cagadubtes"
+    ],
+    "tags": [],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "blau"
+  },
+  {
+    "slug": "cafe-sol",
+    "name": "Un cafè sol",
+    "category": "humor",
+    "new": false,
+    "sides": 1,
+    "phonetic": null,
+    "intro": "Avui només vull",
+    "tagline": null,
+    "def1": null,
+    "def2": null,
+    "summary": "Per als matins en què no vols ni companyia ni llet.",
+    "description": [
+      "Una tassa amb doble sentit: avui només vols un cafè sol… i que et deixin sol. Amb una tasseta amb ulleres de sol prenent el sol a la tovallola.",
+      "Ideal per a l'oficina, per a qui no és persona fins al segon cafè o per a qui reivindica el seu moment de pau."
+    ],
+    "metaDescription": "Tassa «Avui només vull un cafè sol»: joc de paraules per als matins en què no vols ni companyia ni llet.",
+    "images": {
+      "front": "/images/tasses/cafe-sol/negre-front.jpg",
+      "back": "/images/tasses/cafe-sol/negre-back.jpg",
+      "width": 600,
+      "height": 704
+    },
+    "alt": {
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Avui només vull un cafè sol»",
+      "back": "La tassa «Avui només vull un cafè sol» vista des d'un altre angle"
+    },
+    "related": [
+      "tallat",
+      "sense-cafe-no-soc-persona"
+    ],
+    "tags": [
+      "cafe"
+    ],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "negre"
+  },
+  {
+    "slug": "coses-que-s-escalfen-de-seguida",
+    "name": "Coses que s'escalfen de seguida",
+    "category": "humor",
+    "new": false,
+    "sides": 1,
+    "phonetic": null,
+    "intro": null,
+    "tagline": null,
+    "def1": null,
+    "def2": null,
+    "summary": "El microones, el mòbil… i aquella persona que tots coneixem.",
+    "description": [
+      "Una llista il·lustrada de coses que s'escalfen de seguida: el microones, el mòbil i algú amb molt poca paciència.",
+      "Per a qui s'enfada per no res. O per a qui ho reconeix i se'n riu."
+    ],
+    "metaDescription": "Tassa «Coses que s'escalfen de seguida»: el microones, el mòbil i aquella persona que s'enfada per no res.",
+    "images": {
+      "front": "/images/tasses/coses-que-s-escalfen-de-seguida/vermell-front.jpg",
+      "back": "/images/tasses/coses-que-s-escalfen-de-seguida/vermell-back.jpg",
+      "width": 600,
+      "height": 704
+    },
+    "alt": {
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Coses que s'escalfen de seguida»",
+      "back": "La tassa «Coses que s'escalfen de seguida» vista des d'un altre angle"
+    },
+    "related": [
+      "coses-que-perden-el-fil",
+      "mala-llet"
+    ],
+    "tags": [],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "vermell"
+  },
+  {
+    "slug": "mala-llet",
+    "name": "Mala llet",
+    "category": "humor",
+    "new": false,
+    "sides": 1,
+    "phonetic": null,
+    "intro": "Compte, que avui tinc",
+    "tagline": null,
+    "def1": null,
+    "def2": null,
+    "summary": "Avís previ per als dies de mala lluna.",
+    "description": [
+      "Un brick de llet enfadat i un avís clar: avui no és el dia. Millor que tothom ho sàpiga abans del primer cafè.",
+      "Per a qui té el despertar complicat, o per regalar amb tota la intenció del món."
+    ],
+    "metaDescription": "Tassa «Compte, que avui tinc mala llet»: avís previ per als dies de mal humor, amb un brick de llet enfadat.",
+    "images": {
+      "front": "/images/tasses/mala-llet/vermell-front.jpg",
+      "back": "/images/tasses/mala-llet/vermell-back.jpg",
+      "width": 600,
+      "height": 704
+    },
+    "alt": {
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Compte, que avui tinc mala llet»",
+      "back": "La tassa «Compte, que avui tinc mala llet» vista des d'un altre angle"
+    },
+    "related": [
+      "tallat",
+      "mes-cara-que-esquena"
+    ],
+    "tags": [
+      "cafe"
+    ],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "vermell"
+  },
+  {
+    "slug": "coses-que-es-veuen-millor-de-lluny",
+    "name": "Coses que es veuen millor de lluny",
+    "category": "humor",
+    "new": false,
+    "sides": 1,
+    "phonetic": null,
+    "intro": null,
+    "tagline": null,
+    "def1": null,
+    "def2": null,
+    "summary": "La lluna, els focs artificials… i el teu ex.",
+    "description": [
+      "La lluna, els focs artificials i, ben lluny, el teu ex. Tres coses que es veuen molt millor a distància.",
+      "Per a qui ha passat pàgina amb sentit de l'humor."
+    ],
+    "metaDescription": "Tassa «Coses que es veuen millor de lluny»: la lluna, els focs artificials i el teu ex.",
+    "images": {
+      "front": "/images/tasses/coses-que-es-veuen-millor-de-lluny/blau-front.jpg",
+      "back": "/images/tasses/coses-que-es-veuen-millor-de-lluny/blau-back.jpg",
+      "width": 600,
+      "height": 704
+    },
+    "alt": {
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Coses que es veuen millor de lluny»",
+      "back": "La tassa «Coses que es veuen millor de lluny» vista des d'un altre angle"
+    },
+    "related": [
+      "coses-que-no-serveixen-per-a-res",
+      "mes-cara-que-esquena"
+    ],
+    "tags": [],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "blau"
+  },
+  {
+    "slug": "coses-que-no-serveixen-per-a-res",
+    "name": "Coses que no serveixen per a res",
+    "category": "humor",
+    "new": false,
+    "sides": 1,
+    "phonetic": null,
+    "intro": null,
+    "tagline": null,
+    "def1": null,
+    "def2": null,
+    "summary": "Una bombeta fosa, un bolígraf sense tinta… i aquella reunió.",
+    "description": [
+      "Una bombeta fosa, un bolígraf trencat i una reunió que podia haver estat un correu. La llista de coses que no serveixen per a res.",
+      "Ideal per a l'oficina i per a qualsevol persona que hagi sobreviscut a una reunió eterna."
+    ],
+    "metaDescription": "Tassa «Coses que no serveixen per a res»: una bombeta fosa, un bolígraf trencat i una reunió inútil.",
+    "images": {
+      "front": "/images/tasses/coses-que-no-serveixen-per-a-res/blau-front.jpg",
+      "back": "/images/tasses/coses-que-no-serveixen-per-a-res/blau-back.jpg",
+      "width": 600,
+      "height": 704
+    },
+    "alt": {
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Coses que no serveixen per a res»",
+      "back": "La tassa «Coses que no serveixen per a res» vista des d'un altre angle"
+    },
+    "related": [
+      "coses-que-perden-el-fil",
+      "coses-que-es-veuen-millor-de-lluny"
+    ],
+    "tags": [],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "blau"
+  },
+  {
+    "slug": "sense-cafe-no-soc-persona",
+    "name": "Sense cafè no sóc persona",
+    "category": "humor",
+    "new": false,
+    "sides": 1,
+    "phonetic": null,
+    "intro": null,
+    "tagline": "Amb cafè, tampoc gaire.",
+    "def1": null,
+    "def2": null,
+    "summary": "Sense cafè no sóc persona. Amb cafè, tampoc gaire.",
+    "description": [
+      "Dues caretes, abans i després del cafè, i una veritat universal: el cafè ajuda, però no fa miracles.",
+      "Per als que necessiten el cafè per arrencar i ho reconeixen sense embuts."
+    ],
+    "metaDescription": "Tassa «Sense cafè no sóc persona. Amb cafè, tampoc gaire.»: per als que necessiten el cafè per arrencar.",
+    "images": {
+      "front": "/images/tasses/sense-cafe-no-soc-persona/negre-front.jpg",
+      "back": "/images/tasses/sense-cafe-no-soc-persona/negre-back.jpg",
+      "width": 600,
+      "height": 704
+    },
+    "alt": {
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Sense cafè no sóc persona»",
+      "back": "La tassa «Sense cafè no sóc persona» vista des d'un altre angle"
+    },
+    "related": [
+      "cafe-sol",
+      "coses-que-perden-el-fil"
+    ],
+    "tags": [
+      "cafe"
+    ],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "negre"
+  },
+  {
+    "slug": "coses-que-perden-el-fil",
+    "name": "Coses que perden el fil",
+    "category": "humor",
+    "new": false,
+    "sides": 1,
+    "phonetic": null,
+    "intro": null,
+    "tagline": null,
+    "def1": null,
+    "def2": null,
+    "summary": "Les agulles, els estels… i qui comença una història i no l'acaba.",
+    "description": [
+      "Una agulla, un estel i algú que diu «I llavors… què deia?». Tres coses que perden el fil, cadascuna a la seva manera.",
+      "Per a qui s'enreda explicant anècdotes o es distreu a mitja frase."
+    ],
+    "metaDescription": "Tassa «Coses que perden el fil»: una agulla, un estel i algú que no recorda què deia.",
+    "images": {
+      "front": "/images/tasses/coses-que-perden-el-fil/vermell-front.jpg",
+      "back": "/images/tasses/coses-que-perden-el-fil/vermell-back.jpg",
+      "width": 600,
+      "height": 704
+    },
+    "alt": {
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Coses que perden el fil»",
+      "back": "La tassa «Coses que perden el fil» vista des d'un altre angle"
+    },
+    "related": [
+      "coses-que-s-escalfen-de-seguida",
+      "coses-que-no-serveixen-per-a-res"
+    ],
+    "tags": [],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "vermell"
+  },
+  {
+    "slug": "tallat",
+    "name": "Tallat",
+    "category": "humor",
+    "new": false,
+    "sides": 1,
+    "phonetic": null,
+    "intro": "Avui estic una mica",
+    "tagline": null,
+    "def1": null,
+    "def2": null,
+    "summary": "Per als dies que estàs tallat… com el cafè.",
+    "description": [
+      "Quan no saps què dir, et quedes tallat. I el cafè també. Una tassa amb una tasseta tímida i una tireta a la galta, per als dies d'estar una mica tocat.",
+      "Un regal senzill per a qui es posa vermell de seguida o per a qui sempre demana un tallat."
+    ],
+    "metaDescription": "Tassa «Avui estic una mica tallat»: joc de paraules amb el cafè tallat, per als dies d'estar una mica tocat.",
+    "images": {
+      "front": "/images/tasses/tallat/taronja-front.jpg",
+      "back": "/images/tasses/tallat/taronja-back.jpg",
+      "width": 600,
+      "height": 704
+    },
+    "alt": {
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Avui estic una mica tallat»",
+      "back": "La tassa «Avui estic una mica tallat» vista des d'un altre angle"
+    },
+    "related": [
+      "cafe-sol",
+      "mala-llet"
+    ],
+    "tags": [
+      "cafe"
+    ],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "taronja"
+  },
+  {
+    "slug": "tros-de-pa",
+    "name": "Tros de pa",
+    "category": "humor",
+    "new": false,
+    "sides": 1,
+    "phonetic": null,
+    "intro": "Ets un",
+    "tagline": null,
+    "def1": null,
+    "def2": null,
+    "summary": "Per a la persona més bona que coneixes.",
+    "description": [
+      "«Ser un tros de pa» vol dir ser una persona molt bona, d'aquelles que ho donarien tot. Amb una llesca de pa amb aureola, és clar.",
+      "Per agrair-li a algú que sempre hi és, sense posar-se cursi."
+    ],
+    "metaDescription": "Tassa «Ets un tros de pa»: l'expressió catalana per dir que algú és una persona molt bona.",
+    "images": {
+      "front": "/images/tasses/tros-de-pa/groc-front.jpg",
+      "back": "/images/tasses/tros-de-pa/groc-back.jpg",
+      "width": 600,
+      "height": 704
+    },
+    "alt": {
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Ets un tros de pa»",
+      "back": "La tassa «Ets un tros de pa» vista des d'un altre angle"
+    },
+    "related": [
+      "aixopluc",
+      "niu"
+    ],
+    "tags": [
+      "especial"
+    ],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "groc"
+  },
+  {
+    "slug": "mes-inutil-que-un-cendrer-de-moto",
+    "name": "Més inútil que un cendrer de moto",
+    "category": "insults",
+    "new": false,
+    "sides": 1,
+    "phonetic": null,
+    "intro": "Ets",
+    "tagline": null,
+    "def1": null,
+    "def2": null,
+    "summary": "Una comparació clàssica per a qui no en fa ni una.",
+    "description": [
+      "Un cendrer en una moto no té cap sentit, i aquesta comparació tampoc no deixa gaire marge al dubte. Amb la moto i el cendrer dibuixats, perquè quedi clar.",
+      "Per regalar amb afecte (i amb molt de morro) a qui sempre té una excusa."
+    ],
+    "metaDescription": "Tassa «Ets més inútil que un cendrer de moto»: comparació catalana per a qui no en fa ni una.",
+    "images": {
+      "front": "/images/tasses/mes-inutil-que-un-cendrer-de-moto/negre-front.jpg",
+      "back": "/images/tasses/mes-inutil-que-un-cendrer-de-moto/negre-back.jpg",
+      "width": 600,
+      "height": 704
+    },
+    "alt": {
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Ets més inútil que un cendrer de moto»",
+      "back": "La tassa «Ets més inútil que un cendrer de moto» vista des d'un altre angle"
+    },
+    "related": [
+      "mes-pesat-que-una-vaca-en-bracos",
+      "arsenal-insults"
+    ],
+    "tags": [],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "negre"
+  },
+  {
+    "slug": "gamarus",
+    "name": "Però ets un gamarús",
+    "category": "insults",
+    "phonetic": null,
+    "intro": "Sembles un mussol savi,",
+    "tagline": null,
+    "def1": null,
+    "def2": null,
+    "summary": "Per a qui fa cara de saber-ho tot… i no n'encerta ni una.",
+    "description": [
+      "Un mussol amb birret i llibre, amb tota la pinta de savi. Però no: «gamarús» és la paraula catalana per a algú una mica curt de gambals.",
+      "Per regalar amb afecte (i molt de morro) a qui sempre té la resposta equivocada a punt."
+    ],
+    "metaDescription": "Tassa «Sembles un mussol savi, però ets un gamarús»: un insult català amb un mussol de birret.",
+    "related": [
+      "mes-cara-que-esquena",
+      "mes-inutil-que-un-cendrer-de-moto"
+    ],
+    "sides": 1,
+    "new": true,
+    "tags": [],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "verd",
+    "images": {
+      "front": "/images/tasses/gamarus/verd-front.jpg",
+      "back": "/images/tasses/gamarus/verd-back.jpg",
+      "width": 600,
+      "height": 704
+    },
+    "alt": {
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Sembles un mussol savi, però ets un gamarús»",
+      "back": "La tassa «Sembles un mussol savi, però ets un gamarús» vista des d'un altre angle"
+    }
+  },
+  {
+    "slug": "mes-cara-que-esquena",
+    "name": "Més cara que esquena",
+    "category": "insults",
+    "new": false,
+    "sides": 1,
+    "phonetic": null,
+    "intro": "Tens",
+    "tagline": null,
+    "def1": null,
+    "def2": null,
+    "summary": "Per a qui té molta barra i cap vergonya.",
+    "description": [
+      "«Tenir més cara que esquena» és tenir molt de morro. Amb una cara rodona que ocupa més que l'esquena, literalment.",
+      "Per al company que sempre s'escapoleix o per a l'amiga que s'apunta a tot sense pagar mai."
+    ],
+    "metaDescription": "Tassa «Tens més cara que esquena»: l'expressió catalana per a qui té molt de morro.",
+    "images": {
+      "front": "/images/tasses/mes-cara-que-esquena/taronja-front.jpg",
+      "back": "/images/tasses/mes-cara-que-esquena/taronja-back.jpg",
+      "width": 600,
+      "height": 704
+    },
+    "alt": {
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Tens més cara que esquena»",
+      "back": "La tassa «Tens més cara que esquena» vista des d'un altre angle"
+    },
+    "related": [
+      "mes-pesat-que-una-vaca-en-bracos",
+      "mala-llet"
+    ],
+    "tags": [],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "taronja"
+  },
+  {
+    "slug": "mes-pesat-que-una-vaca-en-bracos",
+    "name": "Més pesat que una vaca en braços",
+    "category": "insults",
+    "new": false,
+    "sides": 1,
+    "phonetic": null,
+    "intro": "Ets",
+    "tagline": null,
+    "def1": null,
+    "def2": null,
+    "summary": "Per a qui no deixa d'insistir… i d'insistir.",
+    "description": [
+      "Carregar una vaca en braços cansa. Aguantar segons qui, també. Amb una vaca i un portador ben enfadat.",
+      "Per a l'amic que no para de demanar favors o per al germà que no calla mai."
+    ],
+    "metaDescription": "Tassa «Ets més pesat que una vaca en braços»: comparació catalana per a la gent que no para d'insistir.",
+    "images": {
+      "front": "/images/tasses/mes-pesat-que-una-vaca-en-bracos/blau-front.jpg",
+      "back": "/images/tasses/mes-pesat-que-una-vaca-en-bracos/blau-back.jpg",
+      "width": 600,
+      "height": 704
+    },
+    "alt": {
+      "front": "Tassa blanca amb interior i nansa de color, amb el missatge «Ets més pesat que una vaca en braços»",
+      "back": "La tassa «Ets més pesat que una vaca en braços» vista des d'un altre angle"
+    },
+    "related": [
+      "mes-inutil-que-un-cendrer-de-moto",
+      "mes-cara-que-esquena"
+    ],
+    "tags": [],
+    "colors": [
+      "vermell",
+      "taronja",
+      "groc",
+      "verd",
+      "blau",
+      "negre"
+    ],
+    "defaultColor": "blau"
   },
   {
     "slug": "arsenal-insults",
@@ -938,6 +1631,8 @@
       "cagadubtes",
       "manefla"
     ],
-    "tags": []
+    "tags": [],
+    "colors": [],
+    "defaultColor": null
   }
 ]

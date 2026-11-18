@@ -55,18 +55,70 @@ const admin = { 'x-admin-password': 'secret' };
 const site = require('../data/site.json');
 
 // ---------- Pagament ----------
-test('checkout: cobra el preu únic de data/site.json i l\'enviament configurat', async () => {
+test('checkout: cobra el preu de data/site.json, amb enviament gratuït, i agrupa per tassa i color', async () => {
   stores.clear(); stripeSessions = [];
-  const res = await fn('create-checkout-session')(ev('POST', { items: [{ id: 'aixopluc', qty: 2 }, { id: 'niu', qty: 1 }, { id: 'aixopluc', qty: 1 }] }));
+  const items = [
+    { type: 'mug', id: 'aixopluc', color: 'blau', qty: 2 },
+    { type: 'mug', id: 'aixopluc', color: 'blau', qty: 1 },
+    { type: 'mug', id: 'aixopluc', color: 'groc', qty: 1 },
+    { id: 'niu', qty: 1 },
+  ];
+  const res = await fn('create-checkout-session')(ev('POST', { items }));
   assert.strictEqual(res.statusCode, 200);
   const s = stripeSessions[0];
-  assert.strictEqual(site.unitPriceCents, 595);
-  assert.deepStrictEqual(s.line_items.map((l) => [l.quantity, l.price_data.unit_amount]), [[3, 595], [1, 595]]);
-  assert.strictEqual(s.shipping_options[0].shipping_rate_data.fixed_amount.amount, site.shipping.costCents);
-  const total = s.line_items.reduce((t, l) => t + l.quantity * l.price_data.unit_amount, 0) + site.shipping.costCents;
-  assert.strictEqual(total, 4 * 595 + 495);
-  assert.strictEqual(s.metadata.items, 'aixopluc:3,niu:1');
+  assert.strictEqual(site.unitPriceCents, 1495);
+  assert.deepStrictEqual(s.line_items.map((l) => [l.quantity, l.price_data.unit_amount]), [[3, 1495], [1, 1495], [1, 1495]]);
+  assert.match(s.line_items[0].price_data.product_data.name, /aixopluc» · blau$/);
+  assert.match(s.line_items[2].price_data.product_data.name, /niu» · blau$/, 'sense color, el de portada');
+  assert.strictEqual(s.shipping_options[0].shipping_rate_data.fixed_amount.amount, 0);
+  assert.strictEqual(s.shipping_options[0].shipping_rate_data.display_name, 'Enviament gratuït');
+  assert.strictEqual(s.metadata.items, 'm:aixopluc:blau:3,m:aixopluc:groc:1,m:niu:blau:1');
   assert.match(s.success_url, /^https:\/\/botiga\.test\/gracies\//);
+});
+
+test('checkout: ofertes i packs es cobren al preu del servidor', async () => {
+  stores.clear(); stripeSessions = [];
+  const res = await fn('create-checkout-session')(ev('POST', { items: [
+    { type: 'mug', id: 'esma', color: 'verd', qty: 1, price: 1 },
+    { type: 'pack', id: 'casa', qty: 2 },
+  ] }));
+  assert.strictEqual(res.statusCode, 200);
+  const [mug, pack] = stripeSessions[0].line_items;
+  assert.strictEqual(mug.price_data.unit_amount, site.offers.items.esma);
+  assert.strictEqual(pack.quantity, 2);
+  assert.strictEqual(pack.price_data.unit_amount, site.packs.find((p) => p.id === 'casa').priceCents);
+  assert.ok(pack.price_data.unit_amount < 3 * site.unitPriceCents, 'el pack surt més barat');
+  assert.strictEqual(stripeSessions[0].metadata.items, 'm:esma:verd:1,p:casa:2');
+  // un color que no existeix es canvia pel de portada
+  stripeSessions = [];
+  await fn('create-checkout-session')(ev('POST', { items: [{ type: 'mug', id: 'caliu', color: 'rosa', qty: 1 }] }));
+  assert.strictEqual(stripeSessions[0].metadata.items, 'm:caliu:taronja:1');
+});
+
+test('checkout: tassa personalitzada validada al servidor', async () => {
+  stores.clear(); stripeSessions = [];
+  const design = { structure: 'caracter', intro: 'Sóc un', word: 'garrepa', sub: 'avui convides tu, oi?', def1: 'Persona que no vol gastar ni un cèntim.', def2: '', drawing: 'regal', color: 'verd' };
+  const res = await fn('create-checkout-session')(ev('POST', { items: [{ type: 'custom', design, qty: 2 }] }));
+  assert.strictEqual(res.statusCode, 200);
+  const l = stripeSessions[0].line_items[0];
+  assert.deepStrictEqual([l.quantity, l.price_data.unit_amount], [2, site.customPriceCents]);
+  assert.match(l.price_data.product_data.name, /Sóc un garrepa/);
+  assert.match(l.price_data.product_data.description, /dibuix: regal · darrere: 1\. Persona/);
+  assert.strictEqual(stripeSessions[0].metadata.items, 'c:1:2');
+  assert.strictEqual(JSON.parse(stripeSessions[0].metadata.personalitzada_1).word, 'garrepa');
+
+  const bad = (d) => fn('create-checkout-session')(ev('POST', { items: [{ type: 'custom', design: { ...design, ...d }, qty: 1 }] }));
+  assert.strictEqual((await bad({ word: '' })).statusCode, 400);
+  assert.strictEqual((await bad({ structure: 'inventada' })).statusCode, 400);
+  assert.strictEqual((await bad({ word: 'visita www.spam.com' })).statusCode, 400);
+  assert.strictEqual((await bad({ word: 'subnormal' })).statusCode, 400);
+  assert.strictEqual((await bad({ word: '<script>' })).statusCode, 400);
+  // camps llargs es retallen i dibuixos desconeguts es descarten
+  stripeSessions = [];
+  await bad({ word: 'paraula llarga '.repeat(20), drawing: 'no-existeix' });
+  const saved = JSON.parse(stripeSessions[0].metadata.personalitzada_1);
+  assert.strictEqual(saved.word.length, 24);
+  assert.strictEqual(saved.drawing, '');
 });
 
 test('checkout: rebutja productes desconeguts, limita quantitats i respecta l\'estoc', async () => {
@@ -90,9 +142,14 @@ test('webhook: descompta estoc i compta vendes una sola vegada encara que Stripe
   assert.strictEqual(await fakeStore('stock').get('niu'), '7');
   assert.strictEqual(await fakeStore('stock').get('arrel'), null);
   assert.deepStrictEqual(await fakeStore('sales').get('counts', { type: 'json' }), { niu: 3, arrel: 1 });
+  // format nou: tasses amb color, packs (compten cada tassa) i personalitzades (no compten)
+  stripeEvent = { type: 'checkout.session.completed', data: { object: { id: 'cs_3', payment_status: 'paid', metadata: { items: 'm:niu:blau:1,p:casa:1,c:1:4' } } } };
+  await hook(ev('POST', {}, { headers: { 'stripe-signature': 's' } }));
+  assert.strictEqual(await fakeStore('stock').get('niu'), '5');
+  assert.deepStrictEqual(await fakeStore('sales').get('counts', { type: 'json' }), { niu: 5, arrel: 2, aixopluc: 1 });
   stripeEvent = { type: 'checkout.session.completed', data: { object: { id: 'cs_2', payment_status: 'unpaid', metadata: { items: 'niu:1' } } } };
   await hook(ev('POST', {}, { headers: { 'stripe-signature': 's' } }));
-  assert.strictEqual(await fakeStore('stock').get('niu'), '7');
+  assert.strictEqual(await fakeStore('stock').get('niu'), '5');
 });
 
 test('store-data: "més venuts" només apareix amb vendes reals d\'almenys 3 tasses', async () => {

@@ -61,32 +61,96 @@
   }
 
   // ---------- Cistella ----------
+  // Cada línia és una tassa d'un color, un pack o una tassa personalitzada.
   var stock = {};
-  var cart = (storage.get(CART_KEY) || []).filter(function (i) { return CAT.products[i.id] && i.qty > 0; });
+  var COLOR_BY_ID = {};
+  (CAT.colors || []).forEach(function (c) { COLOR_BY_ID[c.id] = c; });
 
+  function keyOf(i) {
+    if (i.type === 'pack') return 'p|' + i.id;
+    if (i.type === 'custom') return 'c|' + JSON.stringify(i.design);
+    return 'm|' + i.id + '|' + (i.color || '');
+  }
+  function normalize(i) {
+    if (!i || !(i.qty > 0)) return null;
+    var type = i.type || 'mug';
+    if (type === 'mug') {
+      var p = CAT.products[i.id];
+      if (!p) return null;
+      var color = p.colors.length ? (p.colors.indexOf(i.color) > -1 ? i.color : p.defaultColor) : null;
+      return { type: 'mug', id: i.id, color: color, qty: i.qty };
+    }
+    if (type === 'pack') return CAT.packs[i.id] ? { type: 'pack', id: i.id, qty: i.qty } : null;
+    if (type === 'custom') return i.design && i.design.word ? { type: 'custom', design: i.design, qty: i.qty } : null;
+    return null;
+  }
+  var cart = (storage.get(CART_KEY) || []).map(normalize).filter(Boolean);
+
+  function unitPrice(i) {
+    if (i.type === 'pack') return CAT.packs[i.id].priceCents;
+    if (i.type === 'custom') return CAT.customPriceCents;
+    return CAT.products[i.id].priceCents;
+  }
+  function unitsOf(slug) {
+    return cart.reduce(function (n, i) {
+      if (i.type === 'mug' && i.id === slug) return n + i.qty;
+      if (i.type === 'pack' && CAT.packs[i.id].slugs.indexOf(slug) > -1) return n + i.qty;
+      return n;
+    }, 0);
+  }
   function maxFor(slug) {
     var s = stock[slug];
     return typeof s === 'number' ? Math.min(CAT.maxQty, s) : CAT.maxQty;
   }
   function save() { storage.set(CART_KEY, cart); render(); }
-  function count() { return cart.reduce(function (n, i) { return n + i.qty; }, 0); }
-
-  function add(slug, qty) {
-    var product = CAT.products[slug];
-    if (!product) return false;
-    var line = cart.find(function (i) { return i.id === slug; });
-    var current = line ? line.qty : 0;
-    var allowed = Math.max(0, maxFor(slug) - current);
-    if (allowed <= 0) { toast(stock[slug] === 0 ? '«' + product.name + '» s\'ha exhaurit.' : 'Ja tens el màxim d\'unitats d\'aquesta tassa.'); return false; }
-    var n = Math.min(qty || 1, allowed);
-    if (line) line.qty += n; else cart.push({ id: slug, qty: n });
-    save();
+  function mugsCount() {
+    return cart.reduce(function (n, i) { return n + i.qty * (i.type === 'pack' ? CAT.packs[i.id].slugs.length : 1); }, 0);
+  }
+  function bump() {
     var btn = $('[data-cart-open].cart-btn');
     if (btn) { btn.classList.remove('is-bump'); void btn.offsetWidth; btn.classList.add('is-bump'); }
+  }
+  function findLine(item) {
+    var k = keyOf(item);
+    return cart.find(function (i) { return keyOf(i) === k; });
+  }
+
+  function add(slug, qty, color) {
+    var product = CAT.products[slug];
+    if (!product) return false;
+    var allowed = Math.max(0, maxFor(slug) - unitsOf(slug));
+    if (allowed <= 0) { toast(stock[slug] === 0 ? '«' + product.name + '» s\'ha exhaurit.' : 'Ja tens el màxim d\'unitats d\'aquesta tassa.'); return false; }
+    var item = normalize({ type: 'mug', id: slug, color: color, qty: Math.min(qty || 1, allowed) });
+    var line = findLine(item);
+    if (line) line.qty += item.qty; else cart.push(item);
+    save(); bump();
     return true;
   }
-  function setQty(slug, qty) {
-    cart = cart.map(function (i) { return i.id === slug ? { id: slug, qty: Math.min(maxFor(slug), qty) } : i; }).filter(function (i) { return i.qty > 0; });
+  function addPack(id) {
+    var pack = CAT.packs[id];
+    if (!pack) return false;
+    var blocked = pack.slugs.filter(function (s) { return maxFor(s) - unitsOf(s) <= 0; });
+    if (blocked.length) { toast('«' + CAT.products[blocked[0]].name + '» s\'ha exhaurit i el pack no està disponible.'); return false; }
+    var line = findLine({ type: 'pack', id: id });
+    if (line) line.qty = Math.min(CAT.maxQty, line.qty + 1); else cart.push({ type: 'pack', id: id, qty: 1 });
+    save(); bump();
+    return true;
+  }
+  function addCustom(design, qty) {
+    var item = { type: 'custom', design: design, qty: Math.max(1, Math.min(CAT.maxQty, qty || 1)) };
+    var line = findLine(item);
+    if (line) line.qty = Math.min(CAT.maxQty, line.qty + item.qty); else cart.push(item);
+    save(); bump();
+    return true;
+  }
+  window.ElGlopetCart = { addCustom: addCustom, toast: toast, openCart: function () { openCart(); } };
+
+  function setQtyAt(index, qty) {
+    var i = cart[index];
+    if (!i) return;
+    if (i.type === 'mug') qty = Math.min(qty, maxFor(i.id) - unitsOf(i.id) + i.qty);
+    i.qty = Math.min(CAT.maxQty, qty);
+    cart = cart.filter(function (l) { return l.qty > 0; });
     save();
   }
 
@@ -94,48 +158,83 @@
   var backdrop = $('.drawer-backdrop');
   var lastFocus = null;
 
+  function mugIcon(hex) {
+    return '<svg class="line__img line__img--svg" viewBox="0 0 72 90" aria-hidden="true"><rect width="72" height="90" rx="10" fill="#FFFEFC"/>' +
+      '<path d="M50 38h5a8 8 0 0 1 0 16h-5" fill="none" stroke="' + hex + '" stroke-width="5"/>' +
+      '<rect x="16" y="30" width="36" height="38" rx="6" fill="#fff" stroke="#D6D0C5" stroke-width="2"/>' +
+      '<ellipse cx="34" cy="31" rx="17" ry="4" fill="' + hex + '"/>' +
+      '<path d="M27 47c3-4 11-4 14 0" fill="none" stroke="#B66F54" stroke-width="2.5" stroke-linecap="round"/></svg>';
+  }
+  function lineInfo(i) {
+    if (i.type === 'pack') {
+      var pk = CAT.packs[i.id];
+      return {
+        img: '<img class="line__img" src="' + CAT.products[pk.slugs[0]].image + '" alt="" width="72" height="90">',
+        name: esc(pk.name), url: '/#packs',
+        detail: pk.slugs.map(function (s) { return esc(CAT.products[s].name); }).join(' · '),
+      };
+    }
+    if (i.type === 'custom') {
+      var d = i.design;
+      var c = COLOR_BY_ID[d.color] || { hex: '#999', name: '' };
+      return {
+        img: mugIcon(c.hex), name: 'Tassa personalitzada', url: '/crea-la-teva-tassa/',
+        detail: '«' + esc([d.intro, d.word].filter(Boolean).join(' ')) + '» · ' + esc(c.name.toLowerCase()),
+      };
+    }
+    var p = CAT.products[i.id];
+    var col = COLOR_BY_ID[i.color];
+    return {
+      img: '<img class="line__img" src="' + (i.color ? '/images/tasses/' + i.id + '/' + i.color + '-front.jpg' : p.image) + '" alt="" width="72" height="90">',
+      name: esc(p.name), url: p.url + (i.color ? '?color=' + i.color : ''),
+      detail: col ? 'Interior i nansa: ' + esc(col.name.toLowerCase()) : '',
+    };
+  }
+
   function render() {
-    var n = count();
+    var n = mugsCount();
     $$('[data-cart-count]').forEach(function (el) { el.textContent = n ? String(n) : ''; });
-    $$('.cart-btn').forEach(function (b) { b.setAttribute('aria-label', 'Obre la cistella (' + n + ' ' + (n === 1 ? 'producte' : 'productes') + ')'); });
+    $$('.cart-btn').forEach(function (b) { b.setAttribute('aria-label', 'Obre la cistella (' + n + ' ' + (n === 1 ? 'tassa' : 'tasses') + ')'); });
     if (!drawer) return;
 
     var body = $('[data-cart-items]', drawer);
     var foot = $('[data-cart-foot]', drawer);
     var upsell = $('[data-cart-upsell]', drawer);
 
-    if (!n) {
+    if (!cart.length) {
       body.innerHTML = '<div class="drawer__empty"><p>La cistella és buida.</p><a class="btn btn--primary" href="/tasses/">Veure les tasses</a></div>';
       foot.hidden = true; upsell.hidden = true;
       return;
     }
 
-    body.innerHTML = cart.map(function (i) {
-      var p = CAT.products[i.id];
-      return '<div class="line" data-line="' + i.id + '">' +
-        '<img class="line__img" src="' + p.image + '" alt="" width="72" height="90">' +
-        '<div><a class="line__name" href="' + p.url + '">' + esc(p.name) + '</a>' +
-        '<p class="line__unit">' + euro(CAT.priceCents) + ' / unitat</p>' +
-        '<div class="qty"><button type="button" class="qty__btn" data-line-step="-1" aria-label="Una unitat menys de ' + esc(p.name) + '">' + icon('minus') + '</button>' +
+    body.innerHTML = cart.map(function (i, idx) {
+      var info = lineInfo(i);
+      var unit = unitPrice(i);
+      var plain = info.name.replace(/<[^>]+>/g, '');
+      return '<div class="line" data-line="' + idx + '" data-line-key="' + esc(keyOf(i)) + '">' + info.img +
+        '<div><a class="line__name" href="' + info.url + '">' + info.name + '</a>' +
+        (info.detail ? '<p class="line__detail">' + info.detail + '</p>' : '') +
+        '<p class="line__unit">' + euro(unit) + ' / unitat</p>' +
+        '<div class="qty"><button type="button" class="qty__btn" data-line-step="-1" aria-label="Una unitat menys de ' + plain + '">' + icon('minus') + '</button>' +
         '<span class="qty__input" aria-live="polite">' + i.qty + '</span>' +
-        '<button type="button" class="qty__btn" data-line-step="1" aria-label="Una unitat més de ' + esc(p.name) + '">' + icon('plus') + '</button></div></div>' +
-        '<div><span class="line__total">' + euro(CAT.priceCents * i.qty) + '</span>' +
-        '<button type="button" class="icon-btn line__remove" data-line-remove aria-label="Treu ' + esc(p.name) + ' de la cistella">' + icon('trash') + '</button></div>' +
+        '<button type="button" class="qty__btn" data-line-step="1" aria-label="Una unitat més de ' + plain + '">' + icon('plus') + '</button></div></div>' +
+        '<div><span class="line__total">' + euro(unit * i.qty) + '</span>' +
+        '<button type="button" class="icon-btn line__remove" data-line-remove aria-label="Treu ' + plain + ' de la cistella">' + icon('trash') + '</button></div>' +
         '</div>';
     }).join('');
 
-    var subtotal = n * CAT.priceCents;
+    var subtotal = cart.reduce(function (t, i) { return t + unitPrice(i) * i.qty; }, 0);
     $('[data-cart-subtotal]', drawer).textContent = euro(subtotal);
-    $('[data-cart-shipping]', drawer).textContent = euro(CAT.shippingCents);
+    $('[data-cart-shipping]', drawer).textContent = CAT.shippingCents ? euro(CAT.shippingCents) : 'Gratuït';
     $('[data-cart-total]', drawer).textContent = euro(subtotal + CAT.shippingCents);
     foot.hidden = false;
 
-    // Venda creuada: productes relacionats amb el que ja hi ha a la cistella.
-    var inCart = cart.map(function (i) { return i.id; });
+    // Venda creuada: tasses relacionades amb les que ja hi ha a la cistella.
+    var inCart = cart.filter(function (i) { return i.type === 'mug'; }).map(function (i) { return i.id; });
     var suggestions = [];
-    cart.forEach(function (i) {
-      (CAT.products[i.id].related || []).forEach(function (s) {
-        if (inCart.indexOf(s) === -1 && suggestions.indexOf(s) === -1 && stock[s] !== 0) suggestions.push(s);
+    inCart.forEach(function (id) {
+      (CAT.products[id].related || []).forEach(function (s) {
+        if (CAT.products[s] && inCart.indexOf(s) === -1 && suggestions.indexOf(s) === -1 && stock[s] !== 0) suggestions.push(s);
       });
     });
     suggestions = suggestions.slice(0, 2);
@@ -143,7 +242,7 @@
     upsell.innerHTML = suggestions.length ? '<h3>Combina-la amb</h3>' + suggestions.map(function (s) {
       var p = CAT.products[s];
       return '<div class="upsell-item"><img src="' + p.image + '" alt="" width="48" height="60">' +
-        '<div><a href="' + p.url + '">' + esc(p.name) + '</a><span>' + euro(CAT.priceCents) + '</span></div>' +
+        '<div><a href="' + p.url + '">' + esc(p.name) + '</a><span>' + euro(p.priceCents) + '</span></div>' +
         '<button type="button" class="btn btn--small" data-add="' + s + '">Afegeix<span class="sr-only"> ' + esc(p.name) + '</span></button></div>';
     }).join('') : '';
   }
@@ -179,6 +278,10 @@
     }
   });
 
+  function selectedColor() {
+    var checked = $('[data-color-input]:checked');
+    return checked ? checked.value : null;
+  }
   function productQty() {
     var input = $('[data-qty-input]');
     var v = input ? parseInt(input.value, 10) : 1;
@@ -194,31 +297,41 @@
     if (addBtn) {
       e.preventDefault();
       var slug = addBtn.getAttribute('data-add');
-      var qty = addBtn.hasAttribute('data-with-qty') ? productQty() : 1;
-      if (add(slug, qty)) {
+      var withQty = addBtn.hasAttribute('data-with-qty');
+      var qty = withQty ? productQty() : 1;
+      var color = withQty ? selectedColor() : null;
+      if (add(slug, qty, color)) {
         var inDrawer = addBtn.closest('[data-cart]');
-        if (!inDrawer) toast((qty > 1 ? qty + ' × ' : '') + '«' + CAT.products[slug].name + '» a la cistella', true);
+        var colorLabel = color && COLOR_BY_ID[color] ? ' (' + COLOR_BY_ID[color].name.toLowerCase() + ')' : '';
+        if (!inDrawer) toast((qty > 1 ? qty + ' × ' : '') + '«' + CAT.products[slug].name + '»' + colorLabel + ' a la cistella', true);
         addBtn.classList.add('is-added');
         setTimeout(function () { addBtn.classList.remove('is-added'); }, 1200);
       }
       return;
     }
 
+    var bothBtn = t.closest('[data-add-both]');
+    if (bothBtn) {
+      var pair = bothBtn.getAttribute('data-add-both').split(',');
+      var ok = pair.filter(function (s, i) { return add(s, 1, i === 0 ? selectedColor() : null); });
+      if (ok.length) toast(ok.length + ' tasses afegides a la cistella', true);
+      return;
+    }
+
     var packBtn = t.closest('[data-add-pack]');
     if (packBtn) {
-      var slugs = packBtn.getAttribute('data-add-pack').split(',');
-      var added = slugs.filter(function (s) { return add(s, 1); });
-      if (added.length) toast(added.length + ' tasses afegides a la cistella', true);
+      var packId = packBtn.getAttribute('data-add-pack');
+      if (addPack(packId)) toast('«' + CAT.packs[packId].name + '» a la cistella', true);
       return;
     }
 
     var line = t.closest('[data-line]');
     if (line) {
-      var id = line.getAttribute('data-line');
-      var item = cart.find(function (i) { return i.id === id; });
+      var idx = parseInt(line.getAttribute('data-line'), 10);
+      var item = cart[idx];
       var step = t.closest('[data-line-step]');
-      if (step && item) setQty(id, item.qty + parseInt(step.getAttribute('data-line-step'), 10));
-      if (t.closest('[data-line-remove]')) setQty(id, 0);
+      if (step && item) setQtyAt(idx, item.qty + parseInt(step.getAttribute('data-line-step'), 10));
+      if (t.closest('[data-line-remove]')) setQtyAt(idx, 0);
       return;
     }
 
@@ -236,7 +349,7 @@
       checkoutBtn.disabled = true;
       var label = checkoutBtn.textContent;
       checkoutBtn.textContent = 'Obrint el pagament segur…';
-      postJSON('create-checkout-session', { items: cart })
+      postJSON('create-checkout-session', { items: cart.map(function (i) { return { type: i.type, id: i.id, color: i.color, design: i.design, qty: i.qty }; }) })
         .then(function (data) { if (!data.url) throw new Error('no-url'); window.location.href = data.url; })
         .catch(function (err) {
           var msg = err.status ? err.message : "No hem pogut connectar amb el pagament. Comprova la connexió i torna-ho a provar.";
@@ -271,6 +384,30 @@
       clearTimeout(scrollTimer);
       scrollTimer = setTimeout(function () { setActive(Math.round(track.scrollLeft / track.clientWidth)); }, 80);
     }, { passive: true });
+  }
+
+  // ---------- Selector de color de la fitxa ----------
+  var picker = $('[data-color-picker]');
+  if (picker) {
+    var colorName = $('[data-color-name]', picker);
+    var applyColor = function (input) {
+      colorName.textContent = input.getAttribute('data-name');
+      var slides = $$('.gallery__img');
+      var thumbs = $$('.gallery__thumb img');
+      if (slides[0]) slides[0].src = input.getAttribute('data-front');
+      if (slides[1]) slides[1].src = input.getAttribute('data-back');
+      if (thumbs[0]) thumbs[0].src = input.getAttribute('data-front');
+      if (thumbs[1]) thumbs[1].src = input.getAttribute('data-back');
+    };
+    $$('[data-color-input]', picker).forEach(function (input) {
+      input.addEventListener('change', function () {
+        applyColor(input);
+        try { history.replaceState(null, '', '?color=' + input.value); } catch (err) { /* sense historial */ }
+      });
+    });
+    var wanted = (location.search.match(/[?&]color=([a-z]+)/) || [])[1];
+    var pre = wanted && $('[data-color-input][value="' + wanted + '"]', picker);
+    if (pre) { pre.checked = true; applyColor(pre); }
   }
 
   // ---------- Recomanador de regals ----------
