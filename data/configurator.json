@@ -1,7 +1,7 @@
 {
   "limits": {
-    "intro": 32,
-    "word": 24,
+    "intro": 40,
+    "word": 28,
     "sub": 48,
     "def": 110
   },

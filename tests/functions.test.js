@@ -117,7 +117,7 @@ test('checkout: tassa personalitzada validada al servidor', async () => {
   stripeSessions = [];
   await bad({ word: 'paraula llarga '.repeat(20), drawing: 'no-existeix' });
   const saved = JSON.parse(stripeSessions[0].metadata.personalitzada_1);
-  assert.strictEqual(saved.word.length, 24);
+  assert.strictEqual(saved.word.length, 28);
   assert.strictEqual(saved.drawing, '');
 });
 

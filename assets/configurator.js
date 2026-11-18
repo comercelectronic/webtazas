@@ -35,7 +35,8 @@
   };
   var mug = {
     photo: $('[data-mug-photo]'), box: $('[data-mug]'), drawing: $('[data-mug-drawing]'),
-    intro: $('[data-mug-intro]'), word: $('[data-mug-word]'), sub: $('[data-mug-sub]'),
+    intro: $('[data-mug-intro] textPath'), word: $('[data-mug-word] textPath'), sub: $('[data-mug-sub] textPath'),
+    arcs: { intro: $('[data-arc="intro"]'), word: $('[data-arc="word"]'), sub: $('[data-arc="sub"]') },
     front: $('[data-mug-front]'), back: $('[data-mug-back]'), bword: $('[data-mug-back-word]'),
     bdefs: $('[data-mug-back-defs]'), title: $('[data-mug-title]'),
   };
@@ -83,6 +84,13 @@
   }
 
   // ---------- Vista prèvia ----------
+  // Zona d'impressió del davant (unitats de la foto de 760 px): cos de la tassa de x=40 a x=518.
+  var BODY_CX = 279;
+  var PRINT_W = 310;
+  function setArc(path, y) {
+    var half = 190;
+    path.setAttribute('d', 'M' + (BODY_CX - half) + ' ' + y + ' Q' + BODY_CX + ' ' + (y + 16) + ' ' + (BODY_CX + half) + ' ' + y);
+  }
   function fitText(el, base, min, maxWidth) {
     var size = base;
     el.style.fontSize = size + 'px';
@@ -124,27 +132,28 @@
     else mug.drawing.style.display = 'none';
 
     var top = drawing ? 0 : -80;
-    mug.intro.setAttribute('y', 430 + top);
-    mug.word.setAttribute('y', 500 + top);
-    mug.sub.setAttribute('y', 544 + top);
+    // La tassa és un cilindre: el text segueix una corba suau i es queda dins la zona d'impressió.
+    setArc(mug.arcs.intro, 432 + top);
+    setArc(mug.arcs.word, 498 + top);
+    setArc(mug.arcs.sub, 540 + top);
     mug.intro.textContent = intro;
     mug.word.textContent = word;
     mug.sub.textContent = sub;
-    fitText(mug.word, 70, 22, 400);
-    fitText(mug.intro, 32, 16, 400);
-    fitText(mug.sub, 25, 14, 400);
+    fitText(mug.word, 64, 20, PRINT_W);
+    fitText(mug.intro, 30, 14, PRINT_W);
+    fitText(mug.sub, 23, 12, PRINT_W);
 
     var plainWord = f.word.value.trim();
     mug.bword.textContent = s.id === 'coses' ? 'coses que ' + plainWord : plainWord.toLowerCase();
-    fitText(mug.bword, 46, 20, 380);
+    fitText(mug.bword, 42, 18, 290);
     var defs = [f.def1.value.trim(), f.def2.value.trim()];
     var lines = [];
     defs.forEach(function (d, i) {
       if (!d) return;
-      wrap((i + 1) + '. ' + d, 38).forEach(function (l) { lines.push(l); });
+      wrap((i + 1) + '. ' + d, 30).forEach(function (l) { lines.push(l); });
     });
-    mug.bdefs.innerHTML = lines.length ? lines.map(function (l, i) { return '<tspan x="296" dy="' + (i ? 27 : 0) + '">' + esc(l) + '</tspan>'; }).join('')
-      : '<tspan x="296" class="mug-svg__muted">Sense definició al darrere</tspan>';
+    mug.bdefs.innerHTML = lines.length ? lines.map(function (l, i) { return '<tspan x="338" dy="' + (i ? 26 : 0) + '">' + esc(l) + '</tspan>'; }).join('')
+      : '<tspan x="338" class="mug-svg__muted">Sense definició al darrere</tspan>';
 
     mug.title.textContent = 'Vista prèvia: «' + [intro, word].filter(Boolean).join(' ') + '»' + (sub ? ', ' + sub : '') + ', interior ' + color.name.toLowerCase();
     renderWords();
