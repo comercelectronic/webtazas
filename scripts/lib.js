@@ -22,6 +22,14 @@ const SHIPPING = FREE_SHIPPING ? 'gratuït' : euro(site.shipping.costCents);
 // Text curt per a llistes: «Enviament gratuït» o «Enviament: 4,95 €».
 const SHIPPING_LINE = FREE_SHIPPING ? 'Enviament gratuït' : `Enviament: ${euro(site.shipping.costCents)}`;
 
+/** Distintiu d'oferta: «-27 %» si es mostra el preu habitual, «Oferta» si no. */
+function offerBadge(slug) {
+  const cents = pricing.productPriceCents(slug);
+  if (cents >= site.unitPriceCents) return '';
+  if (!(site.offers && site.offers.showReferencePrice)) return 'Oferta';
+  return `-${Math.round((1 - cents / site.unitPriceCents) * 100)} %`;
+}
+
 /** Bloc de preu d'una tassa: preu d'oferta, si en té. */
 function priceHtml(slug, { large = false } = {}) {
   const cents = pricing.productPriceCents(slug);
@@ -55,6 +63,6 @@ const jsonLd = (obj) => `<script type="application/ld+json">${JSON.stringify(obj
 
 module.exports = {
   site, catalog, BY_SLUG, CATEGORIES, CATEGORY_BY_ID, esc, euro, PRICE, SHIPPING, SHIPPING_LINE, FREE_SHIPPING, DELIVERY, icon, value, pendingFields,
-  pricing, priceHtml,
+  pricing, priceHtml, offerBadge,
   productUrl, productImg, jsonLd,
 };

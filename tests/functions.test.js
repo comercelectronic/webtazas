@@ -79,16 +79,16 @@ test('checkout: cobra el preu de data/site.json, amb enviament gratuït, i agrup
 test('checkout: ofertes i packs es cobren al preu del servidor', async () => {
   stores.clear(); stripeSessions = [];
   const res = await fn('create-checkout-session')(ev('POST', { items: [
-    { type: 'mug', id: 'esma', color: 'verd', qty: 1, price: 1 },
+    { type: 'mug', id: 'cuca-de-llum', color: 'verd', qty: 1, price: 1 },
     { type: 'pack', id: 'casa', qty: 2 },
   ] }));
   assert.strictEqual(res.statusCode, 200);
   const [mug, pack] = stripeSessions[0].line_items;
-  assert.strictEqual(mug.price_data.unit_amount, site.offers.items.esma);
+  assert.strictEqual(mug.price_data.unit_amount, site.offers.items['cuca-de-llum']);
   assert.strictEqual(pack.quantity, 2);
   assert.strictEqual(pack.price_data.unit_amount, site.packs.find((p) => p.id === 'casa').priceCents);
   assert.ok(pack.price_data.unit_amount < 3 * site.unitPriceCents, 'el pack surt més barat');
-  assert.strictEqual(stripeSessions[0].metadata.items, 'm:esma:verd:1,p:casa:2');
+  assert.strictEqual(stripeSessions[0].metadata.items, 'm:cuca-de-llum:verd:1,p:casa:2');
   // un color que no existeix es canvia pel de portada
   stripeSessions = [];
   await fn('create-checkout-session')(ev('POST', { items: [{ type: 'mug', id: 'caliu', color: 'lila', qty: 1 }] }));
@@ -117,7 +117,7 @@ test('checkout: tassa personalitzada validada al servidor', async () => {
   stripeSessions = [];
   await bad({ word: 'paraula llarga '.repeat(20), drawing: 'no-existeix' });
   const saved = JSON.parse(stripeSessions[0].metadata.personalitzada_1);
-  assert.strictEqual(saved.word.length, 24);
+  assert.strictEqual(saved.word.length, 28);
   assert.strictEqual(saved.drawing, '');
 });
 

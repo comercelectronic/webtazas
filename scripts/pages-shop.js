@@ -2,6 +2,7 @@ const { site, catalog, BY_SLUG, CATEGORIES, CATEGORY_BY_ID, esc, euro, PRICE, SH
 const { productCard, productGrid, newsletterForm, sectionHead, trustList, breadcrumb, breadcrumbLd } = require('./components');
 
 const newProducts = catalog.filter((p) => p.new);
+const offerProducts = catalog.filter((p) => pricing.hasOffer(p.slug));
 
 const FAQ = [
   ['Quant costa cada tassa?', `${PRICE}, amb l'enviament inclòs. Algunes tasses tenen preu d'oferta, i els packs surten més barats que comprar les tasses per separat. La tassa personalitzada també costa ${PRICE}.`],
@@ -173,6 +174,14 @@ function home() {
 
 ${recommender()}
 
+${offerProducts.length ? `<section class="section offers-band" aria-labelledby="offers-title">
+  <div class="container">
+    ${sectionHead('Ofertes', 'Tasses en oferta', `${offerProducts.length} paraules rebaixades fins a un ${Math.max(...offerProducts.map((p) => Math.round((1 - pricing.productPriceCents(p.slug) / site.unitPriceCents) * 100)))} %, amb l'enviament gratuït.`, { id: 'offers-title' })}
+    <div class="rail" tabindex="0" role="region" aria-label="Tasses en oferta (llisca per veure'n més)">${offerProducts.map((p) => productCard(p)).join('')}</div>
+    <p class="section-cta"><a class="btn btn--ghost btn--lg" href="/tasses/ofertes/">Veure totes les ofertes ${icon('arrow')}</a></p>
+  </div>
+</section>` : ''}
+
 <section class="section section--white" aria-labelledby="new-title">
   <div class="container">
     ${sectionHead('Novetats', 'Acabades d\'arribar.', `Frases enginyoses, expressions de tota la vida i un tros de pa.`, { id: 'new-title' })}
@@ -244,7 +253,7 @@ ${contactSection()}`;
 }
 
 function listing({ path, title, h1, intro, products, crumbs, seoText }) {
-  const chips = [{ path: '/tasses/', name: 'Totes' }, ...CATEGORIES.map((c) => ({ path: c.path, name: c.name }))];
+  const chips = [{ path: '/tasses/', name: 'Totes' }, ...CATEGORIES.map((c) => ({ path: c.path, name: c.name })), ...(offerProducts.length ? [{ path: '/tasses/ofertes/', name: 'Ofertes' }] : [])];
   const main = `
 <section class="page-hero">
   <div class="container">
@@ -291,6 +300,16 @@ function catalogPages() {
       intro: c.text,
       products: c.products,
       crumbs: [{ name: 'Inici', path: '/' }, { name: 'Totes les tasses', path: '/tasses/' }, { name: c.name, path: c.path }],
+    }));
+  }
+  if (offerProducts.length) {
+    out.push(listing({
+      path: '/tasses/ofertes/',
+      title: `Tasses en oferta · ${site.brand}`,
+      h1: 'Tasses en oferta',
+      intro: 'Algunes paraules a preu d\'oferta, amb l\'enviament gratuït com sempre.',
+      products: offerProducts,
+      crumbs: [{ name: 'Inici', path: '/' }, { name: 'Totes les tasses', path: '/tasses/' }, { name: 'Ofertes', path: '/tasses/ofertes/' }],
     }));
   }
   return out;

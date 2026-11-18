@@ -36,16 +36,21 @@ function configurator() {
           <img class="mug-photo__img" data-mug-photo src="/images/tassa-en-blanc/blau.jpg" alt="" width="760" height="760">
           <svg class="mug-photo__print" viewBox="0 0 760 760" role="img" aria-labelledby="mug-title">
             <title id="mug-title" data-mug-title>Vista prèvia de la tassa</title>
+            <defs>
+              <path id="arc-intro" data-arc="intro" d=""/>
+              <path id="arc-word" data-arc="word" d=""/>
+              <path id="arc-sub" data-arc="sub" d=""/>
+            </defs>
             <g data-mug-front>
-              <use data-mug-drawing href="/assets/drawings.svg#d-paraigua" x="220" y="236" width="120" height="120"/>
-              <text data-mug-intro x="280" y="430" text-anchor="middle" class="mug-svg__intro">Tu ets el meu</text>
-              <text data-mug-word x="280" y="500" text-anchor="middle" class="mug-svg__word">aixopluc</text>
-              <text data-mug-sub x="280" y="544" text-anchor="middle" class="mug-svg__sub"></text>
+              <use data-mug-drawing href="/assets/drawings.svg#d-paraigua" x="229" y="250" width="100" height="100"/>
+              <text data-mug-intro text-anchor="middle" class="mug-svg__intro"><textPath href="#arc-intro" startOffset="50%">Tu ets el meu</textPath></text>
+              <text data-mug-word text-anchor="middle" class="mug-svg__word"><textPath href="#arc-word" startOffset="50%">aixopluc</textPath></text>
+              <text data-mug-sub text-anchor="middle" class="mug-svg__sub"><textPath href="#arc-sub" startOffset="50%"></textPath></text>
             </g>
             <g data-mug-back style="display:none">
-              <text data-mug-back-word x="296" y="320" class="mug-svg__bword">aixopluc</text>
-              <line x1="296" y1="340" x2="680" y2="340" stroke="#B66F54" stroke-width="1.5"/>
-              <text data-mug-back-defs x="296" y="380" class="mug-svg__defs"></text>
+              <text data-mug-back-word x="338" y="330" class="mug-svg__bword">aixopluc</text>
+              <line x1="338" y1="348" x2="630" y2="348" stroke="#B66F54" stroke-width="1.5"/>
+              <text data-mug-back-defs x="338" y="382" class="mug-svg__defs"></text>
             </g>
           </svg>
         </div>

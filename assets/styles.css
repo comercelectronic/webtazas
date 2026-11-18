@@ -661,7 +661,7 @@ th { font-weight: 600; background: var(--paper-2); }
 .mug-svg__word { font-family: var(--serif); font-weight: 500; fill: #1F2A37; }
 .mug-svg__sub { font-family: var(--serif); font-style: italic; fill: #A0533A; }
 .mug-svg__bword { font-family: var(--serif); font-weight: 500; fill: #1F2A37; }
-.mug-svg__defs { font-family: var(--sans); font-size: 18px; fill: #3A3F47; }
+.mug-svg__defs { font-family: var(--sans); font-size: 17px; fill: #3A3F47; }
 .mug-svg__muted { fill: #8A857C; font-style: italic; }
 .maker__views { display: flex; justify-content: center; gap: 8px; margin: 12px 0 6px; }
 .maker__view, .pill { min-height: 40px; padding: 8px 16px; border-radius: 999px; border: 1px solid var(--line-2); background: var(--white); cursor: pointer; font-weight: 600; font-size: .9rem; color: var(--ink); }
@@ -711,3 +711,5 @@ th { font-weight: 600; background: var(--paper-2); }
 .maker__buy .buybox__actions { flex-wrap: wrap; }
 .maker__buy > * { min-width: 0; }
 .maker__buy { grid-template-columns: minmax(0, 1fr); }
+.offers-band { background: var(--terra-soft); }
+.line__unit s, .upsell-item s { color: var(--ink-3); margin-right: 4px; }
