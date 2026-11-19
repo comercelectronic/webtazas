@@ -1,4 +1,4 @@
-const { site, catalog, BY_SLUG, CATEGORY_BY_ID, esc, euro, PRICE, SHIPPING, SHIPPING_LINE, FREE_SHIPPING, DELIVERY, icon, productUrl, productImg, priceHtml, pricing, offerBadge, SHOP, igOrderButton } = require('./lib');
+const { site, catalog, BY_SLUG, CATEGORY_BY_ID, esc, euro, PRICE, SHIPPING, SHIPPING_LINE, FREE_SHIPPING, DELIVERY, icon, productUrl, productImg, priceHtml, pricing, offerBadge, SHOP, igOrderButton, colorStock, LOW_STOCK } = require('./lib');
 const { productGrid, sectionHead, trustList, breadcrumb, breadcrumbLd } = require('./components');
 
 function relatedFor(p) {
@@ -24,6 +24,8 @@ function definition(p) {
 </div>`;
 }
 
+const lowText = (n) => (n === 1 ? 'Només en queda 1 en aquest color.' : `Només en queden ${n} en aquest color.`);
+
 function colorPicker(p) {
   if (!(p.colors || []).length) return '';
   const COLORS = Object.fromEntries(site.colors.map((c) => [c.id, c]));
@@ -31,11 +33,12 @@ function colorPicker(p) {
   <legend>Color de l'interior i la nansa: <strong data-color-name>${esc(COLORS[p.defaultColor].name)}</strong></legend>
   <div class="colors__row">
     ${p.colors.map((c) => `<label class="swatch" title="${esc(COLORS[c].name)}">
-      <input type="radio" name="color" value="${c}" data-color-input data-name="${esc(COLORS[c].name)}" data-front="/images/tasses/${p.slug}/${c}-front.jpg" ${p.images.back ? ` data-back="/images/tasses/${p.slug}/${c}-back.jpg"` : ''}${c === p.defaultColor ? ' checked' : ''}>
+      <input type="radio" name="color" value="${c}" data-color-input data-name="${esc(COLORS[c].name)}"${colorStock(c) <= LOW_STOCK ? ` data-left="${colorStock(c)}"` : ''} data-front="/images/tasses/${p.slug}/${c}-front.jpg" ${p.images.back ? ` data-back="/images/tasses/${p.slug}/${c}-back.jpg"` : ''}${c === p.defaultColor ? ' checked' : ''}>
       <span class="swatch__dot dot--${c}"></span><span class="sr-only">${esc(COLORS[c].name)}${c === p.defaultColor ? ' (el que millor hi combina)' : ''}</span>
     </label>`).join('')}
   </div>
   <p class="colors__hint">El color de la portada és el que millor combina amb el dibuix.</p>
+  <p class="colors__left" data-color-left aria-live="polite"${colorStock(p.defaultColor) <= LOW_STOCK ? '' : ' hidden'}>${colorStock(p.defaultColor) <= LOW_STOCK ? lowText(colorStock(p.defaultColor)) : ''}</p>
 </fieldset>`;
 }
 
@@ -100,7 +103,7 @@ function product(p) {
     ${definition(p)}
     <p class="stock-note" data-stock-note hidden></p>
     ${SHOP ? '' : `<div class="buybox__actions" data-main-actions>
-      ${igOrderButton('La vull: demana-la per Instagram', `Hola! M'agradaria la tassa «${title}»`, { cls: 'btn--primary btn--lg btn--grow', withColor: true })}
+      ${igOrderButton('La vull: demana-la per Instagram', `Hola! M'agradaria la tassa «${title}»`, { cls: 'btn--primary btn--lg btn--grow', withColor: true, soldOut: p.soldOut })}
     </div>
     <p class="ig-note">S'obrirà un missatge directe a Instagram. Copiem el text de la comanda (tassa i color) perquè només l'hagis d'enganxar.</p>`}
     ${SHOP ? `<div class="buybox__actions" data-main-actions>
@@ -159,7 +162,7 @@ function product(p) {
 
 <div class="sticky-buy" data-sticky-buy hidden>
   <div class="sticky-buy__info"><span class="sticky-buy__name">${esc(p.name)}</span>${priceHtml(p.slug)}</div>
-  ${SHOP ? `<button type="button" class="btn btn--primary" data-add="${p.slug}" data-with-qty>Afegeix a la cistella</button>` : igOrderButton('La vull', `Hola! M'agradaria la tassa «${title}»`, { withColor: true })}
+  ${SHOP ? `<button type="button" class="btn btn--primary" data-add="${p.slug}" data-with-qty>Afegeix a la cistella</button>` : igOrderButton('La vull', `Hola! M'agradaria la tassa «${title}»`, { withColor: true, soldOut: p.soldOut })}
 </div>`;
 
   const productLd = {

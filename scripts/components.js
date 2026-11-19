@@ -160,7 +160,7 @@ function productCard(p, { eager = false, headingLevel = 3 } = {}) {
     ${productImg(p, 'front', { eager, cls: 'card__img' })}
     ${p.images.back ? productImg(p, 'back', { cls: 'card__img card__img--back', alt: '' }) : ''}
     ${pricing.hasOffer(p.slug) ? `<span class="card__badge">${offerBadge(p.slug)}</span>` : ''}
-    <span class="card__stock" data-stock-badge hidden></span>
+    <span class="card__stock" data-stock-badge${p.soldOut ? '' : ' hidden'}>${p.soldOut ? 'Exhaurida' : ''}</span>
   </a>
   <div class="card__body">
     <p class="chip chip--${p.category}">${esc(cat.singular)}</p>
@@ -171,7 +171,7 @@ function productCard(p, { eager = false, headingLevel = 3 } = {}) {
     <div class="card__foot">
       ${priceHtml(p.slug)}
       ${SHOP ? `<button type="button" class="btn btn--small" data-add="${p.slug}">Afegeix<span class="sr-only"> «${esc(p.name)}» a la cistella</span></button>`
-    : igOrderButton('La vull', `Hola! M'agradaria la tassa «${p.intro ? `${p.intro} ${p.name.toLowerCase()}` : p.name}».`, { cls: 'btn--small', srText: `«${esc(p.name)}»: demana-la per Instagram` })}
+    : igOrderButton('La vull', `Hola! M'agradaria la tassa «${p.intro ? `${p.intro} ${p.name.toLowerCase()}` : p.name}».`, { cls: 'btn--small', srText: `«${esc(p.name)}»: demana-la per Instagram`, soldOut: p.soldOut })}
     </div>
   </div>
 </article>`;

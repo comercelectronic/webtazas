@@ -137,12 +137,36 @@ test('checkout: en mode aparador no es pot pagar a la web', async () => {
 test('checkout: rebutja productes desconeguts, limita quantitats i respecta l\'estoc', async () => {
   stores.clear(); stripeSessions = [];
   assert.strictEqual((await fn('create-checkout-session')(ev('POST', { items: [{ id: 'fals', qty: 1 }] }))).statusCode, 400);
-  await fn('create-checkout-session')(ev('POST', { items: [{ id: 'niu', qty: 999 }] }));
+  const niuColor = site.colors.find((c) => c.id === require('../data/catalog.json').find((p) => p.slug === 'niu').defaultColor);
+  const savedStock = niuColor.stock;
+  niuColor.stock = 999;
+  try {
+    await fn('create-checkout-session')(ev('POST', { items: [{ id: 'niu', qty: 999 }] }));
+  } finally { niuColor.stock = savedStock; }
   assert.strictEqual(stripeSessions[0].line_items[0].quantity, site.maxQtyPerItem);
   await fakeStore('stock').set('niu', '2');
   const res = await fn('create-checkout-session')(ev('POST', { items: [{ id: 'niu', qty: 3 }] }));
   assert.strictEqual(res.statusCode, 409);
   assert.match(parse(res).error, /Només queden 2/);
+});
+
+test('checkout: estoc per colors compartit entre tasses, packs i personalitzades', async () => {
+  stores.clear(); stripeSessions = [];
+  const blau = site.colors.find((c) => c.id === 'blau');
+  const saved = blau.stock;
+  try {
+    blau.stock = 3;
+    const ok = await fn('create-checkout-session')(ev('POST', { items: [{ id: 'niu', qty: 1, color: 'blau' }, { id: 'caliu', qty: 2, color: 'blau' }] }));
+    assert.strictEqual(ok.statusCode, 200);
+    const tooMany = await fn('create-checkout-session')(ev('POST', { items: [{ id: 'niu', qty: 2, color: 'blau' }, { id: 'caliu', qty: 2, color: 'blau' }] }));
+    assert.strictEqual(tooMany.statusCode, 409);
+    assert.match(parse(tooMany).error, /Només queden 3 tasses de color blau/);
+    blau.stock = 0;
+    const out = await fn('create-checkout-session')(ev('POST', { items: [{ type: 'custom', qty: 1, design: { structure: 'ets', word: 'garrepa', color: 'blau' } }] }));
+    assert.strictEqual(out.statusCode, 409);
+    assert.match(parse(out).error, /exhaurit/);
+  } finally { blau.stock = saved; }
+  assert.ok(!site.colors.some((c) => c.id === 'blau-mari'), 'el proveïdor no té blau marí');
 });
 
 test('webhook: descompta estoc i compta vendes una sola vegada encara que Stripe el reenviï', async () => {

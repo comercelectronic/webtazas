@@ -393,8 +393,14 @@
   var picker = $('[data-color-picker]');
   if (picker) {
     var colorName = $('[data-color-name]', picker);
+    var colorLeft = $('[data-color-left]', picker);
     var applyColor = function (input) {
       colorName.textContent = input.getAttribute('data-name');
+      if (colorLeft) {
+        var left = input.getAttribute('data-left');
+        colorLeft.hidden = !left;
+        colorLeft.textContent = !left ? '' : left === '1' ? 'Només en queda 1 en aquest color.' : 'Només en queden ' + left + ' en aquest color.';
+      }
       var slides = $$('.gallery__img');
       var thumbs = $$('.gallery__thumb img');
       var setImg = function (img, src) {

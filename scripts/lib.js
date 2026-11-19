@@ -3,6 +3,24 @@ const site = require('../data/site.json');
 const catalog = require('../data/catalog.json');
 const pricing = require('../netlify/functions/lib/pricing');
 
+const { colorStock, inStock, pickColor, LOW_STOCK } = require('../netlify/functions/lib/colors');
+
+// Els colors exhaurits (data/site.json → colors[].stock = 0) no es mostren.
+// Si s'exhaureix el color de portada, la portada passa al primer disponible.
+// Si una tassa es queda sense cap color, surt com a exhaurida.
+for (const p of catalog) {
+  if (!(p.colors || []).length) continue;
+  const all = p.colors;
+  p.colors = all.filter(inStock);
+  p.soldOut = p.colors.length === 0;
+  const def = pickColor(p.defaultColor, p.colors) || p.defaultColor;
+  if (def !== p.defaultColor) {
+    p.images = { ...p.images, front: p.images.front.replace(`/${p.defaultColor}-`, `/${def}-`), back: p.images.back && p.images.back.replace(`/${p.defaultColor}-`, `/${def}-`) };
+    p.defaultColor = def;
+  }
+}
+const COLORS_AVAILABLE = site.colors.filter((c) => inStock(c.id));
+
 const BY_SLUG = Object.fromEntries(catalog.map((p) => [p.slug, p]));
 
 const CATEGORY_PATHS = { amor: 'paraules-d-amor', caracter: 'paraules-de-caracter', insults: 'insults-d-autor', humor: 'frases-amb-humor' };
@@ -23,7 +41,8 @@ const IG_PROFILE = `https://www.instagram.com/${site.instagram}/`;
 const IG_DM = `https://ig.me/m/${site.instagram}`;
 
 /** Botó que obre un missatge directe a Instagram i copia el text de la comanda. */
-function igOrderButton(label, message, { cls = 'btn--primary', withColor = false, srText = '' } = {}) {
+function igOrderButton(label, message, { cls = 'btn--primary', withColor = false, srText = '', soldOut = false } = {}) {
+  if (soldOut) return `<span class="btn ${cls} btn--disabled" aria-disabled="true">Exhaurida${srText ? `<span class="sr-only"> ${srText}</span>` : ''}</span>`;
   return `<a class="btn ${cls}" href="${IG_DM}" target="_blank" rel="noopener" data-ig-order="${esc(message)}"${withColor ? ' data-ig-color' : ''}>${icon('instagram')}<span>${label}</span>${srText ? `<span class="sr-only"> ${srText}</span>` : ''}</a>`;
 }
 
@@ -87,6 +106,6 @@ const jsonLd = (obj) => `<script type="application/ld+json">${JSON.stringify(obj
 
 module.exports = {
   site, catalog, BY_SLUG, CATEGORIES, CATEGORY_BY_ID, esc, euro, PRICE, SHIPPING, SHIPPING_LINE, FREE_SHIPPING, DELIVERY, icon, value, pendingFields,
-  pricing, priceHtml, offerBadge, SHOP, IG_PROFILE, IG_DM, igOrderButton,
+  pricing, priceHtml, offerBadge, SHOP, IG_PROFILE, IG_DM, igOrderButton, COLORS_AVAILABLE, colorStock, LOW_STOCK,
   productUrl, productImg, srcsetFor, jsonLd,
 };

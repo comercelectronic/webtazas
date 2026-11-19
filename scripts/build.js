@@ -117,3 +117,7 @@ if (pending.length) {
   console.log(`\n⚠ Dades pendents de completar a data/site.json abans de publicar (${pending.length}):`);
   pending.forEach((p) => console.log(`  - ${p}`));
 }
+const stockLine = site.colors.map((c) => `${c.name} ${Number.isInteger(c.stock) ? c.stock : '∞'}`).join(' · ');
+console.log(`\nEstoc per colors: ${stockLine}`);
+const soldOut = catalog.filter((p) => p.soldOut).map((p) => p.name);
+if (soldOut.length) console.log(`⚠ Tasses exhaurides (sense cap color disponible): ${soldOut.join(', ')}`);

@@ -29,7 +29,7 @@ function packCard(pack) {
     <div class="pack__foot">
       <p class="pack__price"><span class="price price--lg">${euro(price)}</span>${saving > 0 ? `<span class="pack__vs">per separat, ${euro(pricing.packSeparateCents(pack))}</span>` : ''}</p>
       ${SHOP ? `<button type="button" class="btn btn--primary" data-add-pack="${pack.id}">Afegeix el pack a la cistella<span class="sr-only"> (${esc(pack.name)}, ${euro(price)})</span></button>`
-    : igOrderButton('Demana el pack per Instagram', `Hola! M'agradaria el ${pack.name} (${items.map((p) => p.name).join(', ')}).`, { srText: `(${esc(pack.name)}, ${euro(price)})` })}
+    : igOrderButton('Demana el pack per Instagram', `Hola! M'agradaria el ${pack.name} (${items.map((p) => p.name).join(', ')}).`, { srText: `(${esc(pack.name)}, ${euro(price)})`, soldOut: items.some((p) => p.soldOut) })}
     </div>
   </div>
 </article>`;
