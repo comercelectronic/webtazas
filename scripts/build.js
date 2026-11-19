@@ -29,6 +29,8 @@ const browserCatalog = {
   customPriceCents: pricing.customPriceCents(),
   showReferencePrice: !!(site.offers && site.offers.showReferencePrice),
   optionalCookies: (site.cookies && site.cookies.optional) || [],
+  consentVersion: (site.cookies && site.cookies.consentVersion) || 1,
+  ga4Id: (site.analytics && site.analytics.ga4Id) || null,
   shippingCents: site.shipping.costCents,
   maxQty: site.maxQtyPerItem,
   colors: site.colors,
@@ -100,7 +102,9 @@ out('_redirects', redirects.join('\n') + '\n');
 
 // 6. Informe de camps pendents.
 const missingSpecs = site.productSpecs.filter((s) => !s.value).map((s) => `fitxa de producte: ${s.label}`);
-const pending = [...pendingFields, ...missingSpecs];
+const missingAnalytics = (site.cookies && site.cookies.optional || []).some((c) => c.id === 'analytics') && !(site.analytics && site.analytics.ga4Id)
+  ? ['ID de mesura de Google Analytics (analytics.ga4Id): mentre falti, no es carrega Analytics'] : [];
+const pending = [...pendingFields, ...missingSpecs, ...missingAnalytics];
 console.log(`✔ ${pages.length} pàgines generades (${catalog.length} tasses, ${CATEGORIES.length} categories). Preu: ${(site.unitPriceCents / 100).toFixed(2)} €`);
 if (pending.length) {
   console.log(`\n⚠ Dades pendents de completar a data/site.json abans de publicar (${pending.length}):`);

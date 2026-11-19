@@ -2,7 +2,7 @@
 //
 // Variables d'entorn necessàries a Netlify:
 //   RESEND_API_KEY   clau de l'API de Resend
-//   NEWSLETTER_FROM  remitent verificat, p. ex. "El Glopet <hola@el-teu-domini.cat>"
+//   NEWSLETTER_FROM  remitent verificat, p. ex. "El Glopet <hola@elglopet.cat>"
 //
 // Si falten, les funcions ho diuen clarament i no simulen cap enviament.
 

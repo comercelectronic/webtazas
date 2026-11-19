@@ -4,4 +4,4 @@ Disallow: /admin/
 Disallow: /newsletter/confirmar/
 Disallow: /newsletter/baixa/
 
-Sitemap: https://sensesucre.netlify.app/sitemap.xml
+Sitemap: https://elglopet.cat/sitemap.xml

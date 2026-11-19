@@ -144,7 +144,7 @@ function configurator() {
           <button type="submit" class="btn btn--primary btn--lg btn--grow">Afegeix la meva tassa a la cistella</button>
         </div>
         <p class="form-status" role="status" aria-live="polite" data-maker-status></p>
-        <p class="form-note"><strong>Abans de comprar:</strong> com que la tassa es fa a mida amb el teu disseny, no té dret de desistiment (art. 103.c del TRLGDCU). Sí que té la garantia legal de 3 anys si arriba trencada o amb defectes. No imprimim textos ofensius ni marques registrades: si el disseny no es pot imprimir tal com és, t'escriurem abans de fer-lo. <a href="/condicions-venda/#personalitzades">Condicions de venda</a>.</p>
+        <p class="form-note">${site.customReturns ? '<strong>Devolució en 14 dies</strong>, també per a les tasses personalitzades, i <strong>3 anys de garantia legal</strong>.' : '<strong>Abans de comprar:</strong> com que la tassa es fa a mida amb el teu disseny, no té dret de desistiment (art. 103.c del TRLGDCU). Sí que té la garantia legal de 3 anys si arriba trencada o amb defectes.'} No imprimim textos ofensius ni marques registrades: si el disseny no es pot imprimir tal com és, t'escriurem abans de fer-lo. <a href="/condicions-venda/#personalitzades">Condicions de venda</a>.</p>
       </div>
     </form>
   </div>
