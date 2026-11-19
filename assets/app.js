@@ -418,6 +418,26 @@
     if (pre) { pre.checked = true; applyColor(pre); }
   }
 
+  // ---------- Mode aparador: comandes per missatge directe a Instagram ----------
+  function copyText(text) {
+    try { return navigator.clipboard.writeText(text).then(function () { return true; }, function () { return false; }); }
+    catch (e) { return Promise.resolve(false); }
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('[data-ig-order]');
+    if (!a) return;
+    var msg = a.getAttribute('data-ig-order');
+    if (a.hasAttribute('data-ig-color')) {
+      var col = $('[data-color-input]:checked');
+      if (col) msg += ', amb l\'interior i la nansa de color ' + col.getAttribute('data-name').toLowerCase();
+      msg += '.';
+    }
+    copyText(msg).then(function (ok) {
+      toast(ok ? 'Hem copiat el missatge: enganxa\'l al xat d\'Instagram.' : 'Escriu-nos quina tassa vols al xat d\'Instagram.');
+    });
+    gaEvent('generate_lead', { method: 'instagram', item: msg });
+  });
+
   // ---------- Recomanador de regals ----------
   var finder = $('#recomanador');
   if (finder) {

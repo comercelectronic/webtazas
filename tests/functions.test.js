@@ -53,6 +53,9 @@ const ev = (method, body, { query, headers, ip } = {}) => ({
 const parse = (res) => JSON.parse(res.body);
 const admin = { 'x-admin-password': 'secret' };
 const site = require('../data/site.json');
+// Les proves de pagament es fan en mode botiga; el mode aparador es prova a part.
+const SITE_MODE = site.mode;
+site.mode = 'botiga';
 
 // ---------- Pagament ----------
 test('checkout: cobra el preu de data/site.json, amb enviament gratuït, i agrupa per tassa i color', async () => {
@@ -119,6 +122,16 @@ test('checkout: tassa personalitzada validada al servidor', async () => {
   const saved = JSON.parse(stripeSessions[0].metadata.personalitzada_1);
   assert.strictEqual(saved.word.length, 28);
   assert.strictEqual(saved.drawing, '');
+});
+
+test('checkout: en mode aparador no es pot pagar a la web', async () => {
+  site.mode = 'aparador';
+  try {
+    const res = await fn('create-checkout-session')(ev('POST', { items: [{ id: 'niu', qty: 1 }] }));
+    assert.strictEqual(res.statusCode, 403);
+    assert.match(parse(res).error, /Instagram/);
+  } finally { site.mode = 'botiga'; }
+  assert.ok(['aparador', 'botiga', undefined].includes(SITE_MODE));
 });
 
 test('checkout: rebutja productes desconeguts, limita quantitats i respecta l\'estoc', async () => {

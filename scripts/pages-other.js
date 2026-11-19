@@ -95,7 +95,9 @@ const notFound = () => simple({
 });
 
 function legalPages() {
-  return Object.entries(legal.pages).map(([slug, pg]) => simple({
+  // En mode aparador no es venen tasses a la web: no calen condicions de venda pròpies.
+  const shopOnly = ['condicions-venda', 'enviaments-i-devolucions'];
+  return Object.entries(legal.pages).filter(([slug]) => site.mode !== 'aparador' || !shopOnly.includes(slug)).map(([slug, pg]) => simple({
     path: `/${slug}/`,
     title: `${pg.title} · ${site.brand}`,
     description: pg.description,

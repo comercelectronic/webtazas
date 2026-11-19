@@ -1,7 +1,7 @@
 // Pàgina «Crea la teva tassa»: configurador amb vista prèvia en directe.
 // Les dades (estructures, paraules i dibuixos) surten de data/configurator.json,
 // el mateix fitxer amb què el servidor valida el disseny abans de cobrar-lo.
-const { site, esc, euro, icon, pricing, SHIPPING_LINE } = require('./lib');
+const { site, esc, euro, icon, pricing, SHIPPING_LINE, SHOP, IG_DM } = require('./lib');
 const { breadcrumb, breadcrumbLd } = require('./components');
 
 const cfg = pricing.configurator;
@@ -134,7 +134,7 @@ function configurator() {
 
       <div class="maker__buy">
         <p class="maker__price"><span class="price price--lg">${price}</span><span>${esc(SHIPPING_LINE)}</span></p>
-        <div class="buybox__actions">
+        ${SHOP ? `<div class="buybox__actions">
           <div class="qty">
             <button type="button" class="qty__btn" data-mk-step="-1" aria-label="Una unitat menys">${icon('minus')}</button>
             <label class="sr-only" for="mk-qty">Quantitat</label>
@@ -142,9 +142,12 @@ function configurator() {
             <button type="button" class="qty__btn" data-mk-step="1" aria-label="Una unitat més">${icon('plus')}</button>
           </div>
           <button type="submit" class="btn btn--primary btn--lg btn--grow">Afegeix la meva tassa a la cistella</button>
+        </div>` : `<div class="buybox__actions">
+          <button type="submit" class="btn btn--primary btn--lg btn--grow" data-ig-submit="${IG_DM}">${icon('instagram')}<span>Demana-la per Instagram</span></button>
         </div>
+        <p class="ig-note">S'obrirà un missatge directe a Instagram. Copiem el disseny (frase, dibuix i color) perquè només l'hagis d'enganxar.</p>`}
         <p class="form-status" role="status" aria-live="polite" data-maker-status></p>
-        <p class="form-note">${site.customReturns ? '<strong>Devolució en 14 dies</strong>, també per a les tasses personalitzades, i <strong>3 anys de garantia legal</strong>.' : '<strong>Abans de comprar:</strong> com que la tassa es fa a mida amb el teu disseny, no té dret de desistiment (art. 103.c del TRLGDCU). Sí que té la garantia legal de 3 anys si arriba trencada o amb defectes.'} No imprimim textos ofensius ni marques registrades: si el disseny no es pot imprimir tal com és, t'escriurem abans de fer-lo. <a href="/condicions-venda/#personalitzades">Condicions de venda</a>.</p>
+        <p class="form-note">${site.customReturns ? '<strong>Devolució en 14 dies</strong>, també per a les tasses personalitzades, i <strong>3 anys de garantia legal</strong>.' : '<strong>Abans de comprar:</strong> com que la tassa es fa a mida amb el teu disseny, no té dret de desistiment (art. 103.c del TRLGDCU). Sí que té la garantia legal de 3 anys si arriba trencada o amb defectes.'} No imprimim textos ofensius ni marques registrades: si el disseny no es pot imprimir tal com és, t'escriurem abans de fer-lo.${SHOP ? ' <a href="/condicions-venda/#personalitzades">Condicions de venda</a>.' : ''}</p>
       </div>
     </form>
   </div>

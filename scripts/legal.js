@@ -8,6 +8,8 @@ const { site, esc, euro, value, PRICE, SHIPPING, FREE_SHIPPING, DELIVERY } = req
 
 const L = site.legal;
 const CUSTOM_RETURNS = site.customReturns === true;
+const SHOP = site.mode !== 'aparador';
+const IG = `@${esc(site.instagram)}`;
 const owner = () => value(L.ownerName, 'nom i cognoms o raó social del titular');
 const taxId = () => value(L.taxId, 'NIF/CIF del titular');
 const address = () => value(L.address, 'domicili del titular');
@@ -72,11 +74,17 @@ const pages = {
 
 <h2>2. Quines dades tractem i per a què</h2>
 
-<h3>Comandes</h3>
+${SHOP ? '' : `<h3>Comandes per Instagram</h3>
+<p><strong>Dades:</strong> les que ens facis arribar per missatge directe a ${IG} per fer una comanda: nom, adreça d'enviament, telèfon, correu electrònic i les tasses que vols (inclòs el text i el dibuix de les personalitzades).<br>
+<strong>Finalitat:</strong> preparar la comanda, enviar-la, cobrar-la i atendre't després.<br>
+<strong>Base legal:</strong> execució del contracte (art. 6.1.b RGPD) i obligacions fiscals i comptables (art. 6.1.c RGPD).<br>
+<strong>Conservació:</strong> el temps que exigeixin les obligacions fiscals i mercantils (amb caràcter general, fins a 6 anys).<br>
+Instagram és un servei de Meta Platforms Ireland Limited, que tracta les converses d'acord amb la seva pròpia <a href="https://privacycenter.instagram.com/policy" rel="noopener" target="_blank">política de privacitat</a>.</p>
+`}${SHOP ? `<h3>Comandes</h3>
 <p><strong>Dades:</strong> nom, adreça d'enviament, correu electrònic, telèfon i detall de la comanda (inclòs el text i el dibuix de les tasses personalitzades). Les dades de la targeta les gestiona directament Stripe; nosaltres no les veiem ni les desem.<br>
 <strong>Finalitat:</strong> gestionar la compra, l'enviament, la facturació i l'atenció postvenda.<br>
 <strong>Base legal:</strong> execució del contracte (art. 6.1.b RGPD) i compliment d'obligacions legals fiscals i comptables (art. 6.1.c RGPD).<br>
-<strong>Conservació:</strong> el temps que exigeixin les obligacions fiscals i mercantils (amb caràcter general, fins a 6 anys).</p>
+<strong>Conservació:</strong> el temps que exigeixin les obligacions fiscals i mercantils (amb caràcter general, fins a 6 anys).</p>` : ''}
 
 <h3>Formulari de contacte</h3>
 <p><strong>Dades:</strong> nom, correu electrònic i missatge.<br>
@@ -110,13 +118,13 @@ Pots donar-te de baixa des de l'enllaç que hi ha a cada correu. Cal tenir almen
 <h2>3. A qui comuniquem les dades</h2>
 <p>No venem ni cedim les teves dades. Les comuniquem només als proveïdors necessaris, que actuen com a encarregats del tractament:</p>
 <ul>
-  <li><strong>Stripe</strong> — pagaments. <a href="https://stripe.com/es/privacy" rel="noopener" target="_blank">Política de privacitat de Stripe</a>.</li>
+  ${SHOP ? '<li><strong>Stripe</strong> — pagaments. <a href="https://stripe.com/es/privacy" rel="noopener" target="_blank">Política de privacitat de Stripe</a>.</li>' : ''}
   <li><strong>Netlify</strong> — allotjament del web, formulari de contacte i emmagatzematge de dades de la botiga.</li>
   <li><strong>Resend</strong> — enviament dels correus de la newsletter.</li>
   <li><strong>Google Ireland Limited</strong> — estadístiques del web amb Google Analytics, només si ho acceptes. <a href="https://policies.google.com/privacy?hl=ca" rel="noopener" target="_blank">Política de privacitat de Google</a>.</li>
   <li><strong>Empresa de transport:</strong> ${value(site.shipping.carrier, 'empresa de transport')} — nom, adreça i telèfon per lliurar la comanda.</li>
 </ul>
-<p>Stripe, Netlify, Resend i Google poden tractar dades fora de l'Espai Econòmic Europeu, amb les garanties previstes al RGPD (Marc de privacitat de dades UE-EUA o clàusules contractuals tipus).</p>
+<p>${SHOP ? 'Stripe, ' : ''}Netlify, Resend i Google poden tractar dades fora de l'Espai Econòmic Europeu, amb les garanties previstes al RGPD (Marc de privacitat de dades UE-EUA o clàusules contractuals tipus).</p>
 
 <h2>4. Els teus drets</h2>
 <p>Pots exercir els drets d'accés, rectificació, supressió, oposició, limitació del tractament i portabilitat, i retirar el consentiment en qualsevol moment, escrivint a ${email}. Et respondrem en el termini d'un mes. No prenem decisions automatitzades ni fem perfils amb les teves dades. Si no estàs d'acord amb la resposta, pots reclamar davant l'Agència Espanyola de Protecció de Dades (<a href="https://www.aepd.es" rel="noopener" target="_blank">aepd.es</a>).</p>
@@ -138,10 +146,10 @@ Pots donar-te de baixa des de l'enllaç que hi ha a cada correu. Cal tenir almen
 <div class="table-wrap"><table>
   <thead><tr><th>Nom</th><th>Tipus</th><th>Per a què serveix</th><th>Durada</th></tr></thead>
   <tbody>
-    <tr><td><code>tdm-cart</code></td><td>Emmagatzematge local (propi)</td><td>Recordar què tens a la cistella.</td><td>Fins que la buidis o acabis la compra</td></tr>
+    ${SHOP ? '<tr><td><code>tdm-cart</code></td><td>Emmagatzematge local (propi)</td><td>Recordar què tens a la cistella.</td><td>Fins que la buidis o acabis la compra</td></tr>' : ''}
     <tr><td><code>tdm-consent</code></td><td>Emmagatzematge local (propi)</td><td>Recordar què has triat a l'avís de cookies.</td><td>12 mesos</td></tr>
     <tr><td><code>tdm-admin</code></td><td>Emmagatzematge de sessió (propi)</td><td>Mantenir la sessió a la zona d'administració. Només per al titular de la botiga.</td><td>Fins que tanques la pestanya</td></tr>
-    <tr><td>Cookies de Stripe</td><td>De tercers (stripe.com)</td><td>Processar el pagament i prevenir el frau. Només es creen a la pàgina de pagament de Stripe.</td><td>Segons <a href="https://stripe.com/es/cookies-policy/legal" rel="noopener" target="_blank">Stripe</a></td></tr>
+    ${SHOP ? '<tr><td>Cookies de Stripe</td><td>De tercers (stripe.com)</td><td>Processar el pagament i prevenir el frau. Només es creen a la pàgina de pagament de Stripe.</td><td>Segons <a href="https://stripe.com/es/cookies-policy/legal" rel="noopener" target="_blank">Stripe</a></td></tr>' : ''}
   </tbody>
 </table></div>
 

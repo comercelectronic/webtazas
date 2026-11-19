@@ -3,6 +3,9 @@
   "tagline": "Paraules catalanes que es mereixen una tassa",
   "siteUrl": "https://elglopet.cat",
   "contactEmail": "hola@elglopet.cat",
+  "mode": "aparador",
+  "_modeNota": "«aparador»: es mostren les tasses i les comandes es fan per missatge directe a Instagram (sense cistella ni pagament a la web). «botiga»: cistella i pagament amb Stripe.",
+  "instagram": "elglopet",
   "locale": "ca_ES",
   "newsletterConsent": {
     "version": "2026-11-17",

@@ -17,6 +17,16 @@ const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '
 
 const euro = (cents) => (cents / 100).toFixed(2).replace('.', ',') + ' €';
 const PRICE = euro(site.unitPriceCents);
+// Mode de la web: «botiga» (cistella i pagament) o «aparador» (comandes per Instagram).
+const SHOP = site.mode !== 'aparador';
+const IG_PROFILE = `https://www.instagram.com/${site.instagram}/`;
+const IG_DM = `https://ig.me/m/${site.instagram}`;
+
+/** Botó que obre un missatge directe a Instagram i copia el text de la comanda. */
+function igOrderButton(label, message, { cls = 'btn--primary', withColor = false, srText = '' } = {}) {
+  return `<a class="btn ${cls}" href="${IG_DM}" target="_blank" rel="noopener" data-ig-order="${esc(message)}"${withColor ? ' data-ig-color' : ''}>${icon('instagram')}<span>${label}</span>${srText ? `<span class="sr-only"> ${srText}</span>` : ''}</a>`;
+}
+
 const FREE_SHIPPING = site.shipping.costCents === 0;
 const SHIPPING = FREE_SHIPPING ? 'gratuït' : euro(site.shipping.costCents);
 // Text curt per a llistes: «Enviament gratuït» o «Enviament: 4,95 €».
@@ -77,6 +87,6 @@ const jsonLd = (obj) => `<script type="application/ld+json">${JSON.stringify(obj
 
 module.exports = {
   site, catalog, BY_SLUG, CATEGORIES, CATEGORY_BY_ID, esc, euro, PRICE, SHIPPING, SHIPPING_LINE, FREE_SHIPPING, DELIVERY, icon, value, pendingFields,
-  pricing, priceHtml, offerBadge,
+  pricing, priceHtml, offerBadge, SHOP, IG_PROFILE, IG_DM, igOrderButton,
   productUrl, productImg, srcsetFor, jsonLd,
 };

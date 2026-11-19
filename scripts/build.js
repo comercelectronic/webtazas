@@ -31,6 +31,8 @@ const browserCatalog = {
   optionalCookies: (site.cookies && site.cookies.optional) || [],
   consentVersion: (site.cookies && site.cookies.consentVersion) || 1,
   ga4Id: (site.analytics && site.analytics.ga4Id) || null,
+  shop: site.mode !== 'aparador',
+  igDm: `https://ig.me/m/${site.instagram}`,
   shippingCents: site.shipping.costCents,
   maxQty: site.maxQtyPerItem,
   colors: site.colors,
@@ -97,6 +99,8 @@ const redirects = [
   ...['avis-legal', 'privacitat', 'cookies', 'condicions-venda'].map((s) => `/${s}.html  /${s}/  301`),
   ...catalog.map((p) => `/tasses/${p.slug}.html  /tasses/${p.slug}/  301`),
   ...retired.map((s) => `/tasses/${s}.html  /tasses/  301`),
+  // En mode aparador no hi ha venda a la web: les pàgines de condicions porten a l'inici.
+  ...(site.mode === 'aparador' ? ['/condicions-venda/*  /  302', '/enviaments-i-devolucions/*  /  302'] : []),
 ];
 out('_redirects', redirects.join('\n') + '\n');
 

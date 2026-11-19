@@ -1,4 +1,4 @@
-const { site, catalog, BY_SLUG, CATEGORY_BY_ID, esc, euro, PRICE, SHIPPING, SHIPPING_LINE, FREE_SHIPPING, DELIVERY, icon, productUrl, productImg, priceHtml, pricing, offerBadge } = require('./lib');
+const { site, catalog, BY_SLUG, CATEGORY_BY_ID, esc, euro, PRICE, SHIPPING, SHIPPING_LINE, FREE_SHIPPING, DELIVERY, icon, productUrl, productImg, priceHtml, pricing, offerBadge, SHOP, igOrderButton } = require('./lib');
 const { productGrid, sectionHead, trustList, breadcrumb, breadcrumbLd } = require('./components');
 
 function relatedFor(p) {
@@ -99,7 +99,11 @@ function product(p) {
     ${colorPicker(p)}
     ${definition(p)}
     <p class="stock-note" data-stock-note hidden></p>
-    <div class="buybox__actions" data-main-actions>
+    ${SHOP ? '' : `<div class="buybox__actions" data-main-actions>
+      ${igOrderButton('La vull: demana-la per Instagram', `Hola! M'agradaria la tassa «${title}»`, { cls: 'btn--primary btn--lg btn--grow', withColor: true })}
+    </div>
+    <p class="ig-note">S'obrirà un missatge directe a Instagram. Copiem el text de la comanda (tassa i color) perquè només l'hagis d'enganxar.</p>`}
+    ${SHOP ? `<div class="buybox__actions" data-main-actions>
       <div class="qty" data-qty>
         <button type="button" class="qty__btn" data-qty-step="-1" aria-label="Una unitat menys">${icon('minus')}</button>
         <label class="sr-only" for="qty">Quantitat</label>
@@ -107,7 +111,7 @@ function product(p) {
         <button type="button" class="qty__btn" data-qty-step="1" aria-label="Una unitat més">${icon('plus')}</button>
       </div>
       <button type="button" class="btn btn--primary btn--lg btn--grow" data-add="${p.slug}" data-with-qty>Afegeix a la cistella</button>
-    </div>
+    </div>` : ''}
     ${trustList()}
     ${combo ? `<div class="combo">
       <a class="combo__img" href="${productUrl(combo)}" tabindex="-1" aria-hidden="true">${productImg(combo, 'front', { alt: '' })}</a>
@@ -115,7 +119,7 @@ function product(p) {
         <p class="combo__title">Combina-la amb <a href="${productUrl(combo)}">${esc(combo.name)}</a></p>
         <p class="combo__text">Les dues per ${euro(pricing.productPriceCents(p.slug) + pricing.productPriceCents(combo.slug))}</p>
       </div>
-      <button type="button" class="btn btn--small btn--ghost" data-add-both="${p.slug},${combo.slug}">Afegeix les dues</button>
+      ${SHOP ? `<button type="button" class="btn btn--small btn--ghost" data-add-both="${p.slug},${combo.slug}">Afegeix les dues</button>` : ''}
     </div>` : ''}
     <div class="details">
       <details open>
@@ -129,7 +133,7 @@ function product(p) {
       </details>
       <details>
         <summary>Devolucions i garantia</summary>
-        <p>Tens 14 dies naturals des que reps la comanda per desistir de la compra. Garantia legal de 3 anys. <a href="/enviaments-i-devolucions/">Com fer una devolució</a>.</p>
+        <p>Tens 14 dies naturals des que reps la comanda per retornar-la. Garantia legal de 3 anys.${SHOP ? ' <a href="/enviaments-i-devolucions/">Com fer una devolució</a>.' : ' Escriu-nos per Instagram i t\'expliquem com fer-ho.'}</p>
       </details>
     </div>
   </div>
@@ -155,7 +159,7 @@ function product(p) {
 
 <div class="sticky-buy" data-sticky-buy hidden>
   <div class="sticky-buy__info"><span class="sticky-buy__name">${esc(p.name)}</span>${priceHtml(p.slug)}</div>
-  <button type="button" class="btn btn--primary" data-add="${p.slug}" data-with-qty>Afegeix a la cistella</button>
+  ${SHOP ? `<button type="button" class="btn btn--primary" data-add="${p.slug}" data-with-qty>Afegeix a la cistella</button>` : igOrderButton('La vull', `Hola! M'agradaria la tassa «${title}»`, { withColor: true })}
 </div>`;
 
   const productLd = {

@@ -1,4 +1,4 @@
-const { site, catalog, CATEGORIES, CATEGORY_BY_ID, esc, PRICE, SHIPPING_LINE, DELIVERY, icon, productUrl, productImg, jsonLd, priceHtml, pricing, offerBadge } = require('./lib');
+const { site, catalog, CATEGORIES, CATEGORY_BY_ID, esc, PRICE, SHIPPING_LINE, DELIVERY, icon, productUrl, productImg, jsonLd, priceHtml, pricing, offerBadge, SHOP, IG_PROFILE, igOrderButton } = require('./lib');
 
 const NAV = [
   { href: '/tasses/', label: 'Totes les tasses' },
@@ -46,9 +46,9 @@ function header(path) {
 <div class="announce"><div class="container announce__inner">
   <span>Tasses a <strong>${PRICE}</strong> amb <strong>enviament gratuït</strong></span>
   <span class="announce__sep" aria-hidden="true">·</span>
-  <span>Pagament segur amb Stripe</span>
+  <span>${SHOP ? 'Pagament segur amb Stripe' : `Comandes per Instagram: <strong>@${esc(site.instagram)}</strong>`}</span>
   <span class="announce__sep" aria-hidden="true">·</span>
-  <span>14 dies per desistir</span>
+  <span>14 dies per retornar-la</span>
 </div></div>
 <header class="site-header">
   <div class="container site-header__inner">
@@ -57,9 +57,9 @@ function header(path) {
     </button>
     <a class="logo" href="/"><img src="/assets/brand/el-glopet-logo.svg" alt="${esc(site.brand)}, inici" width="148" height="36"></a>
     <nav class="site-nav" id="site-nav" aria-label="Principal"><ul>${links}</ul></nav>
-    <button class="cart-btn" type="button" data-cart-open aria-label="Obre la cistella (0 productes)">
+    ${SHOP ? `<button class="cart-btn" type="button" data-cart-open aria-label="Obre la cistella (0 productes)">
       ${icon('bag')}<span class="cart-btn__count" data-cart-count>0</span>
-    </button>
+    </button>` : `<a class="cart-btn" href="${IG_PROFILE}" target="_blank" rel="noopener" aria-label="${esc(site.brand)} a Instagram">${icon('instagram')}</a>`}
   </div>
 </header>`;
 }
@@ -86,8 +86,8 @@ function footer() {
     <nav aria-label="Ajuda">
       <h2 class="site-footer__title">Ajuda</h2>
       <ul>
-        <li><a href="/enviaments-i-devolucions/">Enviaments i devolucions</a></li>
-        <li><a href="/condicions-venda/">Condicions de venda</a></li>
+        ${SHOP ? `<li><a href="/enviaments-i-devolucions/">Enviaments i devolucions</a></li>
+        <li><a href="/condicions-venda/">Condicions de venda</a></li>` : `<li><a href="${IG_PROFILE}" target="_blank" rel="noopener">Instagram @${esc(site.instagram)}</a></li>`}
         <li><a href="/#contacte">Contacte</a></li>
         <li><a href="/newsletter/">Newsletter</a></li>
       </ul>
@@ -138,7 +138,7 @@ ${header(opts.path)}
 ${main}
 </main>
 ${footer()}
-${cartDrawer()}
+${SHOP ? cartDrawer() : '<div class="toast" role="status" aria-live="polite" data-toast></div>'}
 </body>
 </html>
 `;
@@ -146,9 +146,9 @@ ${cartDrawer()}
 
 function trustList(cls = '') {
   return `<ul class="trust ${cls}">
-  <li>${icon('lock')}<span>Pagament segur amb Stripe</span></li>
+  <li>${SHOP ? `${icon('lock')}<span>Pagament segur amb Stripe</span>` : `${icon('instagram')}<span>Comanda per missatge directe a Instagram</span>`}</li>
   <li>${icon('truck')}<span>${SHIPPING_LINE} · ${DELIVERY}</span></li>
-  <li>${icon('return')}<span>14 dies per desistir de la compra</span></li>
+  <li>${icon('return')}<span>14 dies per retornar-la i 3 anys de garantia</span></li>
 </ul>`;
 }
 
@@ -170,7 +170,8 @@ function productCard(p, { eager = false, headingLevel = 3 } = {}) {
     <p class="card__rating" data-rating hidden></p>
     <div class="card__foot">
       ${priceHtml(p.slug)}
-      <button type="button" class="btn btn--small" data-add="${p.slug}">Afegeix<span class="sr-only"> «${esc(p.name)}» a la cistella</span></button>
+      ${SHOP ? `<button type="button" class="btn btn--small" data-add="${p.slug}">Afegeix<span class="sr-only"> «${esc(p.name)}» a la cistella</span></button>`
+    : igOrderButton('La vull', `Hola! M'agradaria la tassa «${p.intro ? `${p.intro} ${p.name.toLowerCase()}` : p.name}».`, { cls: 'btn--small', srText: `«${esc(p.name)}»: demana-la per Instagram` })}
     </div>
   </div>
 </article>`;
