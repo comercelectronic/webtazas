@@ -14,6 +14,7 @@ const shop = require('./pages-shop');
 const { product } = require('./pages-product');
 const other = require('./pages-other');
 const { configurator } = require('./pages-configurator');
+const { instagramReview } = require('./pages-instagram');
 
 const ROOT = path.join(__dirname, '..');
 const out = (rel, content) => {
@@ -66,6 +67,7 @@ const pages = [
   other.notFound(),
   ...other.legalPages(),
   other.admin(),
+  instagramReview(),
 ];
 
 fs.rmSync(path.join(ROOT, 'tasses'), { recursive: true, force: true });
@@ -84,6 +86,7 @@ ${indexable.map((p) => `  <url><loc>${site.siteUrl}${p.path}</loc></url>`).join(
 out('robots.txt', `User-agent: *
 Allow: /
 Disallow: /admin/
+Disallow: /instagram/
 Disallow: /newsletter/confirmar/
 Disallow: /newsletter/baixa/
 

@@ -308,3 +308,67 @@ test('administració: contrasenya obligatòria a totes les funcions', async () =
   const cleared = await fn('admin-stock')(ev('POST', { slug: 'niu', stock: null }, { headers: admin }));
   assert.strictEqual(parse(cleared).stock.niu, null);
 });
+
+test('instagram: només publica el que està aprovat i toca, una vegada, i sense claus no fa res', async () => {
+  const queue = require('../data/instagram.json');
+  const { pickDue, LATE_LIMIT_MS } = require('../netlify/functions/lib/instagram');
+  const now = Date.parse('2026-12-01T12:00:00Z');
+  const posts = [
+    { id: 'futur', approved: true, publishAt: '2026-12-02T12:00:00Z' },
+    { id: 'no-aprovat', approved: false, publishAt: '2026-11-30T12:00:00Z' },
+    { id: 'massa-tard', approved: true, publishAt: new Date(now - LATE_LIMIT_MS - 1000).toISOString() },
+    { id: 'toca-b', approved: true, publishAt: '2026-12-01T11:00:00Z' },
+    { id: 'toca-a', approved: true, publishAt: '2026-12-01T10:00:00Z' },
+  ];
+  const r = pickDue(posts, {}, now);
+  assert.strictEqual(r.due.id, 'toca-a');
+  assert.deepStrictEqual(r.late, ['massa-tard']);
+  assert.strictEqual(pickDue(posts, { 'toca-a': {}, 'toca-b': {} }, now).due, null);
+
+  // La cua del repositori arriba sense res aprovat.
+  assert.ok(queue.posts.length > 0 && queue.posts.every((p) => p.approved === false));
+  for (const p of queue.posts) {
+    assert.ok(p.caption.length <= 2200 && (p.caption.match(/#/g) || []).length <= 30, p.id);
+    assert.ok(p.images.length >= 1 && p.images.length <= 10, p.id);
+    for (const img of p.images) assert.ok(require('fs').existsSync(require('path').join(__dirname, '..', img)) && /\.jpe?g$/.test(img), img);
+  }
+
+  const handler = fn('instagram-publish');
+  delete process.env.IG_USER_ID; delete process.env.IG_ACCESS_TOKEN;
+  assert.strictEqual((await handler(ev('POST'))).body, 'not configured');
+
+  // Amb claus i una publicació aprovada que toca: crea el carrusel i publica.
+  const calls = [];
+  const realFetch = global.fetch;
+  global.fetch = async (url, opts = {}) => {
+    const u = String(url);
+    calls.push({ url: u, body: opts.body ? Object.fromEntries(new URLSearchParams(String(opts.body))) : null });
+    let data = { id: `c${calls.length}` };
+    if (u.includes('refresh_access_token')) data = { access_token: 'token-nou', expires_in: 5184000 };
+    else if (u.includes('status_code')) data = { status_code: 'FINISHED' };
+    else if (u.includes('media_publish')) data = { id: 'media-1' };
+    return { ok: true, json: async () => data };
+  };
+  process.env.IG_USER_ID = '1784';
+  process.env.IG_ACCESS_TOKEN = 'token-vell';
+  const post = queue.posts[0];
+  const saved = { approved: post.approved, publishAt: post.publishAt };
+  post.approved = true;
+  post.publishAt = new Date(Date.now() - 3600 * 1000).toISOString();
+  try {
+    assert.strictEqual((await handler(ev('POST'))).body, `published ${post.id}`);
+    const creates = calls.filter((c) => c.url.endsWith('/1784/media'));
+    assert.strictEqual(creates.length, post.images.length + 1);
+    assert.strictEqual(creates[0].body.image_url, 'https://botiga.test' + post.images[0]);
+    assert.strictEqual(creates.at(-1).body.media_type, 'CAROUSEL');
+    assert.strictEqual(creates.at(-1).body.caption, post.caption);
+    assert.strictEqual(creates.at(-1).body.access_token, 'token-nou');
+    assert.ok(calls.some((c) => c.url.endsWith('/1784/media_publish')));
+    // La següent execució no la torna a publicar.
+    assert.strictEqual((await handler(ev('POST'))).body, 'nothing due');
+  } finally {
+    Object.assign(post, saved);
+    global.fetch = realFetch;
+    delete process.env.IG_USER_ID; delete process.env.IG_ACCESS_TOKEN;
+  }
+});

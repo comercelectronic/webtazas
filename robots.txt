@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
+Disallow: /instagram/
 Disallow: /newsletter/confirmar/
 Disallow: /newsletter/baixa/
 

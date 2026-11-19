@@ -1,0 +1,134 @@
+{
+  "_nota": "Cua de publicacions d'Instagram. Només es publiquen les que tenen \"approved\": true, quan arriba \"publishAt\" i si hi ha IG_USER_ID i IG_ACCESS_TOKEN a Netlify. Si una publicació aprovada fa més de 48 hores que havia d'haver sortit, no es publica: canvia-li la data.",
+  "timezone": "Europe/Madrid",
+  "posts": [
+    {
+      "id": "presentacio",
+      "title": "Presentació",
+      "publishAt": "2026-11-23T13:30:00+01:00",
+      "approved": false,
+      "images": [
+        "/instagram/posts/01-presentacio-1.jpg",
+        "/instagram/posts/01-presentacio-2.jpg",
+        "/instagram/posts/01-presentacio-3.jpg",
+        "/instagram/posts/01-presentacio-4.jpg"
+      ],
+      "caption": "Hi ha coses que costen de dir. Per això hi ha tasses. ☕\n\nSom El Glopet: tasses amb paraules i expressions catalanes. Al davant, el missatge. Al darrere, la definició de diccionari… i una de nostra.\n\nAixopluc, caliu, cagadubtes, garrepa, bocamoll… 40 paraules, 10 colors i, si no hi trobes la teva, la pots crear tu.\n\n14,95 € amb l'enviament gratuït. L'enllaç és a la bio.\n\nQuina paraula catalana posaries en una tassa? 👇\n\n#elglopet #encatalà #paraulescatalanes #regalsencatalà #tasses #tassespersonalitzades #llenguacatalana #regalsoriginals",
+      "note": "Fixa-la a dalt del perfil un cop publicada."
+    },
+    {
+      "id": "paraula-aixopluc",
+      "title": "Paraula de la setmana: aixopluc",
+      "publishAt": "2026-11-25T13:30:00+01:00",
+      "approved": false,
+      "images": [
+        "/instagram/posts/02-paraula-aixopluc.jpg"
+      ],
+      "caption": "aixopluc [ə·ʃu·ˈpluk] m.\n1. Lloc on trobar recer de la pluja i del mal temps.\n2. Persona amb qui et sents a recer, passi el que passi.\n\nTots en tenim un. Etiqueta el teu 🌂\n\n#elglopet #encatalà #paraulescatalanes #aixopluc #llenguacatalana #regalsencatalà",
+      "note": "Pot ser una sèrie fixa cada dimecres."
+    },
+    {
+      "id": "endevina-garrepa",
+      "title": "Endevina: garrepa",
+      "publishAt": "2026-11-27T13:30:00+01:00",
+      "approved": false,
+      "images": [
+        "/instagram/posts/03-endevina-garrepa.jpg"
+      ],
+      "caption": "Què vol dir «garrepa»? 🤔\n\nA. Persona que riu molt\nB. Persona que no vol gastar ni un cèntim\nC. Persona que s'adorm a tot arreu\n\nRespon als comentaris. Demà a les stories en fem la solució (i ja t'avancem que algú del teu grup s'hi sentirà al·ludit).\n\n#elglopet #encatalà #paraulescatalanes #garrepa #llenguacatalana #humorencatalà #tasses",
+      "note": "Respon tots els comentaris i fes la solució a les stories l'endemà."
+    },
+    {
+      "id": "etiqueta-bocamoll",
+      "title": "Etiqueta el bocamoll",
+      "publishAt": "2026-11-30T13:30:00+01:00",
+      "approved": false,
+      "images": [
+        "/instagram/posts/04-etiqueta-bocamoll.jpg"
+      ],
+      "caption": "Etiqueta el bocamoll del teu grup 🤫\n\nbocamoll: persona que no sap guardar un secret. O, dit d'una altra manera, qui t'explica la sorpresa abans que arribi l'homenatjat.\n\nAra té tassa pròpia. En 10 colors, per si de cas.\n\n#elglopet #bocamoll #encatalà #paraulescatalanes #humorencatalà #regalsencatalà #amicinvisible",
+      "note": ""
+    },
+    {
+      "id": "packs-nadal",
+      "title": "Packs de Nadal",
+      "publishAt": "2026-12-02T13:30:00+01:00",
+      "approved": false,
+      "images": [
+        "/instagram/posts/05-packs-nadal.jpg"
+      ],
+      "caption": "Un regal, diverses paraules 🎁\n\nPack Família: Niu · Arrel · Aixopluc. Per a la gent que t'ha vist créixer i que sempre és casa.\n\n39,90 € les tres tasses (t'estalvies 4,95 €) i l'enviament gratuït.\n\nTambé hi ha el Pack Parella, el Pack Feina i el Pack Cafè. Els tens tots a l'enllaç de la bio.\n\n#elglopet #regalsdenadal #nadal #regalsencatalà #encatalà #tasses #regalsoriginals #família",
+      "note": "Comprova els terminis d'enviament abans de publicar-la."
+    },
+    {
+      "id": "crea-la-teva",
+      "title": "Crea la teva tassa",
+      "publishAt": "2026-12-04T13:30:00+01:00",
+      "approved": false,
+      "images": [
+        "/instagram/posts/06-crea-la-teva.jpg"
+      ],
+      "caption": "No trobes la paraula? Crea-la tu ✍️\n\nTria l'estructura («Tu ets el meu…», «Sóc un…», «Ets un…» o text lliure), la paraula, un dibuix i el color. La veus en directe abans de comprar-la.\n\nAquesta l'hem feta per a un dormilega que coneixem bé 😴\n\n14,95 €, enviament gratuït. Enllaç a la bio.\n\n#elglopet #tassapersonalitzada #regalspersonalitzats #encatalà #paraulescatalanes #regalsencatalà #dormilega",
+      "note": "A les stories, grava la pantalla fent una tassa."
+    },
+    {
+      "id": "sense-cafe",
+      "title": "Sense cafè no sóc persona",
+      "publishAt": "2026-12-07T13:30:00+01:00",
+      "approved": false,
+      "images": [
+        "/instagram/posts/07-sense-cafe.jpg"
+      ],
+      "caption": "Dilluns, 7:45 h. Qui s'hi identifica? ☕\n\nSense cafè no sóc persona. Amb cafè, tampoc gaire.\n\nEtiqueta qui no t'ha de parlar abans del primer cafè.\n\n#elglopet #dilluns #cafè #humorencatalà #encatalà #tasses #regalsencatalà",
+      "note": ""
+    },
+    {
+      "id": "ofertes",
+      "title": "Ofertes",
+      "publishAt": "2026-12-09T13:30:00+01:00",
+      "approved": false,
+      "images": [
+        "/instagram/posts/08-ofertes.jpg"
+      ],
+      "caption": "Algunes paraules, rebaixades ✨\n\nBonança i Cuca de llum, a 10,95 € (abans 14,95 €). I n'hi ha més a la secció «Ofertes» de la web.\n\nEnviament gratuït, com sempre. Enllaç a la bio.\n\n#elglopet #ofertes #regalsdenadal #encatalà #paraulescatalanes #regalsencatalà #tasses",
+      "note": "Publica-la només si les ofertes encara són vigents a la web."
+    },
+    {
+      "id": "vaca-en-bracos",
+      "title": "Insult d'autor: vaca en braços",
+      "publishAt": "2026-12-11T13:30:00+01:00",
+      "approved": false,
+      "images": [
+        "/instagram/posts/09-vaca-en-bracos.jpg"
+      ],
+      "caption": "Tots en tenim un. Etiqueta'l (amb afecte) 🐄\n\n«Ets més pesat que una vaca en braços»: per a l'amic que no para de demanar favors o el germà que no calla mai.\n\nQuin insult català hauríem de convertir en tassa? Els millors, a la propera col·lecció 👇\n\n#elglopet #insultscatalans #humorencatalà #encatalà #expressionscatalanes #regalsencatalà #tasses",
+      "note": ""
+    }
+  ],
+  "extras": [
+    {
+      "src": "/instagram/posts/perfil.png",
+      "label": "Foto de perfil"
+    },
+    {
+      "src": "/instagram/posts/destacat-tasses.jpg",
+      "label": "Destacada: Tasses"
+    },
+    {
+      "src": "/instagram/posts/destacat-packs.jpg",
+      "label": "Destacada: Packs"
+    },
+    {
+      "src": "/instagram/posts/destacat-crea-la.jpg",
+      "label": "Destacada: Crea-la"
+    },
+    {
+      "src": "/instagram/posts/destacat-enviaments.jpg",
+      "label": "Destacada: Enviaments"
+    },
+    {
+      "src": "/instagram/posts/destacat-opinions.jpg",
+      "label": "Destacada: Opinions"
+    }
+  ]
+}
