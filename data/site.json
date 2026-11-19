@@ -1,8 +1,8 @@
 {
   "brand": "El Glopet",
   "tagline": "Paraules catalanes que es mereixen una tassa",
-  "siteUrl": "https://tassademots.cat",
-  "contactEmail": "hola@tassademots.cat",
+  "siteUrl": "https://sensesucre.netlify.app",
+  "contactEmail": null,
   "locale": "ca_ES",
   "newsletterConsent": {
     "version": "2026-11-17",
@@ -256,5 +256,9 @@
       "name": "Negre",
       "hex": "#1F1F20"
     }
-  ]
+  ],
+  "cookies": {
+    "_nota": "Categories opcionals (analítica, publicitat...). Mentre la llista sigui buida, no es mostra cap bàner: només s'usa emmagatzematge tècnic exempt de consentiment (art. 22.2 LSSI-CE). Si s'hi afegeix una eina, cal posar-la aquí i carregar-la amb TDMConsent.onGrant().",
+    "optional": []
+  }
 }

@@ -9,7 +9,7 @@ const NAV = [
 
 function head({ title, description, path, ogImage, jsonld = [], noindex = false, assetVersion, adminScript = false, pageScript = null }) {
   const url = site.siteUrl + path;
-  const image = site.siteUrl + (ogImage || '/images/mug-aixopluc-front.jpg');
+  const image = site.siteUrl + (ogImage || '/images/tasses/aixopluc/vermell-front.jpg');
   return `<!doctype html>
 <html lang="ca">
 <head>
@@ -98,7 +98,7 @@ function footer() {
         <li><a href="/avis-legal/">Avís legal</a></li>
         <li><a href="/privacitat/">Política de privacitat</a></li>
         <li><a href="/cookies/">Política de cookies</a></li>
-        <li><button type="button" class="link-btn" data-cookie-settings>Configura les cookies</button></li>
+        ${(site.cookies && site.cookies.optional || []).length ? '<li><button type="button" class="link-btn" data-cookie-settings>Configura les cookies</button></li>' : ''}
       </ul>
     </nav>
   </div>

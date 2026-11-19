@@ -8,7 +8,7 @@ const FAQ = [
   ['Quant costa cada tassa?', `${PRICE}, amb l'enviament inclòs. Algunes tasses tenen preu d'oferta, i els packs surten més barats que comprar les tasses per separat. La tassa personalitzada també costa ${PRICE}.`],
   ['Quant costa l\'enviament?', FREE_SHIPPING ? 'Res: l\'enviament és gratuït, tant si compres una tassa com si en compres deu.' : `${SHIPPING} per comanda, tant si compres una tassa com si en compres deu.`],
   ['Quant triga a arribar?', `El termini estimat és de ${DELIVERY} des del pagament. Enviem a ${site.shipping.countriesLabel}.`],
-  ['Puc tornar una tassa?', 'Sí. Tens 14 dies naturals des que la reps per desistir de la compra, sense haver de donar explicacions. A la pàgina d\'enviaments i devolucions t\'expliquem com fer-ho.'],
+  ['Puc tornar una tassa?', 'Sí. Tens 14 dies naturals des que la reps per desistir de la compra, sense haver de donar explicacions. L\'única excepció són les tasses personalitzades, que es fan a mida: no tenen desistiment, però sí la garantia legal si arriben amb defectes. A la pàgina d\'enviaments i devolucions t\'expliquem com fer-ho.'],
   ['Com es paga?', 'Amb targeta, a la pàgina de pagament segur de Stripe. Nosaltres no veiem ni guardem les dades de la teva targeta.'],
   ['Les opinions que publiqueu són reals?', "Sí. Només publiquem valoracions que ens envien persones a través de la web, i les revisem una a una abans de publicar-les. No n'inventem ni en paguem."],
 ];

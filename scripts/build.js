@@ -28,6 +28,7 @@ const browserCatalog = {
   priceCents: site.unitPriceCents,
   customPriceCents: pricing.customPriceCents(),
   showReferencePrice: !!(site.offers && site.offers.showReferencePrice),
+  optionalCookies: (site.cookies && site.cookies.optional) || [],
   shippingCents: site.shipping.costCents,
   maxQty: site.maxQtyPerItem,
   colors: site.colors,

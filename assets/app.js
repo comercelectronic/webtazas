@@ -692,6 +692,8 @@
     });
   }
 
-  document.addEventListener('click', function (e) { if (e.target.closest('[data-cookie-settings]')) showConsent(true); });
-  if (!window.TDMConsent.get() && !document.body.classList.contains('page-admin')) showConsent(false);
+  // Sense cookies opcionals no cal demanar consentiment (art. 22.2 LSSI-CE): no es mostra cap bàner.
+  var needsConsent = (CAT.optionalCookies || []).length > 0;
+  document.addEventListener('click', function (e) { if (needsConsent && e.target.closest('[data-cookie-settings]')) showConsent(true); });
+  if (needsConsent && !window.TDMConsent.get() && !document.body.classList.contains('page-admin')) showConsent(false);
 })();
