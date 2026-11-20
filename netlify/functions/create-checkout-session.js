@@ -13,6 +13,7 @@ const truncate = (s, n) => (s.length > n ? s.slice(0, n - 1) + '…' : s);
 
 exports.handler = async function (event) {
   if (event.httpMethod !== 'POST') return json(405, { error: 'Method Not Allowed' });
+  if (site.mode === 'aparador') return json(403, { error: 'Ara mateix les comandes es fan per Instagram.' });
 
   if (!process.env.STRIPE_SECRET_KEY) {
     console.error("Falta la variable d'entorn STRIPE_SECRET_KEY a Netlify.");

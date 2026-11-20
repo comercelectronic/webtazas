@@ -6,6 +6,10 @@
 [functions]
   node_bundler = "esbuild"
 
+# Publica a Instagram les publicacions aprovades de data/instagram.json.
+[functions."instagram-publish"]
+  schedule = "@hourly"
+
 [[headers]]
   for = "/*"
   [headers.values]
@@ -17,6 +21,11 @@
   for = "/admin/*"
   [headers.values]
     X-Frame-Options = "DENY"
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/instagram/*"
+  [headers.values]
     X-Robots-Tag = "noindex, nofollow"
 
 [[headers]]

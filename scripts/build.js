@@ -14,6 +14,7 @@ const shop = require('./pages-shop');
 const { product } = require('./pages-product');
 const other = require('./pages-other');
 const { configurator } = require('./pages-configurator');
+const { instagramReview } = require('./pages-instagram');
 
 const ROOT = path.join(__dirname, '..');
 const out = (rel, content) => {
@@ -28,6 +29,11 @@ const browserCatalog = {
   priceCents: site.unitPriceCents,
   customPriceCents: pricing.customPriceCents(),
   showReferencePrice: !!(site.offers && site.offers.showReferencePrice),
+  optionalCookies: (site.cookies && site.cookies.optional) || [],
+  consentVersion: (site.cookies && site.cookies.consentVersion) || 1,
+  ga4Id: (site.analytics && site.analytics.ga4Id) || null,
+  shop: site.mode !== 'aparador',
+  igDm: `https://ig.me/m/${site.instagram}`,
   shippingCents: site.shipping.costCents,
   maxQty: site.maxQtyPerItem,
   colors: site.colors,
@@ -61,6 +67,7 @@ const pages = [
   other.notFound(),
   ...other.legalPages(),
   other.admin(),
+  instagramReview(),
 ];
 
 fs.rmSync(path.join(ROOT, 'tasses'), { recursive: true, force: true });
@@ -79,6 +86,7 @@ ${indexable.map((p) => `  <url><loc>${site.siteUrl}${p.path}</loc></url>`).join(
 out('robots.txt', `User-agent: *
 Allow: /
 Disallow: /admin/
+Disallow: /instagram/
 Disallow: /newsletter/confirmar/
 Disallow: /newsletter/baixa/
 
@@ -94,14 +102,22 @@ const redirects = [
   ...['avis-legal', 'privacitat', 'cookies', 'condicions-venda'].map((s) => `/${s}.html  /${s}/  301`),
   ...catalog.map((p) => `/tasses/${p.slug}.html  /tasses/${p.slug}/  301`),
   ...retired.map((s) => `/tasses/${s}.html  /tasses/  301`),
+  // En mode aparador no hi ha venda a la web: les pàgines de condicions porten a l'inici.
+  ...(site.mode === 'aparador' ? ['/condicions-venda/*  /  302', '/enviaments-i-devolucions/*  /  302'] : []),
 ];
 out('_redirects', redirects.join('\n') + '\n');
 
 // 6. Informe de camps pendents.
 const missingSpecs = site.productSpecs.filter((s) => !s.value).map((s) => `fitxa de producte: ${s.label}`);
-const pending = [...pendingFields, ...missingSpecs];
+const missingAnalytics = (site.cookies && site.cookies.optional || []).some((c) => c.id === 'analytics') && !(site.analytics && site.analytics.ga4Id)
+  ? ['ID de mesura de Google Analytics (analytics.ga4Id): mentre falti, no es carrega Analytics'] : [];
+const pending = [...pendingFields, ...missingSpecs, ...missingAnalytics];
 console.log(`✔ ${pages.length} pàgines generades (${catalog.length} tasses, ${CATEGORIES.length} categories). Preu: ${(site.unitPriceCents / 100).toFixed(2)} €`);
 if (pending.length) {
   console.log(`\n⚠ Dades pendents de completar a data/site.json abans de publicar (${pending.length}):`);
   pending.forEach((p) => console.log(`  - ${p}`));
 }
+const stockLine = site.colors.map((c) => `${c.name} ${Number.isInteger(c.stock) ? c.stock : '∞'}`).join(' · ');
+console.log(`\nEstoc per colors: ${stockLine}`);
+const soldOut = catalog.filter((p) => p.soldOut).map((p) => p.name);
+if (soldOut.length) console.log(`⚠ Tasses exhaurides (sense cap color disponible): ${soldOut.join(', ')}`);

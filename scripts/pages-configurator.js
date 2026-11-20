@@ -1,7 +1,10 @@
 // Pàgina «Crea la teva tassa»: configurador amb vista prèvia en directe.
 // Les dades (estructures, paraules i dibuixos) surten de data/configurator.json,
 // el mateix fitxer amb què el servidor valida el disseny abans de cobrar-lo.
-const { site, esc, euro, icon, pricing, SHIPPING_LINE } = require('./lib');
+const { site, esc, euro, icon, pricing, SHIPPING_LINE, SHOP, IG_DM, COLORS_AVAILABLE } = require('./lib');
+
+// Color inicial: el blau si en queda; si no, el primer disponible.
+const MK_DEFAULT = (COLORS_AVAILABLE.find((c) => c.id === 'blau') || COLORS_AVAILABLE[0] || {}).id;
 const { breadcrumb, breadcrumbLd } = require('./components');
 
 const cfg = pricing.configurator;
@@ -13,7 +16,7 @@ function configurator() {
     structures: cfg.structures,
     lists: cfg.lists,
     drawings: cfg.drawings,
-    colors: site.colors,
+    colors: COLORS_AVAILABLE,
     priceCents: pricing.customPriceCents(),
   };
   const crumbs = [{ name: 'Inici', path: '/' }, { name: 'Crea la teva tassa', path: '/crea-la-teva-tassa/' }];
@@ -33,7 +36,7 @@ function configurator() {
     <div class="maker__preview">
       <div class="maker__stage" aria-live="polite">
         <div class="mug-photo" data-mug>
-          <img class="mug-photo__img" data-mug-photo src="/images/tassa-en-blanc/blau.jpg" alt="" width="1200" height="1200">
+          <img class="mug-photo__img" data-mug-photo src="/images/tassa-en-blanc/${MK_DEFAULT}.jpg" alt="" width="1200" height="1200">
           <svg class="mug-photo__print" viewBox="0 0 760 760" role="img" aria-labelledby="mug-title">
             <title id="mug-title" data-mug-title>Vista prèvia de la tassa</title>
             <defs>
@@ -125,8 +128,8 @@ function configurator() {
       <fieldset class="maker__step">
         <legend><span class="maker__n">5</span> Color de l'interior i la nansa</legend>
         <div class="colors__row">
-          ${site.colors.map((c) => `<label class="swatch" title="${esc(c.name)}">
-            <input type="radio" name="color" value="${c.id}"${c.id === 'blau' ? ' checked' : ''}>
+          ${COLORS_AVAILABLE.map((c) => `<label class="swatch" title="${esc(c.name)}">
+            <input type="radio" name="color" value="${c.id}"${c.id === MK_DEFAULT ? ' checked' : ''}>
             <span class="swatch__dot dot--${c.id}"></span><span class="sr-only">${esc(c.name)}</span>
           </label>`).join('')}
         </div>
@@ -134,7 +137,7 @@ function configurator() {
 
       <div class="maker__buy">
         <p class="maker__price"><span class="price price--lg">${price}</span><span>${esc(SHIPPING_LINE)}</span></p>
-        <div class="buybox__actions">
+        ${SHOP ? `<div class="buybox__actions">
           <div class="qty">
             <button type="button" class="qty__btn" data-mk-step="-1" aria-label="Una unitat menys">${icon('minus')}</button>
             <label class="sr-only" for="mk-qty">Quantitat</label>
@@ -142,9 +145,12 @@ function configurator() {
             <button type="button" class="qty__btn" data-mk-step="1" aria-label="Una unitat més">${icon('plus')}</button>
           </div>
           <button type="submit" class="btn btn--primary btn--lg btn--grow">Afegeix la meva tassa a la cistella</button>
+        </div>` : `<div class="buybox__actions">
+          <button type="submit" class="btn btn--primary btn--lg btn--grow" data-ig-submit="${IG_DM}">${icon('instagram')}<span>Demana-la per Instagram</span></button>
         </div>
+        <p class="ig-note">S'obrirà un missatge directe a Instagram. Copiem el disseny (frase, dibuix i color) perquè només l'hagis d'enganxar.</p>`}
         <p class="form-status" role="status" aria-live="polite" data-maker-status></p>
-        <p class="form-note">No imprimim textos ofensius, marques registrades ni dades personals de terceres persones. Si el disseny no es pot imprimir tal com és, t'escriurem abans d'enviar-lo.</p>
+        <p class="form-note">${site.customReturns ? '<strong>Devolució en 14 dies</strong>, també per a les tasses personalitzades, i <strong>3 anys de garantia legal</strong>.' : '<strong>Abans de comprar:</strong> com que la tassa es fa a mida amb el teu disseny, no té dret de desistiment (art. 103.c del TRLGDCU). Sí que té la garantia legal de 3 anys si arriba trencada o amb defectes.'} No imprimim textos ofensius ni marques registrades: si el disseny no es pot imprimir tal com és, t'escriurem abans de fer-lo.${SHOP ? ' <a href="/condicions-venda/#personalitzades">Condicions de venda</a>.' : ''}</p>
       </div>
     </form>
   </div>

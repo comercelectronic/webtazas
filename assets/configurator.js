@@ -218,6 +218,27 @@
       f.word.focus();
       return;
     }
+    var igBtn = form.querySelector('[data-ig-submit]');
+    if (igBtn) {
+      var colorName = (COLOR[design.color] || {}).name || design.color;
+      var drawingName = (DATA.drawings.find(function (d) { return d.id === design.drawing; }) || {}).label;
+      var lines = ['Hola! M\'agradaria aquesta tassa personalitzada:',
+        'Davant: «' + [design.intro, design.word].filter(Boolean).join(' ') + '»' + (design.sub ? ' / «' + design.sub + '»' : ''),
+        drawingName ? 'Dibuix: ' + drawingName.toLowerCase() : 'Sense dibuix',
+        'Color de l\'interior i la nansa: ' + colorName.toLowerCase()];
+      if (design.def1 || design.def2) lines.push('Darrere: 1. ' + (design.def1 || '-') + (design.def2 ? ' 2. ' + design.def2 : ''));
+      var text = lines.join('\n');
+      // window.open amb «noopener» sempre retorna null: es talla l'opener a mà.
+      var win = window.open(igBtn.getAttribute('data-ig-submit'), '_blank');
+      if (win) win.opener = null;
+      var done = function (ok) {
+        ui.status.textContent = ok ? 'Hem copiat el disseny: enganxa\'l al xat d\'Instagram.' : 'Copia el disseny al xat d\'Instagram: ' + lines.join(' · ');
+        ui.status.className = 'form-status is-ok';
+      };
+      try { navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); }); } catch (err) { done(false); }
+      if (!win) window.location.href = igBtn.getAttribute('data-ig-submit');
+      return;
+    }
     var cartApi = window.ElGlopetCart;
     if (!cartApi) return;
     cartApi.addCustom(design, parseInt(f.qty.value, 10) || 1);

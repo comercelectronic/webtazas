@@ -1,7 +1,8 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
+Disallow: /instagram/
 Disallow: /newsletter/confirmar/
 Disallow: /newsletter/baixa/
 
-Sitemap: https://tassademots.cat/sitemap.xml
+Sitemap: https://elglopet.com/sitemap.xml

@@ -1,4 +1,4 @@
-const { site, catalog, BY_SLUG, CATEGORIES, CATEGORY_BY_ID, esc, euro, PRICE, SHIPPING, SHIPPING_LINE, FREE_SHIPPING, DELIVERY, icon, productUrl, productImg, pricing } = require('./lib');
+const { site, catalog, BY_SLUG, CATEGORIES, CATEGORY_BY_ID, esc, euro, PRICE, SHIPPING, SHIPPING_LINE, FREE_SHIPPING, DELIVERY, icon, productUrl, productImg, pricing, SHOP, igOrderButton } = require('./lib');
 const { productCard, productGrid, newsletterForm, sectionHead, trustList, breadcrumb, breadcrumbLd } = require('./components');
 
 const newProducts = catalog.filter((p) => p.new);
@@ -8,8 +8,10 @@ const FAQ = [
   ['Quant costa cada tassa?', `${PRICE}, amb l'enviament inclòs. Algunes tasses tenen preu d'oferta, i els packs surten més barats que comprar les tasses per separat. La tassa personalitzada també costa ${PRICE}.`],
   ['Quant costa l\'enviament?', FREE_SHIPPING ? 'Res: l\'enviament és gratuït, tant si compres una tassa com si en compres deu.' : `${SHIPPING} per comanda, tant si compres una tassa com si en compres deu.`],
   ['Quant triga a arribar?', `El termini estimat és de ${DELIVERY} des del pagament. Enviem a ${site.shipping.countriesLabel}.`],
-  ['Puc tornar una tassa?', 'Sí. Tens 14 dies naturals des que la reps per desistir de la compra, sense haver de donar explicacions. A la pàgina d\'enviaments i devolucions t\'expliquem com fer-ho.'],
-  ['Com es paga?', 'Amb targeta, a la pàgina de pagament segur de Stripe. Nosaltres no veiem ni guardem les dades de la teva targeta.'],
+  ['Puc tornar una tassa?', `Sí. Tens 14 dies naturals des que la reps per desistir de la compra, sense haver de donar explicacions. ${site.customReturns ? 'També les tasses personalitzades. ' : 'L\'única excepció són les tasses personalitzades, que es fan a mida: no tenen desistiment, però sí la garantia legal si arriben amb defectes. '}${SHOP ? 'A la pàgina d\'enviaments i devolucions t\'expliquem com fer-ho.' : 'Escriu-nos per Instagram i t\'expliquem com fer-ho.'}`],
+  ['Quina garantia tenen?', 'La garantia legal de 3 anys. Si una tassa arriba trencada o té un defecte, te la canviem o et retornem l\'import, sense cap cost. Si el defecte apareix durant els 2 primers anys, no has de demostrar res.'],
+  SHOP ? ['Com es paga?', 'Amb targeta, a la pàgina de pagament segur de Stripe. Nosaltres no veiem ni guardem les dades de la teva targeta.']
+    : ['Com puc comprar una tassa?', `Prem «La vull» a la tassa que t'agradi: s'obrirà un missatge directe a Instagram (@${site.instagram}) amb la tassa i el color ja escrits. T'hi responem amb el resum de la comanda i com pagar-la.`],
   ['Les opinions que publiqueu són reals?', "Sí. Només publiquem valoracions que ens envien persones a través de la web, i les revisem una a una abans de publicar-les. No n'inventem ni en paguem."],
 ];
 
@@ -26,7 +28,8 @@ function packCard(pack) {
     <p class="pack__items">${items.map((p) => `<a href="${productUrl(p)}">${esc(p.name)}</a>`).join('<span aria-hidden="true"> · </span>')}</p>
     <div class="pack__foot">
       <p class="pack__price"><span class="price price--lg">${euro(price)}</span>${saving > 0 ? `<span class="pack__vs">per separat, ${euro(pricing.packSeparateCents(pack))}</span>` : ''}</p>
-      <button type="button" class="btn btn--primary" data-add-pack="${pack.id}">Afegeix el pack a la cistella<span class="sr-only"> (${esc(pack.name)}, ${euro(price)})</span></button>
+      ${SHOP ? `<button type="button" class="btn btn--primary" data-add-pack="${pack.id}">Afegeix el pack a la cistella<span class="sr-only"> (${esc(pack.name)}, ${euro(price)})</span></button>`
+    : igOrderButton('Demana el pack per Instagram', `Hola! M'agradaria el ${pack.name} (${items.map((p) => p.name).join(', ')}).`, { srText: `(${esc(pack.name)}, ${euro(price)})`, soldOut: items.some((p) => p.soldOut) })}
     </div>
   </div>
 </article>`;
@@ -105,7 +108,7 @@ function home() {
         <a class="btn btn--outline-light btn--lg" href="#recomanador">Troba la tassa per a qui vulguis</a>
       </div>
       <ul class="hero__trust">
-        <li>${icon('lock')} Pagament segur amb Stripe</li>
+        <li>${SHOP ? `${icon('lock')} Pagament segur amb Stripe` : `${icon('instagram')} Comandes per Instagram`}</li>
         <li>${icon('truck')} ${SHIPPING_LINE}</li>
         <li>${icon('return')} 14 dies per desistir</li>
       </ul>

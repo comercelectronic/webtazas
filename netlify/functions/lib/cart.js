@@ -10,6 +10,7 @@ const {
   productPriceCents, packPriceCents, customPriceCents, colorName,
 } = require('./pricing');
 const { check } = require('./moderation');
+const { colorStock } = require('./colors');
 
 const MAX_LINES = 30;
 const DRAWINGS = new Set(configurator.drawings.map((d) => d.id));
@@ -122,7 +123,26 @@ function priceCart(items) {
     if (l.type === 'mug') units[l.slug] = (units[l.slug] || 0) + l.qty;
     if (l.type === 'pack') l.slugs.forEach((s) => { units[s] = (units[s] || 0) + l.qty; });
   }
-  return { lines, units };
+  // Estoc per colors: totes les tasses d'un color comparteixen les tasses en blanc.
+  const colorUnits = {};
+  const addColor = (c, n) => { if (c) colorUnits[c] = (colorUnits[c] || 0) + n; };
+  for (const l of lines) {
+    if (l.type === 'mug') addColor(l.color, l.qty);
+    if (l.type === 'custom') addColor(l.design.color, l.qty);
+    if (l.type === 'pack') l.slugs.forEach((s) => addColor(PRODUCTS[s].defaultColor, l.qty));
+  }
+  for (const [c, n] of Object.entries(colorUnits)) {
+    const left = colorStock(c);
+    if (n > left) {
+      return {
+        status: 409,
+        error: left === 0
+          ? `El color ${colorName(c).toLowerCase()} s'ha exhaurit. Tria'n un altre.`
+          : `Només queden ${left} tasses de color ${colorName(c).toLowerCase()}.`,
+      };
+    }
+  }
+  return { lines, units, colorUnits };
 }
 
 module.exports = { priceCart, validateDesign, describeDesign, productTitle };

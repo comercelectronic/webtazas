@@ -11,19 +11,19 @@
 <meta property="og:locale" content="ca_ES">
 <meta property="og:title" content="Administració · El Glopet">
 <meta property="og:description" content="Administració de la botiga.">
-<meta property="og:url" content="https://tassademots.cat/admin/">
-<meta property="og:image" content="https://tassademots.cat/images/mug-aixopluc-front.jpg">
+<meta property="og:url" content="https://elglopet.com/admin/">
+<meta property="og:image" content="https://elglopet.com/images/tasses/aixopluc/vermell-front.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#F4EFE6">
 <link rel="preload" href="/assets/fonts/lora.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/styles.css?v=20e8b44dd9">
+<link rel="stylesheet" href="/assets/styles.css?v=54cc561d60">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
-<script defer src="/assets/catalog.js?v=20e8b44dd9"></script>
-<script defer src="/assets/app.js?v=20e8b44dd9"></script>
-<script defer src="/assets/admin.js?v=20e8b44dd9"></script>
+<script defer src="/assets/catalog.js?v=54cc561d60"></script>
+<script defer src="/assets/app.js?v=54cc561d60"></script>
+<script defer src="/assets/admin.js?v=54cc561d60"></script>
 
 </head>
 <body class="page-admin">
@@ -31,9 +31,9 @@
 <div class="announce"><div class="container announce__inner">
   <span>Tasses a <strong>14,95 €</strong> amb <strong>enviament gratuït</strong></span>
   <span class="announce__sep" aria-hidden="true">·</span>
-  <span>Pagament segur amb Stripe</span>
+  <span>Comandes per Instagram: <strong>@elglopet</strong></span>
   <span class="announce__sep" aria-hidden="true">·</span>
-  <span>14 dies per desistir</span>
+  <span>14 dies per retornar-la</span>
 </div></div>
 <header class="site-header">
   <div class="container site-header__inner">
@@ -42,9 +42,7 @@
     </button>
     <a class="logo" href="/"><img src="/assets/brand/el-glopet-logo.svg" alt="El Glopet, inici" width="148" height="36"></a>
     <nav class="site-nav" id="site-nav" aria-label="Principal"><ul><li><a href="/tasses/">Totes les tasses</a></li><li><a href="/tasses/paraules-d-amor/">Paraules d&#39;amor</a></li><li><a href="/tasses/paraules-de-caracter/">Paraules de caràcter</a></li><li><a href="/tasses/insults-d-autor/">Insults d&#39;autor</a></li><li><a href="/tasses/frases-amb-humor/">Frases amb humor</a></li><li><a href="/#packs">Packs</a></li><li><a href="/crea-la-teva-tassa/" class="nav-cta">Crea la teva</a></li></ul></nav>
-    <button class="cart-btn" type="button" data-cart-open aria-label="Obre la cistella (0 productes)">
-      <svg class="icon " aria-hidden="true" focusable="false"><use href="/assets/icons.svg#bag"></use></svg><span class="cart-btn__count" data-cart-count>0</span>
-    </button>
+    <a class="cart-btn" href="https://www.instagram.com/elglopet/" target="_blank" rel="noopener" aria-label="El Glopet a Instagram"><svg class="icon " aria-hidden="true" focusable="false"><use href="/assets/icons.svg#instagram"></use></svg></a>
   </div>
 </header>
 <main id="main">
@@ -93,8 +91,7 @@
     <nav aria-label="Ajuda">
       <h2 class="site-footer__title">Ajuda</h2>
       <ul>
-        <li><a href="/enviaments-i-devolucions/">Enviaments i devolucions</a></li>
-        <li><a href="/condicions-venda/">Condicions de venda</a></li>
+        <li><a href="https://www.instagram.com/elglopet/" target="_blank" rel="noopener">Instagram @elglopet</a></li>
         <li><a href="/#contacte">Contacte</a></li>
         <li><a href="/newsletter/">Newsletter</a></li>
       </ul>
@@ -113,24 +110,6 @@
     <p>© 2026 El Glopet. Preus en euros.</p>
   </div>
 </footer>
-<div class="drawer-backdrop" data-cart-close hidden></div>
-<aside class="drawer" id="cart" role="dialog" aria-modal="true" aria-labelledby="cart-title" aria-hidden="true" data-cart>
-  <div class="drawer__head">
-    <h2 id="cart-title">La teva cistella</h2>
-    <button type="button" class="icon-btn" data-cart-close aria-label="Tanca la cistella"><svg class="icon " aria-hidden="true" focusable="false"><use href="/assets/icons.svg#close"></use></svg></button>
-  </div>
-  <div class="drawer__body" data-cart-items></div>
-  <div class="drawer__upsell" data-cart-upsell hidden></div>
-  <div class="drawer__foot" data-cart-foot hidden>
-    <dl class="totals">
-      <div><dt>Subtotal</dt><dd data-cart-subtotal></dd></div>
-      <div><dt>Enviament</dt><dd data-cart-shipping></dd></div>
-      <div class="totals__grand"><dt>Total</dt><dd data-cart-total></dd></div>
-    </dl>
-    <button type="button" class="btn btn--primary btn--block btn--lg" data-checkout>Finalitza la compra</button>
-    <p class="drawer__legal"><svg class="icon " aria-hidden="true" focusable="false"><use href="/assets/icons.svg#lock"></use></svg> Pagament segur amb Stripe. En continuar acceptes les <a href="/condicions-venda/">condicions de venda</a>.</p>
-  </div>
-</aside>
 <div class="toast" role="status" aria-live="polite" data-toast></div>
 </body>
 </html>

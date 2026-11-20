@@ -1,8 +1,11 @@
 {
   "brand": "El Glopet",
   "tagline": "Paraules catalanes que es mereixen una tassa",
-  "siteUrl": "https://tassademots.cat",
-  "contactEmail": "hola@tassademots.cat",
+  "siteUrl": "https://elglopet.com",
+  "contactEmail": "hola@elglopet.com",
+  "mode": "aparador",
+  "_modeNota": "«aparador»: es mostren les tasses i les comandes es fan per missatge directe a Instagram (sense cistella ni pagament a la web). «botiga»: cistella i pagament amb Stripe.",
+  "instagram": "elglopet",
   "locale": "ca_ES",
   "newsletterConsent": {
     "version": "2026-11-17",
@@ -209,52 +212,73 @@
     {
       "id": "vermell",
       "name": "Vermell",
-      "hex": "#C41E3A"
+      "hex": "#C41E3A",
+      "stock": 5
     },
     {
       "id": "taronja",
       "name": "Taronja",
-      "hex": "#E06A28"
+      "hex": "#E06A28",
+      "stock": 5
     },
     {
       "id": "groc",
       "name": "Groc",
-      "hex": "#F2D530"
+      "hex": "#F2D530",
+      "stock": 5
     },
     {
       "id": "verd-llima",
       "name": "Verd llima",
-      "hex": "#A4C449"
+      "hex": "#A4C449",
+      "stock": 5
     },
     {
       "id": "verd",
       "name": "Verd",
-      "hex": "#4F9A55"
+      "hex": "#4F9A55",
+      "stock": 5
     },
     {
       "id": "blau-cel",
       "name": "Blau cel",
-      "hex": "#3FA7E0"
+      "hex": "#3FA7E0",
+      "stock": 5
     },
     {
       "id": "blau",
       "name": "Blau",
-      "hex": "#2B3A7A"
-    },
-    {
-      "id": "blau-mari",
-      "name": "Blau marí",
-      "hex": "#1C2A3E"
+      "hex": "#2B3A7A",
+      "stock": 5
     },
     {
       "id": "rosa",
       "name": "Rosa",
-      "hex": "#E58FB2"
+      "hex": "#E58FB2",
+      "stock": 5
     },
     {
       "id": "negre",
       "name": "Negre",
-      "hex": "#1F1F20"
+      "hex": "#1F1F20",
+      "stock": 5
     }
-  ]
+  ],
+  "cookies": {
+    "_nota": "Categories opcionals. Si la llista té alguna categoria, es mostra el bàner de consentiment. Les eines d'aquestes categories només es carreguen si la persona les accepta.",
+    "consentVersion": 2,
+    "optional": [
+      {
+        "id": "analytics",
+        "name": "Analítiques",
+        "text": "Google Analytics: ens diu, de manera agregada, quantes persones visiten la botiga i quines tasses miren, per millorar-la."
+      }
+    ]
+  },
+  "analytics": {
+    "_nota": "ID de mesura de Google Analytics 4 (G-XXXXXXXXXX). Mentre sigui null no es carrega res, encara que la persona ho accepti. A Google Analytics, posa la retenció de dades a 14 mesos.",
+    "ga4Id": null
+  },
+  "customReturns": true,
+  "_notaEstoc": "colors[].stock: tasses en blanc que queden de cada color (totes les paraules en comparteixen l'estoc). 0 = exhaurit; sense valor = sense límit."
 }

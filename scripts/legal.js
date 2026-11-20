@@ -7,10 +7,13 @@
 const { site, esc, euro, value, PRICE, SHIPPING, FREE_SHIPPING, DELIVERY } = require('./lib');
 
 const L = site.legal;
+const CUSTOM_RETURNS = site.customReturns === true;
+const SHOP = site.mode !== 'aparador';
+const IG = `@${esc(site.instagram)}`;
 const owner = () => value(L.ownerName, 'nom i cognoms o raó social del titular');
 const taxId = () => value(L.taxId, 'NIF/CIF del titular');
 const address = () => value(L.address, 'domicili del titular');
-const email = esc(site.contactEmail);
+const email = value(site.contactEmail, 'correu electrònic de contacte');
 const updated = new Date().toLocaleDateString('ca-ES', { year: 'numeric', month: 'long' });
 
 const pages = {
@@ -71,11 +74,17 @@ const pages = {
 
 <h2>2. Quines dades tractem i per a què</h2>
 
-<h3>Comandes</h3>
-<p><strong>Dades:</strong> nom, adreça d'enviament, correu electrònic, telèfon i detall de la comanda. Les dades de la targeta les gestiona directament Stripe; nosaltres no les veiem ni les desem.<br>
+${SHOP ? '' : `<h3>Comandes per Instagram</h3>
+<p><strong>Dades:</strong> les que ens facis arribar per missatge directe a ${IG} per fer una comanda: nom, adreça d'enviament, telèfon, correu electrònic i les tasses que vols (inclòs el text i el dibuix de les personalitzades).<br>
+<strong>Finalitat:</strong> preparar la comanda, enviar-la, cobrar-la i atendre't després.<br>
+<strong>Base legal:</strong> execució del contracte (art. 6.1.b RGPD) i obligacions fiscals i comptables (art. 6.1.c RGPD).<br>
+<strong>Conservació:</strong> el temps que exigeixin les obligacions fiscals i mercantils (amb caràcter general, fins a 6 anys).<br>
+Instagram és un servei de Meta Platforms Ireland Limited, que tracta les converses d'acord amb la seva pròpia <a href="https://privacycenter.instagram.com/policy" rel="noopener" target="_blank">política de privacitat</a>.</p>
+`}${SHOP ? `<h3>Comandes</h3>
+<p><strong>Dades:</strong> nom, adreça d'enviament, correu electrònic, telèfon i detall de la comanda (inclòs el text i el dibuix de les tasses personalitzades). Les dades de la targeta les gestiona directament Stripe; nosaltres no les veiem ni les desem.<br>
 <strong>Finalitat:</strong> gestionar la compra, l'enviament, la facturació i l'atenció postvenda.<br>
 <strong>Base legal:</strong> execució del contracte (art. 6.1.b RGPD) i compliment d'obligacions legals fiscals i comptables (art. 6.1.c RGPD).<br>
-<strong>Conservació:</strong> el temps que exigeixin les obligacions fiscals i mercantils (amb caràcter general, fins a 6 anys).</p>
+<strong>Conservació:</strong> el temps que exigeixin les obligacions fiscals i mercantils (amb caràcter general, fins a 6 anys).</p>` : ''}
 
 <h3>Formulari de contacte</h3>
 <p><strong>Dades:</strong> nom, correu electrònic i missatge.<br>
@@ -96,21 +105,29 @@ Pots donar-te de baixa des de l'enllaç que hi ha a cada correu. Cal tenir almen
 <strong>Base legal:</strong> el teu consentiment en enviar-la (art. 6.1.a RGPD) i el nostre interès legítim a evitar abusos (art. 6.1.f RGPD).<br>
 <strong>Conservació:</strong> les valoracions publicades, fins que en demanis la retirada; les rebutjades s'esborren en revisar-les. L'identificador xifrat que impedeix valorar dues vegades la mateixa tassa es conserva 12 mesos.</p>
 
+<h3>Estadístiques del web (Google Analytics)</h3>
+<p>Només si ho acceptes a l'avís de cookies.<br>
+<strong>Dades:</strong> identificadors pseudònims del navegador, pàgines que visites, tasses que afegeixes a la cistella, tipus de dispositiu i ubicació aproximada (ciutat o país). Google Analytics 4 no desa l'adreça IP completa.<br>
+<strong>Finalitat:</strong> saber, de manera agregada, quantes persones visiten la botiga i què els interessa, per millorar-la.<br>
+<strong>Base legal:</strong> el teu consentiment (art. 6.1.a RGPD i art. 22.2 LSSI-CE). El pots retirar quan vulguis des de «Configura les cookies», al peu de la web.<br>
+<strong>Conservació:</strong> 14 mesos.</p>
+
 <h3>Seguretat dels formularis</h3>
 <p>Per frenar el correu brossa i els enviaments automàtics, calculem un identificador xifrat i irreversible a partir de l'adreça IP i no desem mai l'adreça IP. Els comptadors diaris s'esborren als 2 dies. Base legal: interès legítim (art. 6.1.f RGPD).</p>
 
 <h2>3. A qui comuniquem les dades</h2>
 <p>No venem ni cedim les teves dades. Les comuniquem només als proveïdors necessaris, que actuen com a encarregats del tractament:</p>
 <ul>
-  <li><strong>Stripe</strong> — pagaments. <a href="https://stripe.com/es/privacy" rel="noopener" target="_blank">Política de privacitat de Stripe</a>.</li>
+  ${SHOP ? '<li><strong>Stripe</strong> — pagaments. <a href="https://stripe.com/es/privacy" rel="noopener" target="_blank">Política de privacitat de Stripe</a>.</li>' : ''}
   <li><strong>Netlify</strong> — allotjament del web, formulari de contacte i emmagatzematge de dades de la botiga.</li>
   <li><strong>Resend</strong> — enviament dels correus de la newsletter.</li>
+  <li><strong>Google Ireland Limited</strong> — estadístiques del web amb Google Analytics, només si ho acceptes. <a href="https://policies.google.com/privacy?hl=ca" rel="noopener" target="_blank">Política de privacitat de Google</a>.</li>
   <li><strong>Empresa de transport:</strong> ${value(site.shipping.carrier, 'empresa de transport')} — nom, adreça i telèfon per lliurar la comanda.</li>
 </ul>
-<p>Stripe, Netlify i Resend poden tractar dades fora de l'Espai Econòmic Europeu, amb les garanties previstes al RGPD (Marc de privacitat de dades UE-EUA o clàusules contractuals tipus).</p>
+<p>${SHOP ? 'Stripe, ' : ''}Netlify, Resend i Google poden tractar dades fora de l'Espai Econòmic Europeu, amb les garanties previstes al RGPD (Marc de privacitat de dades UE-EUA o clàusules contractuals tipus).</p>
 
 <h2>4. Els teus drets</h2>
-<p>Pots exercir els drets d'accés, rectificació, supressió, oposició, limitació del tractament i portabilitat, i retirar el consentiment en qualsevol moment, escrivint a ${email}. Si no estàs d'acord amb la resposta, pots reclamar davant l'Agència Espanyola de Protecció de Dades (<a href="https://www.aepd.es" rel="noopener" target="_blank">aepd.es</a>).</p>
+<p>Pots exercir els drets d'accés, rectificació, supressió, oposició, limitació del tractament i portabilitat, i retirar el consentiment en qualsevol moment, escrivint a ${email}. Et respondrem en el termini d'un mes. No prenem decisions automatitzades ni fem perfils amb les teves dades. Si no estàs d'acord amb la resposta, pots reclamar davant l'Agència Espanyola de Protecció de Dades (<a href="https://www.aepd.es" rel="noopener" target="_blank">aepd.es</a>).</p>
 
 <h2>5. Seguretat</h2>
 <p>La web funciona sempre amb connexió xifrada (HTTPS), les zones d'administració estan protegides amb contrasenya i només hi accedeix el titular.</p>`,
@@ -124,23 +141,37 @@ Pots donar-te de baixa des de l'enllaç que hi ha a cada correu. Cal tenir almen
 <p>Les cookies i l'emmagatzematge local són petits fitxers o dades que el web desa al teu navegador.</p>
 
 <h2>2. Què fem servir</h2>
-<p>Ara mateix <strong>només fem servir elements tècnics necessaris</strong> perquè la botiga funcioni. No fem servir cookies d'analítica, de publicitat ni de xarxes socials.</p>
+<h3>Necessàries (sempre actives)</h3>
+<p>Són imprescindibles perquè la botiga funcioni i no requereixen el teu consentiment (art. 22.2 LSSI-CE).</p>
 <div class="table-wrap"><table>
   <thead><tr><th>Nom</th><th>Tipus</th><th>Per a què serveix</th><th>Durada</th></tr></thead>
   <tbody>
-    <tr><td><code>tdm-cart</code></td><td>Emmagatzematge local (propi)</td><td>Recordar què tens a la cistella.</td><td>Fins que la buidis o acabis la compra</td></tr>
-    <tr><td><code>tdm-consent</code></td><td>Emmagatzematge local (propi)</td><td>Recordar què has triat en aquest avís de cookies.</td><td>12 mesos</td></tr>
-    <tr><td>Cookies de Stripe</td><td>De tercers (stripe.com)</td><td>Processar el pagament i prevenir el frau. Només es creen a la pàgina de pagament de Stripe.</td><td>Segons <a href="https://stripe.com/es/cookies-policy/legal" rel="noopener" target="_blank">Stripe</a></td></tr>
+    ${SHOP ? '<tr><td><code>tdm-cart</code></td><td>Emmagatzematge local (propi)</td><td>Recordar què tens a la cistella.</td><td>Fins que la buidis o acabis la compra</td></tr>' : ''}
+    <tr><td><code>tdm-consent</code></td><td>Emmagatzematge local (propi)</td><td>Recordar què has triat a l'avís de cookies.</td><td>12 mesos</td></tr>
+    <tr><td><code>tdm-admin</code></td><td>Emmagatzematge de sessió (propi)</td><td>Mantenir la sessió a la zona d'administració. Només per al titular de la botiga.</td><td>Fins que tanques la pestanya</td></tr>
+    ${SHOP ? '<tr><td>Cookies de Stripe</td><td>De tercers (stripe.com)</td><td>Processar el pagament i prevenir el frau. Només es creen a la pàgina de pagament de Stripe.</td><td>Segons <a href="https://stripe.com/es/cookies-policy/legal" rel="noopener" target="_blank">Stripe</a></td></tr>' : ''}
   </tbody>
 </table></div>
 
-<h2>3. Com configurar-les</h2>
-<p>Pots canviar la teva elecció quan vulguis:</p>
+<h3>Analítiques (només si les acceptes)</h3>
+<p>Fem servir Google Analytics 4, de Google Ireland Limited, per saber quantes persones visiten la botiga, quines pàgines i tasses miren i d'on venen, sempre de manera agregada. No es carreguen fins que les acceptes.</p>
+<div class="table-wrap"><table>
+  <thead><tr><th>Nom</th><th>Tipus</th><th>Per a què serveix</th><th>Durada</th></tr></thead>
+  <tbody>
+    <tr><td><code>_ga</code></td><td>De tercers (Google Analytics)</td><td>Distingir visitants de manera pseudònima.</td><td>2 anys</td></tr>
+    <tr><td><code>_ga_&lt;ID&gt;</code></td><td>De tercers (Google Analytics)</td><td>Mantenir l'estat de la sessió de visita.</td><td>2 anys</td></tr>
+  </tbody>
+</table></div>
+<p>Google pot tractar aquestes dades fora de l'Espai Econòmic Europeu, amb les garanties del Marc de privacitat de dades UE-EUA. Més informació a la <a href="https://policies.google.com/technologies/cookies?hl=ca" rel="noopener" target="_blank">política de cookies de Google</a>.</p>
+<p>No fem servir cookies de publicitat ni de xarxes socials.</p>
+
+<h2>3. Com acceptar-les, rebutjar-les o canviar d'opinió</h2>
+<p>La primera vegada que entres, un avís et deixa acceptar-les, rebutjar-les o triar-les una per una. Rebutjar-les és tan fàcil com acceptar-les i la botiga funciona igual. Pots canviar la teva elecció quan vulguis:</p>
 <p><button type="button" class="btn btn--ghost" data-cookie-settings>Configura les cookies</button></p>
-<p>També pots esborrar o bloquejar aquests elements des de la configuració del teu navegador. Si bloqueges l'emmagatzematge local, la cistella no funcionarà.</p>
+<p>Si retires el consentiment, esborrem les cookies de Google Analytics del teu navegador. També pots esborrar-les o bloquejar-les des de la configuració del navegador. Si bloqueges l'emmagatzematge local, la cistella no funcionarà.</p>
 
 <h2>4. Canvis</h2>
-<p>Si algun dia afegim eines d'analítica o de publicitat, les afegirem a aquesta llista i no s'activaran fins que ho acceptis.</p>`,
+<p>Si afegim altres eines, les afegirem a aquesta llista i et tornarem a demanar el consentiment.</p>`,
   },
 
   'condicions-venda': {
@@ -155,7 +186,7 @@ Pots donar-te de baixa des de l'enllaç que hi ha a cada correu. Cal tenir almen
 <p>Aquestes condicions regulen les compres fetes a ${esc(site.siteUrl)}. Per comprar cal ser major d'edat. En finalitzar una comanda acceptes aquestes condicions.</p>
 
 <h2>3. Preus i impostos</h2>
-<p>El preu habitual de cada tassa és <strong>${PRICE}</strong>, inclosa la tassa personalitzada. Algunes tasses i els packs poden tenir un preu d'oferta, que s'indica a la fitxa i a la cistella. Els preus s'indiquen en euros.</p>
+<p>El preu habitual de cada tassa és <strong>${PRICE}</strong>, inclosa la tassa personalitzada. Algunes tasses i els packs poden tenir un preu d'oferta, que s'indica a la fitxa i a la cistella. Quan es mostra un preu anterior ratllat, és el preu més baix que ha tingut aquella tassa durant els 30 dies anteriors a l'oferta. El preu que pagues és el que veus a la cistella i a la pàgina de pagament en el moment de la compra. Els preus s'indiquen en euros.</p>
 <p>Impostos: ${value(L.vatInfo, 'indicar si el preu inclou l\'IVA i el règim fiscal aplicable')}</p>
 <p>${FREE_SHIPPING ? "L'enviament és gratuït: el preu de les tasses ja l'inclou." : `Les despeses d'enviament (${SHIPPING} per comanda) es mostren a la cistella i a la pàgina de pagament abans de pagar.`}</p>
 
@@ -174,15 +205,31 @@ Pots donar-te de baixa des de l'enllaç que hi ha a cada correu. Cal tenir almen
 <h2>6. Enviament</h2>
 <p>Enviem a ${esc(site.shipping.countriesLabel)}. Termini estimat: ${DELIVERY} des del pagament. Cost: ${FREE_SHIPPING ? 'gratuït' : `${SHIPPING} per comanda`}. Més informació a <a href="/enviaments-i-devolucions/">Enviaments i devolucions</a>.</p>
 
-<h2>7. Dret de desistiment</h2>
-<p>Tens <strong>14 dies naturals</strong> des que reps la comanda per desistir de la compra sense haver de donar cap explicació (art. 102 i següents del TRLGDCU).</p>
-<p>Per fer-ho, envia'ns una declaració inequívoca a ${email}. Pots fer servir aquest model (no és obligatori):</p>
+<h2>7. Dret de desistiment (devolució en 14 dies)</h2>
+<p>Tens <strong>14 dies naturals</strong> per desistir de la compra sense haver de donar cap explicació (art. 102 i següents del TRLGDCU). El termini comença el dia que reps la comanda o, si arriba en diversos paquets, el dia que reps l'últim.</p>
+<p><strong>Com fer-ho.</strong> Envia'ns una declaració clara a ${email} abans que acabi el termini. Pots fer servir aquest model, però no és obligatori:</p>
 <blockquote class="legal-model">A l'atenció de ${owner()}, ${address()}, ${email}:<br>
 Per la present us comunico que desisteixo del contracte de venda dels béns següents: [tasses] · Comanda feta el: [data] · Rebuda el: [data] · Nom: [nom] · Adreça: [adreça] · Data i signatura (només si s'envia en paper).</blockquote>
-<p>Et retornarem l'import pagat, incloses les despeses d'enviament estàndard, en un termini màxim de 14 dies des que ens comuniquis el desistiment, pel mateix mitjà de pagament. Podem esperar a fer el reemborsament fins que rebem les tasses o ens enviïs el justificant d'enviament. Les despeses de retorn van a càrrec teu.</p>
+<p><strong>Retorn de les tasses.</strong> Les has d'enviar a l'adreça que t'indicarem en un màxim de 14 dies naturals des que ens comuniquis el desistiment. Les despeses directes del retorn van a càrrec teu. Només respons de la pèrdua de valor de les tasses si les has fet servir més enllà del que cal per comprovar-ne la naturalesa i les característiques.</p>
+<p><strong>Reemborsament.</strong> Et retornarem tot l'import pagat, incloses les despeses d'enviament inicials si n'hi havia, en un màxim de 14 dies naturals des que ens comuniquis el desistiment, pel mateix mitjà de pagament i sense cap cost per a tu. Podem esperar a fer-lo fins que rebem les tasses o ens enviïs el justificant d'enviament. Si desisteixes d'una part d'un pack, et retornarem la part proporcional del preu del pack.</p>
 
-<h2>8. Garantia</h2>
-<p>Les tasses tenen la garantia legal de conformitat de <strong>3 anys</strong> des del lliurament (art. 120 TRLGDCU). Si una tassa arriba trencada o amb un defecte, escriu-nos a ${email} amb fotos i ho solucionarem amb la reparació, la substitució, una rebaixa de preu o el reemborsament, segons la llei.</p>
+<h3 id="personalitzades">Tasses personalitzades</h3>
+${CUSTOM_RETURNS
+  ? `<p>La llei permet excloure del dret de desistiment els productes fets a mida (art. 103.c del TRLGDCU). Nosaltres no ho fem: <strong>les tasses que dissenyes amb «Crea la teva tassa» també les pots retornar en 14 dies</strong>, en les mateixes condicions que la resta.</p>`
+  : `<p>Les tasses que dissenyes amb el configurador «Crea la teva tassa» es fabriquen a mida amb el teu text i el teu dibuix. Per això <strong>no tenen dret de desistiment</strong> (art. 103.c del TRLGDCU), i així t'ho indiquem abans de comprar-les. Sí que tenen tota la garantia legal.</p>`}
+<p>Revisem cada disseny abans d'imprimir-lo. Si conté textos ofensius, marques registrades o no es pot imprimir bé, t'escriurem abans de fabricar-lo i, si no ho podem resoldre, et retornarem l'import.</p>
+
+<h2>8. Garanties legals</h2>
+<p><strong>Transport.</strong> Fins que reps la comanda, el risc de pèrdua o de danys durant el transport és nostre. Si una tassa arriba trencada, te l'enviem de nou o et retornem l'import, sense cap cost.</p>
+<p><strong>Garantia de conformitat de 3 anys</strong> des del lliurament (art. 114 i següents del TRLGDCU). Respondrem de qualsevol falta de conformitat: defectes de fabricació o d'impressió, una tassa que no correspon a la que vas triar (paraula, disseny o color) o que no té les qualitats que hi anunciem.</p>
+<ul>
+  <li>Si el defecte apareix durant els <strong>2 primers anys</strong>, es presumeix que ja existia en el moment del lliurament: no has de demostrar res.</li>
+  <li>Pots triar entre la <strong>reparació o la substitució</strong> de la tassa, que farem gratuïtament, en un termini raonable i sense molèsties per a tu. Totes les despeses (enviaments, materials i mà d'obra) van a càrrec nostre.</li>
+  <li>Si la substitució no és possible, no la fem en un termini raonable o el defecte és greu, pots demanar una <strong>rebaixa proporcional del preu</strong> o la <strong>resolució del contracte</strong> amb el reemborsament de l'import.</li>
+  <li>Mentre no ho resolguem, pots suspendre el pagament de la part pendent, si n'hi ha.</li>
+</ul>
+<p>La garantia no cobreix els danys causats després del lliurament per un cop, una caiguda o un ús inadequat.</p>
+<p>Per fer-la servir, escriu-nos a ${email} amb fotos de la tassa i la data o el número de la comanda.</p>
 
 <h2>9. Atenció i reclamacions</h2>
 <p>Pots fer-nos arribar qualsevol queixa a ${email}. També pots adreçar-te a l'Agència Catalana del Consum (<a href="https://consum.gencat.cat" rel="noopener" target="_blank">consum.gencat.cat</a>) o a la junta arbitral de consum del teu territori.</p>
@@ -207,20 +254,26 @@ Per la present us comunico que desisteixo del contracte de venda dels béns seg�
 </ul>
 <p>Veuràs el cost d'enviament a la cistella i a la pàgina de pagament abans de pagar.</p>
 
-<h2>Si la tassa arriba trencada</h2>
-<p>Escriu-nos a ${email} amb una foto del paquet i de la tassa, i el número o la data de la comanda. Ho resoldrem d'acord amb la garantia legal: reparació o substitució de la tassa i, si no és possible, rebaixa del preu o reemborsament.</p>
+<h2>Si la tassa arriba trencada o amb defectes</h2>
+<p>Escriu-nos a ${email} amb una foto del paquet i de la tassa, i la data o el número de la comanda. Te l'enviem de nou o et retornem l'import, sense cap cost per a tu.</p>
 
-<h2>Devolucions (dret de desistiment)</h2>
+<h2>Devolucions en 14 dies</h2>
 <ol>
-  <li>Tens 14 dies naturals des que reps la comanda.</li>
-  <li>Escriu-nos a ${email} dient que vols retornar la comanda (no cal explicar per què).</li>
-  <li>Envia les tasses a l'adreça que t'indicarem. El cost del retorn va a càrrec teu.</li>
-  <li>Et retornem l'import, incloses les despeses d'enviament estàndard, en un màxim de 14 dies.</li>
+  <li>Tens 14 dies naturals des que reps la comanda per retornar-la, sense haver de donar cap explicació.</li>
+  <li>Escriu-nos a ${email} dient que vols retornar la comanda.</li>
+  <li>Envia les tasses a l'adreça que t'indicarem en un màxim de 14 dies. El cost del retorn va a càrrec teu.</li>
+  <li>Et retornem tot l'import, incloses les despeses d'enviament inicials si n'hi havia, en un màxim de 14 dies.</li>
 </ol>
+<p>${CUSTOM_RETURNS ? 'Això també val per a les tasses personalitzades (fetes amb «Crea la teva tassa»).' : 'Les tasses personalitzades (fetes amb «Crea la teva tassa») no es poden retornar per desistiment perquè es fan a mida, però sí que les canviem o te\'n retornem l\'import si arriben amb defectes.'}</p>
 <p>Tots els detalls són a les <a href="/condicions-venda/">condicions de venda</a>.</p>
 
-<h2>Garantia</h2>
-<p>3 anys de garantia legal de conformitat des del lliurament.</p>
+<h2>Garanties</h2>
+<ul>
+  <li><strong>3 anys de garantia legal</strong> de conformitat des del lliurament.</li>
+  <li>Si el defecte apareix durant els 2 primers anys, es presumeix que ja hi era: no has de demostrar res.</li>
+  <li>Reparació o substitució gratuïtes i, si no és possible, rebaixa del preu o reemborsament.</li>
+  <li>El risc del transport és nostre fins que reps la comanda.</li>
+</ul>
 
 <h2>Preus</h2>
 <p>Preu habitual per tassa: ${PRICE}, enviament inclòs. Impostos: ${value(L.vatInfo, 'indicar si el preu inclou l\'IVA i el règim fiscal aplicable')}</p>`,

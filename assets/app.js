@@ -8,7 +8,6 @@
   var API = '/.netlify/functions/';
   var CART_KEY = 'tdm-cart';
   var CONSENT_KEY = 'tdm-consent';
-  var CONSENT_VERSION = 1;
 
   var $ = function (sel, root) { return (root || document).querySelector(sel); };
   var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
@@ -115,6 +114,8 @@
     return cart.find(function (i) { return keyOf(i) === k; });
   }
 
+  function gaEvent(event, params) { if (window.gtag) window.gtag('event', event, params); }
+
   function add(slug, qty, color) {
     var product = CAT.products[slug];
     if (!product) return false;
@@ -124,6 +125,7 @@
     var line = findLine(item);
     if (line) line.qty += item.qty; else cart.push(item);
     save(); bump();
+    gaEvent('add_to_cart', { currency: 'EUR', value: product.priceCents * item.qty / 100, items: [{ item_id: slug, item_name: product.name, item_variant: item.color || undefined, price: product.priceCents / 100, quantity: item.qty }] });
     return true;
   }
   function addPack(id) {
@@ -349,6 +351,7 @@
       checkoutBtn.disabled = true;
       var label = checkoutBtn.textContent;
       checkoutBtn.textContent = 'Obrint el pagament segur…';
+      gaEvent('begin_checkout', { currency: 'EUR', value: cart.reduce(function (s, i) { return s + unitPrice(i) * i.qty; }, 0) / 100 });
       postJSON('create-checkout-session', { items: cart.map(function (i) { return { type: i.type, id: i.id, color: i.color, design: i.design, qty: i.qty }; }) })
         .then(function (data) { if (!data.url) throw new Error('no-url'); window.location.href = data.url; })
         .catch(function (err) {
@@ -390,8 +393,14 @@
   var picker = $('[data-color-picker]');
   if (picker) {
     var colorName = $('[data-color-name]', picker);
+    var colorLeft = $('[data-color-left]', picker);
     var applyColor = function (input) {
       colorName.textContent = input.getAttribute('data-name');
+      if (colorLeft) {
+        var left = input.getAttribute('data-left');
+        colorLeft.hidden = !left;
+        colorLeft.textContent = !left ? '' : left === '1' ? 'Només en queda 1 en aquest color.' : 'Només en queden ' + left + ' en aquest color.';
+      }
       var slides = $$('.gallery__img');
       var thumbs = $$('.gallery__thumb img');
       var setImg = function (img, src) {
@@ -414,6 +423,26 @@
     var pre = wanted && $('[data-color-input][value="' + wanted + '"]', picker);
     if (pre) { pre.checked = true; applyColor(pre); }
   }
+
+  // ---------- Mode aparador: comandes per missatge directe a Instagram ----------
+  function copyText(text) {
+    try { return navigator.clipboard.writeText(text).then(function () { return true; }, function () { return false; }); }
+    catch (e) { return Promise.resolve(false); }
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('[data-ig-order]');
+    if (!a) return;
+    var msg = a.getAttribute('data-ig-order');
+    if (a.hasAttribute('data-ig-color')) {
+      var col = $('[data-color-input]:checked');
+      if (col) msg += ', amb l\'interior i la nansa de color ' + col.getAttribute('data-name').toLowerCase();
+      msg += '.';
+    }
+    copyText(msg).then(function (ok) {
+      toast(ok ? 'Hem copiat el missatge: enganxa\'l al xat d\'Instagram.' : 'Escriu-nos quina tassa vols al xat d\'Instagram.');
+    });
+    gaEvent('generate_lead', { method: 'instagram', item: msg });
+  });
 
   // ---------- Recomanador de regals ----------
   var finder = $('#recomanador');
@@ -639,24 +668,43 @@
   }
 
   // ---------- Consentiment de cookies ----------
-  // Ara mateix només hi ha emmagatzematge tècnic necessari. Si s'afegeix
-  // analítica o publicitat, cal carregar-la només dins de TDMConsent.onGrant().
+  // Les eines opcionals (Google Analytics) només es carreguen dins de
+  // TDMConsent.onGrant(), és a dir, quan la persona les ha acceptat.
+  var CONSENT_V = CAT.consentVersion || 1;
+  var OPTIONAL = CAT.optionalCookies || [];
   var grantHandlers = [];
   window.TDMConsent = {
     get: function () {
       var c = storage.get(CONSENT_KEY);
       var fresh = c && Date.now() - new Date(c.date).getTime() < 365 * 86400000;
-      return c && c.version === CONSENT_VERSION && fresh ? c : null;
+      return c && c.version === CONSENT_V && fresh ? c : null;
     },
     has: function (cat) { var c = this.get(); return !!(c && c[cat]); },
     onGrant: function (cat, fn) { grantHandlers.push({ cat: cat, fn: fn }); if (this.has(cat)) fn(); },
   };
 
-  function saveConsent(analytics) {
-    var record = { version: CONSENT_VERSION, necessary: true, analytics: !!analytics, date: new Date().toISOString() };
+  // Esborra les cookies de Google Analytics si es retira el consentiment.
+  function clearAnalyticsCookies() {
+    document.cookie.split(';').forEach(function (c) {
+      var name = c.split('=')[0].trim();
+      if (!/^_ga(_|$)/.test(name)) return;
+      var host = location.hostname;
+      var domains = ['', host, '.' + host, '.' + host.split('.').slice(-2).join('.')];
+      domains.forEach(function (d) {
+        document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/' + (d ? '; domain=' + d : '');
+      });
+    });
+  }
+
+  function saveConsent(choices) {
+    var before = window.TDMConsent.get();
+    var record = { version: CONSENT_V, necessary: true, date: new Date().toISOString() };
+    OPTIONAL.forEach(function (o) { record[o.id] = !!choices[o.id]; });
     storage.set(CONSENT_KEY, record);
-    grantHandlers.forEach(function (h) { if (record[h.cat]) h.fn(); });
     closeConsent();
+    var revoked = before && OPTIONAL.some(function (o) { return before[o.id] && !record[o.id]; });
+    if (revoked) { clearAnalyticsCookies(); location.reload(); return; }
+    grantHandlers.forEach(function (h) { if (record[h.cat]) h.fn(); });
   }
 
   var consentEl;
@@ -666,32 +714,54 @@
     var current = window.TDMConsent.get();
     consentEl = document.createElement('section');
     consentEl.className = 'consent';
-    consentEl.setAttribute('aria-label', 'Preferències de cookies');
+    consentEl.setAttribute('role', 'dialog');
+    consentEl.setAttribute('aria-labelledby', 'consent-title');
     consentEl.innerHTML =
-      '<h2>Cookies</h2>' +
-      '<p>Fem servir només l\'emmagatzematge necessari perquè la botiga funcioni (per exemple, recordar la cistella). No fem servir cookies d\'analítica ni de publicitat. <a href="/cookies/">Més informació</a>.</p>' +
+      '<h2 id="consent-title">Cookies</h2>' +
+      '<p>Fem servir l\'emmagatzematge necessari perquè la botiga funcioni (per exemple, recordar la cistella). Amb el teu permís, també fem servir Google Analytics per saber quantes persones ens visiten i millorar la botiga. No fem servir cookies de publicitat. <a href="/cookies/">Més informació</a>.</p>' +
       (configure ? '<div class="consent__options">' +
         '<label class="consent__option"><strong>Necessàries</strong><span>Cistella i preferències de cookies. Sempre actives.</span><input type="checkbox" checked disabled></label>' +
-        '<label class="consent__option"><strong>Analítiques i de màrqueting</strong><span>Ara mateix no en fem servir cap. Si n\'afegim, només s\'activaran si ho acceptes aquí.</span><input type="checkbox" data-consent-analytics' + (current && current.analytics ? ' checked' : '') + '></label>' +
+        OPTIONAL.map(function (o) {
+          return '<label class="consent__option"><strong>' + esc(o.name) + '</strong><span>' + esc(o.text) + '</span><input type="checkbox" data-consent-cat="' + esc(o.id) + '"' + (current && current[o.id] ? ' checked' : '') + '></label>';
+        }).join('') +
         '</div>' : '') +
       '<div class="consent__actions">' +
-      '<button type="button" class="btn btn--primary" data-consent="reject">Rebutja les opcionals</button>' +
+      '<button type="button" class="btn btn--primary" data-consent="reject">Rebutja-les</button>' +
       (configure ? '<button type="button" class="btn btn--ghost" data-consent="save">Desa la configuració</button>'
         : '<button type="button" class="btn btn--ghost" data-consent="configure">Configura</button>') +
-      '<button type="button" class="btn btn--primary" data-consent="accept">Accepta-les totes</button>' +
+      '<button type="button" class="btn btn--primary" data-consent="accept">Accepta-les</button>' +
       '</div>';
     document.body.appendChild(consentEl);
     consentEl.addEventListener('click', function (e) {
-      var b = e.target.closest('[data-consent]');
-      if (!b) return;
-      var a = b.getAttribute('data-consent');
-      if (a === 'accept') saveConsent(true);
-      if (a === 'reject') saveConsent(false);
-      if (a === 'configure') showConsent(true);
-      if (a === 'save') saveConsent($('[data-consent-analytics]', consentEl).checked);
+      var btn = e.target.closest('[data-consent]');
+      if (!btn) return;
+      var act = btn.getAttribute('data-consent');
+      var all = {}; OPTIONAL.forEach(function (o) { all[o.id] = true; });
+      if (act === 'accept') saveConsent(all);
+      if (act === 'reject') saveConsent({});
+      if (act === 'configure') showConsent(true);
+      if (act === 'save') {
+        var picked = {};
+        $$('[data-consent-cat]', consentEl).forEach(function (i) { picked[i.getAttribute('data-consent-cat')] = i.checked; });
+        saveConsent(picked);
+      }
     });
   }
 
-  document.addEventListener('click', function (e) { if (e.target.closest('[data-cookie-settings]')) showConsent(true); });
-  if (!window.TDMConsent.get() && !document.body.classList.contains('page-admin')) showConsent(false);
+  // Google Analytics 4: només amb consentiment i amb un ID configurat a data/site.json.
+  window.TDMConsent.onGrant('analytics', function () {
+    if (!CAT.ga4Id || window.gtag) return;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    window.gtag('js', new Date());
+    window.gtag('config', CAT.ga4Id);
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(CAT.ga4Id);
+    document.head.appendChild(s);
+  });
+
+  var needsConsent = OPTIONAL.length > 0;
+  document.addEventListener('click', function (e) { if (needsConsent && e.target.closest('[data-cookie-settings]')) showConsent(true); });
+  if (needsConsent && !window.TDMConsent.get() && !document.body.classList.contains('page-admin')) showConsent(false);
 })();
