@@ -357,11 +357,13 @@ test('instagram: només publica el que està aprovat i toca, una vegada, i sense
     for (const img of p.images) assert.ok(require('fs').existsSync(require('path').join(__dirname, '..', img)) && /\.jpe?g$/.test(img), img);
   }
 
-  const handler = fn('instagram-publish');
+  const handler = (await import('../netlify/functions/instagram-publish.mjs')).default;
+  const body = async (res) => res.text();
   delete process.env.IG_USER_ID; delete process.env.IG_ACCESS_TOKEN;
-  assert.strictEqual((await handler(ev('POST'))).body, 'not configured');
+  assert.strictEqual(await body(await handler()), 'not configured');
 
-  // Amb claus i una publicació aprovada que toca: crea el carrusel i publica.
+  // Amb el token i una publicació aprovada que toca: crea el carrusel i publica.
+  // L'identificador del compte es demana a l'API si no hi ha IG_USER_ID.
   const calls = [];
   const realFetch = global.fetch;
   global.fetch = async (url, opts = {}) => {
@@ -369,18 +371,18 @@ test('instagram: només publica el que està aprovat i toca, una vegada, i sense
     calls.push({ url: u, body: opts.body ? Object.fromEntries(new URLSearchParams(String(opts.body))) : null });
     let data = { id: `c${calls.length}` };
     if (u.includes('refresh_access_token')) data = { access_token: 'token-nou', expires_in: 5184000 };
+    else if (u.includes('/me?')) data = { user_id: '1784', username: 'elglopet' };
     else if (u.includes('status_code')) data = { status_code: 'FINISHED' };
     else if (u.includes('media_publish')) data = { id: 'media-1' };
     return { ok: true, json: async () => data };
   };
-  process.env.IG_USER_ID = '1784';
   process.env.IG_ACCESS_TOKEN = 'token-vell';
   const post = queue.posts[0];
   const saved = { approved: post.approved, publishAt: post.publishAt };
   post.approved = true;
   post.publishAt = new Date(Date.now() - 3600 * 1000).toISOString();
   try {
-    assert.strictEqual((await handler(ev('POST'))).body, `published ${post.id}`);
+    assert.strictEqual(await body(await handler()), `published ${post.id}`);
     const creates = calls.filter((c) => c.url.endsWith('/1784/media'));
     assert.strictEqual(creates.length, post.images.length + 1);
     assert.strictEqual(creates[0].body.image_url, 'https://botiga.test' + post.images[0]);
@@ -389,7 +391,10 @@ test('instagram: només publica el que està aprovat i toca, una vegada, i sense
     assert.strictEqual(creates.at(-1).body.access_token, 'token-nou');
     assert.ok(calls.some((c) => c.url.endsWith('/1784/media_publish')));
     // La següent execució no la torna a publicar.
-    assert.strictEqual((await handler(ev('POST'))).body, 'nothing due');
+    assert.strictEqual(await body(await handler()), 'nothing due');
+    // Un token dolent no peta: queda registrat com a error.
+    global.fetch = async () => ({ ok: false, status: 400, json: async () => ({ error: { message: 'Invalid OAuth access token' } }) });
+    assert.strictEqual((await handler()).status, 500);
   } finally {
     Object.assign(post, saved);
     global.fetch = realFetch;

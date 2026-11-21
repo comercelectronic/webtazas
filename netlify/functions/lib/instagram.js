@@ -2,9 +2,9 @@
 // Instagram login»: no cal pàgina de Facebook, només un compte professional).
 //
 // Variables d'entorn a Netlify (mai al codi):
-//   IG_USER_ID       identificador del compte d'Instagram professional
 //   IG_ACCESS_TOKEN  token de llarga durada (60 dies). La funció el renova
 //                    sola i desa el token nou a Netlify Blobs.
+//   IG_USER_ID       opcional: si no hi és, es demana a l'API amb el token.
 //   IG_API_HOST      opcional, per defecte graph.instagram.com
 //   IG_API_VERSION   opcional, per defecte v23.0
 const HOST = () => process.env.IG_API_HOST || 'graph.instagram.com';
@@ -57,6 +57,17 @@ async function publish({ userId, token, images, caption }) {
   return id;
 }
 
+/** Magatzem de Netlify Blobs per al registre de publicacions i el token. */
+function igStore() {
+  const { getStore } = require('@netlify/blobs');
+  return getStore({ name: 'instagram', consistency: 'strong' });
+}
+
+/** Comprova el token i retorna { user_id, username } del compte connectat. */
+async function whoAmI(token) {
+  return api('me', { fields: 'user_id,username' }, { method: 'GET', token });
+}
+
 /** Retorna el token vigent i el renova si fa més de 20 dies. */
 async function currentToken(store) {
   const saved = await store.get('token', { type: 'json' });
@@ -96,4 +107,4 @@ function pickDue(posts, published, now = Date.now()) {
   return { due: due[0] || null, late };
 }
 
-module.exports = { publish, currentToken, pickDue, LATE_LIMIT_MS };
+module.exports = { publish, currentToken, pickDue, whoAmI, igStore, LATE_LIMIT_MS };
