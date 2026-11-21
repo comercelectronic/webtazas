@@ -349,8 +349,13 @@ test('instagram: només publica el que està aprovat i toca, una vegada, i sense
   assert.deepStrictEqual(r.late, ['massa-tard']);
   assert.strictEqual(pickDue(posts, { 'toca-a': {}, 'toca-b': {} }, now).due, null);
 
-  // La cua del repositori arriba sense res aprovat.
-  assert.ok(queue.posts.length > 0 && queue.posts.every((p) => p.approved === false));
+  // La cua del repositori: dates vàlides, sense identificadors repetits, aprovació explícita (true/false).
+  assert.ok(queue.posts.length > 0);
+  assert.strictEqual(new Set(queue.posts.map((p) => p.id)).size, queue.posts.length);
+  for (const p of queue.posts) {
+    assert.ok(typeof p.approved === 'boolean', p.id);
+    assert.ok(Number.isFinite(Date.parse(p.publishAt)) && /[+-]\d\d:\d\d$|Z$/.test(p.publishAt), `${p.id}: data amb zona horària`);
+  }
   for (const p of queue.posts) {
     assert.ok(p.caption.length <= 2200 && (p.caption.match(/#/g) || []).length <= 30, p.id);
     assert.ok(p.images.length >= 1 && p.images.length <= 10, p.id);
