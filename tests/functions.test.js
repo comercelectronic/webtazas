@@ -394,6 +394,19 @@ test('instagram: només publica el que està aprovat i toca, una vegada, i sense
     assert.ok(calls.some((c) => c.url.endsWith('/1784/media_publish')));
     // La següent execució no la torna a publicar.
     assert.strictEqual(await body(await handler()), 'nothing due');
+    // Si canvies el token a Netlify, el renovat que hi havia a Blobs es descarta.
+    const ig = require('../netlify/functions/lib/instagram');
+    const db = fakeStore('instagram');
+    assert.strictEqual(await ig.currentToken(db), 'token-nou');
+    process.env.IG_ACCESS_TOKEN = '  "IGtoken-canviat"\n';
+    assert.strictEqual(ig.envToken(), 'IGtoken-canviat');
+    const seen = [];
+    const prevFetch = global.fetch;
+    global.fetch = async (url) => { seen.push(String(url)); return { ok: false, json: async () => ({ error: { message: 'too new' } }) }; };
+    assert.strictEqual(await ig.currentToken(db), 'IGtoken-canviat');
+    assert.ok(seen[0].includes('IGtoken-canviat'));
+    global.fetch = prevFetch;
+    assert.match(ig.describeToken('EAAxyz'), /Facebook/);
     // Un token dolent no peta: queda registrat com a error.
     global.fetch = async () => ({ ok: false, status: 400, json: async () => ({ error: { message: 'Invalid OAuth access token' } }) });
     assert.strictEqual((await handler()).status, 500);
