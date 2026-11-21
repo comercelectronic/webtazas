@@ -379,6 +379,8 @@ test('instagram: només publica el que està aprovat i toca, una vegada, i sense
     return { ok: true, json: async () => data };
   };
   process.env.IG_ACCESS_TOKEN = 'token-vell';
+  const savedIgUserId = queue.igUserId;
+  delete queue.igUserId;
   const post = queue.posts[0];
   const saved = { approved: post.approved, publishAt: post.publishAt };
   post.approved = true;
@@ -406,13 +408,44 @@ test('instagram: només publica el que està aprovat i toca, una vegada, i sense
     assert.strictEqual(await ig.currentToken(db), 'IGtoken-canviat');
     assert.ok(seen[0].includes('IGtoken-canviat'));
     global.fetch = prevFetch;
-    assert.match(ig.describeToken('EAAxyz'), /Facebook/);
+    assert.match(ig.describeToken('EAAxyz'), /unificat/);
     // Un token dolent no peta: queda registrat com a error.
     global.fetch = async () => ({ ok: false, status: 400, json: async () => ({ error: { message: 'Invalid OAuth access token' } }) });
     assert.strictEqual((await handler()).status, 500);
   } finally {
     Object.assign(post, saved);
+    queue.igUserId = savedIgUserId;
     global.fetch = realFetch;
     delete process.env.IG_USER_ID; delete process.env.IG_ACCESS_TOKEN;
+  }
+
+  // Token d'inici de sessió unificat (EA…): graph.facebook.com, compte de data/instagram.json, sense renovació.
+  assert.ok(/^\d+$/.test(queue.igUserId));
+  const fbCalls = [];
+  global.fetch = async (url, opts = {}) => {
+    const u = String(url);
+    fbCalls.push({ url: u, body: opts.body ? Object.fromEntries(new URLSearchParams(String(opts.body))) : null });
+    let data = { id: `c${fbCalls.length}` };
+    if (u.includes('fields=id%2Cusername') || u.includes('fields=id,username')) data = { id: queue.igUserId, username: 'elglopet' };
+    else if (u.includes('status_code')) data = { status_code: 'FINISHED' };
+    else if (u.includes('media_publish')) data = { id: 'media-2' };
+    return { ok: true, json: async () => data };
+  };
+  process.env.IG_ACCESS_TOKEN = 'EAGtest';
+  stores.delete('instagram');
+  const post2 = queue.posts[1];
+  const saved2 = { approved: post2.approved, publishAt: post2.publishAt };
+  post2.approved = true;
+  post2.publishAt = new Date(Date.now() - 1800 * 1000).toISOString();
+  try {
+    assert.strictEqual(await body(await handler()), `published ${post2.id}`);
+    assert.ok(fbCalls.every((c) => c.url.startsWith('https://graph.facebook.com/')), 'tot va a graph.facebook.com');
+    assert.ok(!fbCalls.some((c) => c.url.includes('refresh_access_token')), 'no es renova');
+    assert.ok(fbCalls.some((c) => c.url.endsWith(`/${queue.igUserId}/media`) && c.body.image_url === 'https://botiga.test' + post2.images[0]));
+    assert.ok(fbCalls.some((c) => c.url.endsWith(`/${queue.igUserId}/media_publish`)));
+  } finally {
+    Object.assign(post2, saved2);
+    global.fetch = realFetch;
+    delete process.env.IG_ACCESS_TOKEN;
   }
 });

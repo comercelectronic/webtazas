@@ -26,8 +26,9 @@ export async function run(db) {
 
   try {
     const token = await ig.currentToken(db);
-    const account = await ig.whoAmI(token);
-    const userId = process.env.IG_USER_ID || account.user_id;
+    const configuredId = process.env.IG_USER_ID || queue.igUserId;
+    const account = await ig.whoAmI(token, configuredId);
+    const userId = configuredId || account.user_id;
     const pending = (queue.posts || []).filter((p) => p.approved === true && !published[p.id]).length;
     console.log(`Instagram: connectat com @${account.username}. Aprovades pendents: ${pending}.`);
     if (!due) return new Response('nothing due');
