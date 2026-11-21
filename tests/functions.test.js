@@ -357,7 +357,9 @@ test('instagram: només publica el que està aprovat i toca, una vegada, i sense
     for (const img of p.images) assert.ok(require('fs').existsSync(require('path').join(__dirname, '..', img)) && /\.jpe?g$/.test(img), img);
   }
 
-  const handler = (await import('../netlify/functions/instagram-publish.mjs')).default;
+  const mod = await import('../netlify/functions/instagram-publish.mjs');
+  // Sense token, la funció no toca res; amb token, provem la feina amb el magatzem fals.
+  const handler = async () => (process.env.IG_ACCESS_TOKEN ? mod.run(fakeStore('instagram')) : mod.default());
   const body = async (res) => res.text();
   delete process.env.IG_USER_ID; delete process.env.IG_ACCESS_TOKEN;
   assert.strictEqual(await body(await handler()), 'not configured');

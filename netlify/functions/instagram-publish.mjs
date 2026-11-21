@@ -7,6 +7,7 @@
 // instagram-publish → «Run now», i el registre diu amb quin compte connecta.
 import queue from '../../data/instagram.json' with { type: 'json' };
 import site from '../../data/site.json' with { type: 'json' };
+import { getStore } from '@netlify/blobs';
 import ig from './lib/instagram.js';
 
 export default async function handler() {
@@ -14,8 +15,11 @@ export default async function handler() {
     console.log('Instagram: falta IG_ACCESS_TOKEN; no es publica res.');
     return new Response('not configured');
   }
+  return run(getStore({ name: 'instagram', consistency: 'strong' }));
+}
 
-  const db = ig.igStore();
+/** Feina de cada execució; `db` és el magatzem de Blobs (substituïble a les proves). */
+export async function run(db) {
   const published = (await db.get('published', { type: 'json' })) || {};
   const { due, late } = ig.pickDue(queue.posts || [], published);
   if (late.length) console.warn(`Instagram: publicacions aprovades massa endarrerides (canvia'ls la data): ${late.join(', ')}`);
