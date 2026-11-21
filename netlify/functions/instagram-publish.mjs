@@ -1,4 +1,4 @@
-// Funció programada: cada hora publica a Instagram la següent publicació
+// Funció programada: cada 15 minuts publica a Instagram la següent publicació
 // aprovada de data/instagram.json quan arriba la seva hora.
 //
 // Només cal la variable IG_ACCESS_TOKEN a Netlify (IG_USER_ID és opcional).
@@ -51,4 +51,5 @@ export async function run(db) {
   }
 }
 
-export const config = { schedule: '@hourly' };
+// Cada 15 minuts, perquè les publicacions surtin a l'hora prevista (p. ex. 08:30).
+export const config = { schedule: '*/15 * * * *' };

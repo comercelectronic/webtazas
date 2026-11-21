@@ -54,7 +54,7 @@ function instagramReview() {
   <h1>Instagram: cua de publicacions</h1>
   <div class="ig-help">
     <p><strong>Com funciona.</strong> Res no es publica fins que no ho aproves. Per aprovar una publicació, a <code>data/instagram.json</code> canvia <code>"approved": false</code> per <code>"approved": true</code> (també pots canviar el text, la data o l'ordre de les imatges) i desa el canvi a GitHub.</p>
-    <p>Un cop a Netlify hi ha la variable <code>IG_ACCESS_TOKEN</code> (token «IG…» o, amb l'inici de sessió unificat, «EA…»), cada hora es comprova si hi ha alguna publicació aprovada que toqui i se'n publica una. Si una publicació aprovada fa més de 48 hores que havia de sortir, no es publica: posa-li una data nova.</p>
+    <p>Un cop a Netlify hi ha la variable <code>IG_ACCESS_TOKEN</code> (token «IG…» o, amb l'inici de sessió unificat, «EA…»), cada 15 minuts es comprova si hi ha alguna publicació aprovada que toqui i se'n publica una. Si una publicació aprovada fa més de 48 hores que havia de sortir, no es publica: posa-li una data nova.</p>
     <p>${posts.filter((p) => p.approved === true).length} de ${posts.length} publicacions aprovades.</p>
   </div>
   ${posts.map(post).join('\n')}
