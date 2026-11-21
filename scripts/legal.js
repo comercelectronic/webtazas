@@ -121,7 +121,7 @@ Pots donar-te de baixa des de l'enllaç que hi ha a cada correu. Cal tenir almen
   ${SHOP ? '<li><strong>Stripe</strong> — pagaments. <a href="https://stripe.com/es/privacy" rel="noopener" target="_blank">Política de privacitat de Stripe</a>.</li>' : ''}
   <li><strong>Netlify</strong> — allotjament del web, formulari de contacte i emmagatzematge de dades de la botiga.</li>
   <li><strong>Resend</strong> — enviament dels correus de la newsletter.</li>
-  <li><strong>Google Ireland Limited</strong> — estadístiques del web amb Google Analytics, només si ho acceptes. <a href="https://policies.google.com/privacy?hl=ca" rel="noopener" target="_blank">Política de privacitat de Google</a>.</li>
+  <li><strong>Google Ireland Limited</strong> — correu electrònic (Gmail), si ens escrius, i estadístiques del web amb Google Analytics, només si ho acceptes. <a href="https://policies.google.com/privacy?hl=ca" rel="noopener" target="_blank">Política de privacitat de Google</a>.</li>
   <li><strong>Empresa de transport:</strong> ${value(site.shipping.carrier, 'empresa de transport')} — nom, adreça i telèfon per lliurar la comanda.</li>
 </ul>
 <p>${SHOP ? 'Stripe, ' : ''}Netlify, Resend i Google poden tractar dades fora de l'Espai Econòmic Europeu, amb les garanties previstes al RGPD (Marc de privacitat de dades UE-EUA o clàusules contractuals tipus).</p>
