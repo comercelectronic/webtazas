@@ -57,12 +57,6 @@ async function publish({ userId, token, images, caption }) {
   return id;
 }
 
-/** Magatzem de Netlify Blobs per al registre de publicacions i el token. */
-function igStore() {
-  const { getStore } = require('@netlify/blobs');
-  return getStore({ name: 'instagram', consistency: 'strong' });
-}
-
 /** Comprova el token i retorna { user_id, username } del compte connectat. */
 async function whoAmI(token) {
   return api('me', { fields: 'user_id,username' }, { method: 'GET', token });
@@ -107,4 +101,4 @@ function pickDue(posts, published, now = Date.now()) {
   return { due: due[0] || null, late };
 }
 
-module.exports = { publish, currentToken, pickDue, whoAmI, igStore, LATE_LIMIT_MS };
+module.exports = { publish, currentToken, pickDue, whoAmI, LATE_LIMIT_MS };
