@@ -1,20 +1,24 @@
-// Publicació a Instagram amb l'API oficial de Meta («Instagram API with
-// Instagram login»: no cal pàgina de Facebook, només un compte professional).
+// Publicació a Instagram amb l'API oficial de Meta. Accepta els dos tipus de token:
+//   - «IG…»: API amb inici de sessió d'Instagram (graph.instagram.com). Dura
+//     60 dies i la funció el renova sola (el desa a Netlify Blobs).
+//   - «EA…»: API amb inici de sessió unificat (graph.facebook.com), token
+//     d'usuari del sistema que no caduca. Cal l'identificador del compte
+//     d'Instagram (data/instagram.json → igUserId, o IG_USER_ID).
 //
 // Variables d'entorn a Netlify (mai al codi):
-//   IG_ACCESS_TOKEN  token de llarga durada (60 dies). La funció el renova
-//                    sola i desa el token nou a Netlify Blobs.
-//   IG_USER_ID       opcional: si no hi és, es demana a l'API amb el token.
-//   IG_API_HOST      opcional, per defecte graph.instagram.com
+//   IG_ACCESS_TOKEN  el token
+//   IG_USER_ID       opcional
+//   IG_API_HOST      opcional, per forçar el servidor de l'API
 //   IG_API_VERSION   opcional, per defecte v23.0
-const HOST = () => process.env.IG_API_HOST || 'graph.instagram.com';
+const isFacebookToken = (token) => /^EA/.test(String(token || ''));
+const HOST = (token) => process.env.IG_API_HOST || (isFacebookToken(token) ? 'graph.facebook.com' : 'graph.instagram.com');
 const VERSION = () => process.env.IG_API_VERSION || 'v23.0';
 
 const LATE_LIMIT_MS = 48 * 3600 * 1000;    // més tard que això, no es publica
 const REFRESH_AFTER_MS = 20 * 86400 * 1000; // renova el token cada 20 dies
 
 async function api(path, params, { method = 'POST', token } = {}) {
-  const url = new URL(`https://${HOST()}/${VERSION()}/${path}`);
+  const url = new URL(`https://${HOST(token)}/${VERSION()}/${path}`);
   const body = new URLSearchParams({ ...params, access_token: token });
   const res = method === 'GET'
     ? await fetch(`${url}?${body}`)
@@ -58,7 +62,12 @@ async function publish({ userId, token, images, caption }) {
 }
 
 /** Comprova el token i retorna { user_id, username } del compte connectat. */
-async function whoAmI(token) {
+async function whoAmI(token, userId) {
+  if (isFacebookToken(token)) {
+    if (!userId) throw new Error("Amb un token EA… cal l'identificador del compte d'Instagram (igUserId a data/instagram.json o IG_USER_ID).");
+    const data = await api(String(userId), { fields: 'id,username' }, { method: 'GET', token });
+    return { user_id: data.id, username: data.username };
+  }
   return api('me', { fields: 'user_id,username' }, { method: 'GET', token });
 }
 
@@ -69,7 +78,7 @@ function envToken() {
 
 /** Diagnòstic sense revelar el token: tipus aparent i llargada. */
 function describeToken(t) {
-  const kind = /^IG/.test(t) ? 'Instagram (IG…)' : /^EAA/.test(t) ? 'Facebook (EAA…), no serveix per a aquesta API' : 'desconegut';
+  const kind = /^IG/.test(t) ? 'Instagram (IG…)' : isFacebookToken(t) ? 'inici de sessió unificat (EA…)' : 'desconegut';
   return `token ${kind}, ${t.length} caràcters`;
 }
 
@@ -86,9 +95,10 @@ async function currentToken(store) {
   const valid = saved && saved.from === fingerprint(base);
   let token = valid ? saved.token : base;
   const since = valid ? Date.now() - new Date(saved.refreshedAt).getTime() : Infinity;
-  if (token && since > REFRESH_AFTER_MS) {
+  // Els tokens EA… d'usuari del sistema no caduquen: no cal renovar-los.
+  if (token && !isFacebookToken(token) && since > REFRESH_AFTER_MS) {
     try {
-      const url = `https://${HOST()}/refresh_access_token?grant_type=ig_refresh_token&access_token=${encodeURIComponent(token)}`;
+      const url = `https://${HOST(token)}/refresh_access_token?grant_type=ig_refresh_token&access_token=${encodeURIComponent(token)}`;
       const res = await fetch(url);
       const data = await res.json();
       if (res.ok && data.access_token) {
