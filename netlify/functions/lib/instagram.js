@@ -62,11 +62,30 @@ async function whoAmI(token) {
   return api('me', { fields: 'user_id,username' }, { method: 'GET', token });
 }
 
-/** Retorna el token vigent i el renova si fa més de 20 dies. */
+/** Token de la variable d'entorn, net d'espais, salts de línia i cometes enganxats per error. */
+function envToken() {
+  return String(process.env.IG_ACCESS_TOKEN || '').trim().replace(/^["']+|["']+$/g, '').trim();
+}
+
+/** Diagnòstic sense revelar el token: tipus aparent i llargada. */
+function describeToken(t) {
+  const kind = /^IG/.test(t) ? 'Instagram (IG…)' : /^EAA/.test(t) ? 'Facebook (EAA…), no serveix per a aquesta API' : 'desconegut';
+  return `token ${kind}, ${t.length} caràcters`;
+}
+
+const fingerprint = (t) => require('crypto').createHash('sha256').update(t).digest('hex').slice(0, 16);
+
+/**
+ * Retorna el token vigent i el renova si fa més de 20 dies.
+ * El token renovat es desa a Blobs lligat al token de Netlify del qual surt:
+ * si canvies IG_ACCESS_TOKEN a Netlify, es torna a fer servir el nou.
+ */
 async function currentToken(store) {
+  const base = envToken();
   const saved = await store.get('token', { type: 'json' });
-  let token = (saved && saved.token) || process.env.IG_ACCESS_TOKEN;
-  const since = saved ? Date.now() - new Date(saved.refreshedAt).getTime() : Infinity;
+  const valid = saved && saved.from === fingerprint(base);
+  let token = valid ? saved.token : base;
+  const since = valid ? Date.now() - new Date(saved.refreshedAt).getTime() : Infinity;
   if (token && since > REFRESH_AFTER_MS) {
     try {
       const url = `https://${HOST()}/refresh_access_token?grant_type=ig_refresh_token&access_token=${encodeURIComponent(token)}`;
@@ -74,7 +93,7 @@ async function currentToken(store) {
       const data = await res.json();
       if (res.ok && data.access_token) {
         token = data.access_token;
-        await store.setJSON('token', { token, refreshedAt: new Date().toISOString() });
+        await store.setJSON('token', { token, from: fingerprint(base), refreshedAt: new Date().toISOString() });
       }
     } catch (err) {
       console.error('No s\'ha pogut renovar el token d\'Instagram:', err.message);
@@ -101,4 +120,4 @@ function pickDue(posts, published, now = Date.now()) {
   return { due: due[0] || null, late };
 }
 
-module.exports = { publish, currentToken, pickDue, whoAmI, LATE_LIMIT_MS };
+module.exports = { publish, currentToken, pickDue, whoAmI, envToken, describeToken, LATE_LIMIT_MS };

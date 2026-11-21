@@ -11,7 +11,7 @@ import { getStore } from '@netlify/blobs';
 import ig from './lib/instagram.js';
 
 export default async function handler() {
-  if (!process.env.IG_ACCESS_TOKEN) {
+  if (!ig.envToken()) {
     console.log('Instagram: falta IG_ACCESS_TOKEN; no es publica res.');
     return new Response('not configured');
   }
@@ -45,6 +45,7 @@ export async function run(db) {
     return new Response(`published ${due.id}`);
   } catch (err) {
     console.error(`Instagram: error${due ? ` publicant «${due.id}»` : ''}:`, err.message);
+    if (/access token/i.test(err.message)) console.error(`Instagram: revisa IG_ACCESS_TOKEN a Netlify (${ig.describeToken(ig.envToken())}).`);
     return new Response('error', { status: 500 });
   }
 }
