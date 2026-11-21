@@ -335,6 +335,8 @@ test('administració: contrasenya obligatòria a totes les funcions', async () =
 
 test('instagram: només publica el que està aprovat i toca, una vegada, i sense claus no fa res', async () => {
   const queue = require('../data/instagram.json');
+  // Les proves controlen elles mateixes què està aprovat (la cua real pot tenir publicacions aprovades i vençudes).
+  const realApproval = queue.posts.map((p) => p.approved);
   const { pickDue, LATE_LIMIT_MS } = require('../netlify/functions/lib/instagram');
   const now = Date.parse('2026-12-01T12:00:00Z');
   const posts = [
@@ -362,12 +364,19 @@ test('instagram: només publica el que està aprovat i toca, una vegada, i sense
     for (const img of p.images) assert.ok(require('fs').existsSync(require('path').join(__dirname, '..', img)) && /\.jpe?g$/.test(img), img);
   }
 
+  queue.posts.forEach((p) => { p.approved = false; });
   const mod = await import('../netlify/functions/instagram-publish.mjs');
   // Sense token, la funció no toca res; amb token, provem la feina amb el magatzem fals.
   const handler = async () => (process.env.IG_ACCESS_TOKEN ? mod.run(fakeStore('instagram')) : mod.default());
   const body = async (res) => res.text();
   delete process.env.IG_USER_ID; delete process.env.IG_ACCESS_TOKEN;
+  // Interruptor de pausa a data/instagram.json.
+  const savedPaused = queue.paused;
+  queue.paused = true;
+  assert.strictEqual(await body(await mod.default()), 'paused');
+  queue.paused = false;
   assert.strictEqual(await body(await handler()), 'not configured');
+  queue.paused = savedPaused;
 
   // Amb el token i una publicació aprovada que toca: crea el carrusel i publica.
   // L'identificador del compte es demana a l'API si no hi ha IG_USER_ID.
@@ -401,6 +410,37 @@ test('instagram: només publica el que està aprovat i toca, una vegada, i sense
     assert.ok(calls.some((c) => c.url.endsWith('/1784/media_publish')));
     // La següent execució no la torna a publicar.
     assert.strictEqual(await body(await handler()), 'nothing due');
+    // Una publicació que ja és al compte (mateix text) no es torna a publicar.
+    const post3 = queue.posts[2];
+    const saved3 = { approved: post3.approved, publishAt: post3.publishAt };
+    post3.approved = true;
+    post3.publishAt = new Date(Date.now() - 600 * 1000).toISOString();
+    const before = calls.length;
+    const listFetch = global.fetch;
+    global.fetch = async (url, opts) => (String(url).includes('/1784/media?')
+      ? { ok: true, json: async () => ({ data: [{ id: 'ja-hi-era', caption: `  ${post3.caption.replace(/\n/g, ' \n')}  ` }] }) }
+      : listFetch(url, opts));
+    assert.strictEqual(await body(await handler()), `already ${post3.id}`);
+    assert.ok(!calls.slice(before).some((c) => c.url.endsWith('/media_publish')), 'no publica res');
+    global.fetch = listFetch;
+    // Una publicació que s'havia quedat «publicant» (p. ex. temps esgotat) no es repeteix sola.
+    const db0 = fakeStore('instagram');
+    const pub = await db0.get('published', { type: 'json' });
+    const post4 = queue.posts[3];
+    const saved4 = { approved: post4.approved, publishAt: post4.publishAt };
+    post4.approved = true;
+    post4.publishAt = new Date(Date.now() - 300 * 1000).toISOString();
+    await db0.setJSON('published', { ...pub, [post4.id]: { status: 'publishing', at: new Date().toISOString() } });
+    assert.strictEqual(await body(await handler()), 'nothing due');
+    // Si Blobs no deixa anotar «publicant», no es publica.
+    await db0.setJSON('published', pub);
+    const realSet = db0.setJSON;
+    const failingStore = { ...db0, setJSON: async () => { throw new Error('blobs caigut'); } };
+    const before2 = calls.length;
+    assert.strictEqual((await mod.run(failingStore)).status, 500);
+    assert.ok(!calls.slice(before2).some((c) => c.url.endsWith('/media_publish') || (c.url.endsWith('/media') && c.body)), 'res creat');
+    db0.setJSON = realSet;
+    Object.assign(post3, saved3); Object.assign(post4, saved4);
     // Si canvies el token a Netlify, el renovat que hi havia a Blobs es descarta.
     const ig = require('../netlify/functions/lib/instagram');
     const db = fakeStore('instagram');
@@ -452,5 +492,6 @@ test('instagram: només publica el que està aprovat i toca, una vegada, i sense
     Object.assign(post2, saved2);
     global.fetch = realFetch;
     delete process.env.IG_ACCESS_TOKEN;
+    queue.posts.forEach((p, i) => { p.approved = realApproval[i]; });
   }
 });

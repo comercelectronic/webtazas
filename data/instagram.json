@@ -2,6 +2,7 @@
   "_nota": "Cua de publicacions d'Instagram. Només es publiquen les que tenen \"approved\": true, quan arriba \"publishAt\" i si hi ha IG_ACCESS_TOKEN a Netlify. Si una publicació aprovada fa més de 48 hores que havia d'haver sortit, no es publica: canvia-li la data.",
   "timezone": "Europe/Madrid",
   "igUserId": "17841452465967162",
+  "paused": true,
   "posts": [
     {
       "id": "presentacio",
