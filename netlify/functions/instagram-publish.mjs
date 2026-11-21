@@ -11,6 +11,10 @@ import { getStore } from '@netlify/blobs';
 import ig from './lib/instagram.js';
 
 export default async function handler() {
+  if (queue.paused === true || process.env.IG_PAUSED === 'true') {
+    console.log('Instagram: publicació automàtica en pausa; no es publica res.');
+    return new Response('paused');
+  }
   if (!ig.envToken()) {
     console.log('Instagram: falta IG_ACCESS_TOKEN; no es publica res.');
     return new Response('not configured');
@@ -33,6 +37,20 @@ export async function run(db) {
     console.log(`Instagram: connectat com @${account.username}. Aprovades pendents: ${pending}.`);
     if (!due) return new Response('nothing due');
 
+    // Mai dues vegades la mateixa publicació:
+    // 1) si ja és al compte (mateix text), només l'anotem;
+    // 2) abans de publicar, anotem «publicant» a Blobs; si no es pot anotar, no es publica;
+    // 3) una publicació que s'havia quedat a mig fer no es repeteix (cal revisar-la a mà).
+    const already = await ig.findPublished(userId, token, due.caption);
+    if (already) {
+      published[due.id] = { mediaId: already, at: new Date().toISOString(), found: true };
+      await db.setJSON('published', published);
+      console.log(`Instagram: «${due.id}» ja era al compte (${already}); no es torna a publicar.`);
+      return new Response(`already ${due.id}`);
+    }
+    published[due.id] = { status: 'publishing', at: new Date().toISOString() };
+    await db.setJSON('published', published);
+
     const origin = (process.env.SITE_URL || site.siteUrl).replace(/\/$/, '');
     const mediaId = await ig.publish({
       userId,
@@ -46,6 +64,7 @@ export async function run(db) {
     return new Response(`published ${due.id}`);
   } catch (err) {
     console.error(`Instagram: error${due ? ` publicant «${due.id}»` : ''}:`, err.message);
+    if (due) console.error(`Instagram: «${due.id}» queda marcada i no es tornarà a intentar sola. Comprova el compte.`);
     if (/access token/i.test(err.message)) console.error(`Instagram: revisa IG_ACCESS_TOKEN a Netlify (${ig.describeToken(ig.envToken())}).`);
     return new Response('error', { status: 500 });
   }

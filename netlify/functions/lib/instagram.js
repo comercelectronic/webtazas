@@ -32,12 +32,12 @@ async function api(path, params, { method = 'POST', token } = {}) {
 }
 
 /** Espera que un contenidor estigui llest (les imatges es processen uns segons). */
-async function waitReady(id, token, tries = 10) {
+async function waitReady(id, token, tries = 12) {
   for (let i = 0; i < tries; i += 1) {
     const { status_code: s } = await api(id, { fields: 'status_code' }, { method: 'GET', token });
     if (s === 'FINISHED') return;
     if (s === 'ERROR' || s === 'EXPIRED') throw new Error(`El contenidor ${id} ha fallat (${s}).`);
-    await new Promise((r) => setTimeout(r, 1500));
+    await new Promise((r) => setTimeout(r, 1000));
   }
   throw new Error(`El contenidor ${id} no ha estat llest a temps.`);
 }
@@ -48,17 +48,23 @@ async function publish({ userId, token, images, caption }) {
   if (images.length === 1) {
     ({ id: creationId } = await api(`${userId}/media`, { image_url: images[0], caption }, { token }));
   } else {
-    const children = [];
-    for (const image_url of images.slice(0, 10)) {
-      const { id } = await api(`${userId}/media`, { image_url, is_carousel_item: 'true' }, { token });
-      children.push(id);
-    }
-    for (const id of children) await waitReady(id, token);
+    const children = await Promise.all(images.slice(0, 10).map((image_url) => api(`${userId}/media`, { image_url, is_carousel_item: 'true' }, { token }).then((r) => r.id)));
+    await Promise.all(children.map((id) => waitReady(id, token)));
     ({ id: creationId } = await api(`${userId}/media`, { media_type: 'CAROUSEL', children: children.join(','), caption }, { token }));
   }
   await waitReady(creationId, token);
   const { id } = await api(`${userId}/media_publish`, { creation_id: creationId }, { token });
   return id;
+}
+
+const norm = (t) => String(t || '').replace(/\s+/g, ' ').trim().slice(0, 120);
+
+/** Busca entre les darreres publicacions del compte una amb el mateix text. Retorna l'id o null. */
+async function findPublished(userId, token, caption) {
+  const data = await api(`${userId}/media`, { fields: 'id,caption,timestamp', limit: '25' }, { method: 'GET', token });
+  const want = norm(caption);
+  const hit = (data.data || []).find((m) => norm(m.caption) === want);
+  return hit ? hit.id : null;
 }
 
 /** Comprova el token i retorna { user_id, username } del compte connectat. */
@@ -130,4 +136,4 @@ function pickDue(posts, published, now = Date.now()) {
   return { due: due[0] || null, late };
 }
 
-module.exports = { publish, currentToken, pickDue, whoAmI, envToken, describeToken, LATE_LIMIT_MS };
+module.exports = { publish, findPublished, currentToken, pickDue, whoAmI, envToken, describeToken, LATE_LIMIT_MS };
