@@ -55,6 +55,7 @@ Variables d'entorn (Site settings → Environment variables):
 | `NEWSLETTER_FROM` | Remitent verificat a Resend, p. ex. `El Glopet <hola@elglopet.com>`. |
 | `SITE_URL` | Adreça pública: `https://elglopet.com` (per als enllaços dels correus). |
 | `HASH_SALT` | Text aleatori llarg per xifrar els identificadors anti-abús. |
+| `IG_ACCESS_TOKEN` | Token d'Instagram (API amb inici de sessió d'Instagram) per publicar sol les publicacions aprovades de `data/instagram.json`. Es renova sol. Opcional: `IG_USER_ID`. |
 
 Altres passos:
 - **Formulari de contacte:** activa *Forms → Form detection* a Netlify. Els missatges hi apareixen i pots activar-ne l'avís per correu.

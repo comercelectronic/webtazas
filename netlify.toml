@@ -6,10 +6,6 @@
 [functions]
   node_bundler = "esbuild"
 
-# Publica a Instagram les publicacions aprovades de data/instagram.json.
-[functions."instagram-publish"]
-  schedule = "@hourly"
-
 [[headers]]
   for = "/*"
   [headers.values]
