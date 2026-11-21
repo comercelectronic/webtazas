@@ -277,7 +277,7 @@
   },
   "analytics": {
     "_nota": "ID de mesura de Google Analytics 4 (G-XXXXXXXXXX). Mentre sigui null no es carrega res, encara que la persona ho accepti. A Google Analytics, posa la retenció de dades a 14 mesos.",
-    "ga4Id": null
+    "ga4Id": "G-Z1ZN8L32BE"
   },
   "customReturns": true,
   "_notaEstoc": "colors[].stock: tasses en blanc que queden de cada color (totes les paraules en comparteixen l'estoc). 0 = exhaurit; sense valor = sense límit."
