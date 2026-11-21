@@ -9,6 +9,7 @@
   },
   "scripts": {
     "build": "node scripts/build.js",
-    "test": "node --test tests/functions.test.js"
+    "test": "node --test tests/functions.test.js",
+    "pinterest": "node scripts/pinterest-pins.js"
   }
 }
