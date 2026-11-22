@@ -17,14 +17,14 @@
 <meta name="theme-color" content="#F4EFE6">
 <link rel="preload" href="/assets/fonts/lora.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/styles.css?v=c364615f13">
+<link rel="stylesheet" href="/assets/styles.css?v=91b69fb7df">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inici","item":"https://elglopet.com/"},{"@type":"ListItem","position":2,"name":"Crea la teva tassa","item":"https://elglopet.com/crea-la-teva-tassa/"}]}</script>
-<script defer src="/assets/catalog.js?v=c364615f13"></script>
-<script defer src="/assets/app.js?v=c364615f13"></script>
+<script defer src="/assets/catalog.js?v=91b69fb7df"></script>
+<script defer src="/assets/app.js?v=91b69fb7df"></script>
 
-<script defer src="/assets/configurator.js?v=c364615f13"></script>
+<script defer src="/assets/configurator.js?v=91b69fb7df"></script>
 </head>
 <body class="page-maker">
 <a class="skip-link" href="#main">Salta al contingut</a>
@@ -67,17 +67,30 @@
               <path id="arc-intro" data-arc="intro" d=""/>
               <path id="arc-word" data-arc="word" d=""/>
               <path id="arc-sub" data-arc="sub" d=""/>
+              <path id="arc-bword" data-arc="bword" d=""/>
+              <!-- La tassa és un cilindre: el que queda cap als costats es veu més apagat. -->
+              <linearGradient id="wrap-front" gradientUnits="userSpaceOnUse" x1="79" x2="479" y1="0" y2="0">
+                <stop offset="0" stop-color="#fff" stop-opacity=".6"/><stop offset=".22" stop-color="#fff"/><stop offset=".78" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity=".6"/>
+              </linearGradient>
+              <linearGradient id="wrap-back" gradientUnits="userSpaceOnUse" x1="281" x2="681" y1="0" y2="0">
+                <stop offset="0" stop-color="#fff" stop-opacity=".6"/><stop offset=".22" stop-color="#fff"/><stop offset=".78" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity=".6"/>
+              </linearGradient>
+              <mask id="mask-front" maskUnits="userSpaceOnUse" x="0" y="0" width="760" height="760"><rect x="79" y="0" width="400" height="760" fill="url(#wrap-front)"/></mask>
+              <mask id="mask-back" maskUnits="userSpaceOnUse" x="0" y="0" width="760" height="760"><rect x="281" y="0" width="400" height="760" fill="url(#wrap-back)"/></mask>
             </defs>
-            <g data-mug-front>
+            <g data-mug-front mask="url(#mask-front)">
               <use data-mug-drawing href="/assets/drawings.svg#d-paraigua" x="229" y="250" width="100" height="100"/>
+              <text data-mug-emoji class="mug-svg__emoji" x="279" y="330" text-anchor="middle" style="display:none"></text>
               <text data-mug-intro text-anchor="middle" class="mug-svg__intro"><textPath href="#arc-intro" startOffset="50%">Tu ets el meu</textPath></text>
               <text data-mug-word text-anchor="middle" class="mug-svg__word"><textPath href="#arc-word" startOffset="50%">aixopluc</textPath></text>
               <text data-mug-sub text-anchor="middle" class="mug-svg__sub"><textPath href="#arc-sub" startOffset="50%"></textPath></text>
             </g>
-            <g data-mug-back style="display:none">
-              <text data-mug-back-word x="338" y="330" class="mug-svg__bword">aixopluc</text>
-              <line x1="338" y1="348" x2="630" y2="348" stroke="#B66F54" stroke-width="1.5"/>
-              <text data-mug-back-defs x="338" y="382" class="mug-svg__defs"></text>
+            <g data-mug-back mask="url(#mask-back)" style="display:none">
+              <use data-mug-bdrawing href="/assets/drawings.svg#d-paraigua" x="456" y="262" width="50" height="50"/>
+              <text data-mug-bemoji class="mug-svg__emoji" x="481" y="306" text-anchor="middle" font-size="40" style="display:none"></text>
+              <text data-mug-back-word class="mug-svg__bword"><textPath href="#arc-bword" startOffset="3%">aixopluc</textPath></text>
+              <path data-mug-back-rule d="" fill="none" stroke="#B66F54" stroke-width="1.5"/>
+              <g data-mug-back-lines></g>
             </g>
           </svg>
         </div>
@@ -129,12 +142,18 @@
         </div>
         <div class="maker__words" data-words-wrap>
           <label class="sr-only" for="mk-search">Cerca una paraula</label>
-          <input class="input input--small" id="mk-search" type="search" placeholder="Cerca entre 76 paraules…" data-word-search>
+          <input class="input input--small" id="mk-search" type="search" placeholder="Cerca entre 110 paraules…" data-word-search>
           <div class="maker__wordlist" data-word-list role="listbox" aria-label="Paraules catalanes"></div>
         </div>
         <div class="field" data-sub-field hidden>
           <label for="mk-sub">Frase de sota (opcional)</label>
           <input class="input" id="mk-sub" name="sub" maxlength="48" autocomplete="off" placeholder="p. ex. primer ho faig, després ho penso">
+        </div>
+        <div class="maker__emojis">
+          <p class="maker__label" id="emoji-help">Emoticones <small>Fes clic al text on la vulguis i tria-la.</small></p>
+          <div class="emoji-row" role="group" aria-labelledby="emoji-help">
+            <button type="button" class="emoji-btn" data-emoji="❤️" aria-label="Afegeix ❤️ al text">❤️</button><button type="button" class="emoji-btn" data-emoji="🧡" aria-label="Afegeix 🧡 al text">🧡</button><button type="button" class="emoji-btn" data-emoji="💛" aria-label="Afegeix 💛 al text">💛</button><button type="button" class="emoji-btn" data-emoji="💚" aria-label="Afegeix 💚 al text">💚</button><button type="button" class="emoji-btn" data-emoji="💙" aria-label="Afegeix 💙 al text">💙</button><button type="button" class="emoji-btn" data-emoji="💜" aria-label="Afegeix 💜 al text">💜</button><button type="button" class="emoji-btn" data-emoji="🖤" aria-label="Afegeix 🖤 al text">🖤</button><button type="button" class="emoji-btn" data-emoji="🤍" aria-label="Afegeix 🤍 al text">🤍</button><button type="button" class="emoji-btn" data-emoji="💕" aria-label="Afegeix 💕 al text">💕</button><button type="button" class="emoji-btn" data-emoji="💖" aria-label="Afegeix 💖 al text">💖</button><button type="button" class="emoji-btn" data-emoji="😍" aria-label="Afegeix 😍 al text">😍</button><button type="button" class="emoji-btn" data-emoji="🥰" aria-label="Afegeix 🥰 al text">🥰</button><button type="button" class="emoji-btn" data-emoji="😘" aria-label="Afegeix 😘 al text">😘</button><button type="button" class="emoji-btn" data-emoji="😊" aria-label="Afegeix 😊 al text">😊</button><button type="button" class="emoji-btn" data-emoji="😂" aria-label="Afegeix 😂 al text">😂</button><button type="button" class="emoji-btn" data-emoji="🤣" aria-label="Afegeix 🤣 al text">🤣</button><button type="button" class="emoji-btn" data-emoji="😜" aria-label="Afegeix 😜 al text">😜</button><button type="button" class="emoji-btn" data-emoji="😎" aria-label="Afegeix 😎 al text">😎</button><button type="button" class="emoji-btn" data-emoji="🤓" aria-label="Afegeix 🤓 al text">🤓</button><button type="button" class="emoji-btn" data-emoji="🥳" aria-label="Afegeix 🥳 al text">🥳</button><button type="button" class="emoji-btn" data-emoji="😴" aria-label="Afegeix 😴 al text">😴</button><button type="button" class="emoji-btn" data-emoji="🤔" aria-label="Afegeix 🤔 al text">🤔</button><button type="button" class="emoji-btn" data-emoji="🙃" aria-label="Afegeix 🙃 al text">🙃</button><button type="button" class="emoji-btn" data-emoji="😇" aria-label="Afegeix 😇 al text">😇</button><button type="button" class="emoji-btn" data-emoji="😈" aria-label="Afegeix 😈 al text">😈</button><button type="button" class="emoji-btn" data-emoji="🤪" aria-label="Afegeix 🤪 al text">🤪</button><button type="button" class="emoji-btn" data-emoji="🙄" aria-label="Afegeix 🙄 al text">🙄</button><button type="button" class="emoji-btn" data-emoji="😅" aria-label="Afegeix 😅 al text">😅</button><button type="button" class="emoji-btn" data-emoji="🫶" aria-label="Afegeix 🫶 al text">🫶</button><button type="button" class="emoji-btn" data-emoji="💪" aria-label="Afegeix 💪 al text">💪</button><button type="button" class="emoji-btn" data-emoji="🙏" aria-label="Afegeix 🙏 al text">🙏</button><button type="button" class="emoji-btn" data-emoji="👍" aria-label="Afegeix 👍 al text">👍</button><button type="button" class="emoji-btn" data-emoji="👑" aria-label="Afegeix 👑 al text">👑</button><button type="button" class="emoji-btn" data-emoji="✨" aria-label="Afegeix ✨ al text">✨</button><button type="button" class="emoji-btn" data-emoji="⭐" aria-label="Afegeix ⭐ al text">⭐</button><button type="button" class="emoji-btn" data-emoji="🌙" aria-label="Afegeix 🌙 al text">🌙</button><button type="button" class="emoji-btn" data-emoji="☀️" aria-label="Afegeix ☀️ al text">☀️</button><button type="button" class="emoji-btn" data-emoji="🌈" aria-label="Afegeix 🌈 al text">🌈</button><button type="button" class="emoji-btn" data-emoji="🔥" aria-label="Afegeix 🔥 al text">🔥</button><button type="button" class="emoji-btn" data-emoji="🌹" aria-label="Afegeix 🌹 al text">🌹</button><button type="button" class="emoji-btn" data-emoji="🌸" aria-label="Afegeix 🌸 al text">🌸</button><button type="button" class="emoji-btn" data-emoji="🌻" aria-label="Afegeix 🌻 al text">🌻</button><button type="button" class="emoji-btn" data-emoji="🍀" aria-label="Afegeix 🍀 al text">🍀</button><button type="button" class="emoji-btn" data-emoji="☕" aria-label="Afegeix ☕ al text">☕</button><button type="button" class="emoji-btn" data-emoji="🍵" aria-label="Afegeix 🍵 al text">🍵</button><button type="button" class="emoji-btn" data-emoji="🥐" aria-label="Afegeix 🥐 al text">🥐</button><button type="button" class="emoji-btn" data-emoji="🍰" aria-label="Afegeix 🍰 al text">🍰</button><button type="button" class="emoji-btn" data-emoji="🍷" aria-label="Afegeix 🍷 al text">🍷</button><button type="button" class="emoji-btn" data-emoji="🍺" aria-label="Afegeix 🍺 al text">🍺</button><button type="button" class="emoji-btn" data-emoji="🎉" aria-label="Afegeix 🎉 al text">🎉</button><button type="button" class="emoji-btn" data-emoji="🎁" aria-label="Afegeix 🎁 al text">🎁</button><button type="button" class="emoji-btn" data-emoji="🎂" aria-label="Afegeix 🎂 al text">🎂</button><button type="button" class="emoji-btn" data-emoji="🎵" aria-label="Afegeix 🎵 al text">🎵</button><button type="button" class="emoji-btn" data-emoji="📚" aria-label="Afegeix 📚 al text">📚</button><button type="button" class="emoji-btn" data-emoji="⚽" aria-label="Afegeix ⚽ al text">⚽</button><button type="button" class="emoji-btn" data-emoji="🐱" aria-label="Afegeix 🐱 al text">🐱</button><button type="button" class="emoji-btn" data-emoji="🐶" aria-label="Afegeix 🐶 al text">🐶</button><button type="button" class="emoji-btn" data-emoji="🐢" aria-label="Afegeix 🐢 al text">🐢</button><button type="button" class="emoji-btn" data-emoji="🦄" aria-label="Afegeix 🦄 al text">🦄</button><button type="button" class="emoji-btn" data-emoji="🌍" aria-label="Afegeix 🌍 al text">🌍</button><button type="button" class="emoji-btn" data-emoji="🌊" aria-label="Afegeix 🌊 al text">🌊</button><button type="button" class="emoji-btn" data-emoji="🏔️" aria-label="Afegeix 🏔️ al text">🏔️</button>
+          </div>
         </div>
       </fieldset>
 
@@ -319,6 +338,322 @@
           </label><label class="drawing" title="Picant l&#39;ullet">
             <input type="radio" name="drawing" value="cara-picant-ullet">
             <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-cara-picant-ullet"/></svg><span class="sr-only">Picant l&#39;ullet</span></span>
+          </label><label class="drawing" title="Cara que riu">
+            <input type="radio" name="drawing" value="cara-rialla">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-cara-rialla"/></svg><span class="sr-only">Cara que riu</span></span>
+          </label><label class="drawing" title="Cara que plora de riure">
+            <input type="radio" name="drawing" value="cara-plorant-de-riure">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-cara-plorant-de-riure"/></svg><span class="sr-only">Cara que plora de riure</span></span>
+          </label><label class="drawing" title="Cara trista">
+            <input type="radio" name="drawing" value="cara-trista">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-cara-trista"/></svg><span class="sr-only">Cara trista</span></span>
+          </label><label class="drawing" title="Cara de sorpresa">
+            <input type="radio" name="drawing" value="cara-sorpresa">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-cara-sorpresa"/></svg><span class="sr-only">Cara de sorpresa</span></span>
+          </label><label class="drawing" title="Cara amb ulleres de sol">
+            <input type="radio" name="drawing" value="cara-ulleres-de-sol">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-cara-ulleres-de-sol"/></svg><span class="sr-only">Cara amb ulleres de sol</span></span>
+          </label><label class="drawing" title="Cara que fa un petó">
+            <input type="radio" name="drawing" value="cara-peto">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-cara-peto"/></svg><span class="sr-only">Cara que fa un petó</span></span>
+          </label><label class="drawing" title="Angelet">
+            <input type="radio" name="drawing" value="cara-angelet">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-cara-angelet"/></svg><span class="sr-only">Angelet</span></span>
+          </label><label class="drawing" title="Diablet">
+            <input type="radio" name="drawing" value="cara-diablet">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-cara-diablet"/></svg><span class="sr-only">Diablet</span></span>
+          </label><label class="drawing" title="Cara que treu la llengua">
+            <input type="radio" name="drawing" value="cara-llengua">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-cara-llengua"/></svg><span class="sr-only">Cara que treu la llengua</span></span>
+          </label><label class="drawing" title="Cor trencat">
+            <input type="radio" name="drawing" value="cor-trencat">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-cor-trencat"/></svg><span class="sr-only">Cor trencat</span></span>
+          </label><label class="drawing" title="Porró">
+            <input type="radio" name="drawing" value="porro">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-porro"/></svg><span class="sr-only">Porró</span></span>
+          </label><label class="drawing" title="Barretina">
+            <input type="radio" name="drawing" value="barretina">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-barretina"/></svg><span class="sr-only">Barretina</span></span>
+          </label><label class="drawing" title="Rosa de Sant Jordi">
+            <input type="radio" name="drawing" value="rosa">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-rosa"/></svg><span class="sr-only">Rosa de Sant Jordi</span></span>
+          </label><label class="drawing" title="Bolet">
+            <input type="radio" name="drawing" value="bolet">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-bolet"/></svg><span class="sr-only">Bolet</span></span>
+          </label><label class="drawing" title="Tomàquet">
+            <input type="radio" name="drawing" value="tomaquet">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-tomaquet"/></svg><span class="sr-only">Tomàquet</span></span>
+          </label><label class="drawing" title="Calçot">
+            <input type="radio" name="drawing" value="calcot">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-calcot"/></svg><span class="sr-only">Calçot</span></span>
+          </label><label class="drawing" title="Copa de vi">
+            <input type="radio" name="drawing" value="copa-de-vi">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-copa-de-vi"/></svg><span class="sr-only">Copa de vi</span></span>
+          </label><label class="drawing" title="Cafetera italiana">
+            <input type="radio" name="drawing" value="cafetera">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-cafetera"/></svg><span class="sr-only">Cafetera italiana</span></span>
+          </label><label class="drawing" title="Gelat">
+            <input type="radio" name="drawing" value="gelat">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-gelat"/></svg><span class="sr-only">Gelat</span></span>
+          </label><label class="drawing" title="Dònut">
+            <input type="radio" name="drawing" value="donut">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-donut"/></svg><span class="sr-only">Dònut</span></span>
+          </label><label class="drawing" title="Maduixa">
+            <input type="radio" name="drawing" value="maduixa">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-maduixa"/></svg><span class="sr-only">Maduixa</span></span>
+          </label><label class="drawing" title="Síndria">
+            <input type="radio" name="drawing" value="sindria">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-sindria"/></svg><span class="sr-only">Síndria</span></span>
+          </label><label class="drawing" title="Pizza">
+            <input type="radio" name="drawing" value="pizza">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-pizza"/></svg><span class="sr-only">Pizza</span></span>
+          </label><label class="drawing" title="Trèvol de quatre fulles">
+            <input type="radio" name="drawing" value="trevol">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-trevol"/></svg><span class="sr-only">Trèvol de quatre fulles</span></span>
+          </label><label class="drawing" title="Guitarra">
+            <input type="radio" name="drawing" value="guitarra">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-guitarra"/></svg><span class="sr-only">Guitarra</span></span>
+          </label><label class="drawing" title="Auriculars">
+            <input type="radio" name="drawing" value="auriculars">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-auriculars"/></svg><span class="sr-only">Auriculars</span></span>
+          </label><label class="drawing" title="Càmera de fotos">
+            <input type="radio" name="drawing" value="camera">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-camera"/></svg><span class="sr-only">Càmera de fotos</span></span>
+          </label><label class="drawing" title="Coet">
+            <input type="radio" name="drawing" value="coet">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-coet"/></svg><span class="sr-only">Coet</span></span>
+          </label><label class="drawing" title="Planeta">
+            <input type="radio" name="drawing" value="planeta">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-planeta"/></svg><span class="sr-only">Planeta</span></span>
+          </label><label class="drawing" title="Maleta">
+            <input type="radio" name="drawing" value="maleta">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-maleta"/></svg><span class="sr-only">Maleta</span></span>
+          </label><label class="drawing" title="Dau">
+            <input type="radio" name="drawing" value="dau">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-dau"/></svg><span class="sr-only">Dau</span></span>
+          </label><label class="drawing" title="Trofeu">
+            <input type="radio" name="drawing" value="trofeu">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-trofeu"/></svg><span class="sr-only">Trofeu</span></span>
+          </label><label class="drawing" title="Pilota">
+            <input type="radio" name="drawing" value="pilota">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-pilota"/></svg><span class="sr-only">Pilota</span></span>
+          </label><label class="drawing" title="Llavis">
+            <input type="radio" name="drawing" value="llavis">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-llavis"/></svg><span class="sr-only">Llavis</span></span>
+          </label><label class="drawing" title="Bigoti">
+            <input type="radio" name="drawing" value="bigoti">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-bigoti"/></svg><span class="sr-only">Bigoti</span></span>
+          </label><label class="drawing" title="Infinit">
+            <input type="radio" name="drawing" value="infinit">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-infinit"/></svg><span class="sr-only">Infinit</span></span>
+          </label><label class="drawing" title="Conill">
+            <input type="radio" name="drawing" value="conill">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-conill"/></svg><span class="sr-only">Conill</span></span>
+          </label><label class="drawing" title="Ós">
+            <input type="radio" name="drawing" value="os">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-os"/></svg><span class="sr-only">Ós</span></span>
+          </label><label class="drawing" title="Guineu">
+            <input type="radio" name="drawing" value="guineu">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-guineu"/></svg><span class="sr-only">Guineu</span></span>
+          </label><label class="drawing" title="Granota">
+            <input type="radio" name="drawing" value="granota">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-granota"/></svg><span class="sr-only">Granota</span></span>
+          </label><label class="drawing" title="Tortuga">
+            <input type="radio" name="drawing" value="tortuga">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-tortuga"/></svg><span class="sr-only">Tortuga</span></span>
+          </label><label class="drawing" title="Pop">
+            <input type="radio" name="drawing" value="pop">
+            <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-pop"/></svg><span class="sr-only">Pop</span></span>
+          </label>
+        </div>
+        <p class="maker__label">O una emoticona gran</p>
+        <div class="maker__drawings maker__drawings--emoji">
+          <label class="drawing">
+            <input type="radio" name="drawing" value="❤️">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">❤️</span><span class="sr-only">Emoticona ❤️</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🧡">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🧡</span><span class="sr-only">Emoticona 🧡</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="💛">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">💛</span><span class="sr-only">Emoticona 💛</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="💚">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">💚</span><span class="sr-only">Emoticona 💚</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="💙">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">💙</span><span class="sr-only">Emoticona 💙</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="💜">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">💜</span><span class="sr-only">Emoticona 💜</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🖤">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🖤</span><span class="sr-only">Emoticona 🖤</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🤍">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🤍</span><span class="sr-only">Emoticona 🤍</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="💕">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">💕</span><span class="sr-only">Emoticona 💕</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="💖">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">💖</span><span class="sr-only">Emoticona 💖</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="😍">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">😍</span><span class="sr-only">Emoticona 😍</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🥰">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🥰</span><span class="sr-only">Emoticona 🥰</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="😘">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">😘</span><span class="sr-only">Emoticona 😘</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="😊">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">😊</span><span class="sr-only">Emoticona 😊</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="😂">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">😂</span><span class="sr-only">Emoticona 😂</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🤣">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🤣</span><span class="sr-only">Emoticona 🤣</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="😜">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">😜</span><span class="sr-only">Emoticona 😜</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="😎">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">😎</span><span class="sr-only">Emoticona 😎</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🤓">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🤓</span><span class="sr-only">Emoticona 🤓</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🥳">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🥳</span><span class="sr-only">Emoticona 🥳</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="😴">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">😴</span><span class="sr-only">Emoticona 😴</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🤔">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🤔</span><span class="sr-only">Emoticona 🤔</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🙃">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🙃</span><span class="sr-only">Emoticona 🙃</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="😇">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">😇</span><span class="sr-only">Emoticona 😇</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="😈">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">😈</span><span class="sr-only">Emoticona 😈</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🤪">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🤪</span><span class="sr-only">Emoticona 🤪</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🙄">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🙄</span><span class="sr-only">Emoticona 🙄</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="😅">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">😅</span><span class="sr-only">Emoticona 😅</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🫶">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🫶</span><span class="sr-only">Emoticona 🫶</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="💪">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">💪</span><span class="sr-only">Emoticona 💪</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🙏">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🙏</span><span class="sr-only">Emoticona 🙏</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="👍">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">👍</span><span class="sr-only">Emoticona 👍</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="👑">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">👑</span><span class="sr-only">Emoticona 👑</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="✨">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">✨</span><span class="sr-only">Emoticona ✨</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="⭐">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">⭐</span><span class="sr-only">Emoticona ⭐</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🌙">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🌙</span><span class="sr-only">Emoticona 🌙</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="☀️">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">☀️</span><span class="sr-only">Emoticona ☀️</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🌈">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🌈</span><span class="sr-only">Emoticona 🌈</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🔥">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🔥</span><span class="sr-only">Emoticona 🔥</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🌹">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🌹</span><span class="sr-only">Emoticona 🌹</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🌸">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🌸</span><span class="sr-only">Emoticona 🌸</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🌻">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🌻</span><span class="sr-only">Emoticona 🌻</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🍀">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🍀</span><span class="sr-only">Emoticona 🍀</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="☕">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">☕</span><span class="sr-only">Emoticona ☕</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🍵">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🍵</span><span class="sr-only">Emoticona 🍵</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🥐">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🥐</span><span class="sr-only">Emoticona 🥐</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🍰">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🍰</span><span class="sr-only">Emoticona 🍰</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🍷">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🍷</span><span class="sr-only">Emoticona 🍷</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🍺">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🍺</span><span class="sr-only">Emoticona 🍺</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🎉">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🎉</span><span class="sr-only">Emoticona 🎉</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🎁">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🎁</span><span class="sr-only">Emoticona 🎁</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🎂">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🎂</span><span class="sr-only">Emoticona 🎂</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🎵">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🎵</span><span class="sr-only">Emoticona 🎵</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="📚">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">📚</span><span class="sr-only">Emoticona 📚</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="⚽">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">⚽</span><span class="sr-only">Emoticona ⚽</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🐱">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🐱</span><span class="sr-only">Emoticona 🐱</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🐶">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🐶</span><span class="sr-only">Emoticona 🐶</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🐢">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🐢</span><span class="sr-only">Emoticona 🐢</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🦄">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🦄</span><span class="sr-only">Emoticona 🦄</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🌍">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🌍</span><span class="sr-only">Emoticona 🌍</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🌊">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🌊</span><span class="sr-only">Emoticona 🌊</span>
+          </label><label class="drawing">
+            <input type="radio" name="drawing" value="🏔️">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">🏔️</span><span class="sr-only">Emoticona 🏔️</span>
           </label>
         </div>
       </fieldset>
@@ -369,7 +704,7 @@
     </form>
   </div>
 </section>
-<script type="application/json" id="maker-data">{"limits":{"intro":40,"word":28,"sub":48,"def":110},"structures":[{"id":"tendra","label":"Tu ets el meu… / Tu ets la meva…","help":"Per dir-li a algú què significa per a tu.","introM":"Tu ets el meu","introF":"Tu ets la meva","list":"tendres","sub":false,"example":"aixopluc"},{"id":"caracter","label":"Sóc un… / Sóc una…","help":"Per riure't de les teves manies.","introM":"Sóc un","introF":"Sóc una","list":"caracter","sub":true,"example":"cagadubtes"},{"id":"ets","label":"Ets un… / Ets una…","help":"Un insult d'autor, amb afecte.","introM":"Ets un","introF":"Ets una","list":"insults","sub":true,"example":"capsigrany"},{"id":"coses","label":"Coses que…","help":"Una llista enginyosa amb dibuix.","introM":"Coses que","introF":"Coses que","list":null,"sub":true,"example":null},{"id":"lliure","label":"Text lliure","help":"Escriu el que vulguis, tal com vulguis.","introM":"","introF":"","list":null,"sub":true,"example":null}],"lists":{"tendres":{"label":"Paraules tendres","words":[{"w":"aixopluc","g":"m","d":"Lloc on t'arreceres de la pluja i del mal temps."},{"w":"caliu","g":"m","d":"Brasa colgada sota la cendra que conserva l'escalfor."},{"w":"niu","g":"m","d":"Construcció que fan els ocells per covar i criar."},{"w":"arrel","g":"f","d":"Part de la planta que la subjecta a terra i la nodreix."},{"w":"bonança","g":"f","d":"Calma del mar i del temps després de la tempesta."},{"w":"solell","g":"m","d":"Lloc on toca molt el sol."},{"w":"rosada","g":"f","d":"Gotes d'aigua que es formen de matinada sobre l'herba."},{"w":"ventijol","g":"m","d":"Vent suau i agradable."},{"w":"moixaina","g":"f","d":"Carícia tendra, amanyac."},{"w":"deler","g":"m","d":"Desig ardent d'alguna cosa."},{"w":"llostre","g":"m","d":"Claror tènue de l'alba o del capvespre."},{"w":"redós","g":"m","d":"Lloc arrecerat del vent i del fred."},{"w":"esma","g":"f","d":"Instint que et guia gairebé sense pensar-hi."},{"w":"encís","g":"m","d":"Atractiu que captiva, com si fos un encanteri."},{"w":"cuca de llum","g":"f","d":"Insecte que fa llum a la foscor de les nits d'estiu."},{"w":"recer","g":"m","d":"Lloc protegit del vent, de la pluja o del perill."},{"w":"escalfor","g":"f","d":"Calor moderada i agradable."},{"w":"estel","g":"m","d":"Astre que brilla al cel de nit."},{"w":"far","g":"m","d":"Torre amb un llum potent que guia els vaixells."},{"w":"brúixola","g":"f","d":"Instrument que sempre assenyala el nord."},{"w":"abraçada","g":"f","d":"Gest d'estrènyer algú entre els braços."},{"w":"tendresa","g":"f","d":"Afecte dolç i delicat."},{"w":"albada","g":"f","d":"Primera claror del dia."},{"w":"capvespre","g":"m","d":"Darrera part de la tarda, quan es pon el sol."},{"w":"serenor","g":"f","d":"Calma i tranquil·litat."},{"w":"llar","g":"f","d":"Casa on es viu, amb la família."},{"w":"bressol","g":"m","d":"Llitet on dormen els nadons."},{"w":"refugi","g":"m","d":"Lloc on et pots protegir."},{"w":"alegria","g":"f","d":"Sentiment de joia i satisfacció."},{"w":"dolçor","g":"f","d":"Qualitat del que és dolç."},{"w":"espurna","g":"f","d":"Partícula encesa que salta del foc."},{"w":"aurora","g":"f","d":"Claror que precedeix la sortida del sol."},{"w":"marinada","g":"f","d":"Vent suau que a la tarda bufa del mar cap a terra."},{"w":"roure","g":"m","d":"Arbre de fusta dura que viu molts anys."},{"w":"mel","g":"f","d":"Substància dolça que fan les abelles."},{"w":"clariana","g":"f","d":"Espai sense arbres enmig d'un bosc."},{"w":"rierol","g":"m","d":"Riu petit."},{"w":"amanyac","g":"m","d":"Carícia, gest afectuós."},{"w":"somriure","g":"m","d":"Gest de la cara que expressa alegria."},{"w":"primavera","g":"f","d":"Estació de l'any en què floreixen les plantes."}]},"caracter":{"label":"Paraules de caràcter","words":[{"w":"bocamoll","g":"mf","d":"Persona que no sap guardar un secret."},{"w":"cagadubtes","g":"mf","d":"Persona que no s'acaba de decidir mai."},{"w":"corcó","g":"m","d":"Persona molesta i insistent."},{"w":"escalfacadires","g":"mf","d":"Persona que passa hores asseguda sense fer gaire res."},{"w":"llepafils","g":"mf","d":"Persona molt primmirada amb el menjar."},{"w":"manefla","g":"mf","d":"Persona que es fica en els afers dels altres."},{"w":"pocatraça","g":"mf","d":"Persona que té poca habilitat amb les mans."},{"w":"baliga-balaga","g":"mf","d":"Persona poc seriosa, que no té formalitat."},{"w":"bufanúvols","g":"mf","d":"Persona presumida, que es creu més del que és."},{"w":"cap de trons","g":"mf","d":"Persona esbojarrada, que fa les coses sense pensar."},{"w":"garrepa","g":"mf","d":"Persona que no vol gastar ni un cèntim."},{"w":"pixatinters","g":"mf","d":"Oficinista, empleat de despatx de poca categoria."},{"w":"dormilega","g":"mf","d":"Persona a qui agrada molt dormir."},{"w":"xerraire","g":"mf","d":"Persona que parla molt."},{"w":"rondinaire","g":"mf","d":"Persona que sempre es queixa."},{"w":"somiatruites","g":"mf","d":"Persona que fa plans poc realistes."},{"w":"tastaolletes","g":"mf","d":"Persona que comença moltes coses i no n'acaba cap."},{"w":"setciències","g":"mf","d":"Persona que presumeix de saber-ho tot."},{"w":"pixapins","g":"mf","d":"Persona de ciutat que va a passar el dia a la muntanya."},{"w":"busca-raons","g":"mf","d":"Persona que sempre busca baralla."},{"w":"perepunyetes","g":"mf","d":"Persona primmirada, que s'hi mira molt."},{"w":"trapella","g":"mf","d":"Persona entremaliada i juganera."},{"w":"poca-solta","g":"mf","d":"Persona que fa o diu coses sense solta ni volta."}]},"insults":{"label":"Insults d'autor","words":[{"w":"capsigrany","g":"m","d":"Persona curta de gambals."},{"w":"gamarús","g":"m","d":"Persona curta d'enteniment."},{"w":"ganàpia","g":"mf","d":"Persona gran que es comporta com un infant."},{"w":"tòtil","g":"mf","d":"Persona ximple, babau."},{"w":"babau","g":"mf","d":"Persona ingènua que s'ho creu tot."},{"w":"tanoca","g":"mf","d":"Persona ximple, de poc enteniment."},{"w":"cap de suro","g":"mf","d":"Persona distreta, de poc seny."},{"w":"cap de fava","g":"mf","d":"Persona ximple."},{"w":"estaquirot","g":"m","d":"Persona que es queda plantada sense fer res."},{"w":"carallot","g":"m","d":"Persona ximple."},{"w":"llepaculs","g":"mf","d":"Persona que afalaga per treure'n profit."},{"w":"bleda","g":"f","d":"Persona sense energia ni caràcter."},{"w":"tocacampanes","g":"mf","d":"Persona poc seriosa, que fa ximpleries."}]}},"drawings":[{"id":"cor","label":"Cor"},{"id":"cors","label":"Dos cors"},{"id":"paraigua","label":"Paraigua"},{"id":"sol","label":"Sol"},{"id":"lluna","label":"Lluna"},{"id":"estel","label":"Estel"},{"id":"estel-fugac","label":"Estel fugaç"},{"id":"nuvol","label":"Núvol"},{"id":"pluja","label":"Pluja"},{"id":"llamp","label":"Llamp"},{"id":"arc-de-sant-marti","label":"Arc de Sant Martí"},{"id":"floc-de-neu","label":"Floc de neu"},{"id":"foc","label":"Foc"},{"id":"flor","label":"Flor"},{"id":"fulla","label":"Fulla"},{"id":"arbre","label":"Arbre"},{"id":"cactus","label":"Cactus"},{"id":"test","label":"Planta"},{"id":"muntanya","label":"Muntanyes"},{"id":"onada","label":"Onada"},{"id":"vaixell","label":"Vaixell"},{"id":"ancora","label":"Àncora"},{"id":"far","label":"Far"},{"id":"casa","label":"Casa"},{"id":"niu","label":"Niu"},{"id":"ocell","label":"Ocell"},{"id":"gat","label":"Gat"},{"id":"gos","label":"Gos"},{"id":"peix","label":"Peix"},{"id":"papallona","label":"Papallona"},{"id":"abella","label":"Abella"},{"id":"cargol","label":"Cargol"},{"id":"tassa","label":"Tassa de cafè"},{"id":"croissant","label":"Croissant"},{"id":"magdalena","label":"Magdalena"},{"id":"pastis","label":"Pastís"},{"id":"regal","label":"Regal"},{"id":"globus","label":"Globus"},{"id":"corona","label":"Corona"},{"id":"ulleres","label":"Ulleres"},{"id":"llibre","label":"Llibre"},{"id":"llapis","label":"Llapis"},{"id":"rellotge","label":"Despertador"},{"id":"bombeta","label":"Bombeta"},{"id":"clau","label":"Clau"},{"id":"carta","label":"Carta"},{"id":"avio-de-paper","label":"Avió de paper"},{"id":"nota-musical","label":"Música"},{"id":"bicicleta","label":"Bicicleta"},{"id":"brujola","label":"Brúixola"},{"id":"cara-felic","label":"Cara feliç"},{"id":"cara-enamorada","label":"Cara enamorada"},{"id":"cara-adormida","label":"Cara adormida"},{"id":"cara-enfadada","label":"Cara enfadada"},{"id":"cara-picant-ullet","label":"Picant l'ullet"}],"colors":[{"id":"vermell","name":"Vermell","hex":"#C41E3A","stock":5},{"id":"taronja","name":"Taronja","hex":"#E06A28","stock":5},{"id":"groc","name":"Groc","hex":"#F2D530","stock":5},{"id":"verd-llima","name":"Verd llima","hex":"#A4C449","stock":5},{"id":"verd","name":"Verd","hex":"#4F9A55","stock":5},{"id":"blau-cel","name":"Blau cel","hex":"#3FA7E0","stock":5},{"id":"blau","name":"Blau","hex":"#2B3A7A","stock":5},{"id":"rosa","name":"Rosa","hex":"#E58FB2","stock":5},{"id":"negre","name":"Negre","hex":"#1F1F20","stock":5}],"priceCents":1495}</script>
+<script type="application/json" id="maker-data">{"limits":{"intro":40,"word":28,"sub":48,"def":110},"structures":[{"id":"tendra","label":"Tu ets el meu… / Tu ets la meva…","help":"Per dir-li a algú què significa per a tu.","introM":"Tu ets el meu","introF":"Tu ets la meva","list":"tendres","sub":false,"example":"aixopluc"},{"id":"caracter","label":"Sóc un… / Sóc una…","help":"Per riure't de les teves manies.","introM":"Sóc un","introF":"Sóc una","list":"caracter","sub":true,"example":"cagadubtes"},{"id":"ets","label":"Ets un… / Ets una…","help":"Un insult d'autor, amb afecte.","introM":"Ets un","introF":"Ets una","list":"insults","sub":true,"example":"capsigrany"},{"id":"coses","label":"Coses que…","help":"Una llista enginyosa amb dibuix.","introM":"Coses que","introF":"Coses que","list":null,"sub":true,"example":null},{"id":"lliure","label":"Text lliure","help":"Escriu el que vulguis, tal com vulguis.","introM":"","introF":"","list":null,"sub":true,"example":null}],"lists":{"tendres":{"label":"Paraules tendres","words":[{"w":"aixopluc","g":"m","d":"Lloc on t'arreceres de la pluja i del mal temps."},{"w":"caliu","g":"m","d":"Brasa colgada sota la cendra que conserva l'escalfor."},{"w":"niu","g":"m","d":"Construcció que fan els ocells per covar i criar."},{"w":"arrel","g":"f","d":"Part de la planta que la subjecta a terra i la nodreix."},{"w":"bonança","g":"f","d":"Calma del mar i del temps després de la tempesta."},{"w":"solell","g":"m","d":"Lloc on toca molt el sol."},{"w":"rosada","g":"f","d":"Gotes d'aigua que es formen de matinada sobre l'herba."},{"w":"ventijol","g":"m","d":"Vent suau i agradable."},{"w":"moixaina","g":"f","d":"Carícia tendra, amanyac."},{"w":"deler","g":"m","d":"Desig ardent d'alguna cosa."},{"w":"llostre","g":"m","d":"Claror tènue de l'alba o del capvespre."},{"w":"redós","g":"m","d":"Lloc arrecerat del vent i del fred."},{"w":"esma","g":"f","d":"Instint que et guia gairebé sense pensar-hi."},{"w":"encís","g":"m","d":"Atractiu que captiva, com si fos un encanteri."},{"w":"cuca de llum","g":"f","d":"Insecte que fa llum a la foscor de les nits d'estiu."},{"w":"recer","g":"m","d":"Lloc protegit del vent, de la pluja o del perill."},{"w":"escalfor","g":"f","d":"Calor moderada i agradable."},{"w":"estel","g":"m","d":"Astre que brilla al cel de nit."},{"w":"far","g":"m","d":"Torre amb un llum potent que guia els vaixells."},{"w":"brúixola","g":"f","d":"Instrument que sempre assenyala el nord."},{"w":"abraçada","g":"f","d":"Gest d'estrènyer algú entre els braços."},{"w":"tendresa","g":"f","d":"Afecte dolç i delicat."},{"w":"albada","g":"f","d":"Primera claror del dia."},{"w":"capvespre","g":"m","d":"Darrera part de la tarda, quan es pon el sol."},{"w":"serenor","g":"f","d":"Calma i tranquil·litat."},{"w":"llar","g":"f","d":"Casa on es viu, amb la família."},{"w":"bressol","g":"m","d":"Llitet on dormen els nadons."},{"w":"refugi","g":"m","d":"Lloc on et pots protegir."},{"w":"alegria","g":"f","d":"Sentiment de joia i satisfacció."},{"w":"dolçor","g":"f","d":"Qualitat del que és dolç."},{"w":"espurna","g":"f","d":"Partícula encesa que salta del foc."},{"w":"aurora","g":"f","d":"Claror que precedeix la sortida del sol."},{"w":"marinada","g":"f","d":"Vent suau que a la tarda bufa del mar cap a terra."},{"w":"roure","g":"m","d":"Arbre de fusta dura que viu molts anys."},{"w":"mel","g":"f","d":"Substància dolça que fan les abelles."},{"w":"clariana","g":"f","d":"Espai sense arbres enmig d'un bosc."},{"w":"rierol","g":"m","d":"Riu petit."},{"w":"amanyac","g":"m","d":"Carícia, gest afectuós."},{"w":"somriure","g":"m","d":"Gest de la cara que expressa alegria."},{"w":"primavera","g":"f","d":"Estació de l'any en què floreixen les plantes."},{"w":"tresor","g":"m","d":"Conjunt de coses de gran valor que es guarden amb cura."},{"w":"sol","g":"m","d":"Estrella que dona llum i escalfor a la Terra."},{"w":"lluna","g":"f","d":"Satèl·lit que il·lumina la nit."},{"w":"batec","g":"m","d":"Moviment rítmic del cor."},{"w":"port","g":"m","d":"Lloc resguardat on les embarcacions troben recer."},{"w":"nord","g":"m","d":"Punt cardinal que serveix per orientar-se."},{"w":"casa","g":"f","d":"Lloc on hom viu i se sent a gust."},{"w":"sort","g":"f","d":"Encadenament favorable de les coses."},{"w":"calma","g":"f","d":"Estat de tranquil·litat, sense vent ni onades."},{"w":"pau","g":"f","d":"Estat de tranquil·litat i d'harmonia."},{"w":"mitja taronja","g":"f","d":"Persona que et completa, com l'altra meitat d'una taronja."},{"w":"debilitat","g":"f","d":"Persona per la qual sents una inclinació especial."}]},"caracter":{"label":"Paraules de caràcter","words":[{"w":"bocamoll","g":"mf","d":"Persona que no sap guardar un secret."},{"w":"cagadubtes","g":"mf","d":"Persona que no s'acaba de decidir mai."},{"w":"corcó","g":"m","d":"Persona molesta i insistent."},{"w":"escalfacadires","g":"mf","d":"Persona que passa hores asseguda sense fer gaire res."},{"w":"llepafils","g":"mf","d":"Persona molt primmirada amb el menjar."},{"w":"manefla","g":"mf","d":"Persona que es fica en els afers dels altres."},{"w":"pocatraça","g":"mf","d":"Persona que té poca habilitat amb les mans."},{"w":"baliga-balaga","g":"mf","d":"Persona poc seriosa, que no té formalitat."},{"w":"bufanúvols","g":"mf","d":"Persona presumida, que es creu més del que és."},{"w":"cap de trons","g":"mf","d":"Persona esbojarrada, que fa les coses sense pensar."},{"w":"garrepa","g":"mf","d":"Persona que no vol gastar ni un cèntim."},{"w":"pixatinters","g":"mf","d":"Oficinista, empleat de despatx de poca categoria."},{"w":"dormilega","g":"mf","d":"Persona a qui agrada molt dormir."},{"w":"xerraire","g":"mf","d":"Persona que parla molt."},{"w":"rondinaire","g":"mf","d":"Persona que sempre es queixa."},{"w":"somiatruites","g":"mf","d":"Persona que fa plans poc realistes."},{"w":"tastaolletes","g":"mf","d":"Persona que comença moltes coses i no n'acaba cap."},{"w":"setciències","g":"mf","d":"Persona que presumeix de saber-ho tot."},{"w":"pixapins","g":"mf","d":"Persona de ciutat que va a passar el dia a la muntanya."},{"w":"busca-raons","g":"mf","d":"Persona que sempre busca baralla."},{"w":"perepunyetes","g":"mf","d":"Persona primmirada, que s'hi mira molt."},{"w":"trapella","g":"mf","d":"Persona entremaliada i juganera."},{"w":"poca-solta","g":"mf","d":"Persona que fa o diu coses sense solta ni volta."},{"w":"tocapebrots","g":"mf","d":"Persona que molesta i fa la guitza."},{"w":"menjamiques","g":"mf","d":"Persona que menja poc i amb desgana."},{"w":"esgarriacries","g":"mf","d":"Persona que ho espatlla tot."},{"w":"queixica","g":"mf","d":"Persona que es queixa per tot."},{"w":"pocavergonya","g":"mf","d":"Persona que no té vergonya."},{"w":"nyicris","g":"mf","d":"Persona esquifida i feble."},{"w":"perdonavides","g":"mf","d":"Persona que es fa la valenta i presumeix de força."},{"w":"aixafaguitarres","g":"mf","d":"Persona que espatlla la gresca dels altres."},{"w":"tapaforats","g":"mf","d":"Persona que sempre fa de substitut per omplir un buit."},{"w":"ploramiques","g":"mf","d":"Persona que es lamenta per qualsevol cosa."},{"w":"pixallits","g":"mf","d":"Criatura que encara es pixa al llit; persona poc espavilada."}]},"insults":{"label":"Insults d'autor","words":[{"w":"capsigrany","g":"m","d":"Persona curta de gambals."},{"w":"gamarús","g":"m","d":"Persona curta d'enteniment."},{"w":"ganàpia","g":"mf","d":"Persona gran que es comporta com un infant."},{"w":"tòtil","g":"mf","d":"Persona ximple, babau."},{"w":"babau","g":"mf","d":"Persona ingènua que s'ho creu tot."},{"w":"tanoca","g":"mf","d":"Persona ximple, de poc enteniment."},{"w":"cap de suro","g":"mf","d":"Persona distreta, de poc seny."},{"w":"cap de fava","g":"mf","d":"Persona ximple."},{"w":"estaquirot","g":"m","d":"Persona que es queda plantada sense fer res."},{"w":"carallot","g":"m","d":"Persona ximple."},{"w":"llepaculs","g":"mf","d":"Persona que afalaga per treure'n profit."},{"w":"bleda","g":"f","d":"Persona sense energia ni caràcter."},{"w":"tocacampanes","g":"mf","d":"Persona poc seriosa, que fa ximpleries."},{"w":"galifardeu","g":"m","d":"Jove trapella i desvergonyit."},{"w":"mitja merda","g":"mf","d":"Persona insignificant, de poca empenta."},{"w":"panoli","g":"mf","d":"Persona ingènua, fàcil d'enganyar."},{"w":"tros d'ase","g":"m","d":"Persona molt ignorant."},{"w":"brètol","g":"m","d":"Persona dolenta, que fa malifetes."},{"w":"ase","g":"m","d":"Persona ignorant o de pocs coneixements."},{"w":"gallina","g":"f","d":"Persona covarda."},{"w":"titella","g":"m","d":"Persona sense voluntat pròpia, que es deixa manejar."},{"w":"esperpent","g":"m","d":"Persona d'aspecte ridícul o grotesc."},{"w":"espantall","g":"m","d":"Persona mal vestida o d'aspecte estrafolari."},{"w":"mamarratxo","g":"m","d":"Persona ridícula, que fa riure."}]}},"drawings":[{"id":"cor","label":"Cor"},{"id":"cors","label":"Dos cors"},{"id":"paraigua","label":"Paraigua"},{"id":"sol","label":"Sol"},{"id":"lluna","label":"Lluna"},{"id":"estel","label":"Estel"},{"id":"estel-fugac","label":"Estel fugaç"},{"id":"nuvol","label":"Núvol"},{"id":"pluja","label":"Pluja"},{"id":"llamp","label":"Llamp"},{"id":"arc-de-sant-marti","label":"Arc de Sant Martí"},{"id":"floc-de-neu","label":"Floc de neu"},{"id":"foc","label":"Foc"},{"id":"flor","label":"Flor"},{"id":"fulla","label":"Fulla"},{"id":"arbre","label":"Arbre"},{"id":"cactus","label":"Cactus"},{"id":"test","label":"Planta"},{"id":"muntanya","label":"Muntanyes"},{"id":"onada","label":"Onada"},{"id":"vaixell","label":"Vaixell"},{"id":"ancora","label":"Àncora"},{"id":"far","label":"Far"},{"id":"casa","label":"Casa"},{"id":"niu","label":"Niu"},{"id":"ocell","label":"Ocell"},{"id":"gat","label":"Gat"},{"id":"gos","label":"Gos"},{"id":"peix","label":"Peix"},{"id":"papallona","label":"Papallona"},{"id":"abella","label":"Abella"},{"id":"cargol","label":"Cargol"},{"id":"tassa","label":"Tassa de cafè"},{"id":"croissant","label":"Croissant"},{"id":"magdalena","label":"Magdalena"},{"id":"pastis","label":"Pastís"},{"id":"regal","label":"Regal"},{"id":"globus","label":"Globus"},{"id":"corona","label":"Corona"},{"id":"ulleres","label":"Ulleres"},{"id":"llibre","label":"Llibre"},{"id":"llapis","label":"Llapis"},{"id":"rellotge","label":"Despertador"},{"id":"bombeta","label":"Bombeta"},{"id":"clau","label":"Clau"},{"id":"carta","label":"Carta"},{"id":"avio-de-paper","label":"Avió de paper"},{"id":"nota-musical","label":"Música"},{"id":"bicicleta","label":"Bicicleta"},{"id":"brujola","label":"Brúixola"},{"id":"cara-felic","label":"Cara feliç"},{"id":"cara-enamorada","label":"Cara enamorada"},{"id":"cara-adormida","label":"Cara adormida"},{"id":"cara-enfadada","label":"Cara enfadada"},{"id":"cara-picant-ullet","label":"Picant l'ullet"},{"id":"cara-rialla","label":"Cara que riu"},{"id":"cara-plorant-de-riure","label":"Cara que plora de riure"},{"id":"cara-trista","label":"Cara trista"},{"id":"cara-sorpresa","label":"Cara de sorpresa"},{"id":"cara-ulleres-de-sol","label":"Cara amb ulleres de sol"},{"id":"cara-peto","label":"Cara que fa un petó"},{"id":"cara-angelet","label":"Angelet"},{"id":"cara-diablet","label":"Diablet"},{"id":"cara-llengua","label":"Cara que treu la llengua"},{"id":"cor-trencat","label":"Cor trencat"},{"id":"porro","label":"Porró"},{"id":"barretina","label":"Barretina"},{"id":"rosa","label":"Rosa de Sant Jordi"},{"id":"bolet","label":"Bolet"},{"id":"tomaquet","label":"Tomàquet"},{"id":"calcot","label":"Calçot"},{"id":"copa-de-vi","label":"Copa de vi"},{"id":"cafetera","label":"Cafetera italiana"},{"id":"gelat","label":"Gelat"},{"id":"donut","label":"Dònut"},{"id":"maduixa","label":"Maduixa"},{"id":"sindria","label":"Síndria"},{"id":"pizza","label":"Pizza"},{"id":"trevol","label":"Trèvol de quatre fulles"},{"id":"guitarra","label":"Guitarra"},{"id":"auriculars","label":"Auriculars"},{"id":"camera","label":"Càmera de fotos"},{"id":"coet","label":"Coet"},{"id":"planeta","label":"Planeta"},{"id":"maleta","label":"Maleta"},{"id":"dau","label":"Dau"},{"id":"trofeu","label":"Trofeu"},{"id":"pilota","label":"Pilota"},{"id":"llavis","label":"Llavis"},{"id":"bigoti","label":"Bigoti"},{"id":"infinit","label":"Infinit"},{"id":"conill","label":"Conill"},{"id":"os","label":"Ós"},{"id":"guineu","label":"Guineu"},{"id":"granota","label":"Granota"},{"id":"tortuga","label":"Tortuga"},{"id":"pop","label":"Pop"}],"emojis":["❤️","🧡","💛","💚","💙","💜","🖤","🤍","💕","💖","😍","🥰","😘","😊","😂","🤣","😜","😎","🤓","🥳","😴","🤔","🙃","😇","😈","🤪","🙄","😅","🫶","💪","🙏","👍","👑","✨","⭐","🌙","☀️","🌈","🔥","🌹","🌸","🌻","🍀","☕","🍵","🥐","🍰","🍷","🍺","🎉","🎁","🎂","🎵","📚","⚽","🐱","🐶","🐢","🦄","🌍","🌊","🏔️"],"colors":[{"id":"vermell","name":"Vermell","hex":"#C41E3A","stock":5},{"id":"taronja","name":"Taronja","hex":"#E06A28","stock":5},{"id":"groc","name":"Groc","hex":"#F2D530","stock":5},{"id":"verd-llima","name":"Verd llima","hex":"#A4C449","stock":5},{"id":"verd","name":"Verd","hex":"#4F9A55","stock":5},{"id":"blau-cel","name":"Blau cel","hex":"#3FA7E0","stock":5},{"id":"blau","name":"Blau","hex":"#2B3A7A","stock":5},{"id":"rosa","name":"Rosa","hex":"#E58FB2","stock":5},{"id":"negre","name":"Negre","hex":"#1F1F20","stock":5}],"priceCents":1495}</script>
 </main>
 <footer class="site-footer">
   <div class="container site-footer__grid">

@@ -260,6 +260,66 @@
           "w": "primavera",
           "g": "f",
           "d": "Estació de l'any en què floreixen les plantes."
+        },
+        {
+          "w": "tresor",
+          "g": "m",
+          "d": "Conjunt de coses de gran valor que es guarden amb cura."
+        },
+        {
+          "w": "sol",
+          "g": "m",
+          "d": "Estrella que dona llum i escalfor a la Terra."
+        },
+        {
+          "w": "lluna",
+          "g": "f",
+          "d": "Satèl·lit que il·lumina la nit."
+        },
+        {
+          "w": "batec",
+          "g": "m",
+          "d": "Moviment rítmic del cor."
+        },
+        {
+          "w": "port",
+          "g": "m",
+          "d": "Lloc resguardat on les embarcacions troben recer."
+        },
+        {
+          "w": "nord",
+          "g": "m",
+          "d": "Punt cardinal que serveix per orientar-se."
+        },
+        {
+          "w": "casa",
+          "g": "f",
+          "d": "Lloc on hom viu i se sent a gust."
+        },
+        {
+          "w": "sort",
+          "g": "f",
+          "d": "Encadenament favorable de les coses."
+        },
+        {
+          "w": "calma",
+          "g": "f",
+          "d": "Estat de tranquil·litat, sense vent ni onades."
+        },
+        {
+          "w": "pau",
+          "g": "f",
+          "d": "Estat de tranquil·litat i d'harmonia."
+        },
+        {
+          "w": "mitja taronja",
+          "g": "f",
+          "d": "Persona que et completa, com l'altra meitat d'una taronja."
+        },
+        {
+          "w": "debilitat",
+          "g": "f",
+          "d": "Persona per la qual sents una inclinació especial."
         }
       ]
     },
@@ -380,6 +440,61 @@
           "w": "poca-solta",
           "g": "mf",
           "d": "Persona que fa o diu coses sense solta ni volta."
+        },
+        {
+          "w": "tocapebrots",
+          "g": "mf",
+          "d": "Persona que molesta i fa la guitza."
+        },
+        {
+          "w": "menjamiques",
+          "g": "mf",
+          "d": "Persona que menja poc i amb desgana."
+        },
+        {
+          "w": "esgarriacries",
+          "g": "mf",
+          "d": "Persona que ho espatlla tot."
+        },
+        {
+          "w": "queixica",
+          "g": "mf",
+          "d": "Persona que es queixa per tot."
+        },
+        {
+          "w": "pocavergonya",
+          "g": "mf",
+          "d": "Persona que no té vergonya."
+        },
+        {
+          "w": "nyicris",
+          "g": "mf",
+          "d": "Persona esquifida i feble."
+        },
+        {
+          "w": "perdonavides",
+          "g": "mf",
+          "d": "Persona que es fa la valenta i presumeix de força."
+        },
+        {
+          "w": "aixafaguitarres",
+          "g": "mf",
+          "d": "Persona que espatlla la gresca dels altres."
+        },
+        {
+          "w": "tapaforats",
+          "g": "mf",
+          "d": "Persona que sempre fa de substitut per omplir un buit."
+        },
+        {
+          "w": "ploramiques",
+          "g": "mf",
+          "d": "Persona que es lamenta per qualsevol cosa."
+        },
+        {
+          "w": "pixallits",
+          "g": "mf",
+          "d": "Criatura que encara es pixa al llit; persona poc espavilada."
         }
       ]
     },
@@ -450,6 +565,61 @@
           "w": "tocacampanes",
           "g": "mf",
           "d": "Persona poc seriosa, que fa ximpleries."
+        },
+        {
+          "w": "galifardeu",
+          "g": "m",
+          "d": "Jove trapella i desvergonyit."
+        },
+        {
+          "w": "mitja merda",
+          "g": "mf",
+          "d": "Persona insignificant, de poca empenta."
+        },
+        {
+          "w": "panoli",
+          "g": "mf",
+          "d": "Persona ingènua, fàcil d'enganyar."
+        },
+        {
+          "w": "tros d'ase",
+          "g": "m",
+          "d": "Persona molt ignorant."
+        },
+        {
+          "w": "brètol",
+          "g": "m",
+          "d": "Persona dolenta, que fa malifetes."
+        },
+        {
+          "w": "ase",
+          "g": "m",
+          "d": "Persona ignorant o de pocs coneixements."
+        },
+        {
+          "w": "gallina",
+          "g": "f",
+          "d": "Persona covarda."
+        },
+        {
+          "w": "titella",
+          "g": "m",
+          "d": "Persona sense voluntat pròpia, que es deixa manejar."
+        },
+        {
+          "w": "esperpent",
+          "g": "m",
+          "d": "Persona d'aspecte ridícul o grotesc."
+        },
+        {
+          "w": "espantall",
+          "g": "m",
+          "d": "Persona mal vestida o d'aspecte estrafolari."
+        },
+        {
+          "w": "mamarratxo",
+          "g": "m",
+          "d": "Persona ridícula, que fa riure."
         }
       ]
     }
@@ -674,6 +844,238 @@
     {
       "id": "cara-picant-ullet",
       "label": "Picant l'ullet"
+    },
+    {
+      "id": "cara-rialla",
+      "label": "Cara que riu"
+    },
+    {
+      "id": "cara-plorant-de-riure",
+      "label": "Cara que plora de riure"
+    },
+    {
+      "id": "cara-trista",
+      "label": "Cara trista"
+    },
+    {
+      "id": "cara-sorpresa",
+      "label": "Cara de sorpresa"
+    },
+    {
+      "id": "cara-ulleres-de-sol",
+      "label": "Cara amb ulleres de sol"
+    },
+    {
+      "id": "cara-peto",
+      "label": "Cara que fa un petó"
+    },
+    {
+      "id": "cara-angelet",
+      "label": "Angelet"
+    },
+    {
+      "id": "cara-diablet",
+      "label": "Diablet"
+    },
+    {
+      "id": "cara-llengua",
+      "label": "Cara que treu la llengua"
+    },
+    {
+      "id": "cor-trencat",
+      "label": "Cor trencat"
+    },
+    {
+      "id": "porro",
+      "label": "Porró"
+    },
+    {
+      "id": "barretina",
+      "label": "Barretina"
+    },
+    {
+      "id": "rosa",
+      "label": "Rosa de Sant Jordi"
+    },
+    {
+      "id": "bolet",
+      "label": "Bolet"
+    },
+    {
+      "id": "tomaquet",
+      "label": "Tomàquet"
+    },
+    {
+      "id": "calcot",
+      "label": "Calçot"
+    },
+    {
+      "id": "copa-de-vi",
+      "label": "Copa de vi"
+    },
+    {
+      "id": "cafetera",
+      "label": "Cafetera italiana"
+    },
+    {
+      "id": "gelat",
+      "label": "Gelat"
+    },
+    {
+      "id": "donut",
+      "label": "Dònut"
+    },
+    {
+      "id": "maduixa",
+      "label": "Maduixa"
+    },
+    {
+      "id": "sindria",
+      "label": "Síndria"
+    },
+    {
+      "id": "pizza",
+      "label": "Pizza"
+    },
+    {
+      "id": "trevol",
+      "label": "Trèvol de quatre fulles"
+    },
+    {
+      "id": "guitarra",
+      "label": "Guitarra"
+    },
+    {
+      "id": "auriculars",
+      "label": "Auriculars"
+    },
+    {
+      "id": "camera",
+      "label": "Càmera de fotos"
+    },
+    {
+      "id": "coet",
+      "label": "Coet"
+    },
+    {
+      "id": "planeta",
+      "label": "Planeta"
+    },
+    {
+      "id": "maleta",
+      "label": "Maleta"
+    },
+    {
+      "id": "dau",
+      "label": "Dau"
+    },
+    {
+      "id": "trofeu",
+      "label": "Trofeu"
+    },
+    {
+      "id": "pilota",
+      "label": "Pilota"
+    },
+    {
+      "id": "llavis",
+      "label": "Llavis"
+    },
+    {
+      "id": "bigoti",
+      "label": "Bigoti"
+    },
+    {
+      "id": "infinit",
+      "label": "Infinit"
+    },
+    {
+      "id": "conill",
+      "label": "Conill"
+    },
+    {
+      "id": "os",
+      "label": "Ós"
+    },
+    {
+      "id": "guineu",
+      "label": "Guineu"
+    },
+    {
+      "id": "granota",
+      "label": "Granota"
+    },
+    {
+      "id": "tortuga",
+      "label": "Tortuga"
+    },
+    {
+      "id": "pop",
+      "label": "Pop"
     }
+  ],
+  "emojis": [
+    "❤️",
+    "🧡",
+    "💛",
+    "💚",
+    "💙",
+    "💜",
+    "🖤",
+    "🤍",
+    "💕",
+    "💖",
+    "😍",
+    "🥰",
+    "😘",
+    "😊",
+    "😂",
+    "🤣",
+    "😜",
+    "😎",
+    "🤓",
+    "🥳",
+    "😴",
+    "🤔",
+    "🙃",
+    "😇",
+    "😈",
+    "🤪",
+    "🙄",
+    "😅",
+    "🫶",
+    "💪",
+    "🙏",
+    "👍",
+    "👑",
+    "✨",
+    "⭐",
+    "🌙",
+    "☀️",
+    "🌈",
+    "🔥",
+    "🌹",
+    "🌸",
+    "🌻",
+    "🍀",
+    "☕",
+    "🍵",
+    "🥐",
+    "🍰",
+    "🍷",
+    "🍺",
+    "🎉",
+    "🎁",
+    "🎂",
+    "🎵",
+    "📚",
+    "⚽",
+    "🐱",
+    "🐶",
+    "🐢",
+    "🦄",
+    "🌍",
+    "🌊",
+    "🏔️"
   ]
 }

@@ -37,9 +37,14 @@
     photo: $('[data-mug-photo]'), box: $('[data-mug]'), drawing: $('[data-mug-drawing]'),
     intro: $('[data-mug-intro] textPath'), word: $('[data-mug-word] textPath'), sub: $('[data-mug-sub] textPath'),
     arcs: { intro: $('[data-arc="intro"]'), word: $('[data-arc="word"]'), sub: $('[data-arc="sub"]') },
-    front: $('[data-mug-front]'), back: $('[data-mug-back]'), bword: $('[data-mug-back-word]'),
-    bdefs: $('[data-mug-back-defs]'), title: $('[data-mug-title]'),
+    front: $('[data-mug-front]'), back: $('[data-mug-back]'), bword: $('[data-mug-back-word] textPath'),
+    barc: $('[data-arc="bword"]'), brule: $('[data-mug-back-rule]'), blines: $('[data-mug-back-lines]'),
+    emoji: $('[data-mug-emoji]'), bdrawing: $('[data-mug-bdrawing]'), bemoji: $('[data-mug-bemoji]'),
+    title: $('[data-mug-title]'),
   };
+  var EMOJIS = DATA.emojis || [];
+  var isEmoji = function (v) { return EMOJIS.indexOf(v) > -1; };
+  var SVGNS = 'http://www.w3.org/2000/svg';
 
   var state = { gender: 'm', autoDef: true };
 
@@ -56,6 +61,7 @@
   }
 
   // ---------- Llista de paraules ----------
+  var lastWordsHtml = null;
   function renderWords() {
     var s = structure();
     var q = norm(f.search.value.trim());
@@ -63,10 +69,13 @@
       ? ALL_WORDS.filter(function (w) { return norm(w.w).indexOf(q) > -1 || norm(w.d).indexOf(q) > -1; })
       : ALL_WORDS.filter(function (w) { return w.list === s.list; });
     var current = norm(f.word.value.trim());
-    ui.wordList.innerHTML = words.length ? words.map(function (w) {
+    var html = words.length ? words.map(function (w) {
       var on = norm(w.w) === current;
       return '<button type="button" class="wordchip' + (on ? ' is-on' : '') + '" role="option" aria-selected="' + on + '" data-w="' + esc(w.w) + '" title="' + esc(w.d) + '">' + esc(w.w) + '</button>';
     }).join('') : '<p class="maker__empty">Cap paraula coincideix. Pots escriure-la tu directament a dalt.</p>';
+    // Només es torna a pintar si canvia: si no, un clic que arriba just després
+    // que la cerca perdi el focus es perdria (el botó ja no existiria).
+    if (html !== lastWordsHtml) { ui.wordList.innerHTML = html; lastWordsHtml = html; }
   }
 
   function pickWord(text) {
@@ -84,13 +93,25 @@
   }
 
   // ---------- Vista prèvia ----------
-  // Zona d'impressió del davant (unitats de la foto de 760 px): cos de la tassa de x=40 a x=518.
+  // Zona d'impressió (unitats de la foto de 760 px). Davant: cos de la tassa de x=40 a x=518.
+  // Darrere: la foto és la mateixa girada, així que el cos va de x=242 a x=720.
   var BODY_CX = 279;
+  var BACK_CX = 481;
+  var HALF = 190;
   var PRINT_W = 310;
-  function setArc(path, y) {
-    var half = 190;
-    path.setAttribute('d', 'M' + (BODY_CX - half) + ' ' + y + ' Q' + BODY_CX + ' ' + (y + 16) + ' ' + (BODY_CX + half) + ' ' + y);
+  // La tassa és un cilindre vist una mica des de dalt: les línies fan un somriure
+  // i com més avall són, més es corben.
+  // Cada línia és un tros d'el·lipse: la secció d'un cilindre de radi R vista en perspectiva
+  // (plana al mig i més corbada cap als costats).
+  var R = 239;
+  function sag(y) { return Math.max(5, Math.min(18, 7 + (y - 300) * 0.04)); }
+  function arcD(cx, y, half) {
+    half = half || HALF;
+    var k = Math.sqrt(1 - Math.pow(half / R, 2));
+    var ry = sag(y) / (1 - k);
+    return 'M' + (cx - half) + ' ' + y + ' A' + R + ' ' + ry.toFixed(1) + ' 0 0 0 ' + (cx + half) + ' ' + y;
   }
+  function setArc(path, y) { path.setAttribute('d', arcD(BODY_CX, y)); }
   function fitText(el, base, min, maxWidth) {
     var size = base;
     el.style.fontSize = size + 'px';
@@ -128,10 +149,21 @@
 
     var src = '/images/tassa-en-blanc/' + color.id + '.jpg';
     if (mug.photo.getAttribute('src') !== src) mug.photo.setAttribute('src', src);
-    if (drawing) { mug.drawing.setAttribute('href', '/assets/drawings.svg#d-' + drawing); mug.drawing.style.display = ''; }
-    else mug.drawing.style.display = 'none';
+    var emoji = isEmoji(drawing);
+    if (drawing && !emoji) {
+      mug.drawing.setAttribute('href', '/assets/drawings.svg#d-' + drawing);
+      mug.bdrawing.setAttribute('href', '/assets/drawings.svg#d-' + drawing);
+    }
+    mug.drawing.style.display = drawing && !emoji ? '' : 'none';
+    mug.bdrawing.style.display = drawing && !emoji ? '' : 'none';
+    mug.emoji.style.display = emoji ? '' : 'none';
+    mug.bemoji.style.display = emoji ? '' : 'none';
+    mug.emoji.textContent = emoji ? drawing : '';
+    mug.bemoji.textContent = emoji ? drawing : '';
+    mug.emoji.setAttribute('font-size', '88');
 
     var top = drawing ? 0 : -80;
+    mug.emoji.setAttribute('y', '338');
     // La tassa és un cilindre: el text segueix una corba suau i es queda dins la zona d'impressió.
     setArc(mug.arcs.intro, 432 + top);
     setArc(mug.arcs.word, 498 + top);
@@ -143,20 +175,70 @@
     fitText(mug.intro, 30, 14, PRINT_W);
     fitText(mug.sub, 23, 12, PRINT_W);
 
+    // Darrere: com les tasses de la botiga, amb la paraula, una ratlla i les definicions,
+    // tot seguint la corba de la tassa.
     var plainWord = f.word.value.trim();
+    var bTop = drawing ? 0 : -40;
+    var wordY = 372 + bTop;
+    var left = BACK_CX - HALF;
+    mug.barc.setAttribute('d', arcD(BACK_CX, wordY));
     mug.bword.textContent = s.id === 'coses' ? 'coses que ' + plainWord : plainWord.toLowerCase();
-    fitText(mug.bword, 42, 18, 290);
+    fitText(mug.bword, 44, 18, 330);
+    mug.brule.setAttribute('d', arcD(BACK_CX, wordY + 18, HALF - 12));
+    while (mug.blines.firstChild) mug.blines.removeChild(mug.blines.firstChild);
     var defs = [f.def1.value.trim(), f.def2.value.trim()];
-    var lines = [];
+    var rows = [];
     defs.forEach(function (d, i) {
       if (!d) return;
-      wrap((i + 1) + '. ' + d, 30).forEach(function (l) { lines.push(l); });
+      wrap(d, 48).forEach(function (l, j) { rows.push({ num: j === 0 ? (i + 1) + '. ' : '', text: l, indent: j > 0 }); });
     });
-    mug.bdefs.innerHTML = lines.length ? lines.map(function (l, i) { return '<tspan x="338" dy="' + (i ? 26 : 0) + '">' + esc(l) + '</tspan>'; }).join('')
-      : '<tspan x="338" class="mug-svg__muted">Sense definició al darrere</tspan>';
+    if (!rows.length) rows.push({ num: '', text: 'Sense definició al darrere', muted: true });
+    rows.forEach(function (r, i) {
+      var y = wordY + 46 + i * 24;
+      var id = 'arc-bline-' + i;
+      var path = document.createElementNS(SVGNS, 'path');
+      path.setAttribute('id', id);
+      path.setAttribute('d', arcD(BACK_CX, y, HALF - 8));
+      path.setAttribute('fill', 'none');
+      var text = document.createElementNS(SVGNS, 'text');
+      text.setAttribute('class', 'mug-svg__defs' + (r.muted ? ' mug-svg__muted' : ''));
+      var tp = document.createElementNS(SVGNS, 'textPath');
+      tp.setAttribute('href', '#' + id);
+      tp.setAttribute('startOffset', r.indent ? '7%' : '3%');
+      if (r.num) {
+        var n = document.createElementNS(SVGNS, 'tspan');
+        n.setAttribute('class', 'mug-svg__num');
+        n.textContent = r.num;
+        tp.appendChild(n);
+      }
+      tp.appendChild(document.createTextNode(r.text));
+      text.appendChild(tp);
+      mug.blines.appendChild(path);
+      mug.blines.appendChild(text);
+    });
+    mug.bdrawing.setAttribute('y', String(262 + bTop));
+    mug.bemoji.setAttribute('y', String(306 + bTop));
 
     mug.title.textContent = 'Vista prèvia: «' + [intro, word].filter(Boolean).join(' ') + '»' + (sub ? ', ' + sub : '') + ', interior ' + color.name.toLowerCase();
     renderWords();
+  }
+
+  // ---------- Emoticones dins del text ----------
+  var lastField = f.word;
+  [f.intro, f.word, f.sub, f.def1, f.def2].forEach(function (el) {
+    if (el) el.addEventListener('focus', function () { lastField = el; });
+  });
+  function insertEmoji(e) {
+    var el = lastField && !lastField.closest('[hidden]') ? lastField : f.word;
+    var max = parseInt(el.getAttribute('maxlength'), 10) || 200;
+    if (el.value.length + e.length > max) { el.focus(); return; }
+    var start = typeof el.selectionStart === 'number' ? el.selectionStart : el.value.length;
+    var end = typeof el.selectionEnd === 'number' ? el.selectionEnd : start;
+    el.value = el.value.slice(0, start) + e + el.value.slice(end);
+    el.focus();
+    try { el.setSelectionRange(start + e.length, start + e.length); } catch (err) { /* res */ }
+    if (el === f.def1) state.autoDef = false;
+    update();
   }
 
   // ---------- Esdeveniments ----------
@@ -180,6 +262,8 @@
     update();
   });
   root.addEventListener('click', function (e) {
+    var em = e.target.closest('[data-emoji]');
+    if (em) { insertEmoji(em.getAttribute('data-emoji')); return; }
     var chip = e.target.closest('.wordchip');
     if (chip) { pickWord(chip.getAttribute('data-w')); return; }
     var g = e.target.closest('[data-gender]');
@@ -221,7 +305,8 @@
     var igBtn = form.querySelector('[data-ig-submit]');
     if (igBtn) {
       var colorName = (COLOR[design.color] || {}).name || design.color;
-      var drawingName = (DATA.drawings.find(function (d) { return d.id === design.drawing; }) || {}).label;
+      var drawingName = isEmoji(design.drawing) ? 'Emoticona ' + design.drawing
+        : (DATA.drawings.find(function (d) { return d.id === design.drawing; }) || {}).label;
       var lines = ['Hola! M\'agradaria aquesta tassa personalitzada:',
         'Davant: «' + [design.intro, design.word].filter(Boolean).join(' ') + '»' + (design.sub ? ' / «' + design.sub + '»' : ''),
         drawingName ? 'Dibuix: ' + drawingName.toLowerCase() : 'Sense dibuix',
