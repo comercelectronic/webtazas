@@ -14,7 +14,8 @@ const isFacebookToken = (token) => /^EA/.test(String(token || ''));
 const HOST = (token) => process.env.IG_API_HOST || (isFacebookToken(token) ? 'graph.facebook.com' : 'graph.instagram.com');
 const VERSION = () => process.env.IG_API_VERSION || 'v23.0';
 
-const LATE_LIMIT_MS = 48 * 3600 * 1000;    // més tard que això, no es publica
+const LATE_LIMIT_MS = 48 * 3600 * 1000;
+const MIN_GAP_MS = 6 * 3600 * 1000;      // mínim entre dues publicacions    // més tard que això, no es publica
 const REFRESH_AFTER_MS = 20 * 86400 * 1000; // renova el token cada 20 dies
 
 async function api(path, params, { method = 'POST', token } = {}) {
@@ -136,4 +137,4 @@ function pickDue(posts, published, now = Date.now()) {
   return { due: due[0] || null, late };
 }
 
-module.exports = { publish, findPublished, currentToken, pickDue, whoAmI, envToken, describeToken, LATE_LIMIT_MS };
+module.exports = { MIN_GAP_MS, publish, findPublished, currentToken, pickDue, whoAmI, envToken, describeToken, LATE_LIMIT_MS };
