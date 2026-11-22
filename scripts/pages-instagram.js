@@ -49,6 +49,8 @@ function instagramReview() {
 .ig-post__id{font-size:.85em;opacity:.7}
 .ig-extras{display:flex;gap:10px;flex-wrap:wrap}
 .ig-extras img{width:120px;height:auto;border-radius:8px}
+.ig-reel{margin:20px 0 28px}
+.ig-reel video{display:block;border-radius:12px;background:#000;margin:10px 0;max-width:100%;height:auto}
 </style>
 <div class="ig-wrap">
   <h1>Instagram: cua de publicacions</h1>
@@ -58,6 +60,15 @@ function instagramReview() {
     <p>${posts.filter((p) => p.approved === true).length} de ${posts.length} publicacions aprovades.</p>
   </div>
   ${posts.map(post).join('\n')}
+  ${(queue.reels || []).length ? `<section class="ig-post"><h2>Reels (per pujar des de l'app, amb música)</h2>
+    <p>Els reels es pugen a mà perquè l'àudio en tendència només es pot afegir des de l'app: <em>+ → Reel → tria el vídeo → Àudio</em>. Copia el text de cada un i tria'n la portada.</p>
+    ${queue.reels.map((r) => `<article class="ig-reel">
+      <h3>${esc(r.title)}</h3>
+      <p>Suggerit: ${esc(r.suggested || '')} · <a href="${esc(r.video)}" download>Descarrega el vídeo</a> · <a href="${esc(r.cover)}" download>Portada</a></p>
+      <video src="${esc(r.video)}" poster="${esc(r.cover)}" controls muted playsinline preload="none" width="270" height="480"></video>
+      <pre class="ig-post__caption">${esc(r.caption)}</pre>
+    </article>`).join('')}
+  </section>` : ''}
   ${extras.length ? `<section class="ig-post"><h2>Per pujar a mà</h2><p>Les històries destacades i la foto de perfil no es poden publicar amb l'API: puja-les des de l'app.</p><div class="ig-extras">${extras.map((e) => `<a href="${esc(e.src)}" download><img src="${esc(e.src)}" alt="${esc(e.label)}" loading="lazy"></a>`).join('')}</div></section>` : ''}
 </div>`,
   };

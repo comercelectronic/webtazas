@@ -10,6 +10,7 @@
   "scripts": {
     "build": "node scripts/build.js",
     "test": "node --test tests/functions.test.js",
-    "pinterest": "node scripts/pinterest-pins.js"
+    "pinterest": "node scripts/pinterest-pins.js",
+    "reels": "node scripts/reels.js"
   }
 }
