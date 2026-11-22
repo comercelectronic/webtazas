@@ -718,7 +718,7 @@
     consentEl.setAttribute('aria-labelledby', 'consent-title');
     consentEl.innerHTML =
       '<h2 id="consent-title">Cookies</h2>' +
-      '<p>Fem servir l\'emmagatzematge necessari perquè la botiga funcioni (per exemple, recordar la cistella). Amb el teu permís, també fem servir Google Analytics per saber quantes persones ens visiten i millorar la botiga. No fem servir cookies de publicitat. <a href="/cookies/">Més informació</a>.</p>' +
+      '<p>Fem servir l\'emmagatzematge necessari perquè la web funcioni (' + (CAT.shop ? 'per exemple, recordar la cistella' : 'per exemple, recordar aquesta elecció') + '). Amb el teu permís, també fem servir Google Analytics per saber quantes persones ens visiten i millorar la botiga. No fem servir cookies de publicitat. <a href="/cookies/">Més informació</a>.</p>' +
       (configure ? '<div class="consent__options">' +
         '<label class="consent__option"><strong>Necessàries</strong><span>Cistella i preferències de cookies. Sempre actives.</span><input type="checkbox" checked disabled></label>' +
         OPTIONAL.map(function (o) {

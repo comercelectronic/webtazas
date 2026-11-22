@@ -15,6 +15,7 @@ const { product } = require('./pages-product');
 const other = require('./pages-other');
 const { configurator } = require('./pages-configurator');
 const { instagramReview } = require('./pages-instagram');
+const { ideasPages } = require('./pages-ideas');
 
 const ROOT = path.join(__dirname, '..');
 const out = (rel, content) => {
@@ -59,6 +60,7 @@ const pages = [
   ...shop.catalogPages(),
   ...catalog.map(product),
   configurator(),
+  ...ideasPages(),
   other.newsletter(),
   other.nlAction('confirm'),
   other.nlAction('unsubscribe'),
