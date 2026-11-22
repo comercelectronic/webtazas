@@ -1,4 +1,5 @@
-const { site, catalog, BY_SLUG, CATEGORIES, CATEGORY_BY_ID, esc, euro, PRICE, SHIPPING, SHIPPING_LINE, FREE_SHIPPING, DELIVERY, icon, productUrl, productImg, pricing, SHOP, igOrderButton } = require('./lib');
+const { site, catalog, BY_SLUG, CATEGORIES, CATEGORY_BY_ID, esc, euro, PRICE, SHIPPING, SHIPPING_LINE, FREE_SHIPPING, DELIVERY, icon, productUrl, productImg, pricing, SHOP, igOrderButton, metaDescription } = require('./lib');
+const articles = require('./articles');
 const { productCard, productGrid, newsletterForm, sectionHead, trustList, breadcrumb, breadcrumbLd } = require('./components');
 
 const newProducts = catalog.filter((p) => p.new);
@@ -193,6 +194,15 @@ ${offerProducts.length ? `<section class="section offers-band" aria-labelledby="
   </div>
 </section>
 
+<section class="section" aria-labelledby="ideas-title">
+  <div class="container narrow">
+    ${sectionHead('Idees de regal', 'No saps què regalar?', 'Guies per encertar-la, amb paraules catalanes per a cada persona.', { id: 'ideas-title' })}
+    <ul class="article-list">
+      ${articles.map((a) => `<li class="article-card"><a href="/idees-de-regal/${a.slug}/"><img src="${a.image}" alt="" width="600" height="600" loading="lazy"><span><strong>${esc(a.title)}</strong><span>${esc(a.description)}</span></span></a></li>`).join('')}
+    </ul>
+  </div>
+</section>
+
 <section class="section" aria-labelledby="best-title" data-bestsellers hidden>
   <div class="container">
     ${sectionHead('Més venudes', 'Les que més s\'emporten.', 'Calculat a partir de les comandes pagades a la botiga.', { id: 'best-title' })}
@@ -255,7 +265,7 @@ ${contactSection()}`;
   };
 }
 
-function listing({ path, title, h1, intro, products, crumbs, seoText }) {
+function listing({ path, title, h1, intro, products, crumbs, seoText, description }) {
   const chips = [{ path: '/tasses/', name: 'Totes' }, ...CATEGORIES.map((c) => ({ path: c.path, name: c.name })), ...(offerProducts.length ? [{ path: '/tasses/ofertes/', name: 'Ofertes' }] : [])];
   const main = `
 <section class="page-hero">
@@ -274,7 +284,7 @@ function listing({ path, title, h1, intro, products, crumbs, seoText }) {
   </div>
 </section>`;
   return {
-    path, title, description: `${intro} Tasses a ${PRICE} amb enviament gratuït.`,
+    path, title, description: description || metaDescription(intro, `Tasses a ${PRICE} amb enviament gratuït.`),
     jsonld: [
       breadcrumbLd(crumbs),
       {
@@ -289,8 +299,9 @@ function listing({ path, title, h1, intro, products, crumbs, seoText }) {
 function catalogPages() {
   const out = [listing({
     path: '/tasses/',
-    title: `Totes les tasses · ${site.brand}`,
+    title: `Totes les tasses amb paraules catalanes · ${site.brand}`,
     h1: 'Totes les tasses',
+    description: `Totes les tasses amb paraules catalanes: d'amor, de caràcter, insults d'autor i frases amb humor. ${PRICE} amb enviament gratuït.`,
     intro: 'Tasses amb paraules catalanes per regalar: per dir t\'estimo, per riure\'s de les manies de cadascú, per desfogar-se amb insults d\'autor o per començar el dia amb humor.',
     products: catalog,
     crumbs: [{ name: 'Inici', path: '/' }, { name: 'Totes les tasses', path: '/tasses/' }],
@@ -301,6 +312,7 @@ function catalogPages() {
       title: `${c.name}: tasses per regalar · ${site.brand}`,
       h1: c.name,
       intro: c.text,
+      seoText: c.seoText,
       products: c.products,
       crumbs: [{ name: 'Inici', path: '/' }, { name: 'Totes les tasses', path: '/tasses/' }, { name: c.name, path: c.path }],
     }));

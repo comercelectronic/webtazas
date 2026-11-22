@@ -1,4 +1,4 @@
-const { site, catalog, BY_SLUG, CATEGORY_BY_ID, esc, euro, PRICE, SHIPPING, SHIPPING_LINE, FREE_SHIPPING, DELIVERY, icon, productUrl, productImg, priceHtml, pricing, offerBadge, SHOP, igOrderButton, colorStock, LOW_STOCK } = require('./lib');
+const { site, catalog, BY_SLUG, CATEGORY_BY_ID, esc, euro, PRICE, SHIPPING, SHIPPING_LINE, FREE_SHIPPING, DELIVERY, icon, productUrl, productImg, priceHtml, pricing, offerBadge, SHOP, igOrderButton, colorStock, LOW_STOCK, metaDescription } = require('./lib');
 const { productGrid, sectionHead, trustList, breadcrumb, breadcrumbLd } = require('./components');
 
 function relatedFor(p) {
@@ -204,7 +204,7 @@ function product(p) {
   return {
     path: productUrl(p),
     title: `Tassa «${title}» · ${site.brand}`,
-    description: `${p.metaDescription} ${euro(pricing.productPriceCents(p.slug))}, enviament gratuït.`,
+    description: metaDescription(p.metaDescription, `${euro(pricing.productPriceCents(p.slug))}, enviament gratuït.`),
     ogImage: p.images.front,
     jsonld: [productLd, breadcrumbLd(crumbs)],
     bodyClass: 'page-product',

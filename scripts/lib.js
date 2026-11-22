@@ -104,7 +104,20 @@ function productImg(p, side = 'front', { eager = false, cls = '', alt, sizes = '
 
 const jsonLd = (obj) => `<script type="application/ld+json">${JSON.stringify(obj).replace(/</g, '\\u003c')}</script>`;
 
+/**
+ * Meta descripció que Google no talli (≈ 158 caràcters): afegeix l'extra només si hi cap
+ * i, si el text principal és massa llarg, el talla per una paraula sencera.
+ */
+function metaDescription(main, extra = '', max = 158) {
+  const m = String(main).trim();
+  const both = extra ? `${m} ${extra}` : m;
+  if (both.length <= max) return both;
+  if (m.length <= max) return m;
+  return m.slice(0, max - 1).replace(/\s+\S*$/, '').replace(/[,;:]$/, '') + '…';
+}
+
 module.exports = {
+  metaDescription,
   site, catalog, BY_SLUG, CATEGORIES, CATEGORY_BY_ID, esc, euro, PRICE, SHIPPING, SHIPPING_LINE, FREE_SHIPPING, DELIVERY, icon, value, pendingFields,
   pricing, priceHtml, offerBadge, SHOP, IG_PROFILE, IG_DM, igOrderButton, COLORS_AVAILABLE, colorStock, LOW_STOCK,
   productUrl, productImg, srcsetFor, jsonLd,

@@ -732,3 +732,14 @@ th { font-weight: 600; background: var(--paper-2); }
 .price, .price__ref { white-space: nowrap; }
 .card__foot { flex-wrap: wrap; row-gap: 8px; }
 .card__foot > .price + .price__ref { margin-right: auto; }
+
+/* Idees de regal */
+.article-meta { color: var(--ink-3); font-size: .9rem; margin: 6px 0 0; }
+.article-section .grid { margin-top: 18px; }
+.article-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 16px; }
+.article-card a { display: grid; grid-template-columns: 120px 1fr; gap: 16px; align-items: center; padding: 12px; border: 1px solid var(--line); border-radius: 16px; background: var(--white); color: inherit; text-decoration: none; }
+.article-card a:hover { border-color: var(--ink); }
+.article-card img { width: 120px; height: 120px; object-fit: cover; border-radius: 12px; }
+.article-card strong { display: block; font-family: var(--serif); font-size: 1.2rem; margin-bottom: 4px; }
+.article-card span span { color: var(--ink-2); font-size: .95rem; }
+@media (max-width: 480px) { .article-card a { grid-template-columns: 84px 1fr; } .article-card img { width: 84px; height: 84px; } }

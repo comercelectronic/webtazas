@@ -71,7 +71,7 @@ function footer() {
     <div class="site-footer__brand">
       <a class="logo logo--light" href="/"><img src="/assets/brand/el-glopet-logo-light.svg" alt="${esc(site.brand)}" width="164" height="40" loading="lazy"></a>
       <p>Tasses amb paraules i expressions catalanes per regalar. Una paraula, dues definicions.</p>
-      <p class="site-footer__pay">${icon('lock')} Pagament segur amb Stripe</p>
+      <p class="site-footer__pay">${SHOP ? `${icon('lock')} Pagament segur amb Stripe` : `${icon('instagram')} Comandes per Instagram @${esc(site.instagram)}`}</p>
     </div>
     <nav aria-label="Botiga">
       <h2 class="site-footer__title">Botiga</h2>
@@ -81,6 +81,7 @@ function footer() {
         <li><a href="/tasses/ofertes/">Ofertes</a></li>
         <li><a href="/#packs">Packs per regalar</a></li>
         <li><a href="/crea-la-teva-tassa/">Crea la teva tassa</a></li>
+        <li><a href="/idees-de-regal/">Idees de regal</a></li>
       </ul>
     </nav>
     <nav aria-label="Ajuda">

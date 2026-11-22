@@ -224,16 +224,18 @@
   }
 
   // ---------- Emoticones dins del text ----------
-  var lastField = f.word;
+  var lastField = null;
   [f.intro, f.word, f.sub, f.def1, f.def2].forEach(function (el) {
     if (el) el.addEventListener('focus', function () { lastField = el; });
   });
   function insertEmoji(e) {
-    var el = lastField && !lastField.closest('[hidden]') ? lastField : f.word;
+    var picked = lastField && !lastField.closest('[hidden]');
+    var el = picked ? lastField : f.word;
     var max = parseInt(el.getAttribute('maxlength'), 10) || 200;
     if (el.value.length + e.length > max) { el.focus(); return; }
-    var start = typeof el.selectionStart === 'number' ? el.selectionStart : el.value.length;
-    var end = typeof el.selectionEnd === 'number' ? el.selectionEnd : start;
+    // Si encara no s'ha triat cap camp, l'emoticona va al final de la paraula.
+    var start = picked && typeof el.selectionStart === 'number' ? el.selectionStart : el.value.length;
+    var end = picked && typeof el.selectionEnd === 'number' ? el.selectionEnd : start;
     el.value = el.value.slice(0, start) + e + el.value.slice(end);
     el.focus();
     try { el.setSelectionRange(start + e.length, start + e.length); } catch (err) { /* res */ }
