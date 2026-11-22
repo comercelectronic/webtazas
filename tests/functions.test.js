@@ -423,6 +423,13 @@ test('instagram: només publica el que està aprovat i toca, una vegada, i sense
     assert.strictEqual(await body(await handler()), `already ${post3.id}`);
     assert.ok(!calls.slice(before).some((c) => c.url.endsWith('/media_publish')), 'no publica res');
     global.fetch = listFetch;
+    // Si se n'han acumulat, la següent espera 6 hores des de l'última publicació.
+    const post5 = queue.posts[4];
+    const saved5 = { approved: post5.approved, publishAt: post5.publishAt };
+    post5.approved = true;
+    post5.publishAt = new Date(Date.now() - 120 * 1000).toISOString();
+    assert.strictEqual(await body(await handler()), 'waiting gap');
+    Object.assign(post5, saved5);
     // Una publicació que s'havia quedat «publicant» (p. ex. temps esgotat) no es repeteix sola.
     const db0 = fakeStore('instagram');
     const pub = await db0.get('published', { type: 'json' });
@@ -433,7 +440,8 @@ test('instagram: només publica el que està aprovat i toca, una vegada, i sense
     await db0.setJSON('published', { ...pub, [post4.id]: { status: 'publishing', at: new Date().toISOString() } });
     assert.strictEqual(await body(await handler()), 'nothing due');
     // Si Blobs no deixa anotar «publicant», no es publica.
-    await db0.setJSON('published', pub);
+    const old = Object.fromEntries(Object.entries(pub).map(([k, v]) => [k, { ...v, at: '2000-01-01T00:00:00Z' }]));
+    await db0.setJSON('published', old);
     const realSet = db0.setJSON;
     const failingStore = { ...db0, setJSON: async () => { throw new Error('blobs caigut'); } };
     const before2 = calls.length;

@@ -48,6 +48,13 @@ export async function run(db) {
       console.log(`Instagram: «${due.id}» ja era al compte (${already}); no es torna a publicar.`);
       return new Response(`already ${due.id}`);
     }
+    // Mai dues publicacions seguides: si se n'han acumulat (p. ex. després d'una pausa),
+    // surten d'una en una amb almenys 6 hores entre elles.
+    const last = Math.max(0, ...Object.values(published).map((v) => Date.parse(v && v.at) || 0));
+    if (Date.now() - last < ig.MIN_GAP_MS) {
+      console.log(`Instagram: «${due.id}» espera; l'última publicació és de fa menys de 6 hores.`);
+      return new Response('waiting gap');
+    }
     published[due.id] = { status: 'publishing', at: new Date().toISOString() };
     await db.setJSON('published', published);
 
