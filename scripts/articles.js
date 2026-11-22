@@ -7,9 +7,9 @@ const { PRICE, DELIVERY } = require('./lib');
 module.exports = [
   {
     slug: 'amic-invisible-en-catala',
-    title: 'Idees per a l\'amic invisible en català (per menys de 15 €)',
-    metaTitle: 'Amic invisible: idees de regal en català per menys de 15 €',
-    description: 'Regals per a l\'amic invisible de la feina, dels amics o de la família: tasses amb paraules catalanes per a cada manera de ser, per menys de 15 €.',
+    title: 'Idees per a l\'amic invisible en català (per menys de 12 €)',
+    metaTitle: 'Amic invisible: idees de regal en català per menys de 12 €',
+    description: 'Regals per a l\'amic invisible de la feina, dels amics o de la família: tasses amb paraules catalanes per a cada manera de ser, per menys de 12 €.',
     published: '2026-11-22',
     image: '/images/tasses/cagadubtes/verd-front.jpg',
     lead: `L'amic invisible té una regla d'or: un pressupost petit i un regal que faci somriure. Si a més és en català i diu alguna cosa de la persona que el rep, millor. Aquí tens idees per a cada mena de company, totes a ${PRICE} amb l'enviament gratuït.`,

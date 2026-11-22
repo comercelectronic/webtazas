@@ -11,7 +11,7 @@
     "version": "2026-11-17",
     "text": "Vull rebre per correu electrònic la newsletter d'El Glopet amb novetats, nous dissenys, ofertes i descomptes. Sé que em puc donar de baixa en qualsevol moment."
   },
-  "unitPriceCents": 1495,
+  "unitPriceCents": 1195,
   "currency": "EUR",
   "maxQtyPerItem": 20,
   "shipping": {
@@ -72,7 +72,7 @@
         "arrel",
         "aixopluc"
       ],
-      "priceCents": 3990
+      "priceCents": 3090
     },
     {
       "id": "parella",
@@ -82,7 +82,7 @@
         "deler",
         "caliu"
       ],
-      "priceCents": 2690
+      "priceCents": 2090
     },
     {
       "id": "feina",
@@ -93,7 +93,7 @@
         "manefla",
         "bocamoll"
       ],
-      "priceCents": 3490
+      "priceCents": 2790
     },
     {
       "id": "cafe",
@@ -104,7 +104,7 @@
         "tallat",
         "sense-cafe-no-soc-persona"
       ],
-      "priceCents": 3990
+      "priceCents": 3190
     }
   ],
   "categories": [
@@ -195,21 +195,21 @@
     "garrepa"
   ],
   "brandOf": "d'El Glopet",
-  "customPriceCents": 1495,
+  "customPriceCents": 1195,
   "offers": {
     "_nota": "Preu d'oferta per tassa (en cèntims). Amb showReferencePrice es mostra el preu habitual ratllat i el percentatge de descompte. Un cop la botiga sigui pública, el preu ratllat ha de ser el més baix aplicat els 30 dies anteriors (art. 20 de la Llei d'ordenació del comerç minorista).",
     "showReferencePrice": true,
     "items": {
-      "solell": 1195,
-      "escalfacadires": 1295,
-      "cuca-de-llum": 1095,
-      "bonanca": 1095,
-      "arrel": 1295,
-      "ventijol": 1095,
-      "manefla": 1095,
-      "corco": 1295,
-      "coses-que-no-serveixen-per-a-res": 1095,
-      "garrepa": 1195
+      "solell": 995,
+      "escalfacadires": 1050,
+      "cuca-de-llum": 895,
+      "bonanca": 895,
+      "arrel": 1050,
+      "ventijol": 895,
+      "manefla": 895,
+      "corco": 1050,
+      "coses-que-no-serveixen-per-a-res": 895,
+      "garrepa": 995
     }
   },
   "colors": [

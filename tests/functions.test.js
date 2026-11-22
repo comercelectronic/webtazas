@@ -69,8 +69,8 @@ test('checkout: cobra el preu de data/site.json, amb enviament gratuït, i agrup
   const res = await fn('create-checkout-session')(ev('POST', { items }));
   assert.strictEqual(res.statusCode, 200);
   const s = stripeSessions[0];
-  assert.strictEqual(site.unitPriceCents, 1495);
-  assert.deepStrictEqual(s.line_items.map((l) => [l.quantity, l.price_data.unit_amount]), [[3, 1495], [1, 1495], [1, 1495]]);
+  assert.strictEqual(site.unitPriceCents, 1195);
+  assert.deepStrictEqual(s.line_items.map((l) => [l.quantity, l.price_data.unit_amount]), [[3, 1195], [1, 1195], [1, 1195]]);
   assert.match(s.line_items[0].price_data.product_data.name, /aixopluc» · blau$/);
   assert.match(s.line_items[2].price_data.product_data.name, /niu» · blau$/, 'sense color, el de portada');
   assert.strictEqual(s.shipping_options[0].shipping_rate_data.fixed_amount.amount, 0);
