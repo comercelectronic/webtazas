@@ -16,6 +16,7 @@ function configurator() {
     structures: cfg.structures,
     lists: cfg.lists,
     drawings: cfg.drawings,
+    emojis: cfg.emojis || [],
     colors: COLORS_AVAILABLE,
     priceCents: pricing.customPriceCents(),
   };
@@ -43,17 +44,30 @@ function configurator() {
               <path id="arc-intro" data-arc="intro" d=""/>
               <path id="arc-word" data-arc="word" d=""/>
               <path id="arc-sub" data-arc="sub" d=""/>
+              <path id="arc-bword" data-arc="bword" d=""/>
+              <!-- La tassa és un cilindre: el que queda cap als costats es veu més apagat. -->
+              <linearGradient id="wrap-front" gradientUnits="userSpaceOnUse" x1="79" x2="479" y1="0" y2="0">
+                <stop offset="0" stop-color="#fff" stop-opacity=".6"/><stop offset=".22" stop-color="#fff"/><stop offset=".78" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity=".6"/>
+              </linearGradient>
+              <linearGradient id="wrap-back" gradientUnits="userSpaceOnUse" x1="281" x2="681" y1="0" y2="0">
+                <stop offset="0" stop-color="#fff" stop-opacity=".6"/><stop offset=".22" stop-color="#fff"/><stop offset=".78" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity=".6"/>
+              </linearGradient>
+              <mask id="mask-front" maskUnits="userSpaceOnUse" x="0" y="0" width="760" height="760"><rect x="79" y="0" width="400" height="760" fill="url(#wrap-front)"/></mask>
+              <mask id="mask-back" maskUnits="userSpaceOnUse" x="0" y="0" width="760" height="760"><rect x="281" y="0" width="400" height="760" fill="url(#wrap-back)"/></mask>
             </defs>
-            <g data-mug-front>
+            <g data-mug-front mask="url(#mask-front)">
               <use data-mug-drawing href="/assets/drawings.svg#d-paraigua" x="229" y="250" width="100" height="100"/>
+              <text data-mug-emoji class="mug-svg__emoji" x="279" y="330" text-anchor="middle" style="display:none"></text>
               <text data-mug-intro text-anchor="middle" class="mug-svg__intro"><textPath href="#arc-intro" startOffset="50%">Tu ets el meu</textPath></text>
               <text data-mug-word text-anchor="middle" class="mug-svg__word"><textPath href="#arc-word" startOffset="50%">aixopluc</textPath></text>
               <text data-mug-sub text-anchor="middle" class="mug-svg__sub"><textPath href="#arc-sub" startOffset="50%"></textPath></text>
             </g>
-            <g data-mug-back style="display:none">
-              <text data-mug-back-word x="338" y="330" class="mug-svg__bword">aixopluc</text>
-              <line x1="338" y1="348" x2="630" y2="348" stroke="#B66F54" stroke-width="1.5"/>
-              <text data-mug-back-defs x="338" y="382" class="mug-svg__defs"></text>
+            <g data-mug-back mask="url(#mask-back)" style="display:none">
+              <use data-mug-bdrawing href="/assets/drawings.svg#d-paraigua" x="456" y="262" width="50" height="50"/>
+              <text data-mug-bemoji class="mug-svg__emoji" x="481" y="306" text-anchor="middle" font-size="40" style="display:none"></text>
+              <text data-mug-back-word class="mug-svg__bword"><textPath href="#arc-bword" startOffset="3%">aixopluc</textPath></text>
+              <path data-mug-back-rule d="" fill="none" stroke="#B66F54" stroke-width="1.5"/>
+              <g data-mug-back-lines></g>
             </g>
           </svg>
         </div>
@@ -100,6 +114,12 @@ function configurator() {
           <label for="mk-sub">Frase de sota (opcional)</label>
           <input class="input" id="mk-sub" name="sub" maxlength="${L.sub}" autocomplete="off" placeholder="p. ex. primer ho faig, després ho penso">
         </div>
+        <div class="maker__emojis">
+          <p class="maker__label" id="emoji-help">Emoticones <small>Fes clic al text on la vulguis i tria-la.</small></p>
+          <div class="emoji-row" role="group" aria-labelledby="emoji-help">
+            ${(cfg.emojis || []).map((e) => `<button type="button" class="emoji-btn" data-emoji="${esc(e)}" aria-label="Afegeix ${esc(e)} al text">${esc(e)}</button>`).join('')}
+          </div>
+        </div>
       </fieldset>
 
       <fieldset class="maker__step">
@@ -121,6 +141,13 @@ function configurator() {
           ${cfg.drawings.map((d) => `<label class="drawing" title="${esc(d.label)}">
             <input type="radio" name="drawing" value="${d.id}"${d.id === 'paraigua' ? ' checked' : ''}>
             <span class="drawing__box"><svg aria-hidden="true" width="44" height="44"><use href="/assets/drawings.svg#d-${d.id}"/></svg><span class="sr-only">${esc(d.label)}</span></span>
+          </label>`).join('')}
+        </div>
+        <p class="maker__label">O una emoticona gran</p>
+        <div class="maker__drawings maker__drawings--emoji">
+          ${(cfg.emojis || []).map((e) => `<label class="drawing">
+            <input type="radio" name="drawing" value="${esc(e)}">
+            <span class="drawing__box drawing__box--emoji" aria-hidden="true">${esc(e)}</span><span class="sr-only">Emoticona ${esc(e)}</span>
           </label>`).join('')}
         </div>
       </fieldset>

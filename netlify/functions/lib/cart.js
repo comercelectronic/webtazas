@@ -14,8 +14,10 @@ const { colorStock } = require('./colors');
 
 const MAX_LINES = 30;
 const DRAWINGS = new Set(configurator.drawings.map((d) => d.id));
+const EMOJIS = new Set(configurator.emojis || []);
 const STRUCTURES = Object.fromEntries(configurator.structures.map((s) => [s.id, s]));
-const TEXT_RE = /^[\p{L}\p{M}\p{N} .,'’·!?¡¿«»"\-:;()…&/]*$/u;
+// Lletres, números, puntuació habitual i emoticones (amb modificadors de to i unions).
+const TEXT_RE = /^(?:[\p{L}\p{M}\p{N} .,'’·!?¡¿«»"\-:;()…&/]|\p{Extended_Pictographic}|\p{Emoji_Modifier}|\u200D|\uFE0F)*$/u;
 
 const clampQty = (q) => Math.min(site.maxQtyPerItem, Math.max(1, parseInt(q, 10) || 1));
 const clean = (s) => String(s == null ? '' : s).replace(/\s+/g, ' ').trim();
@@ -37,7 +39,7 @@ function validateDesign(raw) {
     sub: structure.sub ? clean(raw.sub).slice(0, L.sub) : '',
     def1: clean(raw.def1).slice(0, L.def),
     def2: clean(raw.def2).slice(0, L.def),
-    drawing: DRAWINGS.has(raw.drawing) ? raw.drawing : '',
+    drawing: DRAWINGS.has(raw.drawing) || EMOJIS.has(raw.drawing) ? raw.drawing : '',
     color: COLORS[raw.color] ? raw.color : site.colors[0].id,
   };
   if (!d.word) return { error: 'Escriu la paraula o la frase principal de la tassa.' };

@@ -17,7 +17,7 @@ const SPAM_WORDS = [
 // marquen la valoració perquè la persona moderadora hi pari atenció.
 const OFFENSIVE_WORDS = [
   'nazi', 'puta', 'puto', 'maricón', 'maricon', 'marica', 'subnormal', 'retrasado', 'negrata',
-  'moro de merda', 'sudaca', 'fag', 'nigger', 'retard', 'kill yourself', 'mátate', 'mata\'t',
+  'moro de merda', 'sudaca', 'fag', 'nigger', 'kill yourself', 'mátate', 'mata\'t',
 ];
 
 function normalize(s) {
@@ -32,7 +32,8 @@ function check(text) {
   if (SPAM_WORDS.some((w) => n.includes(normalize(w)))) return { block: 'El text sembla publicitat.' };
 
   const flags = [];
-  if (OFFENSIVE_WORDS.some((w) => n.includes(normalize(w)))) flags.push('possible contingut ofensiu');
+  // Només paraules senceres: «disputa» o «aixafaguitarres» no són ofensives.
+  if (OFFENSIVE_WORDS.some((w) => new RegExp(`(^|[^\\p{L}])${normalize(w).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}($|[^\\p{L}])`, 'u').test(n))) flags.push('possible contingut ofensiu');
   if (/(.)\1{6,}/.test(n)) flags.push('caràcters repetits');
   const letters = t.replace(/[^A-Za-zÀ-ÿ]/g, '');
   if (letters.length > 20 && letters === letters.toUpperCase()) flags.push('tot en majúscules');

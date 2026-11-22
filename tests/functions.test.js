@@ -495,3 +495,29 @@ test('instagram: només publica el que està aprovat i toca, una vegada, i sense
     queue.posts.forEach((p, i) => { p.approved = realApproval[i]; });
   }
 });
+
+test('configurador: emoticones, dibuixos nous i filtre de paraules senceres', () => {
+  const { validateDesign } = require('../netlify/functions/lib/cart');
+  const { check } = require('../netlify/functions/lib/moderation');
+  const cfg = require('../data/configurator.json');
+  const base = { structure: 'caracter', word: 'cagadubtes', color: 'blau' };
+  // Emoticones dins del text (també amb to de pell) i com a dibuix.
+  assert.ok(validateDesign({ ...base, sub: 'la festa acaba aquí 😎', def2: 'Sempre té raó 🙄👍🏽' }).design);
+  assert.strictEqual(validateDesign({ ...base, drawing: '🥳' }).design.drawing, '🥳');
+  assert.strictEqual(validateDesign({ ...base, drawing: '💩' }).design.drawing, '', 'només les emoticones de la llista');
+  assert.strictEqual(validateDesign({ ...base, drawing: 'porro' }).design.drawing, 'porro');
+  assert.ok(validateDesign({ ...base, word: '<b>' }).error);
+  // Tots els dibuixos de la llista existeixen a l'SVG.
+  const svg = require('fs').readFileSync(require('path').join(__dirname, '../assets/drawings.svg'), 'utf8');
+  for (const d of cfg.drawings) assert.ok(svg.includes(`id="d-${d.id}"`), d.id);
+  // Totes les paraules de les llistes es poden fer servir (sense falsos positius del filtre).
+  for (const [k, l] of Object.entries(cfg.lists)) {
+    const st = k === 'tendres' ? 'tendra' : k === 'caracter' ? 'caracter' : 'ets';
+    for (const w of l.words) assert.ok(validateDesign({ structure: st, word: w.w, def1: w.d, color: 'blau' }).design, w.w);
+  }
+  for (const e of cfg.emojis) assert.ok(validateDesign({ structure: 'lliure', word: e, color: 'blau' }).design, e);
+  assert.deepStrictEqual(check('disputa').flags, []);
+  assert.deepStrictEqual(check('aixafaguitarres').flags, []);
+  assert.deepStrictEqual(check('Hi ha retard').flags, []);
+  assert.ok(check('ets una puta').flags.includes('possible contingut ofensiu'));
+});

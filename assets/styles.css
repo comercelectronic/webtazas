@@ -663,7 +663,17 @@ th { font-weight: 600; background: var(--paper-2); }
 .mug-svg__word { font-family: var(--serif); font-weight: 500; fill: #1F2A37; }
 .mug-svg__sub { font-family: var(--serif); font-style: italic; fill: #A0533A; }
 .mug-svg__bword { font-family: var(--serif); font-weight: 500; fill: #1F2A37; }
-.mug-svg__defs { font-family: var(--sans); font-size: 17px; fill: #3A3F47; }
+.mug-svg__defs { font-family: var(--sans); font-size: 15.5px; fill: #3A3F47; }
+.mug-svg__num { fill: #B66F54; }
+.mug-svg__emoji { font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif; }
+.maker__label { font-weight: 600; font-size: .92rem; margin: 14px 0 6px; }
+.maker__label small { font-weight: 400; color: var(--ink-3); margin-left: 6px; }
+.emoji-row { display: flex; flex-wrap: wrap; gap: 4px; max-height: 132px; overflow-y: auto; padding: 2px; }
+.emoji-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--line); background: var(--white); font-size: 1.3rem; line-height: 1; cursor: pointer; }
+.emoji-btn:hover { border-color: var(--ink); }
+.emoji-btn:focus-visible { outline: 3px solid var(--terra-dark); outline-offset: 2px; }
+.drawing__box--emoji { font-size: 1.7rem; line-height: 1; }
+.maker__drawings.maker__drawings--emoji { max-height: 200px; }
 .mug-svg__muted { fill: #8A857C; font-style: italic; }
 .maker__views { display: flex; justify-content: center; gap: 8px; margin: 12px 0 6px; }
 .maker__view, .pill { min-height: 40px; padding: 8px 16px; border-radius: 999px; border: 1px solid var(--line-2); background: var(--white); cursor: pointer; font-weight: 600; font-size: .9rem; color: var(--ink); }
