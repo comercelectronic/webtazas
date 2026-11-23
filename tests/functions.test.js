@@ -337,6 +337,8 @@ test('instagram: només publica el que està aprovat i toca, una vegada, i sense
   const queue = require('../data/instagram.json');
   // Les proves controlen elles mateixes què està aprovat (la cua real pot tenir publicacions aprovades i vençudes).
   const realApproval = queue.posts.map((p) => p.approved);
+  const realReelApproval = (queue.reels || []).map((r) => r.approved);
+  (queue.reels || []).forEach((r) => { r.approved = false; });
   const { pickDue, LATE_LIMIT_MS } = require('../netlify/functions/lib/instagram');
   const now = Date.parse('2026-12-01T12:00:00Z');
   const posts = [
@@ -501,6 +503,7 @@ test('instagram: només publica el que està aprovat i toca, una vegada, i sense
     global.fetch = realFetch;
     delete process.env.IG_ACCESS_TOKEN;
     queue.posts.forEach((p, i) => { p.approved = realApproval[i]; });
+    (queue.reels || []).forEach((r, i) => { r.approved = realReelApproval[i]; });
   }
 });
 
@@ -528,4 +531,64 @@ test('configurador: emoticones, dibuixos nous i filtre de paraules senceres', ()
   assert.deepStrictEqual(check('aixafaguitarres').flags, []);
   assert.deepStrictEqual(check('Hi ha retard').flags, []);
   assert.ok(check('ets una puta').flags.includes('possible contingut ofensiu'));
+});
+
+test('instagram: els reels es pugen, s\'esperen fins que Instagram els ha processat i es publiquen una sola vegada', async () => {
+  const queue = require('../data/instagram.json');
+  const mod = await import('../netlify/functions/instagram-publish.mjs');
+  const saved = { posts: queue.posts.map((p) => p.approved), reels: queue.reels.map((r) => ({ approved: r.approved, publishAt: r.publishAt })) };
+  queue.posts.forEach((p) => { p.approved = false; });
+  queue.reels.forEach((r) => { r.approved = false; });
+  const reel = queue.reels[0];
+  reel.approved = true;
+  reel.publishAt = new Date(Date.now() - 600 * 1000).toISOString();
+  stores.delete('instagram');
+  const db = fakeStore('instagram');
+  const calls = [];
+  let status = 'IN_PROGRESS';
+  const realFetch = global.fetch;
+  global.fetch = async (url, opts = {}) => {
+    const u = String(url);
+    calls.push({ url: u, body: opts.body ? Object.fromEntries(new URLSearchParams(String(opts.body))) : null });
+    let data = { id: 'x' };
+    if (u.includes('fields=id%2Cusername')) data = { id: queue.igUserId, username: 'elglopet' };
+    else if (u.includes('/media?')) data = { data: [] };
+    else if (u.includes('status_code')) data = { status_code: status };
+    else if (u.endsWith('/media_publish')) data = { id: 'reel-media-1' };
+    else if (u.endsWith('/media')) data = { id: 'cont-1' };
+    return { ok: true, json: async () => data };
+  };
+  process.env.IG_ACCESS_TOKEN = 'EAGtest';
+  const body = async (r) => r.text();
+  try {
+    // 1) Es crea el contenidor del vídeo amb l'URL pública, la portada i el text.
+    assert.strictEqual(await body(await mod.run(db)), `container ${reel.id}`);
+    const create = calls.find((c) => c.url.endsWith('/media') && c.body && c.body.media_type === 'REELS');
+    assert.ok(create);
+    assert.strictEqual(create.body.video_url, 'https://botiga.test' + reel.video);
+    assert.strictEqual(create.body.cover_url, 'https://botiga.test' + reel.cover);
+    assert.strictEqual(create.body.caption, reel.caption);
+    assert.strictEqual(create.body.share_to_feed, 'true');
+    // 2) Mentre Instagram el processa, s'espera (i no es torna a pujar).
+    assert.strictEqual(await body(await mod.run(db)), `processing ${reel.id}`);
+    assert.strictEqual(calls.filter((c) => c.body && c.body.media_type === 'REELS').length, 1);
+    // 3) Quan està llest, es publica; després ja no hi ha res pendent.
+    status = 'FINISHED';
+    assert.strictEqual(await body(await mod.run(db)), `published ${reel.id}`);
+    assert.strictEqual((await db.get('published', { type: 'json' }))[reel.id].mediaId, 'reel-media-1');
+    assert.strictEqual(await body(await mod.run(db)), 'nothing due');
+    // Un reel que Instagram no pot processar queda marcat com a fallit i no es repeteix.
+    stores.delete('instagram');
+    const db2 = fakeStore('instagram');
+    status = 'ERROR';
+    assert.strictEqual(await body(await mod.run(db2)), `container ${reel.id}`);
+    assert.strictEqual((await mod.run(db2)).status, 500);
+    assert.strictEqual((await db2.get('published', { type: 'json' }))[reel.id].status, 'failed');
+    assert.strictEqual(await body(await mod.run(db2)), 'nothing due');
+  } finally {
+    global.fetch = realFetch;
+    delete process.env.IG_ACCESS_TOKEN;
+    queue.posts.forEach((p, i) => { p.approved = saved.posts[i]; });
+    queue.reels.forEach((r, i) => Object.assign(r, saved.reels[i]));
+  }
 });

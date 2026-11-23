@@ -1,5 +1,5 @@
 {
-  "_nota": "Cua de publicacions d'Instagram. Només es publiquen les que tenen \"approved\": true, quan arriba \"publishAt\" i si hi ha IG_ACCESS_TOKEN a Netlify. Si una publicació aprovada fa més de 48 hores que havia d'haver sortit, no es publica: canvia-li la data.",
+  "_nota": "Cua de publicacions d'Instagram. Només es publiquen les que tenen \"approved\": true, quan arriba \"publishAt\" i si hi ha IG_ACCESS_TOKEN a Netlify. Si una publicació aprovada fa més de 48 hores que havia d'haver sortit, no es publica: canvia-li la data. Els reels (reels[]) també es publiquen sols, sense música: primer es puja el vídeo i es publica quan Instagram l'ha processat. Entre dues publicacions hi ha com a mínim 5 hores.",
   "timezone": "Europe/Madrid",
   "igUserId": "17841452465967162",
   "paused": false,
@@ -135,28 +135,34 @@
   ],
   "reels": [
     {
-      "id": "colors",
+      "id": "reel-colors",
       "title": "Reel · Una paraula, 9 colors",
+      "publishAt": "2026-11-23T12:30:00+01:00",
+      "approved": true,
       "video": "/instagram/reels/colors.mp4",
       "cover": "/instagram/reels/colors-portada.jpg",
-      "suggested": "dilluns 23/11, 13:00",
-      "caption": "Una paraula. 9 colors. Quin és el teu? 🎨\n\nAixopluc: persona amb qui et sents a recer, passi el que passi. Tu tries el color de l'interior i de la nansa.\n\n11,95 € amb enviament gratuït. Demana-la per DM 📩\n\n#elglopet #encatalà #paraulescatalanes #tasses #regalsencatalà #regalsdenadal #aixopluc"
+      "caption": "Una paraula. 9 colors. Quin és el teu? 🎨\n\nAixopluc: persona amb qui et sents a recer, passi el que passi. Tu tries el color de l'interior i de la nansa.\n\n11,95 € amb enviament gratuït. Demana-la per DM 📩\n\n#elglopet #encatalà #paraulescatalanes #tasses #regalsencatalà #regalsdenadal #aixopluc",
+      "note": "Es publica sol, sense música. Si vols música, puja'l a mà i posa approved a false."
     },
     {
-      "id": "bocamoll",
+      "id": "reel-bocamoll",
       "title": "Reel · Tots tenim un bocamoll",
+      "publishAt": "2026-11-26T12:30:00+01:00",
+      "approved": true,
       "video": "/instagram/reels/bocamoll.mp4",
       "cover": "/instagram/reels/bocamoll-portada.jpg",
-      "suggested": "dijous 26/11, 13:00",
-      "caption": "Tots tenim un amic que no sap guardar un secret 🤫 Etiqueta'l!\n\nbocamoll: persona que no sap guardar un secret.\n\nTassa «Sóc un bocamoll», 11,95 € amb enviament gratuït. Demana-la per DM 📩\n\n#elglopet #bocamoll #humorencatalà #encatalà #paraulescatalanes #amicinvisible #regalsencatalà"
+      "caption": "Tots tenim un amic que no sap guardar un secret 🤫 Etiqueta'l!\n\nbocamoll: persona que no sap guardar un secret.\n\nTassa «Sóc un bocamoll», 11,95 € amb enviament gratuït. Demana-la per DM 📩\n\n#elglopet #bocamoll #humorencatalà #encatalà #paraulescatalanes #amicinvisible #regalsencatalà",
+      "note": "Es publica sol, sense música. Si vols música, puja'l a mà i posa approved a false."
     },
     {
-      "id": "crea-la-teva",
+      "id": "reel-crea-la-teva",
       "title": "Reel · Crea la teva tassa",
+      "publishAt": "2026-11-28T12:30:00+01:00",
+      "approved": true,
       "video": "/instagram/reels/crea-la-teva.mp4",
       "cover": "/instagram/reels/crea-la-teva-portada.jpg",
-      "suggested": "dissabte 28/11, 13:00",
-      "caption": "No trobes la paraula? Crea-la tu ✍️\n\nFrase, paraula, emoticones, dibuix i color: la veus en directe abans de demanar-la. Aquesta, per a una tastaolletes que coneixem 🤪\n\nFes la teva a l'enllaç de la bio i envia'ns el disseny per DM 📩\n\n#elglopet #tassapersonalitzada #regalspersonalitzats #encatalà #regalsencatalà #regalsdenadal"
+      "caption": "No trobes la paraula? Crea-la tu ✍️\n\nFrase, paraula, emoticones, dibuix i color: la veus en directe abans de demanar-la. Aquesta, per a una tastaolletes que coneixem 🤪\n\nFes la teva a l'enllaç de la bio i envia'ns el disseny per DM 📩\n\n#elglopet #tassapersonalitzada #regalspersonalitzats #encatalà #regalsencatalà #regalsdenadal",
+      "note": "Es publica sol, sense música. Si vols música, puja'l a mà i posa approved a false."
     }
   ]
 }

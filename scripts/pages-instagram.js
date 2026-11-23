@@ -60,11 +60,11 @@ function instagramReview() {
     <p>${posts.filter((p) => p.approved === true).length} de ${posts.length} publicacions aprovades.</p>
   </div>
   ${posts.map(post).join('\n')}
-  ${(queue.reels || []).length ? `<section class="ig-post"><h2>Reels (per pujar des de l'app, amb música)</h2>
-    <p>Els reels es pugen a mà perquè l'àudio en tendència només es pot afegir des de l'app: <em>+ → Reel → tria el vídeo → Àudio</em>. Copia el text de cada un i tria'n la portada.</p>
-    ${queue.reels.map((r) => `<article class="ig-reel">
+  ${(queue.reels || []).length ? `<section class="ig-post"><h2>Reels</h2>
+    <p>Els reels aprovats es publiquen sols a la seva hora, <strong>sense música</strong> (l'API d'Instagram no permet afegir àudios). Si en vols pujar un a mà amb música, posa-li <code>"approved": false</code> perquè no surti dues vegades.</p>
+    ${queue.reels.map((r) => `<article class="ig-reel" id="${esc(r.id)}">
       <h3>${esc(r.title)}</h3>
-      <p>Suggerit: ${esc(r.suggested || '')} · <a href="${esc(r.video)}" download>Descarrega el vídeo</a> · <a href="${esc(r.cover)}" download>Portada</a></p>
+      <p><time datetime="${esc(r.publishAt)}">${esc(fmt.format(new Date(r.publishAt)))}</time> · ${r.approved === true ? '<span class="ig-status ig-status--ok">Aprovat · es publicarà sol</span>' : '<span class="ig-status">Pendent de revisar</span>'} · <a href="${esc(r.video)}" download>Descarrega el vídeo</a> · <a href="${esc(r.cover)}" download>Portada</a></p>
       <video src="${esc(r.video)}" poster="${esc(r.cover)}" controls muted playsinline preload="none" width="270" height="480"></video>
       <pre class="ig-post__caption">${esc(r.caption)}</pre>
     </article>`).join('')}
