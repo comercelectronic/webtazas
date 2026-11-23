@@ -14,8 +14,9 @@ const isFacebookToken = (token) => /^EA/.test(String(token || ''));
 const HOST = (token) => process.env.IG_API_HOST || (isFacebookToken(token) ? 'graph.facebook.com' : 'graph.instagram.com');
 const VERSION = () => process.env.IG_API_VERSION || 'v23.0';
 
-const LATE_LIMIT_MS = 48 * 3600 * 1000;
-const MIN_GAP_MS = 6 * 3600 * 1000;      // mínim entre dues publicacions    // més tard que això, no es publica
+const LATE_LIMIT_MS = 48 * 3600 * 1000;    // més tard que això, no es publica
+const MIN_GAP_MS = 5 * 3600 * 1000;      // mínim entre dues publicacions
+const REEL_EXPIRE_MS = 23 * 3600 * 1000; // un contenidor de vídeo caduca a les 24 h
 const REFRESH_AFTER_MS = 20 * 86400 * 1000; // renova el token cada 20 dies
 
 async function api(path, params, { method = 'POST', token } = {}) {
@@ -59,6 +60,28 @@ async function publish({ userId, token, images, caption }) {
 }
 
 const norm = (t) => String(t || '').replace(/\s+/g, ' ').trim().slice(0, 120);
+
+/**
+ * Reels, en dos passos (el vídeo pot trigar més a processar-se que el temps
+ * màxim d'una execució): 1) es crea el contenidor; 2) en una execució posterior,
+ * quan Instagram l'ha processat (FINISHED), es publica.
+ */
+async function createReel({ userId, token, video, cover, caption }) {
+  const params = { media_type: 'REELS', video_url: video, caption, share_to_feed: 'true' };
+  if (cover) params.cover_url = cover;
+  const { id } = await api(`${userId}/media`, params, { token });
+  return id;
+}
+
+async function containerStatus(id, token) {
+  const { status_code: s } = await api(id, { fields: 'status_code' }, { method: 'GET', token });
+  return s;
+}
+
+async function publishContainer(userId, token, creationId) {
+  const { id } = await api(`${userId}/media_publish`, { creation_id: creationId }, { token });
+  return id;
+}
 
 /** Busca entre les darreres publicacions del compte una amb el mateix text. Retorna l'id o null. */
 async function findPublished(userId, token, caption) {
@@ -137,4 +160,4 @@ function pickDue(posts, published, now = Date.now()) {
   return { due: due[0] || null, late };
 }
 
-module.exports = { MIN_GAP_MS, publish, findPublished, currentToken, pickDue, whoAmI, envToken, describeToken, LATE_LIMIT_MS };
+module.exports = { MIN_GAP_MS, REEL_EXPIRE_MS, createReel, containerStatus, publishContainer, publish, findPublished, currentToken, pickDue, whoAmI, envToken, describeToken, LATE_LIMIT_MS };
