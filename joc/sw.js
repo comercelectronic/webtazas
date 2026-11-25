@@ -1,5 +1,5 @@
 /* Agència Digital — service worker: permet jugar sense connexió i instal·lar el joc com a app */
-const CACHE = 'agencia-digital-v4';
+const CACHE = 'agencia-digital-v5';
 const ASSETS = [
   './', './index.html', './style.css', './manifest.webmanifest',
   './js/i18n.js', './js/i18n-es.js', './js/i18n-en.js', './js/art.js', './js/data-lessons.js', './js/data-story1.js', './js/data-story2.js', './js/data-story3.js', './js/data-web.js', './js/game.js',
