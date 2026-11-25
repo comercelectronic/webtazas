@@ -36,6 +36,13 @@
     .detail-h { display: flex; gap: 14px; align-items: center; margin-bottom: 10px; }
     .detail-h .ava-s { width: 80px; height: 80px; }
     .err { color: var(--bad); font-weight: 700; }
+    .mgmt { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    @media (max-width: 860px) { .mgmt { grid-template-columns: 1fr; } }
+    .mgmt h4 { margin: 0 0 10px; }
+    .mgmt .form-row label { min-width: 140px; }
+    .mgmt input[type=date] { min-width: 150px; }
+    .late { color: var(--bad); font-weight: 800; }
+    .ontime { color: #1d6b45; font-weight: 800; }
   </style>
 </head>
 <body>
@@ -52,6 +59,8 @@
       <p class="muted small" data-t>Els alumnes que escriuen un codi de classe al joc envien els resultats automàticament cada vegada que acaben un capítol. També pots afegir fitxers de resultats que t'hagin enviat (botó de sota).</p>
       <p id="msg"></p>
     </section>
+
+    <section class="card" id="mgmt" hidden></section>
 
     <section class="card">
       <div class="form-row" style="justify-content:space-between;align-items:center">

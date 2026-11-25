@@ -592,3 +592,49 @@ test('instagram: els reels es pugen, s\'esperen fins que Instagram els ha proces
     queue.reels.forEach((r, i) => Object.assign(r, saved.reels[i]));
   }
 });
+
+test('joc: el professor dona diners i posa dates d\'entrega; l\'alumne ho rep amb el codi de classe', async () => {
+  stores.clear();
+  process.env.TEACHER_PASSWORD = 'profe';
+  const h = fn('joc-resultats');
+  const call = async (body) => { const r = await h({ httpMethod: 'POST', body: JSON.stringify(body), headers: {} }); return { status: r.statusCode, body: JSON.parse(r.body) }; };
+  const A = 'alumne-aaaa-1111';
+  const B = 'alumne-bbbb-2222';
+  const P = { password: 'profe', classe: '4ESO-B' };
+
+  assert.strictEqual((await call({ action: 'grant', ...P, password: 'malament', to: '*', amount: 100 })).status, 401);
+  assert.strictEqual((await call({ action: 'grant', password: 'profe', to: '*', amount: 100 })).status, 400, 'cal classe');
+  assert.strictEqual((await call({ action: 'grant', ...P, to: '*', amount: 0 })).status, 400);
+  assert.strictEqual((await call({ action: 'grant', ...P, to: '*', amount: 999999 })).status, 400);
+
+  // Diners a tota la classe i a un alumne concret.
+  assert.strictEqual((await call({ action: 'grant', ...P, to: '*', amount: 500, reason: 'Premi <b>de</b> classe' })).status, 200);
+  const g2 = await call({ action: 'grant', ...P, to: A, toName: 'Anna', amount: 250, reason: 'Millor presentació' });
+  assert.strictEqual(g2.body.config.grants.length, 2);
+  assert.ok(!g2.body.config.grants[0].reason.includes('<'), 'sense HTML');
+
+  // Dates de la classe i una pròrroga per a l'alumne A.
+  assert.strictEqual((await call({ action: 'deadlines', ...P, deadlines: { 1: '2026-12-01', 2: 'no-és-data' } })).status, 400);
+  await call({ action: 'deadlines', ...P, deadlines: { 1: '2026-12-01', 2: '2026-12-08', 3: '' } });
+  await call({ action: 'extension', ...P, id: A, level: 2, date: '2026-12-15' });
+
+  const sa = (await call({ action: 'sync', classe: '4ESO-B', id: A })).body;
+  const sb = (await call({ action: 'sync', classe: '4ESO-B', id: B })).body;
+  assert.deepStrictEqual(sa.grants.map((g) => g.amount).sort(), [250, 500]);
+  assert.deepStrictEqual(sb.grants.map((g) => g.amount), [500], 'els diners d\'un altre alumne no li arriben');
+  assert.deepStrictEqual(sa.deadlines, { 1: '2026-12-01', 2: '2026-12-15' });
+  assert.deepStrictEqual(sb.deadlines, { 1: '2026-12-01', 2: '2026-12-08' });
+  assert.ok(!('toName' in sa.grants[0]), 'l\'alumne no veu a qui van els altres ingressos');
+
+  // Treure la pròrroga i anul·lar un ingrés.
+  await call({ action: 'extension', ...P, id: A, level: 2, date: '' });
+  const gid = sa.grants.find((g) => g.amount === 250).gid;
+  await call({ action: 'grant-delete', ...P, gid });
+  const sa2 = (await call({ action: 'sync', classe: '4ESO-B', id: A })).body;
+  assert.deepStrictEqual(sa2.deadlines, { 1: '2026-12-01', 2: '2026-12-08' });
+  assert.deepStrictEqual(sa2.grants.map((g) => g.amount), [500]);
+  // Una altra classe no veu res.
+  assert.deepStrictEqual((await call({ action: 'sync', classe: '4ESO-C', id: A })).body, { grants: [], deadlines: {} });
+  assert.strictEqual((await call({ action: 'sync', classe: '4eso b', id: A })).status, 400);
+  delete process.env.TEACHER_PASSWORD;
+});

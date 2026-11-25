@@ -8,6 +8,7 @@
   const PKEY = 'agencia-digital-professor';
 
   let rows = new Map(); // clau "classe/id" → resum
+  let cfg = null;       // configuració de la classe carregada: { classe, grants, deadlines, extensions }
   let sortKey = 'classe', sortDir = 1;
 
   function toast(msg, cls) {
@@ -18,6 +19,11 @@
   const fullName = (r) => `${r.nom || ''} ${r.cognom || ''}`.trim() || T('(sense nom)');
   const pctTxt = (v) => v == null ? '—' : v + ' %';
   const dateTxt = (d) => d ? new Date(d).toLocaleString(LOCALE, { dateStyle: 'short', timeStyle: 'short' }) : '—';
+  const dayTxt = (d) => d ? new Date(d + 'T12:00:00').toLocaleDateString(LOCALE, { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }) : '—';
+  // Data d'entrega d'un alumne per a un nivell: la pròrroga si en té, si no la de la classe.
+  const dueFor = (r, n) => (cfg && cfg.classe === r.classe) ? ((cfg.extensions[r.id] || {})[n] || cfg.deadlines[n] || null) : null;
+  const isLate = (r, n, w) => { const d = dueFor(r, n); return !!(d && w && w.at && new Date(w.at) > new Date(d + 'T23:59:59')); };
+  const lateCount = (r) => (cfg && cfg.classe === r.classe) ? GD.webLevels.filter(L => isLate(r, L.n, (r.webs || {})[L.n])).length : (r.websFora || 0);
   const avatar = (r) => { ART.setPlayer(r.aspecte); return ART.portrait('pau', 'n', { rank: Math.min(4, Math.floor((r.etapesCompletades || 0) / 2)) }); };
 
   function add(list, source) {
@@ -74,7 +80,7 @@
           <td>${r.llicionsSuperades || 0} / ${r.llicionsTotal || LESSONS.length}</td>
           <td>${pctTxt(r.mitjanaPrimerIntent)}</td>
           <td>${pctTxt(r.mitjanaMillor)}</td>
-          <td>${r.websEntregades ? `<b>${r.websEntregades}</b>/${GD.webLevels.length}` : '—'}</td>
+          <td>${r.websEntregades ? `<b>${r.websEntregades}</b>/${GD.webLevels.length}${lateCount(r) ? ` <span class="late" title="${T('Fora de termini')}">⚠️${lateCount(r)}</span>` : ''}` : '—'}</td>
           <td>${r.reputacio ?? '—'}</td>
           <td>${r.liquiditat != null ? r.liquiditat.toLocaleString(LOCALE) + ' €' : '—'}</td>
           <td>${esc(r.final ? r.final.replace(/^\S+ \d — /, '') : '—')}</td>
@@ -86,6 +92,7 @@
 
   function detail(k) {
     const r = rows.get(k); if (!r) return;
+    const canEdit = !!(cfg && cfg.classe === r.classe && r._font === 'servidor');
     const d = document.createElement('div'); d.className = 'modal';
     const ll = r.llicons || {};
     d.innerHTML = `<div class="modal-box wide">
@@ -104,9 +111,13 @@
       </tbody></table>
       <h4>${T('🛠️ Taller web')}</h4>
       ${(r.webPlataformes || []).length ? `<p class="small">${T('Plataformes triades:')} ${r.webPlataformes.map(k => esc(GD.webPlatforms[k] ? GD.webPlatforms[k].n : k)).join(', ')}</p>` : ''}
-      <table class="tbl"><thead><tr><th>${T('Nivell')}</th><th>${T('Encàrrec')}</th><th>${T('Plataforma')}</th><th>${T('Enllaç')}</th></tr></thead><tbody>
-        ${GD.webLevels.map(L => { const w = (r.webs || {})[L.n]; return `<tr><td>${L.n}</td><td>${esc(L.title)}${w && w.reflection ? `<br><small class="muted">${esc(w.reflection)}</small>` : ''}${w && w.note ? `<br><small>📝 ${esc(w.note)}</small>` : ''}</td><td>${w ? esc(GD.webPlatforms[w.platform] ? GD.webPlatforms[w.platform].n : w.platform) : '—'}</td><td>${w ? `<a href="${/^https?:\/\//i.test(w.url) ? esc(w.url) : '#'}" target="_blank" rel="noopener">${esc(w.url)}</a>${w.reachable === false ? ' ⚠️' : ''}` : '—'}</td></tr>`; }).join('')}
+      ${canEdit ? `<p class="muted small">${T('Pots donar més temps a aquest alumne: posa-li una data nova (pròrroga) a la columna «Entrega». Si la deixes buida, torna a tenir la data de la classe.')}</p>` : ''}
+      <table class="tbl"><thead><tr><th>${T('Nivell')}</th><th>${T('Encàrrec')}</th><th>${T('Plataforma')}</th><th>${T('Enllaç')}</th><th>${T('Entrega')}</th></tr></thead><tbody>
+        ${GD.webLevels.map(L => { const w = (r.webs || {})[L.n]; const due = dueFor(r, String(L.n)); const ext = canEdit && (cfg.extensions[r.id] || {})[L.n]; return `<tr><td>${L.n}</td><td>${esc(L.title)}${w && w.reflection ? `<br><small class="muted">${esc(w.reflection)}</small>` : ''}${w && w.note ? `<br><small>📝 ${esc(w.note)}</small>` : ''}</td><td>${w ? esc(GD.webPlatforms[w.platform] ? GD.webPlatforms[w.platform].n : w.platform) : '—'}</td><td>${w ? `<a href="${/^https?:\/\//i.test(w.url) ? esc(w.url) : '#'}" target="_blank" rel="noopener">${esc(w.url)}</a>${w.reachable === false ? ' ⚠️' : ''}<br><small class="muted">${T('Entregada el {0}', [dateTxt(w.at)])}</small>` : '—'}</td>
+          <td>${due ? `${dayTxt(due)}${ext ? ` <small class="muted">(${T('pròrroga')})</small>` : ''}${w ? (isLate(r, String(L.n), w) ? `<br><span class="late">⚠️ ${T('Fora de termini')}</span>` : `<br><span class="ontime">✔ ${T('A temps')}</span>`) : ''}` : '—'}
+            ${canEdit ? `<br><input class="inp" type="date" data-ext="${L.n}" value="${esc(ext || '')}" style="margin-top:4px;padding:4px 6px" title="${T('Pròrroga per a aquest alumne')}">` : ''}</td></tr>`; }).join('')}
       </tbody></table>
+      ${(r.dinersProfessor || 0) ? `<p class="small">💶 ${T('Diners rebuts del professor: {0}', [`<b>${(r.dinersProfessor || 0).toLocaleString(LOCALE)} €</b>`])}</p>` : ''}
       <h4>${T("🧭 Habilitats i coneixement")}</h4>
       <p class="small">${Object.entries(r.habilitats || {}).map(([k, v]) => `${esc(k)}: <b>${v}</b>`).join(' · ')}</p>
       <p class="small">${Object.entries(r.coneixement || {}).filter(([, v]) => v).map(([k, v]) => `${esc(GD.areas[k] || k)}: <b>${v}</b>`).join(' · ') || '—'}</p>
@@ -114,8 +125,82 @@
       <ul class="history">${(r.decisions || []).map(t => `<li class="key">${esc(t)}</li>`).join('') || '<li>—</li>'}</ul>
       <div class="row-btns"><button class="btn primary" id="close">${T("Tancar")}</button></div></div>`;
     document.body.appendChild(d);
+    d.querySelectorAll('[data-ext]').forEach(inp => inp.onchange = async () => {
+      try {
+        const { config } = await api({ action: 'extension', password: $('#pw').value, classe: r.classe, id: r.id, level: inp.dataset.ext, date: inp.value });
+        cfg = Object.assign({ classe: r.classe }, config);
+        toast(inp.value ? T('Pròrroga desada: {0}', [dayTxt(inp.value)]) : T('Pròrroga treta'), 'good');
+        d.remove(); detail(k); render();
+      } catch (err) { toast(esc(err.message), 'bad'); }
+    });
     d.querySelector('#close').onclick = () => d.remove();
     d.onclick = (e) => { if (e.target === d) d.remove(); };
+  }
+
+  // ---------- Gestió de la classe: diners i dates d'entrega ----------
+  function renderMgmt() {
+    const box = $('#mgmt');
+    if (!cfg) {
+      box.hidden = !$('#pw').value;
+      box.innerHTML = `<h3>${T('🎓 Gestió de la classe')}</h3><p class="muted">${T('Escriu un codi de classe a dalt i prem «Veure resultats» per donar diners als alumnes o posar les dates d\'entrega.')}</p>`;
+      return;
+    }
+    box.hidden = false;
+    const students = [...rows.values()].filter(r => r.classe === cfg.classe && r._font === 'servidor').sort((a, b) => fullName(a).localeCompare(fullName(b)));
+    const grants = [...cfg.grants].reverse();
+    box.innerHTML = `<h3>${T('🎓 Gestió de la classe {0}', [esc(cfg.classe)])}</h3>
+      <div class="mgmt">
+        <div>
+          <h4>${T('💶 Donar diners')}</h4>
+          <div class="form-row">
+            <label>${T('Per a')}<select class="inp" id="gTo"><option value="*">${T('Tota la classe')}</option>${students.map(r => `<option value="${esc(r.id)}">${esc(fullName(r))}</option>`).join('')}</select></label>
+            <label>${T('Quantitat (€)')}<input class="inp" id="gAmt" type="number" min="1" max="100000" step="50" value="500"></label>
+          </div>
+          <div class="form-row" style="margin-top:8px">
+            <label>${T('Motiu (opcional, el veurà l\'alumne)')}<input class="inp" id="gWhy" maxlength="120" placeholder="${T('Per exemple: premi a la millor presentació')}"></label>
+            <button class="btn primary" id="gGo">${T('Donar')}</button>
+          </div>
+          <p class="muted small">${T('Els alumnes reben els diners al joc la propera vegada que l\'obren amb connexió. Si dones diners a tota la classe, també els rebran els que s\'hi apuntin més tard.')}</p>
+          ${grants.length ? `<table class="tbl"><thead><tr><th>${T('Data')}</th><th>${T('Per a')}</th><th>${T('Quantitat')}</th><th>${T('Motiu')}</th><th></th></tr></thead><tbody>
+            ${grants.map(g => `<tr><td><small>${dateTxt(g.at)}</small></td><td>${g.to === '*' ? `<b>${T('Tota la classe')}</b>` : esc(g.toName || g.to)}</td><td><b>${(g.amount).toLocaleString(LOCALE)} €</b></td><td><small>${esc(g.reason || '—')}</small></td><td><button class="btn small danger" data-gdel="${esc(g.gid)}" title="${T('Anul·lar (només per als alumnes que encara no els han rebut)')}">✕</button></td></tr>`).join('')}
+          </tbody></table>` : `<p class="muted small">${T('Encara no has donat diners a aquesta classe.')}</p>`}
+        </div>
+        <div>
+          <h4>${T('📅 Dates d\'entrega del Taller web')}</h4>
+          <table class="tbl"><thead><tr><th>${T('Nivell')}</th><th>${T('Encàrrec')}</th><th>${T('Data d\'entrega')}</th></tr></thead><tbody>
+            ${GD.webLevels.map(L => `<tr><td>${L.n}</td><td><small>${esc(L.title)}</small></td><td><input class="inp" type="date" data-due="${L.n}" value="${esc(cfg.deadlines[L.n] || '')}" style="margin:0;padding:4px 6px"></td></tr>`).join('')}
+          </tbody></table>
+          <div class="row-btns"><button class="btn primary" id="dSave">${T('Desar les dates')}</button></div>
+          <p class="muted small">${T('Es pot entregar fins a les 23:59 del dia indicat. Deixa-la buida si no hi ha data. Per donar més temps a un sol alumne, obre\'n el «Detall».')}</p>
+        </div>
+      </div>`;
+    box.querySelector('#gGo').onclick = async () => {
+      const amount = Math.round(Number(box.querySelector('#gAmt').value));
+      const to = box.querySelector('#gTo').value;
+      const toName = to === '*' ? '' : box.querySelector('#gTo').selectedOptions[0].textContent;
+      if (!(amount >= 1 && amount <= 100000)) { toast(T('Escriu una quantitat entre 1 i 100.000 €.'), 'bad'); return; }
+      const who = to === '*' ? T('tota la classe {0}', [cfg.classe]) : toName;
+      if (!confirm(T('Vols donar {0} € a {1}?', [amount.toLocaleString(LOCALE), who]))) return;
+      try {
+        const { config } = await api({ action: 'grant', password: $('#pw').value, classe: cfg.classe, to, toName, amount, reason: box.querySelector('#gWhy').value });
+        cfg = Object.assign({ classe: cfg.classe }, config); renderMgmt();
+        toast(T('💶 Fet: {0} € per a {1}', [amount.toLocaleString(LOCALE), esc(who)]), 'good');
+      } catch (err) { toast(esc(err.message), 'bad'); }
+    };
+    box.querySelectorAll('[data-gdel]').forEach(b => b.onclick = async () => {
+      if (!confirm(T('Vols anul·lar aquest ingrés? Els alumnes que ja l\'han rebut el conservaran.'))) return;
+      try { const { config } = await api({ action: 'grant-delete', password: $('#pw').value, classe: cfg.classe, gid: b.dataset.gdel }); cfg = Object.assign({ classe: cfg.classe }, config); renderMgmt(); }
+      catch (err) { toast(esc(err.message), 'bad'); }
+    });
+    box.querySelector('#dSave').onclick = async () => {
+      const deadlines = {};
+      box.querySelectorAll('[data-due]').forEach(i => { if (i.value) deadlines[i.dataset.due] = i.value; });
+      try {
+        const { config } = await api({ action: 'deadlines', password: $('#pw').value, classe: cfg.classe, deadlines });
+        cfg = Object.assign({ classe: cfg.classe }, config); renderMgmt(); render();
+        toast(T('📅 Dates desades. Els alumnes les veuran al Taller web.'), 'good');
+      } catch (err) { toast(esc(err.message), 'bad'); }
+    };
   }
 
   async function api(body) {
@@ -135,6 +220,9 @@
       try { sessionStorage.setItem(PKEY, JSON.stringify({ pw, classe })); } catch (e) { }
       [...rows.keys()].forEach(k => { if (rows.get(k)._font === 'servidor') rows.delete(k); });
       add(results, 'servidor');
+      cfg = null;
+      if (classe) { const { config } = await api({ action: 'config', password: pw, classe }); cfg = Object.assign({ classe }, config); }
+      renderMgmt(); render();
       $('#msg').innerHTML = `<span class="pos">✔ ${T(results.length === 1 ? '{0} alumne' : '{0} alumnes', [results.length])} ${classe ? T('a la classe ') + esc(classe) : T('en total')}.</span>`;
     } catch (e) { $('#msg').innerHTML = `<span class="err">${esc(e.message)}</span>`; }
   }
@@ -144,8 +232,8 @@
     const list = [...rows.values()].sort((a, b) => (a.classe || '').localeCompare(b.classe || '') || fullName(a).localeCompare(fullName(b)));
     const head = [T('Classe'), T('Nom'), T('Cognom'), T('Agència'), T('Perfil'), T('Nivell'), T('Etapa actual'), T('Etapes completades'), T('Capítols completats'), T('Capítols totals'), T('Capítol en curs'),
       T('Lliçons superades'), T('Lliçons totals'), T('Mitjana 1r intent (%)'), T('Mitjana millor (%)'), T('Reputació'), T('Liquiditat (€)'), T('Clients'), T('Equip'), T('Camí'), T('Final'),
-      T('Campanyes bones'), T('Campanyes'), T('Encàrrecs'), T('Setmana de joc'), T('Iniciat'), T('Darrera actualització'), T('Decisions clau'), T('Webs entregades'), T('Plataformes web'),
-      ...GD.webLevels.flatMap(L => [T('Web {0} · plataforma', [L.n]), T('Web {0} · enllaç', [L.n])]),
+      T('Campanyes bones'), T('Campanyes'), T('Encàrrecs'), T('Setmana de joc'), T('Iniciat'), T('Darrera actualització'), T('Decisions clau'), T('Webs entregades'), T('Plataformes web'), T('Webs fora de termini'), T('Diners del professor (€)'),
+      ...GD.webLevels.flatMap(L => [T('Web {0} · plataforma', [L.n]), T('Web {0} · enllaç', [L.n]), T('Web {0} · entregada', [L.n]), T('Web {0} · data d\'entrega', [L.n]), T('Web {0} · fora de termini', [L.n])]),
       ...LESSONS.flatMap(id => [T("{0} · 1r intent", [GD.lessons[id].title]), T("{0} · millor", [GD.lessons[id].title])])];
     const cell = (v) => { const s = v == null ? '' : String(v); return /[;"\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
     const lines = [head.map(cell).join(';')];
@@ -153,8 +241,8 @@
       const ll = r.llicons || {};
       lines.push([r.classe, r.nom, r.cognom, r.agencia, r.perfil, r.nivell, r.etapaActual, r.etapesCompletades, r.capitolsCompletats, r.capitolsTotal, r.capitolActual,
         r.llicionsSuperades, r.llicionsTotal, r.mitjanaPrimerIntent, r.mitjanaMillor, r.reputacio, r.liquiditat, r.clients, r.equip, r.cami, r.final,
-        r.campanyesBones, r.campanyes, r.encarrecs, r.setmana, dateTxt(r.iniciat), dateTxt(r.actualitzat), (r.decisions || []).join(' | '), r.websEntregades || 0, (r.webPlataformes || []).join(', '),
-        ...GD.webLevels.flatMap(L => { const w = (r.webs || {})[L.n]; return w ? [w.platform, w.url] : ['', '']; }),
+        r.campanyesBones, r.campanyes, r.encarrecs, r.setmana, dateTxt(r.iniciat), dateTxt(r.actualitzat), (r.decisions || []).join(' | '), r.websEntregades || 0, (r.webPlataformes || []).join(', '), lateCount(r), r.dinersProfessor || 0,
+        ...GD.webLevels.flatMap(L => { const w = (r.webs || {})[L.n]; const due = dueFor(r, String(L.n)); return [w ? w.platform : '', w ? w.url : '', w ? dateTxt(w.at) : '', due || '', w && due ? (isLate(r, String(L.n), w) ? T('Sí') : T('No')) : '']; }),
         ...LESSONS.flatMap(id => ll[id] ? [`${ll[id].first}/${ll[id].total}`, `${ll[id].best}/${ll[id].total}`] : ['', ''])].map(cell).join(';'));
     });
     const blob = new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' });

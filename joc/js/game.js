@@ -35,6 +35,7 @@
       v: 1, agency: T('Píxel d\'Osona'), profile: null,
       player: { id: uid(), name: 'Pau', surname: 'Riera', g: 'm', look: Object.assign({}, ART.PLAYER_DEFAULT) },
       classe: '', quizLog: {}, syncPending: false, lastSync: 0, web: { platforms: [], levels: {} },
+      grantsApplied: [], teacherMoney: 0, deadlines: {},
       level: 1, xp: 0, sp: 0,
       skills: { estrategia: 0, creativitat: 0, analitica: 0, comercial: 0, gestio: 0 },
       money: 3000, reserve: 0, week: 1, rep: 5,
@@ -416,6 +417,26 @@
     }
     S.gigs = picks;
   }
+  /* ================= Dates d'entrega (les posa el professor) ================= */
+  // La data és el darrer dia per entregar: compta fins a les 23:59 d'aquell dia.
+  const dueOf = (n) => (S && S.deadlines && S.deadlines[String(n)]) || null;
+  const dueEnd = (d) => new Date(d + 'T23:59:59');
+  const fmtDay = (d) => new Date(d + 'T12:00:00').toLocaleDateString(LOCALE, { weekday: 'short', day: 'numeric', month: 'short' });
+  function lateDelivery(n, rec) {
+    const d = dueOf(n);
+    return !!(d && rec && rec.at && new Date(rec.at) > dueEnd(d));
+  }
+  function dueBadge(n, rec) {
+    const d = dueOf(n);
+    if (!d) return '';
+    if (rec) return lateDelivery(n, rec) ? `<span class="due late">⚠️ ${T('Entregada fora de termini')}</span>` : `<span class="due ok">✔ ${T('Entregada a temps')}</span>`;
+    const days = Math.ceil((dueEnd(d) - Date.now()) / 86400000) - 1;
+    if (Date.now() > dueEnd(d)) return `<span class="due late">⏰ ${T('Termini acabat el {0}', [fmtDay(d)])}</span>`;
+    if (days <= 0) return `<span class="due soon">⏰ ${T('S\'entrega avui')}</span>`;
+    if (days <= 3) return `<span class="due soon">📅 ${T('Entrega: {0} · queden {1} dies', [fmtDay(d), days])}</span>`;
+    return `<span class="due">📅 ${T('Entrega: {0}', [fmtDay(d)])}</span>`;
+  }
+
   /* ================= Taller web (curs opcional) ================= */
   const WP = () => GD.webPlatforms;
   function webState() { if (!S.web) S.web = { platforms: [], levels: {} }; return S.web; }
@@ -438,7 +459,7 @@
         const d = W.levels[L.n], open = webOpen(L.n), p = d && WP()[d.platform];
         return `<div class="web-level card ${d ? 'done' : open ? 'open' : 'locked'}">
           <span class="wl-ava">${ART.portrait(L.who, d ? 'h' : 'n')}</span>
-          <div class="wl-txt"><small>${T('Nivell {0}', [L.n])} · ${txt(L.sub)}</small><b>${txt(L.title)}</b>
+          <div class="wl-txt"><small>${T('Nivell {0}', [L.n])} · ${txt(L.sub)}</small><b>${txt(L.title)}</b>${dueBadge(L.n, d)}
             ${d ? `<a href="${safeUrl(d.url)}" target="_blank" rel="noopener">${esc(d.url)}</a>${p ? ` <em class="plat-chip">${p.i} ${esc(p.n)}</em>` : ''}` : ''}
           </div>
           ${open ? `<button class="btn ${d ? 'small' : 'primary'}" data-web="${L.n}">${d ? T('Revisar') : T('Començar')}</button>` : '<span class="ch-s">🔒</span>'}
@@ -480,6 +501,7 @@
     const brief = () => panel(`<div class="pn-h"><b>🧾 ${txt(L.title)}</b><small>${T('Taller web · Nivell {0}', [n])} · ${txt(L.sub)}</small></div>
       <h4>${T('Què demana el client')}</h4>
       <ul class="req-list">${L.reqs.map(r => `<li>${txt(r)}</li>`).join('')}</ul>
+      ${dueOf(n) ? `<p>${dueBadge(n, prev)}</p>` : ''}
       ${prev ? `<div class="info">${T('Ja has entregat aquest nivell:')} <a href="${safeUrl(prev.url)}" target="_blank" rel="noopener">${esc(prev.url)}</a></div>` : ''}
       <div class="row-btns"><button class="btn primary" id="learn">${T('📚 Aprèn a fer-la')}</button><button class="btn" id="deliver">${T('📤 Entregar')}</button><button class="btn ghost" id="back">${T('Tornar al taller')}</button></div>`, (p) => {
       p.querySelector('#learn').onclick = learn; p.querySelector('#deliver').onclick = deliver; p.querySelector('#back').onclick = back;
@@ -1156,6 +1178,8 @@
       webPlataformes: (S.web && S.web.platforms) || [],
       webs: Object.fromEntries(Object.entries((S.web && S.web.levels) || {}).map(([k, v]) => [k, { url: v.url, platform: v.platform, at: v.at, reflection: v.reflection, note: v.note, reachable: v.reachable }])),
       websEntregades: Object.keys((S.web && S.web.levels) || {}).length,
+      websFora: Object.entries((S.web && S.web.levels) || {}).filter(([n, v]) => lateDelivery(n, v)).length,
+      dinersProfessor: S.teacherMoney || 0,
       decisions: S.history.filter(h => h.key).map(h => T("Cap. {0}: {1}", [h.ch, h.t]))
     };
   }
@@ -1173,10 +1197,40 @@
       if (!r.ok) throw new Error((await r.json().catch(() => ({}))).error || 'Error ' + r.status);
       S.syncPending = false; S.lastSync = Date.now(); save();
       if (manual) { toast(T('📤 Resultats enviats al professor'), 'good'); if ($('.hub')) hubScreen('empresa'); }
+      classSync();
     } catch (e) {
       if (manual) toast(T('No s\'han pogut enviar els resultats (') + esc(e.message || T('sense connexió')) + T('). Torna-ho a provar o descarrega el fitxer.'), 'bad');
     }
   }
+  // Diners i dates d'entrega que posa el professor (per classe)
+  let classSyncAt = 0;
+  async function classSync(force) {
+    if (!S || !S.classe || !navigator.onLine) return;
+    if (!force && Date.now() - classSyncAt < 60000) return;
+    classSyncAt = Date.now();
+    try {
+      const r = await fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'sync', classe: S.classe, id: S.player.id }) });
+      if (!r.ok) return;
+      const { grants = [], deadlines = {} } = await r.json();
+      const applied = new Set(S.grantsApplied || []);
+      const fresh = grants.filter((g) => g && g.gid && !applied.has(g.gid) && Number.isFinite(g.amount));
+      const datesChanged = JSON.stringify(deadlines) !== JSON.stringify(S.deadlines || {});
+      S.deadlines = deadlines;
+      fresh.forEach((g) => {
+        S.money += g.amount; S.teacherMoney = (S.teacherMoney || 0) + g.amount;
+        applied.add(g.gid);
+        S.history.push({ ch: '—', week: S.week, t: g.reason ? T('El professor va donar {0} a l\'agència: {1}', [eur(g.amount), g.reason]) : T('El professor va donar {0} a l\'agència.', [eur(g.amount)]), key: false });
+        toast(`💶 ${g.reason ? T('El teu professor t\'ha donat {0}: {1}', [eur(g.amount), esc(g.reason)]) : T('El teu professor t\'ha donat {0}.', [eur(g.amount)])}`, 'good');
+      });
+      S.grantsApplied = [...applied];
+      save();
+      if (fresh.length) queueSync();
+      if ((fresh.length || datesChanged) && $('.hub')) hubScreen(hubTab);
+    } catch (e) { /* sense connexió: ja ho farem */ }
+  }
+  window.addEventListener('focus', () => classSync(false));
+  setInterval(() => { if (document.visibilityState === 'visible') classSync(false); }, 120000);
+
   function downloadResults() {
     const data = buildSummary();
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -1198,6 +1252,7 @@
     S = Object.assign(newState(), S);
     applyPlayer();
     if (S.syncPending) queueSync();
+    classSync(true);
     if (S.cur && GD.chapters[S.cur.id]) startChapter(S.cur.id, true); else hubScreen('campanya');
   }
 
@@ -1240,7 +1295,7 @@
       case 'downloadResults': downloadResults(); break;
       case 'setClass': textBox(T('Codi de classe (te\'l dona el professor):'), S.classe, (v) => {
         S.classe = normClass(v); S.lastSync = 0; save();
-        if (S.classe) { toast(T('Codi desat: ') + esc(S.classe), 'good'); doSync(true); } else hubScreen('empresa');
+        if (S.classe) { toast(T('Codi desat: ') + esc(S.classe), 'good'); doSync(true); classSync(true); } else { S.deadlines = {}; hubScreen('empresa'); }
       }, T('Desar')); break;
       case 'sceneMenu': confirmBox(T('Vols sortir de la missió? El progrés de la missió es desa i la podràs reprendre.'), () => { const c = S.cur; save(); hubScreen('campanya'); S.cur = c; save(); }); break;
     }
